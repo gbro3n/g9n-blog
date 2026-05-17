@@ -1,0 +1,6 @@
+{
+    "markdown.copyFiles.destination": {
+        "**/*.md": "/assets/${fileName}"
+    },
+    "as-notes.notesFolder": "blog"
+}

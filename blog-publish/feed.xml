@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Gareth Brown&apos;s Weblog</title>
+    <link>/</link>
+    <description>Gareth Brown&apos;s Weblog RSS Feed</description>
+        <item>
+      <title>Introducing the g9n blog</title>
+      <link>introducing-the-g9n-blog.html</link>
+      <description>An introduction to the g9n blog</description>
+      <author>Gareth Brown</author>
+      <pubDate>2026-05-17</pubDate>
+    </item>
+  </channel>
+</rss>

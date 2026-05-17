@@ -1,0 +1,17 @@
+{
+    "inputDir": "./blog",
+    "defaultPublic": false,
+    "defaultAssets": true,
+    "layout": "blog",
+    "layouts": "./asnotes-publish.layouts.blog",
+    "includes": "./asnotes-publish.includes.blog",
+    "theme": "default",
+    "themes": "./asnotes-publish.themes.blog",
+    "baseUrl": "",
+    "retina": true,
+    "includeDrafts": false,
+    "stylesheets": [],
+    "exclude": [],
+    "outputDir": "./blog-publish",
+    "siteTitle": "Gareth Brown's Weblog"
+}
