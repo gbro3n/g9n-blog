@@ -1198,3 +1198,124 @@
 [2026-05-17T09:21:05.218Z] [INFO] decor: cached 0 lines, 0 wikilinks
 [2026-05-17T09:21:05.218Z] [INFO] decor: rebuildCache (6 lines): 0.15ms
 [2026-05-17T09:21:05.670Z] [INFO] IndexService: indexFileContent: README.md → pageId=1
+[2026-05-17T09:24:42.444Z] [INFO] extension: periodicScan: tick starting
+[2026-05-17T09:24:42.472Z] [INFO] IndexScanner: staleScan: starting — 2 files on disk, 2 in index
+[2026-05-17T09:24:42.474Z] [INFO] IndexScanner: staleScan: 1.39ms
+[2026-05-17T09:24:42.474Z] [INFO] IndexScanner: staleScan: complete — 0 new, 0 stale, 0 deleted, 2 unchanged
+[2026-05-17T09:24:42.474Z] [INFO] extension: periodicScan: no changes
+[2026-05-17T09:26:38.681Z] [INFO] decor: cached 0 lines, 0 wikilinks
+[2026-05-17T09:26:38.681Z] [INFO] decor: rebuildCache (11 lines): 0.11ms
+[2026-05-17T09:26:38.740Z] [INFO] IndexService: indexFileContent: README.md → pageId=1
+[2026-05-17T09:26:38.742Z] [INFO] IndexService: saveToFile: wrote 77824 bytes
+[2026-05-17T09:26:38.742Z] [INFO] IndexService: saveToFile: 0.77ms
+[2026-05-17T09:29:42.445Z] [INFO] extension: periodicScan: tick starting
+[2026-05-17T09:29:42.466Z] [INFO] IndexScanner: staleScan: starting — 2 files on disk, 2 in index
+[2026-05-17T09:29:42.466Z] [INFO] IndexScanner: staleScan: 0.57ms
+[2026-05-17T09:29:42.466Z] [INFO] IndexScanner: staleScan: complete — 0 new, 0 stale, 0 deleted, 2 unchanged
+[2026-05-17T09:29:42.466Z] [INFO] extension: periodicScan: no changes
+[2026-05-17T09:34:42.446Z] [INFO] extension: periodicScan: tick starting
+[2026-05-17T09:34:42.472Z] [INFO] IndexScanner: staleScan: starting — 2 files on disk, 2 in index
+[2026-05-17T09:34:42.474Z] [INFO] IndexScanner: staleScan: 1.20ms
+[2026-05-17T09:34:42.474Z] [INFO] IndexScanner: staleScan: complete — 0 new, 0 stale, 0 deleted, 2 unchanged
+[2026-05-17T09:34:42.474Z] [INFO] extension: periodicScan: no changes
+[2026-05-17T09:39:42.446Z] [INFO] extension: periodicScan: tick starting
+[2026-05-17T09:39:42.467Z] [INFO] IndexScanner: staleScan: starting — 2 files on disk, 2 in index
+[2026-05-17T09:39:42.469Z] [INFO] IndexScanner: staleScan: 1.43ms
+[2026-05-17T09:39:42.469Z] [INFO] IndexScanner: staleScan: complete — 0 new, 0 stale, 0 deleted, 2 unchanged
+[2026-05-17T09:39:42.469Z] [INFO] extension: periodicScan: no changes
+[2026-05-17T09:44:42.447Z] [INFO] extension: periodicScan: tick starting
+[2026-05-17T09:44:42.472Z] [INFO] IndexScanner: staleScan: starting — 2 files on disk, 2 in index
+[2026-05-17T09:44:42.473Z] [INFO] IndexScanner: staleScan: 0.62ms
+[2026-05-17T09:44:42.473Z] [INFO] IndexScanner: staleScan: complete — 0 new, 0 stale, 0 deleted, 2 unchanged
+[2026-05-17T09:44:42.473Z] [INFO] extension: periodicScan: no changes
+[2026-05-17T13:57:09.996Z] [INFO] extension: periodicScan: tick starting
+[2026-05-17T13:57:10.091Z] [INFO] IndexScanner: staleScan: starting — 2 files on disk, 2 in index
+[2026-05-17T13:57:10.100Z] [INFO] IndexScanner: staleScan: 7.55ms
+[2026-05-17T13:57:10.100Z] [INFO] IndexScanner: staleScan: complete — 0 new, 0 stale, 0 deleted, 2 unchanged
+[2026-05-17T13:57:10.100Z] [INFO] extension: periodicScan: no changes
+[2026-05-17T14:02:10.878Z] [INFO] extension: periodicScan: tick starting
+[2026-05-17T14:02:10.909Z] [INFO] IndexScanner: staleScan: starting — 2 files on disk, 2 in index
+[2026-05-17T14:02:10.911Z] [INFO] IndexScanner: staleScan: 1.37ms
+[2026-05-17T14:02:10.911Z] [INFO] IndexScanner: staleScan: complete — 0 new, 0 stale, 0 deleted, 2 unchanged
+[2026-05-17T14:02:10.911Z] [INFO] extension: periodicScan: no changes
+[2026-05-17T14:07:10.879Z] [INFO] extension: periodicScan: tick starting
+[2026-05-17T14:07:10.911Z] [INFO] IndexScanner: staleScan: starting — 2 files on disk, 2 in index
+[2026-05-17T14:07:10.912Z] [INFO] IndexScanner: staleScan: 1.45ms
+[2026-05-17T14:07:10.912Z] [INFO] IndexScanner: staleScan: complete — 0 new, 0 stale, 0 deleted, 2 unchanged
+[2026-05-17T14:07:10.912Z] [INFO] extension: periodicScan: no changes
+[2026-05-17T14:12:10.889Z] [INFO] extension: periodicScan: tick starting
+[2026-05-17T14:12:10.914Z] [INFO] IndexScanner: staleScan: starting — 2 files on disk, 2 in index
+[2026-05-17T14:12:10.914Z] [INFO] IndexScanner: staleScan: 0.58ms
+[2026-05-17T14:12:10.914Z] [INFO] IndexScanner: staleScan: complete — 0 new, 0 stale, 0 deleted, 2 unchanged
+[2026-05-17T14:12:10.914Z] [INFO] extension: periodicScan: no changes
+[2026-05-17T14:17:10.880Z] [INFO] extension: periodicScan: tick starting
+[2026-05-17T14:17:10.910Z] [INFO] IndexScanner: staleScan: starting — 2 files on disk, 2 in index
+[2026-05-17T14:17:10.913Z] [INFO] IndexScanner: staleScan: 2.00ms
+[2026-05-17T14:17:10.913Z] [INFO] IndexScanner: staleScan: complete — 0 new, 0 stale, 0 deleted, 2 unchanged
+[2026-05-17T14:17:10.913Z] [INFO] extension: periodicScan: no changes
+[2026-05-17T14:22:10.881Z] [INFO] extension: periodicScan: tick starting
+[2026-05-17T14:22:10.913Z] [INFO] IndexScanner: staleScan: starting — 2 files on disk, 2 in index
+[2026-05-17T14:22:10.914Z] [INFO] IndexScanner: staleScan: 0.43ms
+[2026-05-17T14:22:10.914Z] [INFO] IndexScanner: staleScan: complete — 0 new, 0 stale, 0 deleted, 2 unchanged
+[2026-05-17T14:22:10.914Z] [INFO] extension: periodicScan: no changes
+[2026-05-17T14:27:10.882Z] [INFO] extension: periodicScan: tick starting
+[2026-05-17T14:27:10.909Z] [INFO] IndexScanner: staleScan: starting — 2 files on disk, 2 in index
+[2026-05-17T14:27:10.910Z] [INFO] IndexScanner: staleScan: 1.03ms
+[2026-05-17T14:27:10.910Z] [INFO] IndexScanner: staleScan: complete — 0 new, 0 stale, 0 deleted, 2 unchanged
+[2026-05-17T14:27:10.910Z] [INFO] extension: periodicScan: no changes
+[2026-05-17T14:32:10.882Z] [INFO] extension: periodicScan: tick starting
+[2026-05-17T14:32:10.899Z] [INFO] IndexScanner: staleScan: starting — 2 files on disk, 2 in index
+[2026-05-17T14:32:10.900Z] [INFO] IndexScanner: staleScan: 1.06ms
+[2026-05-17T14:32:10.900Z] [INFO] IndexScanner: staleScan: complete — 0 new, 0 stale, 0 deleted, 2 unchanged
+[2026-05-17T14:32:10.900Z] [INFO] extension: periodicScan: no changes
+[2026-05-17T14:37:10.883Z] [INFO] extension: periodicScan: tick starting
+[2026-05-17T14:37:10.924Z] [INFO] IndexScanner: staleScan: starting — 2 files on disk, 2 in index
+[2026-05-17T14:37:10.926Z] [INFO] IndexScanner: staleScan: 1.42ms
+[2026-05-17T14:37:10.926Z] [INFO] IndexScanner: staleScan: complete — 0 new, 0 stale, 0 deleted, 2 unchanged
+[2026-05-17T14:37:10.926Z] [INFO] extension: periodicScan: no changes
+[2026-05-17T14:42:10.883Z] [INFO] extension: periodicScan: tick starting
+[2026-05-17T14:42:10.918Z] [INFO] IndexScanner: staleScan: starting — 2 files on disk, 2 in index
+[2026-05-17T14:42:10.919Z] [INFO] IndexScanner: staleScan: 0.93ms
+[2026-05-17T14:42:10.919Z] [INFO] IndexScanner: staleScan: complete — 0 new, 0 stale, 0 deleted, 2 unchanged
+[2026-05-17T14:42:10.919Z] [INFO] extension: periodicScan: no changes
+[2026-05-17T14:47:10.885Z] [INFO] extension: periodicScan: tick starting
+[2026-05-17T14:47:10.924Z] [INFO] IndexScanner: staleScan: starting — 2 files on disk, 2 in index
+[2026-05-17T14:47:10.925Z] [INFO] IndexScanner: staleScan: 1.30ms
+[2026-05-17T14:47:10.925Z] [INFO] IndexScanner: staleScan: complete — 0 new, 0 stale, 0 deleted, 2 unchanged
+[2026-05-17T14:47:10.925Z] [INFO] extension: periodicScan: no changes
+[2026-05-17T14:52:10.885Z] [INFO] extension: periodicScan: tick starting
+[2026-05-17T14:52:10.913Z] [INFO] IndexScanner: staleScan: starting — 2 files on disk, 2 in index
+[2026-05-17T14:52:10.916Z] [INFO] IndexScanner: staleScan: 1.64ms
+[2026-05-17T14:52:10.916Z] [INFO] IndexScanner: staleScan: complete — 0 new, 0 stale, 0 deleted, 2 unchanged
+[2026-05-17T14:52:10.916Z] [INFO] extension: periodicScan: no changes
+[2026-05-17T14:57:10.887Z] [INFO] extension: periodicScan: tick starting
+[2026-05-17T14:57:10.919Z] [INFO] IndexScanner: staleScan: starting — 2 files on disk, 2 in index
+[2026-05-17T14:57:10.919Z] [INFO] IndexScanner: staleScan: 0.49ms
+[2026-05-17T14:57:10.919Z] [INFO] IndexScanner: staleScan: complete — 0 new, 0 stale, 0 deleted, 2 unchanged
+[2026-05-17T14:57:10.920Z] [INFO] extension: periodicScan: no changes
+[2026-05-17T14:58:14.711Z] [INFO] IndexScanner: staleScan: starting — 2 files on disk, 2 in index
+[2026-05-17T14:58:14.711Z] [INFO] IndexScanner: staleScan: 0.65ms
+[2026-05-17T14:58:14.711Z] [INFO] IndexScanner: staleScan: complete — 0 new, 0 stale, 0 deleted, 2 unchanged
+[2026-05-17T14:58:14.717Z] [INFO] IndexService: saveToFile: wrote 77824 bytes
+[2026-05-17T14:58:14.717Z] [INFO] IndexService: saveToFile: 5.15ms
+[2026-05-17T14:58:14.722Z] [INFO] completion: cache rebuilt: 2 pages, 0 fwd refs, 0 aliases (2 total)
+[2026-05-17T14:58:14.722Z] [INFO] completion: rebuildCache: 3.89ms
+[2026-05-17T14:58:19.061Z] [INFO] IndexService: saveToFile: wrote 77824 bytes
+[2026-05-17T14:58:19.061Z] [INFO] IndexService: saveToFile: 0.71ms
+[2026-05-17T14:58:19.062Z] [INFO] IndexService: close: closing database and releasing WASM module
+[2026-05-17T14:58:21.795Z] [INFO] extension: Logging activated
+[2026-05-17T14:58:21.795Z] [INFO] extension: enterFullMode: initialising database
+[2026-05-17T14:58:21.796Z] [INFO] IndexService: Loading WASM module (first load)
+[2026-05-17T14:58:22.376Z] [INFO] IndexService: initSqlJs: 579.98ms
+[2026-05-17T14:58:22.376Z] [INFO] IndexService: initDatabase: opening existing file (77824 bytes)
+[2026-05-17T14:58:22.401Z] [INFO] IndexService: initDatabase: complete
+[2026-05-17T14:58:22.403Z] [INFO] decor: cached 0 lines, 0 wikilinks
+[2026-05-17T14:58:22.403Z] [INFO] decor: rebuildCache (11 lines): 0.27ms
+[2026-05-17T14:58:22.628Z] [INFO] extension: enterFullMode: running stale scan
+[2026-05-17T14:58:23.956Z] [INFO] IndexScanner: staleScan: starting — 2 files on disk, 2 in index
+[2026-05-17T14:58:23.974Z] [INFO] extension: extendMarkdownIt() invoked by VS Code markdown preview
+[2026-05-17T14:58:24.041Z] [INFO] IndexScanner: staleScan: 85.00ms
+[2026-05-17T14:58:24.041Z] [INFO] IndexScanner: staleScan: complete — 0 new, 0 stale, 0 deleted, 2 unchanged
+[2026-05-17T14:58:24.044Z] [INFO] completion: cache rebuilt: 2 pages, 0 fwd refs, 0 aliases (2 total)
+[2026-05-17T14:58:24.044Z] [INFO] completion: rebuildCache: 1.91ms
+[2026-05-17T14:58:24.067Z] [INFO] extension: enterFullMode: complete
