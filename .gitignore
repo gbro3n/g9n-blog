@@ -1,0 +1,7 @@
+# AgentKanban settings
+
+.agentkanban/
+.vscode/mcp.json
+
+# AS Notes config
+
