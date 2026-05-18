@@ -4,18 +4,18 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Introducing the g9n blog</title>
+        <title>Contact</title>
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300..700;1,14..32,300..700&display=swap" rel="stylesheet">
         
     <link rel="stylesheet" href="theme-default.css">
     <link rel="stylesheet" href="retina.css">
-    <meta name="description" content="An introduction to the g9n blog">
+    <meta name="description" content="Contact">
         <script defer src="https://analytics.appsoftware.com/telemetry.js" data-website-id="6913dde8-61ce-4739-90fe-3abeeb6ab0a4"></script>
     </head>
 
-    <body data-layout="blog">
+    <body data-layout="docs">
         <header>
 <div class="site-header">
     <a class="site-title" href="/">
@@ -26,13 +26,20 @@
 </div>
 
 </header>
- <article class="blog-post">
-                <nav class="blog-home-link"><a href="index.html">← Home</a></nav>
-    <h1 class="post-title">Introducing the g9n blog</h1>
-    <time class="page-date" datetime="2026-05-17">2026-05-17</time>
-    <span class="page-author">Gareth Brown</span>
-
-            <p>Welcome to my blog. This is where I intend (intend, not promise) to put my (hopefully) regular writings in an effort to be more intentional about what I'm working on and thinking about, communicate it all better and build up a history that I can look back on and maybe one day get a sense of progress!</p>
+<button class="nav-toggle" aria-label="Toggle navigation">&#9776;</button>
+        <div class="nav-backdrop"></div>
+            <nav class="site-nav">
+<h2>Site</h2>
+<ul>
+<li><a href="/">Blog</a></li>
+<li><a href="about.html" class="wikilink">About</a></li>
+<li><a href="contact.html" class="wikilink">Contact</a></li>
+</ul>
+    </nav>
+        <article class="markdown-body">
+            
+            <h1 id="contact">Contact</h1>
+<p>If you have questions or if anything you find on this blog is of interest to you, contact me at <a href="mailto:gareth.brown@g9n.com">gareth.brown@g9n.com</a></p>
 
         </article>
         <footer>
@@ -41,6 +48,24 @@
     <p>&copy; 2026 Built with <a href="https://www.asnotes.io">AS Notes</a> by <a href="https://www.appsoftware.com">App Software Ltd</a></p>
 </div>
 </footer>
-</body>
+
+        <script>
+            (function () {
+                var btn = document.querySelector('.nav-toggle');
+                var bd = document.querySelector('.nav-backdrop');
+                function toggle() {
+                    document.body.classList.toggle('nav-open');
+                    btn.setAttribute('aria-expanded', document.body.classList.contains('nav-open'));
+                }
+                function close() {
+                    document.body.classList.remove('nav-open');
+                    btn.setAttribute('aria-expanded', 'false');
+                }
+                if (btn) btn.addEventListener('click', toggle);
+                if (bd) bd.addEventListener('click', close);
+                document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+            })();
+        </script>
+    </body>
 
 </html>
