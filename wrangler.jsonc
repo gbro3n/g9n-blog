@@ -1,0 +1,14 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "g9n-blog",
+  "compatibility_date": "2026-06-24",
+  "observability": {
+    "enabled": true
+  },
+  "assets": {
+    "directory": "blog-publish"
+  },
+  "compatibility_flags": [
+    "nodejs_compat"
+  ]
+}
