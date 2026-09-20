@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="EtherPK">
+    <title>AS Notes - VS Code Notes, Docs and Wikilink Markdown Editing :: g9n Blog</title>
+    <meta name="description" content="What is AS Notes? AS Notes brings markdown editing with [[wikilink]] for notes, documentation, blogs and wikis directly into VS Code and compatible editors (e.g. Antigravity, Cursor, Windsurf). With…">
+    <link rel="stylesheet" href="theme/theme.css">
+    
+    
+    <link rel="alternate" type="application/rss+xml" title="g9n Blog" href="feed.xml">
+    <script defer src="https://analytics.appsoftware.com/telemetry.js" data-website-id="6913dde8-61ce-4739-90fe-3abeeb6ab0a4"></script>
+</head>
+<body class="layout-terminal">
+    <a class="skip-link" href="#content">Skip to content</a>
+    <div class="container">
+        <header class="header">
+            <div class="header__inner">
+                <a class="site-title logo" href="index.html">
+                    <span class="logo__mark"><!-- The EtherPK icon (resources/brand/etherpk-icon-*.svg), inline so the page fetches nothing and it takes the text colour; aria-hidden because the title beside it is the name. Fill the "logo" include, or edit this partial, for your own. -->
+                                             <svg class="site-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 191.82 166.13" width="24" height="21" aria-hidden="true" focusable="false"><path fill="currentColor" fill-rule="evenodd" d="M67.09,132.92,47.93,166.13H9.59L0,149.52,86.33,0H105.5L19.17,149.52H38.34l19.17-33.2h76.8l9.59,16.6Zm48-83.12,9.65,16.71H143.9L115.08,16.6q-24,41.57-48,83.12H143.9q14.37,24.9,28.76,49.8h-96l-9.59,16.61H182.24l9.58-16.61-38.34-66.4H96C95.85,82.9,113.39,52.73,115.08,49.8Z"/></svg>
+</span>
+                    <span class="logo__text">g9n Blog</span>
+                    <span class="logo__cursor" aria-hidden="true"></span>
+                </a>
+                <button class="nav-toggle menu-trigger" type="button" aria-controls="site-nav" aria-expanded="false" aria-label="Menu">Menu</button>
+            </div>
+            <div class="nav-backdrop" hidden></div>
+            <nav id="site-nav" class="menu site-nav" aria-label="Site">
+                <ul class="menu__inner site-nav-list">
+                </ul>
+                <form class="site-search" role="search" data-search-index="search.json" data-search-script="search-index.js">
+                    <label class="visually-hidden" for="site-search-input">Search</label>
+                    <input id="site-search-input" type="search" name="q" placeholder="$ search" autocomplete="off">
+                    <div class="site-search-results" role="listbox" hidden></div>
+                </form>
+            </nav>
+        </header>
+    <main id="content" class="content">
+        <article class="post">
+            <h1 class="post-title">AS Notes - VS Code Notes, Docs and Wikilink Markdown Editing</h1>
+            <div class="post-meta"><time class="post-date" datetime="2026-03-30">2026-03-30</time> :: <span class="post-reading">7 min read</span></div>
+        <nav class="toc framed" aria-label="Table of contents">
+            <p class="toc__title">:: Table of contents</p>
+            <ul>
+                <li class="toc-level-2"><a href="#what-is-as-notes">What is AS Notes?</a></li><li class="toc-level-2"><a href="#why-did-i-build-as-notes">Why Did I Build AS Notes?</a></li><li class="toc-level-2"><a href="#as-notes-works-where-you-work-and-with-your-existing-tools">AS Notes Works Where You Work, and With Your Existing Tools</a></li><li class="toc-level-2"><a href="#the-best-place-to-maintain-documentation-and-notes-is-with-your-code">The Best Place to Maintain Documentation (and Notes) Is With Your Code</a></li><li class="toc-level-2"><a href="#features-at-a-glance">Features At A Glance</a></li><li class="toc-level-3"><a href="#wikilinks-and-nested-wikilinks">Wikilinks and Nested Wikilinks</a></li><li class="toc-level-3"><a href="#inline-editor-styling">Inline Editor Styling</a></li><li class="toc-level-4"><a href="#mermaid-and-latex-rendering">Mermaid and LaTeX Rendering</a></li><li class="toc-level-3"><a href="#backlinks-view">Backlinks View</a></li><li class="toc-level-3"><a href="#task-management">Task Management</a></li><li class="toc-level-3"><a href="#kanban-board">Kanban Board</a></li><li class="toc-level-3"><a href="#daily-journal">Daily Journal</a></li><li class="toc-level-3"><a href="#outliner-mode">Outliner Mode</a></li><li class="toc-level-3"><a href="#templates">Templates</a></li><li class="toc-level-3"><a href="#encrypted-notes">Encrypted Notes</a></li><li class="toc-level-3"><a href="#static-site-publishing">Static Site Publishing</a></li><li class="toc-level-2"><a href="#installing-as-notes">Installing AS Notes</a></li><li class="toc-level-2"><a href="#conclusion-feedback-questions">Conclusion &#x2F; Feedback &#x2F; Questions</a></li>
+            </ul>
+        </nav>
+            <div class="post-content">
+<h2 id="what-is-as-notes">What is AS Notes?</h2>
+<p><strong>AS Notes brings markdown editing with <code>[[wikilink]]</code> for notes, documentation, blogs and wikis directly into <a href="https://code.visualstudio.com/">VS Code</a> and compatible editors (e.g. <a href="https://antigravity.google/">Antigravity</a>, <a href="https://cursor.com/">Cursor</a>, <a href="https://windsurf.com/">Windsurf</a>).</strong></p>
+<p><strong>With AS Notes, you can capture ideas, link concepts, write, and stay focused - without ever leaving your editor.</strong></p>
+<p>AS Notes provides productivity tooling that turns your favourite IDE into a personal knowledge management system (PKMS), including a backlinks view, task management, journals, a kanban board, markdown editing tools, mermaid, LaTeX math support and Jekyll / Hugo like publishing.</p>
+<p><strong>Install:</strong> <a href="https://marketplace.visualstudio.com/items?itemName=appsoftwareltd.as-notes">Visual Studio Marketplace</a> / <a href="https://open-vsx.org/extension/appsoftwareltd/as-notes">Open VSX</a>
+<strong>GitHub:</strong> <a href="https://github.com/appsoftwareltd/as-notes">github.com/appsoftwareltd/as-notes</a></p>
+<table>
+<thead>
+<tr>
+<th>Resource</th>
+<th>Url</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Install</td>
+<td><a href="https://marketplace.visualstudio.com/items?itemName=appsoftwareltd.as-notes">Visual Studio Marketplace</a> / <a href="https://open-vsx.org/extension/appsoftwareltd/as-notes">Open VSX</a></td>
+</tr>
+<tr>
+<td>Pro Features</td>
+<td><a href="https://www.asnotes.io?attr=src_readme">asnotes.io/pricing</a></td>
+</tr>
+<tr>
+<td>Docs</td>
+<td><a href="https://docs.asnotes.io">docs.asnotes.io</a></td>
+</tr>
+<tr>
+<td>Blog</td>
+<td><a href="https://blog.asnotes.io">blog.asnotes.io</a></td>
+</tr>
+<tr>
+<td>Roadmap / Project Board</td>
+<td><a href="https://docs.asnotes.io/development-roadmap.html">docs.asnotes.io/development-roadmap</a> / <a href="https://github.com/orgs/appsoftwareltd/projects/16">github.com</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="why-did-i-build-as-notes">Why Did I Build AS Notes?</h2>
+<p>There are many note taking apps in various forms, for various devices supporting various formats. Why do we need another one?</p>
+<p>Firstly, I'm a big fan of note taking / second brain / zettelkasten apps like Logseq and Obsidian. The main draw of these apps for many is that they offer bi-directional linking tools and importantly, are based on markdown - an open text based format that comes with inherent portability and longevity that doesn't come with closed proprietary formats that you might see in apps like OneNote or those that store your information in remote databases like Notion. I want to know that my thoughts and writing will be available to me in 30 years, without me having to continuously pay monthly subscriptions. Markdown provides that. There will always be text files and markdown will always be simple to parse, meaning that notes in markdown can survive the rise and fall of any editing tool. Secondly, markdown based tools facilitate local editing, which offers options for the privacy conscious.</p>
+<p>As a software developer however, the existing tools didn't cover everything I needed them to. Not all work environments will allow personal knowledge management tools with the potential to sync data to private clouds (for obvious reasons). And while they may support publishing in various forms, they are not designed for building and maintaining documentation for software projects.</p>
+<p>I wanted fast, simple wikilinks, bi-directional linking and backlinking in my documents. This feature allows both the author and the user to infer relationships between key concepts in your applications, and we're more likely to write good notes and documentation when our tooling make it easy.</p>
+<p>AS Notes goes further by also providing markdown editing tooling along with task and productivity management tools.</p>
+<p>Full documentation and features are available at <a href="https://docs.asnotes.io">docs.asnotes.io</a></p>
+<h2 id="as-notes-works-where-you-work-and-with-your-existing-tools">AS Notes Works Where You Work, and With Your Existing Tools</h2>
+<p>Many of us spend a lot of our day in VS Code and VS Code derived editors like Cursor, Antigravity or Windsurf. What I really wanted was the power of a PKMS (personal knowledge management system), with wikilinking and fast information capture, but with the flexibility to also write and maintain comprehensive, well formatted technical documentation, along with options for publishing, and I needed it to work where I spend most of my day - in the IDE.</p>
+<p>Further, I believe in version controlling everything - code, notes and documentation. I need to work with Git friendly tools and formats. VS Code is a text editor. Text is Git friendly, and VS Code has version control tooling built in.</p>
+<h2 id="the-best-place-to-maintain-documentation-and-notes-is-with-your-code">The Best Place to Maintain Documentation (and Notes) Is With Your Code</h2>
+<p>I firmly believe that documentation is best maintained right next to a code base. This can also be extended to general project and planning notes too, depending on how far you want to take the idea. The reason for this is that you are far more likely to keep your documentation up to date when you are able to edit and version control docs alongside code, due to proximity and easy switching between the files.</p>
+<p>Docs next to code also lends itself to publishing documentation to static websites, providing the option of making your documentation available via GitHub / Cloudflare Pages or other providers, and having those documents published as part of your build pipeline (CI/CD).</p>
+<p>AS Notes can be initialised at the top level working directory, or a single subfolder (For example you may not want AS Notes active in basic README.md or LICENCE.md files). AS Notes also supports Jekyll / Hugo like publishing of selected documents or entire directories, with layout and theme support.</p>
+<h2 id="features-at-a-glance">Features At A Glance</h2>
+<h3 id="wikilinks-and-nested-wikilinks">Wikilinks and Nested Wikilinks</h3>
+<p>Link notes together with <code>[[wikilinks]]</code>, including support for nested links like <code>[[[[AS Notes]] Page]]</code> that resolve multiple targets. Renaming a link updates the target file and all matching references across your workspace.</p>
+<p><img src="assets/as-notes-vs-code-notes-docs-and-wikilink-markdown-editing.dc8bf70a-c602-4565-80dc-db7eb2f6dc5b.png" alt="Wikilinks"></p>
+<h3 id="inline-editor-styling">Inline Editor Styling</h3>
+<p>Optional Typora-like inline rendering that replaces markdown syntax with visual formatting as you type. Syntax characters fade to ghost opacity when the cursor is on the line, and appear in full when editing inside a construct.</p>
+<p><img src="assets/as-notes-vs-code-notes-docs-and-wikilink-markdown-editing-2.0751f662-ac8c-430f-90a3-e838acd20f4e.png" alt="Inline Editor Styling"></p>
+<h4 id="mermaid-and-latex-rendering">Mermaid and LaTeX Rendering</h4>
+<p>Mermaid diagrams and LaTeX math expressions render inline in the editor, with live updates as you edit.</p>
+<p><img src="assets/as-notes-vs-code-notes-docs-and-wikilink-markdown-editing-3.c61082db-28e0-49bb-909f-916dfde0c321.png" alt="Mermaid and LaTeX rendering"></p>
+<h3 id="backlinks-view">Backlinks View</h3>
+<p>See every reference to the current page in a dedicated panel. Backlinks capture surrounding context, support forward references and update live as you edit. Group by page or by chain pattern for concept-based exploration.</p>
+<p><img src="assets/as-notes-vs-code-notes-docs-and-wikilink-markdown-editing-4.b3213796-833e-4415-8547-609728ec225e.png" alt="Backlinks View"></p>
+<h3 id="task-management">Task Management</h3>
+<p>Toggle markdown TODOs with a keyboard shortcut and view all tasks across your workspace in a dedicated sidebar. Group by page, priority, due date or completion date, and filter by status or page name. Add structured metadata tags (<code>#P1</code>, <code>#W</code>, <code>#D-YYYY-MM-DD</code>) to categorise and organise tasks.</p>
+<p><img src="assets/as-notes-vs-code-notes-docs-and-wikilink-markdown-editing-5.90538266-07a6-4669-8c3a-f753951f60d6.png" alt="Task Management"></p>
+<h3 id="kanban-board">Kanban Board</h3>
+<p>A built-in kanban board backed by markdown files for tracking long-running projects. Cards are regular notes so you can use wikilinks, tasks and all other AS Notes features inside them.</p>
+<p><img src="assets/as-notes-vs-code-notes-docs-and-wikilink-markdown-editing-6.3c106fbc-0a94-4fc2-9301-199ca8e7858e.png" alt="Kanban Board"></p>
+<h3 id="daily-journal">Daily Journal</h3>
+<p>Press a keyboard shortcut to create or open today's journal entry. New entries are generated from a customisable template with placeholder support. A calendar panel in the sidebar shows the current month with journal indicators.</p>
+<p><img src="assets/as-notes-vs-code-notes-docs-and-wikilink-markdown-editing-7.df1cfff7-f74d-4c89-a3a1-6b35c6e35030.png" alt="Daily Journal"></p>
+<h3 id="outliner-mode">Outliner Mode</h3>
+<p>Turn the editor into a bullet-first outliner where every line begins with <code>-</code>. Custom keybindings for Enter, Tab, Shift+Tab and Ctrl+Shift+Enter keep you in flow with automatic bullet continuation, indentation control and todo cycling.</p>
+<p><img src="assets/as-notes-vs-code-notes-docs-and-wikilink-markdown-editing-8.bed1ab1e-e261-4bcf-b929-3eb5c7b7d1f4.png" alt="Outliner mode"></p>
+<h3 id="templates">Templates</h3>
+<p>Example <code>Demo Template.md</code> - when used via the <code>/template</code> slash command , the template below would result in the following markdown and cursor placement:</p>
+<pre><code># {{title}} - Template Placeholder Demo
+
+Created: {{date}}
+Time: {{time}}
+Full timestamp: {{datetime}}
+
+## File Info
+
+- **Filename:** {{filename}}
+- **Title:** {{title}}
+
+## Custom Date Formats
+
+- UK format: {{DD/MM/YYYY}}
+- US format: {{MM/DD/YYYY}}
+- Short year: {{DD/MM/YY}}
+- Time only: {{HH:mm}}
+- Full custom: {{DD/MM/YYYY HH:mm:ss}}
+- Year-month: {{YYYY-MM}}
+- Day-month: {{DD-MM}}
+
+## Notes
+
+{{cursor}}
+</code></pre>
+<p>Result:</p>
+<pre><code># 2026-04-02 - Template Placeholder Demo
+
+Created: 2026-04-02
+Time: 12:15:20
+Full timestamp: 2026-04-02 12:15:20
+
+## File Info
+
+- **Filename:** 2026-04-02
+- **Title:** 2026-04-02
+
+## Custom Date Formats
+
+- UK format: 02/04/2026
+- US format: 04/02/2026
+- Short year: {{DD/MM/YY}}
+- Time only: 12:15
+- Full custom: 02/04/2026 12:15:20
+- Year-month: 2026-04
+- Day-month: 02-04
+
+## Notes
+
+&lt;- Cursor here
+
+</code></pre>
+<h3 id="encrypted-notes">Encrypted Notes</h3>
+<p>Store sensitive notes in encrypted <code>.enc.md</code> files using AES-256-GCM encryption. Your passphrase is stored securely in the OS keychain and never written to disk. Encrypt and decrypt notes with a single command.</p>
+<h3 id="static-site-publishing">Static Site Publishing</h3>
+<p>Publish selected notes or entire directories as a static HTML site with layout and theme support, similar to Jekyll or Hugo. Ideal for documentation sites, blogs, and project wikis deployed via GitHub Pages, Cloudflare Pages or other providers.</p>
+<p><img src="assets/as-notes-vs-code-notes-docs-and-wikilink-markdown-editing-9.2637cdfa-6869-44c4-b6d1-3d3a06c2ea39.png" alt="Static Site Publishing"></p>
+<h2 id="installing-as-notes">Installing AS Notes</h2>
+<p>If you'd like to use AS Notes to manage your notes or documentation, you can install via:</p>
+<p><a href="https://marketplace.visualstudio.com/items?itemName=appsoftwareltd.as-notes">Visual Studio Marketplace</a> / <a href="https://open-vsx.org/extension/appsoftwareltd/as-notes">Open VSX</a></p>
+<h2 id="conclusion-feedback-questions">Conclusion / Feedback / Questions</h2>
+<p>If you have any questions or feedback regarding AS Notes, contact us via <a href="https://www.asnotes.io">asnotes.io</a> or email <a href="mailto:support@asnotes.io">support@asnotes.io</a></p>
+
+            </div>
+            <nav class="pagination" aria-label="Neighbouring posts">
+                <a class="button pagination__prev" href="you-need-probabilistic-gates-for-deterministic-ai-agents.html"><span class="button__icon">←</span><span class="button__text">You Need Deterministic Gates for Probabilistic AI Agents</span></a>
+                <a class="button pagination__next" href="introducing-agent-kanban.html"><span class="button__text">Introducing Agent Kanban</span><span class="button__icon">→</span></a>
+            </nav>
+        </article>
+    </main>
+        <footer class="footer">
+            <div class="footer__inner">
+                <div class="copyright">
+                    <span>&copy; 2026 g9n Blog</span>
+                    <span class="footer__separator" aria-hidden="true">::</span>
+                    <span>Published with <a href="https://etherpk.com" rel="noopener">EtherPK</a></span>
+                    <span class="footer__separator" aria-hidden="true">::</span><a href="feed.xml">Feed</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+        <script src="theme/search.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="EtherPK">
+    <title>VS Code Kingfisher Extension: Colour Your VS Code Windows Without Breaking Your Team&#39;s Settings :: g9n Blog</title>
+    <meta name="description" content="Colour Your VS Code Windows Without Breaking Your Team&#39;s Settings VS Code Marketplace | GitHub Repository If you work across multiple projects simultaneously, you&#39;ll know it can get difficult…">
+    <link rel="stylesheet" href="theme/theme.css">
+    
+    
+    <link rel="alternate" type="application/rss+xml" title="g9n Blog" href="feed.xml">
+    <script defer src="https://analytics.appsoftware.com/telemetry.js" data-website-id="6913dde8-61ce-4739-90fe-3abeeb6ab0a4"></script>
+</head>
+<body class="layout-terminal">
+    <a class="skip-link" href="#content">Skip to content</a>
+    <div class="container">
+        <header class="header">
+            <div class="header__inner">
+                <a class="site-title logo" href="index.html">
+                    <span class="logo__mark"><!-- The EtherPK icon (resources/brand/etherpk-icon-*.svg), inline so the page fetches nothing and it takes the text colour; aria-hidden because the title beside it is the name. Fill the "logo" include, or edit this partial, for your own. -->
+                                             <svg class="site-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 191.82 166.13" width="24" height="21" aria-hidden="true" focusable="false"><path fill="currentColor" fill-rule="evenodd" d="M67.09,132.92,47.93,166.13H9.59L0,149.52,86.33,0H105.5L19.17,149.52H38.34l19.17-33.2h76.8l9.59,16.6Zm48-83.12,9.65,16.71H143.9L115.08,16.6q-24,41.57-48,83.12H143.9q14.37,24.9,28.76,49.8h-96l-9.59,16.61H182.24l9.58-16.61-38.34-66.4H96C95.85,82.9,113.39,52.73,115.08,49.8Z"/></svg>
+</span>
+                    <span class="logo__text">g9n Blog</span>
+                    <span class="logo__cursor" aria-hidden="true"></span>
+                </a>
+                <button class="nav-toggle menu-trigger" type="button" aria-controls="site-nav" aria-expanded="false" aria-label="Menu">Menu</button>
+            </div>
+            <div class="nav-backdrop" hidden></div>
+            <nav id="site-nav" class="menu site-nav" aria-label="Site">
+                <ul class="menu__inner site-nav-list">
+                </ul>
+                <form class="site-search" role="search" data-search-index="search.json" data-search-script="search-index.js">
+                    <label class="visually-hidden" for="site-search-input">Search</label>
+                    <input id="site-search-input" type="search" name="q" placeholder="$ search" autocomplete="off">
+                    <div class="site-search-results" role="listbox" hidden></div>
+                </form>
+            </nav>
+        </header>
+    <main id="content" class="content">
+        <article class="post">
+            <h1 class="post-title">VS Code Kingfisher Extension: Colour Your VS Code Windows Without Breaking Your Team's Settings</h1>
+            <div class="post-meta"><time class="post-date" datetime="2026-03-08">2026-03-08</time> :: <span class="post-reading">5 min read</span></div>
+        <nav class="toc framed" aria-label="Table of contents">
+            <p class="toc__title">:: Table of contents</p>
+            <ul>
+                <li class="toc-level-2"><a href="#the-problem-with-the-existing-approach">The Problem With the Existing Approach</a></li><li class="toc-level-2"><a href="#a-different-approach">A Different Approach</a></li><li class="toc-level-2"><a href="#the-trade-off-and-how-its-mitigated">The Trade-off (And How It&#39;s Mitigated)</a></li><li class="toc-level-2"><a href="#the-alttab-problem">The Alt+Tab Problem</a></li><li class="toc-level-2"><a href="#using-it">Using It</a></li><li class="toc-level-2"><a href="#what-kingfisher-modifies">What Kingfisher Modifies</a></li><li class="toc-level-2"><a href="#limitations">Limitations</a></li>
+            </ul>
+        </nav>
+            <div class="post-content">
+<h1 id="colour-your-vs-code-windows-without-breaking-your-teams-settings">Colour Your VS Code Windows Without Breaking Your Team's Settings</h1>
+<p><a href="https://marketplace.visualstudio.com/items?itemName=AppSoftwareLtd.vscode-kingfisher">VS Code Marketplace</a> | <a href="https://github.com/appsoftwareltd/vscode-kingfisher">GitHub Repository</a></p>
+<p><img src="assets/kingfisher-icon-full.1c87fc24-f455-45c0-bb79-7f695c4518df.png" alt="Pasted image"></p>
+<p>If you work across multiple projects simultaneously, you'll know it can get difficult juggling multiple VS Code windows. For example: three VS Code windows open, all wearing the same dark theme, and you spend five seconds squinting at the title bar to figure out which one is your API project and which one is the frontend. It's a small friction, but it adds up.</p>
+<p><a href="https://img.youtube.com/vi/fa4ZdYpHDFU">VS Code Kingfisher Extension Demo (Youtube)</a></p>
+<p><img src="assets/vs-code-kingfisher-extension-colour-your-vs-code-windows.39befe93-7e6c-4bf3-a12e-ada0199b0bb5.png" alt="VS Code Kingfisher Demo"></p>
+<p>The obvious fix is to colour the title bar — assign each workspace its own colour so you can identify it at a glance. VS Code even has a setting for this: <code>workbench.colorCustomizations</code>. There's even a popular extension that does exactly this called <a href="https://github.com/johnpapa/vscode-peacock">Peacock</a>.</p>
+<p>So why build another one?</p>
+<h2 id="the-problem-with-the-existing-approach">The Problem With the Existing Approach</h2>
+<p>Peacock works by writing your chosen colour into <code>.vscode/settings.json</code> — the workspace settings file that lives alongside your code. This works great if you're the only person who ever touches that repository. But most of us aren't.</p>
+<p>Teams share <code>.vscode/settings.json</code>. It often gets committed to version control and checked in for everyone. The moment you add your personal hot-pink title bar colour to it, you're either pushing that preference to your colleagues or you're constantly fighting with <code>.gitignore</code> to keep it out. Neither is a great outcome.</p>
+<p>This is a <a href="https://github.com/johnpapa/vscode-peacock/issues/7">known and long-standing issue with Peacock</a>, and it has no clean solution within Peacock's current design — because writing to workspace settings is fundamentally how it works.</p>
+<h2 id="a-different-approach">A Different Approach</h2>
+<p><a href="https://marketplace.visualstudio.com/items?itemName=AppSoftwareLtd.vscode-kingfisher">VS Code Kingfisher</a> takes a different approach from the ground up.</p>
+<p>Instead of touching <code>.vscode/settings.json</code>, Kingfisher stores your colour choice in <strong>VS Code's internal extension storage</strong> — <code>globalState</code>, a key-value store that lives outside your project entirely and is never version-controlled. Your colour preference is yours alone. Your team never sees it.</p>
+<p>To actually display the colour, Kingfisher still has to write to <code>workbench.colorCustomizations</code> — there's no other VS Code API that controls title bar colour. But it writes to your <strong>personal user settings</strong>, not the workspace file. Clean separation.</p>
+<h2 id="the-trade-off-and-how-its-mitigated">The Trade-off (And How It's Mitigated)</h2>
+<p>This approach has one unavoidable complication: <code>workbench.colorCustomizations</code> is a <strong>global</strong> user setting. It applies to all your open VS Code windows simultaneously. If you set window A to blue and window B to green, you can't have both colours active at the same time — the last write wins.</p>
+<p>Kingfisher's answer to this is straightforward: <strong>apply colour on focus, clear it on blur</strong>.</p>
+<p>When you switch to a window, Kingfisher writes that window's colour to user settings. When you leave a window, it removes the colour and lets your theme take over. At any given moment, the active window shows its colour; inactive windows revert to the theme default.</p>
+<pre><code>Window gains focus  →  apply this workspace's colour to user settings
+Window loses focus  →  clear colour from user settings
+</code></pre>
+<p>This means you always see the correct colour for whichever window you're actively working in.</p>
+<h2 id="the-alttab-problem">The Alt+Tab Problem</h2>
+<p>There's a secondary problem though. One of the main reasons to colour windows is so you can identify them in <strong>Alt+Tab</strong> — those small thumbnails that let you switch between applications. If the colour is cleared the moment a window loses focus, the thumbnails all look identical again. We're back to square one.</p>
+<p>Kingfisher's solution here is a small but clever workaround: when a window loses focus, Kingfisher <strong>automatically opens a sidebar panel</strong> that fills its entire height with the workspace colour.</p>
+<p>This sidebar panel is rendered by a WebView that belongs to that specific VS Code window — it's not a shared setting, it's local to the window process. Each window maintains its own colour in the sidebar independently. So in Alt+Tab, even though the title bar has reverted to the theme colour, the sidebar is showing the right colour, making each window visually distinct.</p>
+<pre><code>Window loses focus  →  clear title bar colour  +  open coloured sidebar panel
+Window gains focus  →  restore title bar colour  +  close sidebar, restore Explorer
+</code></pre>
+<p>When you return to the window, the sidebar closes automatically and Explorer is restored so you're not left staring at the Kingfisher panel.</p>
+<h2 id="using-it">Using It</h2>
+<p>Install <a href="https://marketplace.visualstudio.com/items?itemName=AppSoftwareLtd.vscode-kingfisher">Kingfisher from the VS Code Marketplace</a>, then open the command palette and run <strong>Kingfisher: Set Title Bar Colour</strong>. You'll get a menu with:</p>
+<ul>
+<li>A set of hand-picked pastel presets (Rose, Mint, Sky, Periwinkle, and more)</li>
+<li>A native colour picker for precise control</li>
+<li>A custom hex entry field</li>
+</ul>
+<p>You can also click the Kingfisher indicator in the status bar to open the same menu. The chosen colour is saved per-workspace, so each project remembers its own setting.</p>
+<p>To remove a colour, run <strong>Kingfisher: Clear Title Bar Colour</strong>.</p>
+<h2 id="what-kingfisher-modifies">What Kingfisher Modifies</h2>
+<p>Kingfisher only touches four <code>workbench.colorCustomizations</code> keys:</p>
+<ul>
+<li><code>titleBar.activeBackground</code></li>
+<li><code>titleBar.activeForeground</code></li>
+<li><code>titleBar.inactiveBackground</code></li>
+<li><code>titleBar.inactiveForeground</code></li>
+</ul>
+<p>Foreground colours are calculated automatically using the WCAG 2.x relative luminance formula to ensure readable contrast. The inactive state uses a slightly dimmed version of your chosen colour. Any other customisations you have in place are left completely untouched.</p>
+<h2 id="limitations">Limitations</h2>
+<ul>
+<li>Because the title bar colour is applied globally at the moment of focus, you can't have two windows showing different title bar colours at the same time. The sidebar panel is the mitigation for this.</li>
+<li>On refocus, Kingfisher always restores the Explorer sidebar — VS Code's API doesn't expose which sidebar view was previously open, so there's no way to restore the original view.</li>
+<li>If the sidebar workaround doesn't suit you, or you need true simultaneous per-window title bar colouring, <a href="https://github.com/johnpapa/vscode-peacock">Peacock</a> remains the right tool if your team is happy to commit workspace settings.</li>
+</ul>
+<hr>
+<p>Kingfisher is <a href="https://github.com/AppSoftwareLtd/vscode-kingfisher">open source on GitHub</a> and available on the <a href="https://marketplace.visualstudio.com/items?itemName=AppSoftwareLtd.vscode-kingfisher">VS Code Marketplace</a>. Feedback and contributions welcome.</p>
+
+            </div>
+            <nav class="pagination" aria-label="Neighbouring posts">
+                <a class="button pagination__prev" href="debugging-a-sqlite-wasm-heap-fragmentation-bug-in-a-vs-code-extension.html"><span class="button__icon">←</span><span class="button__text">Debugging a SQLite WASM Heap Fragmentation Bug in a VS Code Extension</span></a>
+                <a class="button pagination__next" href="introducing-vs-code-agent-kanban-task-management-for-the-ai-assisted-developer.html"><span class="button__text">Introducing VS Code Agent Kanban: Task Management for the AI-Assisted Developer</span><span class="button__icon">→</span></a>
+            </nav>
+        </article>
+    </main>
+        <footer class="footer">
+            <div class="footer__inner">
+                <div class="copyright">
+                    <span>&copy; 2026 g9n Blog</span>
+                    <span class="footer__separator" aria-hidden="true">::</span>
+                    <span>Published with <a href="https://etherpk.com" rel="noopener">EtherPK</a></span>
+                    <span class="footer__separator" aria-hidden="true">::</span><a href="feed.xml">Feed</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+        <script src="theme/search.js" defer></script>
+</body>
+</html>

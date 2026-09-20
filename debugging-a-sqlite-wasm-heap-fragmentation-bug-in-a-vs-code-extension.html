@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="EtherPK">
+    <title>Debugging a SQLite WASM Heap Fragmentation Bug in a VS Code Extension :: g9n Blog</title>
+    <meta name="description" content="While building AS Notes (A wikilink-based knowledge management VS Code extension - https:&#x2F;&#x2F;github.com&#x2F;appsoftwareltd&#x2F;as-notes) - I ran into a subtle and genuinely interesting bug involving…">
+    <link rel="stylesheet" href="theme/theme.css">
+    
+    
+    <link rel="alternate" type="application/rss+xml" title="g9n Blog" href="feed.xml">
+    <script defer src="https://analytics.appsoftware.com/telemetry.js" data-website-id="6913dde8-61ce-4739-90fe-3abeeb6ab0a4"></script>
+</head>
+<body class="layout-terminal">
+    <a class="skip-link" href="#content">Skip to content</a>
+    <div class="container">
+        <header class="header">
+            <div class="header__inner">
+                <a class="site-title logo" href="index.html">
+                    <span class="logo__mark"><!-- The EtherPK icon (resources/brand/etherpk-icon-*.svg), inline so the page fetches nothing and it takes the text colour; aria-hidden because the title beside it is the name. Fill the "logo" include, or edit this partial, for your own. -->
+                                             <svg class="site-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 191.82 166.13" width="24" height="21" aria-hidden="true" focusable="false"><path fill="currentColor" fill-rule="evenodd" d="M67.09,132.92,47.93,166.13H9.59L0,149.52,86.33,0H105.5L19.17,149.52H38.34l19.17-33.2h76.8l9.59,16.6Zm48-83.12,9.65,16.71H143.9L115.08,16.6q-24,41.57-48,83.12H143.9q14.37,24.9,28.76,49.8h-96l-9.59,16.61H182.24l9.58-16.61-38.34-66.4H96C95.85,82.9,113.39,52.73,115.08,49.8Z"/></svg>
+</span>
+                    <span class="logo__text">g9n Blog</span>
+                    <span class="logo__cursor" aria-hidden="true"></span>
+                </a>
+                <button class="nav-toggle menu-trigger" type="button" aria-controls="site-nav" aria-expanded="false" aria-label="Menu">Menu</button>
+            </div>
+            <div class="nav-backdrop" hidden></div>
+            <nav id="site-nav" class="menu site-nav" aria-label="Site">
+                <ul class="menu__inner site-nav-list">
+                </ul>
+                <form class="site-search" role="search" data-search-index="search.json" data-search-script="search-index.js">
+                    <label class="visually-hidden" for="site-search-input">Search</label>
+                    <input id="site-search-input" type="search" name="q" placeholder="$ search" autocomplete="off">
+                    <div class="site-search-results" role="listbox" hidden></div>
+                </form>
+            </nav>
+        </header>
+    <main id="content" class="content">
+        <article class="post">
+            <h1 class="post-title">Debugging a SQLite WASM Heap Fragmentation Bug in a VS Code Extension</h1>
+            <div class="post-meta"><time class="post-date" datetime="2026-03-05">2026-03-05</time> :: <span class="post-reading">8 min read</span></div>
+        <nav class="toc framed" aria-label="Table of contents">
+            <p class="toc__title">:: Table of contents</p>
+            <ul>
+                <li class="toc-level-2"><a href="#background">Background</a></li><li class="toc-level-2"><a href="#the-symptom">The Symptom</a></li><li class="toc-level-2"><a href="#why-initialisation-works-and-rebuild-doesnt">Why Initialisation Works and Rebuild Doesn&#39;t</a></li><li class="toc-level-2"><a href="#the-dead-ends">The Dead Ends</a></li><li class="toc-level-2"><a href="#the-fix-build-time-wasm-cache-reset">The Fix: Build-Time WASM Cache Reset</a></li><li class="toc-level-3"><a href="#the-esbuild-plugin">The esbuild Plugin</a></li><li class="toc-level-3"><a href="#usage-in-indexservice">Usage in IndexService</a></li><li class="toc-level-2"><a href="#implications-for-periodic-scans">Implications for Periodic Scans</a></li><li class="toc-level-2"><a href="#a-note-on-diagnostics">A Note on Diagnostics</a></li><li class="toc-level-2"><a href="#conclusion">Conclusion</a></li>
+            </ul>
+        </nav>
+            <div class="post-content">
+<p>While building <a href="https://www.appsoftware.com/blog/as-notes-turn-vs-code-into-your-personal-knowledge-management-system-pkms">AS Notes</a> (A wikilink-based knowledge management VS Code extension - <a href="https://github.com/appsoftwareltd/as-notes">https://github.com/appsoftwareltd/as-notes</a>) - I ran into a subtle and genuinely interesting bug involving WebAssembly linear memory.</p>
+<p>TLDR: sql.js loads SQLite into a WASM module with a single linear memory buffer. After indexing 18,000+ files that memory is large and fragmented. Reconstructing a <code>Database()</code> object on that same heap fails with &quot;memory access out of bounds&quot;. The fix is a build-time esbuild plugin that injects a <code>resetCache()</code> function into the sql.js bundle, allowing the WASM module to be fully discarded and reloaded from scratch on rebuild.</p>
+<hr>
+<h2 id="background">Background</h2>
+<p><strong>AS Notes</strong> maintains a local SQLite index of your markdown knowledge base - pages, wikilinks, aliases, and tasks. The index is built and queried using <a href="https://github.com/sql-js/sql.js">sql.js</a>, which compiles SQLite to WebAssembly. No native binaries, no external processes. It runs entirely inside the VS Code extension host.</p>
+<p>On first initialisation, the extension scans your workspace, indexes every markdown file, and persists the result to disk as <code>index.db</code>. This works correctly regardless of knowledge base size.</p>
+<p>The rebuild command - <strong>AS Notes: Rebuild Index</strong> - is intended to be a clean re-scan from scratch. It should produce exactly the same result as a fresh initialisation. In practice, it was crashing.</p>
+<hr>
+<h2 id="the-symptom">The Symptom</h2>
+<p>Running the rebuild command on a 18k <code>.md</code> file knowledge base produced one of two failure modes depending on which iteration of the fix was in place at the time:</p>
+<ul>
+<li>&quot;memory access out of bounds&quot; - a WebAssembly runtime trap</li>
+<li>A progress notification (&quot;AS Notes: Rebuilding Index...&quot;) that would appear and never resolve</li>
+</ul>
+<p>The out-of-memory errors were misleading. System memory was at 41% of 32 GB. This is not a system memory problem.</p>
+<p>First initialisation, by contrast, worked perfectly every time ...</p>
+<hr>
+<h2 id="why-initialisation-works-and-rebuild-doesnt">Why Initialisation Works and Rebuild Doesn't</h2>
+<p>This asymmetry is the important clue.</p>
+<p>On first initialisation, the extension creates a brand new <code>SQL.Database()</code> instance loaded from a fresh WASM module. The WASM linear memory starts clean. Every allocation is sequential and predictable.</p>
+<p>For rebuild, the extension reuses the existing <code>IndexService</code> and its already-loaded sql.js module - the same module that just finished indexing 18,500 files.</p>
+<p><strong>Here is the problem.</strong> WASM linear memory can only grow; it cannot shrink. During a full scan, SQLite performs millions of allocations inside the WASM heap: B-tree nodes, page cache buffers, prepared statement objects, query results. Over 18,500 files with approximately 280,000 wikilinks, this amounts to hundreds of thousands of <code>malloc</code>/<code>free</code> cycles within the WASM allocator. <code>free()</code> returns blocks to the allocator's free list, but the WASM high-water mark never moves. After a full scan, the heap has grown to roughly 80 MB in a heavily fragmented state - a large allocation arena full of holes.</p>
+<p>When <code>Database.close()</code> is called followed by <code>new Database()</code> on the same WASM module, the new database object is constructed on that same fragmented heap. Smaller allocations succeed by fitting into the holes. Larger contiguous allocations eventually cannot be satisfied, and the WASM allocator either traps with &quot;memory access out of bounds&quot; or stalls indefinitely.</p>
+<p>The failure at ~1,618 files (consistently reproducible) is not a coincidence - it's the point at which the allocator exhausts its ability to find sufficient contiguous space in the fragmented linear memory for SQLite's internal structures.</p>
+<hr>
+<h2 id="the-dead-ends">The Dead Ends</h2>
+<p>Several approaches were attempted before the root cause was properly understood.</p>
+<p><strong><code>resetSchema()</code> (DROP TABLE / CREATE TABLE)</strong> - the original rebuild strategy. This invalidated sql.js's internal prepared statement cache. Subsequent operations silently failed or stalled. This is what caused the hanging progress notification.</p>
+<p><strong><code>clearAllData()</code> (DELETE FROM all tables)</strong> - safer, but operating on the same database instance that was potentially loaded from a corrupt <code>index.db</code> written during a prior failed <code>resetSchema()</code> session. If the on-disk state was corrupt, this path hung too.</p>
+<p><strong><code>close()</code> → delete <code>index.db</code> → <code>initDatabase()</code></strong> - created a new <code>Database()</code> on the same fragmented WASM heap. This resolved the corrupt file problem but introduced the &quot;memory access out of bounds&quot; crash for large knowledge bases.</p>
+<p><strong>Caching the WASM module</strong> - calling <code>initSqlJs()</code> once and reusing the module across <code>initDatabase()</code> calls. Correct approach for avoiding multiple WASM heap allocations, but when paired with the close/reinit rebuild path, it still suffered from heap fragmentation.</p>
+<hr>
+<h2 id="the-fix-build-time-wasm-cache-reset">The Fix: Build-Time WASM Cache Reset</h2>
+<p>The root cause is that the only way to get a clean WASM heap is to load a completely new WASM module. <code>Database.close()</code> frees SQLite's internal structures but does not reset the WASM allocator's state. There is no public API in sql.js to force this.</p>
+<p>Internally, sql.js <code>initSqlJs()</code> caches the result of loading the WASM binary in a module-scoped variable, <code>initSqlJsPromise</code>. If this variable is set, subsequent calls to <code>initSqlJs()</code> return the cached module - which is exactly the designed behaviour for normal usage. The problem is there is no way from outside the module to clear that cache.</p>
+<p>The solution is to inject one at build time.</p>
+<h3 id="the-esbuild-plugin">The esbuild Plugin</h3>
+<pre><code class="language-javascript"><span class="tok-keyword">const</span> <span class="tok-variableName tok-definition">sqlJsCacheResetPlugin</span> <span class="tok-operator">=</span> <span class="tok-punctuation">{</span>
+  <span class="tok-propertyName tok-definition">name</span><span class="tok-punctuation">:</span> <span class="tok-string">'sql-js-cache-reset'</span><span class="tok-punctuation">,</span>
+  <span class="tok-propertyName tok-definition">setup</span><span class="tok-punctuation">(</span><span class="tok-variableName tok-definition">build</span><span class="tok-punctuation">)</span> <span class="tok-punctuation">{</span>
+    <span class="tok-variableName">build</span><span class="tok-operator">.</span><span class="tok-propertyName">onLoad</span><span class="tok-punctuation">(</span><span class="tok-punctuation">{</span> <span class="tok-propertyName tok-definition">filter</span><span class="tok-punctuation">:</span> <span class="tok-string2">/sql-wasm\.js$/</span> <span class="tok-punctuation">}</span><span class="tok-punctuation">,</span> <span class="tok-keyword">async</span> <span class="tok-punctuation">(</span><span class="tok-variableName tok-definition">args</span><span class="tok-punctuation">)</span> <span class="tok-punctuation">=&gt;</span> <span class="tok-punctuation">{</span>
+      <span class="tok-keyword">let</span> <span class="tok-variableName tok-definition">contents</span> <span class="tok-operator">=</span> <span class="tok-keyword">await</span> <span class="tok-variableName">fs</span><span class="tok-operator">.</span><span class="tok-propertyName">promises</span><span class="tok-operator">.</span><span class="tok-propertyName">readFile</span><span class="tok-punctuation">(</span><span class="tok-variableName">args</span><span class="tok-operator">.</span><span class="tok-propertyName">path</span><span class="tok-punctuation">,</span> <span class="tok-string">'utf8'</span><span class="tok-punctuation">)</span><span class="tok-punctuation">;</span>
+      <span class="tok-comment">// Inject a resetCache() function into the closure before module.exports</span>
+      <span class="tok-variableName">contents</span> <span class="tok-operator">=</span> <span class="tok-variableName">contents</span><span class="tok-operator">.</span><span class="tok-propertyName">replace</span><span class="tok-punctuation">(</span>
+        <span class="tok-string">'module.exports = initSqlJs;'</span><span class="tok-punctuation">,</span>
+        <span class="tok-string">'initSqlJs.resetCache = function() { initSqlJsPromise = undefined; };</span><span class="tok-string2">\n</span><span class="tok-string">module.exports = initSqlJs;'</span>
+      <span class="tok-punctuation">)</span><span class="tok-punctuation">;</span>
+      <span class="tok-keyword">return</span> <span class="tok-punctuation">{</span> <span class="tok-propertyName tok-definition">contents</span><span class="tok-punctuation">,</span> <span class="tok-propertyName tok-definition">loader</span><span class="tok-punctuation">:</span> <span class="tok-string">'js'</span> <span class="tok-punctuation">}</span><span class="tok-punctuation">;</span>
+    <span class="tok-punctuation">}</span><span class="tok-punctuation">)</span><span class="tok-punctuation">;</span>
+  <span class="tok-punctuation">}</span><span class="tok-punctuation">,</span>
+<span class="tok-punctuation">}</span><span class="tok-punctuation">;</span>
+</code></pre>
+<p>This runs during the esbuild bundling step. It intercepts the <code>sql-wasm.js</code> source, locates the <code>module.exports = initSqlJs;</code> line at the bottom of the CommonJS wrapper, and inserts the <code>resetCache</code> function immediately before it. Because the injection happens inside the <code>__commonJS</code> closure generated by esbuild, the injected function has direct access to the <code>initSqlJsPromise</code> variable - the same one that <code>initSqlJs()</code> itself closes over.</p>
+<p>The exported <code>initSqlJs</code> function now has a <code>resetCache</code> property that, when called, sets <code>initSqlJsPromise</code> to <code>undefined</code>. The next call to <code>initSqlJs()</code> then loads the WASM binary afresh, allocating a brand new linear memory buffer from 0 bytes. The old module - with its 80 MB fragmented heap - becomes unreachable and eligible for garbage collection.</p>
+<h3 id="usage-in-indexservice">Usage in <code>IndexService</code></h3>
+<p><code>resetSchema()</code> was made async and now does the following:</p>
+<ol>
+<li>Close the current database (<code>this.db!.close()</code>)</li>
+<li>Call <code>(initSqlJs as any).resetCache()</code> - clears the cached WASM module</li>
+<li>Set <code>this.sqlModule = null</code></li>
+<li><code>await initSqlJs()</code> - loads a fresh WASM binary with clean linear memory</li>
+<li><code>new this.sqlModule.Database()</code> - creates an empty database on the new heap</li>
+<li>Run <code>PRAGMA foreign_keys = ON</code> and <code>SCHEMA_SQL</code></li>
+</ol>
+<p>The rebuild command calls <code>await indexService!.resetSchema()</code> before <code>fullScan()</code>.</p>
+<p>The result: every rebuild is now equivalent to a first initialisation. Fresh WASM module, clean linear memory, empty database, no fragmentation, no stale prepared statements, no corrupt state from prior failed sessions.</p>
+<p>There is a brief period during <code>resetSchema()</code> where the old and new WASM modules coexist - approximately 160 MB peak. This is acceptable and transient. For all other operations (periodic stale scans, file save handlers, completions), the original WASM module is reused for the lifetime of the extension session. Only the explicit rebuild path triggers a fresh load.</p>
+<hr>
+<h2 id="implications-for-periodic-scans">Implications for Periodic Scans</h2>
+<p>The periodic stale scan (<code>staleScan()</code>) does not have this problem. It processes only changed or new files since the last scan - typically 0–10 files per tick. The WASM heap grows during the initial full scan and then remains approximately stable. Periodic scans add a small, bounded amount of allocation activity. There is no accumulation that would cause the fragmentation problem seen during rebuild.</p>
+<p>The question of whether periodic <code>VACUUM</code> would be beneficial is valid but premature. The current failure mode was caused by WASM heap fragmentation on the extension side, not by SQLite page fragmentation inside the database file itself. Periodic <code>VACUUM</code> addresses the latter, which is not the observed problem.</p>
+<hr>
+<h2 id="a-note-on-diagnostics">A Note on Diagnostics</h2>
+<p>The debugging process was complicated by the fact that both failure modes - the hanging notification and the WASM trap - surfaced no useful error messages by default. The stall in particular produces nothing: the <code>withProgress</code> callback simply never returns.</p>
+<p>As part of this work, a <code>LogService</code> was added to the extension. When enabled (via the <code>as-notes.enableLogging</code> setting or the <code>AS_NOTES_DEBUG=1</code> environment variable), it writes timestamped log lines to <code>.asnotes/logs/as-notes.log</code>. If you are working with a large knowledge base and experiencing index issues, enabling this setting is the first diagnostic step.</p>
+<hr>
+<h2 id="conclusion">Conclusion</h2>
+<p>This is the kind of bug that is easy to misread. &quot;Out of memory&quot; suggests system RAM. &quot;Memory access out of bounds&quot; suggests a code bug. Neither is true here (my system RAM had plenty of room). The issue is WASM linear memory fragmentation caused by the non-shrinkable nature of WASM heap allocations, surfacing only when a large database session is followed by an attempt to reinitialise on the same module.</p>
+<p>The build-time injection approach is pragmatic rather than elegant. It relies on the internal structure of the sql.js CommonJS bundle, which could change between versions. But it is isolated, testable (confirmed present in the built output), and solves a problem that has no clean public API solution. The esbuild plugin is eight lines and the patch point is unambiguous.</p>
+<p>If you're using AS Notes with a large knowledge base, this fix is in the current release. The rebuild command now works reliably, regardless of how many prior sessions the WASM module has survived.</p>
+<p><a href="https://marketplace.visualstudio.com/items?itemName=appsoftwareltd.as-notes">Install AS Notes from the VS Code Marketplace</a> | <a href="https://github.com/appsoftwareltd/as-notes">Source on GitHub</a></p>
+
+            </div>
+            <nav class="pagination" aria-label="Neighbouring posts">
+                <a class="button pagination__prev" href="an-effective-ai-agent-pattern-plan-tasks-implementation.html"><span class="button__icon">←</span><span class="button__text">An Effective AI Agent Pattern: Plan, Tasks, Implementation</span></a>
+                <a class="button pagination__next" href="vs-code-kingfisher-extension-colour-your-vs-code-windows-without-breaking-your-teams-settings.html"><span class="button__text">VS Code Kingfisher Extension: Colour Your VS Code Windows Without Breaking Your Team&#39;s Settings</span><span class="button__icon">→</span></a>
+            </nav>
+        </article>
+    </main>
+        <footer class="footer">
+            <div class="footer__inner">
+                <div class="copyright">
+                    <span>&copy; 2026 g9n Blog</span>
+                    <span class="footer__separator" aria-hidden="true">::</span>
+                    <span>Published with <a href="https://etherpk.com" rel="noopener">EtherPK</a></span>
+                    <span class="footer__separator" aria-hidden="true">::</span><a href="feed.xml">Feed</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+        <script src="theme/search.js" defer></script>
+</body>
+</html>

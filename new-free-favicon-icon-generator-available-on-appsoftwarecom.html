@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="EtherPK">
+    <title>New (Free) Favicon &#x2F; Icon Generator Available on appsoftware.com :: g9n Blog</title>
+    <meta name="description" content="Introducing Our Privacy-Focused Favicon Generator We&#39;ve added a new tool to our suite of free web utilities: a favicon generator that processes everything in your browser. If you&#39;ve ever needed to…">
+    <link rel="stylesheet" href="theme/theme.css">
+    
+    
+    <link rel="alternate" type="application/rss+xml" title="g9n Blog" href="feed.xml">
+    <script defer src="https://analytics.appsoftware.com/telemetry.js" data-website-id="6913dde8-61ce-4739-90fe-3abeeb6ab0a4"></script>
+</head>
+<body class="layout-terminal">
+    <a class="skip-link" href="#content">Skip to content</a>
+    <div class="container">
+        <header class="header">
+            <div class="header__inner">
+                <a class="site-title logo" href="index.html">
+                    <span class="logo__mark"><!-- The EtherPK icon (resources/brand/etherpk-icon-*.svg), inline so the page fetches nothing and it takes the text colour; aria-hidden because the title beside it is the name. Fill the "logo" include, or edit this partial, for your own. -->
+                                             <svg class="site-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 191.82 166.13" width="24" height="21" aria-hidden="true" focusable="false"><path fill="currentColor" fill-rule="evenodd" d="M67.09,132.92,47.93,166.13H9.59L0,149.52,86.33,0H105.5L19.17,149.52H38.34l19.17-33.2h76.8l9.59,16.6Zm48-83.12,9.65,16.71H143.9L115.08,16.6q-24,41.57-48,83.12H143.9q14.37,24.9,28.76,49.8h-96l-9.59,16.61H182.24l9.58-16.61-38.34-66.4H96C95.85,82.9,113.39,52.73,115.08,49.8Z"/></svg>
+</span>
+                    <span class="logo__text">g9n Blog</span>
+                    <span class="logo__cursor" aria-hidden="true"></span>
+                </a>
+                <button class="nav-toggle menu-trigger" type="button" aria-controls="site-nav" aria-expanded="false" aria-label="Menu">Menu</button>
+            </div>
+            <div class="nav-backdrop" hidden></div>
+            <nav id="site-nav" class="menu site-nav" aria-label="Site">
+                <ul class="menu__inner site-nav-list">
+                </ul>
+                <form class="site-search" role="search" data-search-index="search.json" data-search-script="search-index.js">
+                    <label class="visually-hidden" for="site-search-input">Search</label>
+                    <input id="site-search-input" type="search" name="q" placeholder="$ search" autocomplete="off">
+                    <div class="site-search-results" role="listbox" hidden></div>
+                </form>
+            </nav>
+        </header>
+    <main id="content" class="content">
+        <article class="post">
+            <h1 class="post-title">New (Free) Favicon / Icon Generator Available on appsoftware.com</h1>
+            <div class="post-meta"><time class="post-date" datetime="2025-10-26">2025-10-26</time> :: <span class="post-reading">5 min read</span></div>
+        <nav class="toc framed" aria-label="Table of contents">
+            <p class="toc__title">:: Table of contents</p>
+            <ul>
+                <li class="toc-level-2"><a href="#introducing-our-privacy-focused-favicon-generator">Introducing Our Privacy-Focused Favicon Generator</a></li><li class="toc-level-3"><a href="#what-makes-it-different">What Makes It Different</a></li><li class="toc-level-3"><a href="#svg-support-the-technical-challenge">SVG Support: The Technical Challenge</a></li><li class="toc-level-3"><a href="#the-multi-step-downscaling-approach">The Multi-Step Downscaling Approach</a></li><li class="toc-level-3"><a href="#what-you-get">What You Get</a></li><li class="toc-level-3"><a href="#practical-use-cases">Practical Use Cases</a></li><li class="toc-level-3"><a href="#technical-implementation">Technical Implementation</a></li><li class="toc-level-3"><a href="#try-it-out">Try It Out</a></li><li class="toc-level-3"><a href="#looking-forward">Looking Forward</a></li>
+            </ul>
+        </nav>
+            <div class="post-content">
+<h2 id="introducing-our-privacy-focused-favicon-generator">Introducing Our Privacy-Focused Favicon Generator</h2>
+<p>We've added a new tool to our suite of free web utilities: <a href="https://www.appsoftware.com/tools/utilities/favicon-generator">a favicon generator</a> that processes everything in your browser. If you've ever needed to create favicons for a website, you'll know it's one of those tasks that's tedious enough to be annoying but not quite complex enough to justify installing software. This tool aims to solve that problem.</p>
+<p><img src="assets/new-free-favicon-icon-generator-available-on-appso.b78b17a7-00a2-43fa-ab9f-5373c2baf630.png" alt="Favicon / Icon Generator"></p>
+<h3 id="what-makes-it-different">What Makes It Different</h3>
+<p>The main distinction is privacy. Your images never leave your device. Everything happens client-side using browser APIs—there's no upload to a server, no temporary storage, no third-party processing. Upload an image, generate your favicons, download the package. Done.</p>
+<p>This approach has practical advantages beyond privacy. There are no file size limits (beyond what your browser can handle), no queues, no rate limiting. The processing is instantaneous because it's all local.</p>
+<h3 id="svg-support-the-technical-challenge">SVG Support: The Technical Challenge</h3>
+<p>Supporting SVG input turned out to be more interesting than expected. Raster images (PNG, JPEG) are straightforward: crop to square from the centre, then downscale to each required size. But SVGs presented a different problem.</p>
+<p>The obvious approach—render the SVG at the target size—produces poor results. A vector graphic rendered at 16×16 pixels looks pixelated because there simply aren't enough pixels to represent the shapes cleanly. The solution required working backwards: render the SVG at very high resolution (4096×4096 pixels), then progressively downscale to each target size.</p>
+<p>But rendering at high resolution created another issue. How do you handle a non-square SVG? Cropping would clip parts of the graphic. Stretching would distort it. The solution was to pad the SVG within the square canvas, maintaining its aspect ratio and centering it with transparent padding. This preserves the entire vector graphic at maximum quality.</p>
+<p>For raster images, we still use centre cropping because padding a photo or raster logo would introduce visible borders. The tool handles each input type appropriately.</p>
+<h3 id="the-multi-step-downscaling-approach">The Multi-Step Downscaling Approach</h3>
+<p>When you need to go from 4096×4096 to 16×16, a single downscale operation can introduce artifacts. The tool uses progressive downscaling instead: 4096 → 2048 → 1024 → 512 → 256 → 128 → 64 → 32 → 16. Each step halves the dimensions, which browsers handle well with their high-quality interpolation.</p>
+<p>This matters most for SVG sources, where preserving the sharpness of vector artwork through the downscaling process is essential. The results are noticeably better than single-step scaling, particularly at the smaller sizes (16×16 and 32×32) where every pixel counts.</p>
+<h3 id="what-you-get">What You Get</h3>
+<p>The tool generates seven files in a single ZIP package:</p>
+<ul>
+<li><code>favicon.ico</code> (32×32) for legacy browser support</li>
+<li><code>favicon-16x16.png</code> for browser tabs</li>
+<li><code>favicon-32x32.png</code> for standard browser tabs</li>
+<li><code>apple-touch-icon.png</code> (180×180) for iOS home screens</li>
+<li><code>android-chrome-192x192.png</code> for Android home screens</li>
+<li><code>android-chrome-512x512.png</code> for high-resolution Android devices</li>
+<li><code>site.webmanifest</code> for Progressive Web App support</li>
+</ul>
+<p>Extract these to your website root, add a few <code>&lt;link&gt;</code> tags to your HTML, and you're done.</p>
+<h3 id="practical-use-cases">Practical Use Cases</h3>
+<p>The tool is particularly useful for:</p>
+<p><strong>Converting logos</strong>: If you have your company logo as an SVG, you can generate a complete favicon package without image editing software. The SVG-to-favicon conversion preserves quality at all sizes.</p>
+<p><strong>Client projects</strong>: When building websites for clients, generating favicons is one of those final tasks that's easy to forget. Having a quick tool that requires no account creation or file uploads streamlines the workflow.</p>
+<p><strong>Progressive Web Apps</strong>: The web manifest file is included automatically, which is necessary for PWA requirements. One less file to create manually.</p>
+<p><strong>Rebranding</strong>: When updating brand identity across multiple websites, regenerating all favicon files quickly becomes important. This tool makes it a five-minute task rather than an hour-long process.</p>
+<h3 id="technical-implementation">Technical Implementation</h3>
+<p>For those interested in the implementation details, the tool is built as a Svelte 5 custom element using TypeScript. It leverages the Canvas API for image processing and JSZip for creating the download package. The entire component is bundled as a single JavaScript file that can be included in any web page.</p>
+<p>The choice of Svelte 5 was driven by its excellent TypeScript support and the custom elements feature, which allows the component to work within a server-rendered ASP.NET MVC application without requiring a full SPA framework. Shadow DOM is disabled to allow global styles (Bulma CSS, Font Awesome) to apply naturally.</p>
+<h3 id="try-it-out">Try It Out</h3>
+<p>The favicon generator is available at <a href="https://www.appsoftware.com/tools/utilities/favicon-generator">/tools/favicon-generator</a>. No account required, no tracking, no uploads to servers. Upload an image (ideally an SVG of your logo), click generate, download the package.</p>
+<p>If you're working with SVG logos, you'll likely notice the quality difference compared to other favicon generators. That's the benefit of the high-resolution rendering approach. For raster images, the multi-step downscaling still produces better results than single-step scaling, though the improvement is more subtle.</p>
+<h3 id="looking-forward">Looking Forward</h3>
+<p>This tool represents our approach to web utilities: privacy-focused, technically sound, and solving real problems without unnecessary complexity. We're continuing to add more tools that follow these principles.</p>
+<p>If you encounter any issues or have suggestions for improvements, we'd appreciate hearing about them. The tool is actively maintained and we're responsive to feedback.</p>
+<hr>
+<p>The favicon generator is part of our free tools collection at AppSoftware.</p>
+
+            </div>
+            <nav class="pagination" aria-label="Neighbouring posts">
+                <a class="button pagination__prev" href="open-source-tools-and-web-utilities-from-app-software-ltd.html"><span class="button__icon">←</span><span class="button__text">Open Source Tools and Web Utilities from App Software Ltd</span></a>
+                <a class="button pagination__next" href="building-reusable-ui-components-with-svelte-5-custom-elements.html"><span class="button__text">Building Reusable UI Components with Svelte 5 Custom Elements</span><span class="button__icon">→</span></a>
+            </nav>
+        </article>
+    </main>
+        <footer class="footer">
+            <div class="footer__inner">
+                <div class="copyright">
+                    <span>&copy; 2026 g9n Blog</span>
+                    <span class="footer__separator" aria-hidden="true">::</span>
+                    <span>Published with <a href="https://etherpk.com" rel="noopener">EtherPK</a></span>
+                    <span class="footer__separator" aria-hidden="true">::</span><a href="feed.xml">Feed</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+        <script src="theme/search.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="EtherPK">
+    <title>Building Reusable UI Components with Svelte 5 Custom Elements :: g9n Blog</title>
+    <meta name="description" content="Modern web applications often face a common challenge: how do you add sophisticated, interactive components to server-rendered pages without rewriting your entire application as a single-page app…">
+    <link rel="stylesheet" href="theme/theme.css">
+    
+    
+    <link rel="alternate" type="application/rss+xml" title="g9n Blog" href="feed.xml">
+    <script defer src="https://analytics.appsoftware.com/telemetry.js" data-website-id="6913dde8-61ce-4739-90fe-3abeeb6ab0a4"></script>
+</head>
+<body class="layout-terminal">
+    <a class="skip-link" href="#content">Skip to content</a>
+    <div class="container">
+        <header class="header">
+            <div class="header__inner">
+                <a class="site-title logo" href="index.html">
+                    <span class="logo__mark"><!-- The EtherPK icon (resources/brand/etherpk-icon-*.svg), inline so the page fetches nothing and it takes the text colour; aria-hidden because the title beside it is the name. Fill the "logo" include, or edit this partial, for your own. -->
+                                             <svg class="site-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 191.82 166.13" width="24" height="21" aria-hidden="true" focusable="false"><path fill="currentColor" fill-rule="evenodd" d="M67.09,132.92,47.93,166.13H9.59L0,149.52,86.33,0H105.5L19.17,149.52H38.34l19.17-33.2h76.8l9.59,16.6Zm48-83.12,9.65,16.71H143.9L115.08,16.6q-24,41.57-48,83.12H143.9q14.37,24.9,28.76,49.8h-96l-9.59,16.61H182.24l9.58-16.61-38.34-66.4H96C95.85,82.9,113.39,52.73,115.08,49.8Z"/></svg>
+</span>
+                    <span class="logo__text">g9n Blog</span>
+                    <span class="logo__cursor" aria-hidden="true"></span>
+                </a>
+                <button class="nav-toggle menu-trigger" type="button" aria-controls="site-nav" aria-expanded="false" aria-label="Menu">Menu</button>
+            </div>
+            <div class="nav-backdrop" hidden></div>
+            <nav id="site-nav" class="menu site-nav" aria-label="Site">
+                <ul class="menu__inner site-nav-list">
+                </ul>
+                <form class="site-search" role="search" data-search-index="search.json" data-search-script="search-index.js">
+                    <label class="visually-hidden" for="site-search-input">Search</label>
+                    <input id="site-search-input" type="search" name="q" placeholder="$ search" autocomplete="off">
+                    <div class="site-search-results" role="listbox" hidden></div>
+                </form>
+            </nav>
+        </header>
+    <main id="content" class="content">
+        <article class="post">
+            <h1 class="post-title">Building Reusable UI Components with Svelte 5 Custom Elements</h1>
+            <div class="post-meta"><time class="post-date" datetime="2025-11-01">2025-11-01</time> :: <span class="post-reading">7 min read</span></div>
+        <nav class="toc framed" aria-label="Table of contents">
+            <p class="toc__title">:: Table of contents</p>
+            <ul>
+                <li class="toc-level-2"><a href="#the-problem-interactive-components-in-server-rendered-apps">The Problem: Interactive Components in Server-Rendered Apps</a></li><li class="toc-level-2"><a href="#the-solution-svelte-5-custom-elements">The Solution: Svelte 5 Custom Elements</a></li><li class="toc-level-2"><a href="#why-svelte-5-specifically">Why Svelte 5 Specifically?</a></li><li class="toc-level-2"><a href="#architecture-logical-bundle-organization">Architecture: Logical Bundle Organization</a></li><li class="toc-level-3"><a href="#1-formsiifejs-29kb-11kb-gzipped">1. forms.iife.js (~29KB, ~11KB gzipped)</a></li><li class="toc-level-3"><a href="#2-value-tooliifejs-63kb-21kb-gzipped">2. value-tool.iife.js (~63KB, ~21KB gzipped)</a></li><li class="toc-level-2"><a href="#technical-implementation">Technical Implementation</a></li><li class="toc-level-3"><a href="#build-system">Build System</a></li><li class="toc-level-3"><a href="#npm-scripts">NPM Scripts</a></li><li class="toc-level-3"><a href="#shadow-dom-consideration">Shadow DOM Consideration</a></li><li class="toc-level-2"><a href="#benefits-in-practice">Benefits in Practice</a></li><li class="toc-level-3"><a href="#1-progressive-enhancement">1. Progressive Enhancement</a></li><li class="toc-level-3"><a href="#2-framework-independence">2. Framework Independence</a></li><li class="toc-level-3"><a href="#3-standards-compliance">3. Standards Compliance</a></li><li class="toc-level-3"><a href="#4-developer-experience">4. Developer Experience</a></li><li class="toc-level-3"><a href="#5-maintainability">5. Maintainability</a></li><li class="toc-level-2"><a href="#real-world-example-calculator-components">Real-World Example: Calculator Components</a></li><li class="toc-level-2"><a href="#code-organization">Code Organization</a></li><li class="toc-level-2"><a href="#when-to-create-a-new-bundle">When to Create a New Bundle</a></li><li class="toc-level-2"><a href="#lessons-learned">Lessons Learned</a></li><li class="toc-level-3"><a href="#1-start-simple">1. Start Simple</a></li><li class="toc-level-3"><a href="#2-watch-mode-is-essential">2. Watch Mode is Essential</a></li><li class="toc-level-3"><a href="#3-typescript-strictness-pays-off">3. TypeScript Strictness Pays Off</a></li><li class="toc-level-2"><a href="#conclusion">Conclusion</a></li>
+            </ul>
+        </nav>
+            <div class="post-content">
+<p><img src="assets/building-reusable-ui-components-with-svelte-5-cust.3e31cb5c-dbbb-4154-b19e-282dd41abc50.png" alt="Svelte 5 Custom Elements"></p>
+<p>Modern web applications often face a common challenge: how do you add sophisticated, interactive components to server-rendered pages without rewriting your entire application as a single-page app (SPA)? In this post, I'll share how I'm using Svelte 5 Custom Elements in my ASP.NET MVC application to achieve progressive enhancement with clean, maintainable code.</p>
+<p>Check out the <a href="https://www.appsoftware.com/tools/utilities/svelte-custom-elements-demo">Svelte 5 Custom Elements Demo</a> to see how these principles come together in a working example.</p>
+<div class="notification is-info is-light">
+        For software application and development services, you can contact me via <a href="https://appsoftware.com">https://appsoftware.com</a>
+    </div>
+<h2 id="the-problem-interactive-components-in-server-rendered-apps">The Problem: Interactive Components in Server-Rendered Apps</h2>
+<p>This application uses ASP.NET MVC with Razor views for server-side rendering, which provides excellent SEO, fast initial page loads, and straightforward authentication. However, certain features—like an interactive value analysis tool for artists or an educational evolution timeline—require rich client-side interactivity that's difficult to achieve with vanilla JavaScript alone.</p>
+<p>I needed a solution that would:</p>
+<ul>
+<li><strong>Encapsulate complex logic</strong> without polluting the global scope</li>
+<li><strong>Manage reactive state</strong> without manual DOM manipulation</li>
+<li><strong>Coexist peacefully</strong> with existing JavaScript libraries (Alpine.js, vanilla JS)</li>
+<li><strong>Remain maintainable</strong> as the component library grows</li>
+<li><strong>Follow web standards</strong> for maximum portability and longevity</li>
+</ul>
+<h2 id="the-solution-svelte-5-custom-elements">The Solution: Svelte 5 Custom Elements</h2>
+<p>Custom Elements (part of the Web Components standard) allow you to define reusable HTML tags with encapsulated behavior. By compiling Svelte 5 components as Custom Elements, I get the best of both worlds: Svelte's excellent developer experience and reactive state management, combined with browser-native component registration.</p>
+<p>Here's what a simple calculator component looks like:</p>
+<pre><code class="language-svelte">&lt;svelte:options customElement={{ tag: &quot;add-calculator&quot;, shadow: &quot;none&quot; }} /&gt;
+
+&lt;script lang=&quot;ts&quot;&gt;
+    let firstNumber: number = $state(0);
+    let secondNumber: number = $state(0);
+    let result: number = $derived(firstNumber + secondNumber);
+&lt;/script&gt;
+
+&lt;div class=&quot;add-calculator&quot;&gt;
+    &lt;input type=&quot;number&quot; bind:value={firstNumber} /&gt;
+    &lt;input type=&quot;number&quot; bind:value={secondNumber} /&gt;
+    &lt;p&gt;Result: {result}&lt;/p&gt;
+&lt;/div&gt;
+</code></pre>
+<p>Using it in a Razor view is straightforward:</p>
+<pre><code class="language-html">@section PageScripts {
+    <span class="tok-punctuation">&lt;</span><span class="tok-typeName">script</span> <span class="tok-propertyName">src</span><span class="tok-operator">=</span><span class="tok-string">&quot;~/js/svelte-build/forms.iife.js&quot;</span> <span class="tok-propertyName">asp-append-version</span><span class="tok-operator">=</span><span class="tok-string">&quot;true&quot;</span><span class="tok-punctuation">&gt;</span><span class="tok-punctuation">&lt;/</span><span class="tok-typeName">script</span><span class="tok-punctuation">&gt;</span>
+}
+
+<span class="tok-punctuation">&lt;</span><span class="tok-typeName">add-calculator</span><span class="tok-punctuation">&gt;</span><span class="tok-punctuation">&lt;/</span><span class="tok-typeName">add-calculator</span><span class="tok-punctuation">&gt;</span>
+</code></pre>
+<p>That's it. No initialization code, no framework mounting logic—just a script tag and a custom element.</p>
+<h2 id="why-svelte-5-specifically">Why Svelte 5 Specifically?</h2>
+<p>Svelte 5 introduced <strong>Runes syntax</strong> (<code>$state</code>, <code>$effect</code>, <code>$derived</code>) which provides explicit, predictable reactive state management. Unlike Svelte 4's &quot;magic&quot; reactivity, Runes make it clear what's reactive and when effects run. This is particularly valuable in Custom Elements where you need precise control over component lifecycle.</p>
+<p>Key advantages:</p>
+<ul>
+<li><strong>No runtime</strong>: Svelte compiles to vanilla JavaScript, resulting in small bundle sizes</li>
+<li><strong>Reactive by default</strong>: UI automatically updates when state changes</li>
+<li><strong>TypeScript support</strong>: First-class TypeScript integration with excellent type inference</li>
+<li><strong>Modern syntax</strong>: Clean, intuitive API that's easy for new developers to understand</li>
+</ul>
+<h2 id="architecture-logical-bundle-organization">Architecture: Logical Bundle Organization</h2>
+<p>Rather than building a monolithic <code>components.js</code> bundle, I organize components into three logical bundles:</p>
+<h3 id="1-formsiifejs-29kb-11kb-gzipped">1. <strong>forms.iife.js</strong> (~29KB, ~11KB gzipped)</h3>
+<p>Form-based utilities like calculators that are likely to be used together. These are small, focused components that benefit from sharing a bundle.</p>
+<h3 id="2-value-tooliifejs-63kb-21kb-gzipped">2. <strong>value-tool.iife.js</strong> (~63KB, ~21KB gzipped)</h3>
+<p>The ValueTool—a complex image analysis tool for artists. This standalone component has its own bundle because it's:</p>
+<ul>
+<li>Large and feature-rich</li>
+<li>Used independently on a single page</li>
+<li>Updated frequently during development</li>
+</ul>
+<p>This approach provides:</p>
+<ul>
+<li><strong>Efficient loading</strong>: Pages only download the bundles they need</li>
+<li><strong>Better caching</strong>: Changes to one component don't invalidate unrelated bundles</li>
+<li><strong>Faster development</strong>: Watch mode rebuilds only the bundle you're working on</li>
+<li><strong>Logical grouping</strong>: Related components share infrastructure</li>
+</ul>
+<h2 id="technical-implementation">Technical Implementation</h2>
+<h3 id="build-system">Build System</h3>
+<p>I use <strong>Vite</strong> with separate configuration files for each bundle:</p>
+<pre><code class="language-javascript"><span class="tok-comment">// vite.config.forms.js</span>
+<span class="tok-keyword">export</span> <span class="tok-keyword">default</span> <span class="tok-variableName">defineConfig</span><span class="tok-punctuation">(</span><span class="tok-punctuation">{</span>
+  <span class="tok-propertyName tok-definition">plugins</span><span class="tok-punctuation">:</span> <span class="tok-punctuation">[</span><span class="tok-variableName">svelte</span><span class="tok-punctuation">(</span><span class="tok-punctuation">{</span> <span class="tok-propertyName tok-definition">compilerOptions</span><span class="tok-punctuation">:</span> <span class="tok-punctuation">{</span> <span class="tok-propertyName tok-definition">customElement</span><span class="tok-punctuation">:</span> <span class="tok-bool">true</span> <span class="tok-punctuation">}</span> <span class="tok-punctuation">}</span><span class="tok-punctuation">)</span><span class="tok-punctuation">]</span><span class="tok-punctuation">,</span>
+  <span class="tok-propertyName tok-definition">build</span><span class="tok-punctuation">:</span> <span class="tok-punctuation">{</span>
+    <span class="tok-propertyName tok-definition">rollupOptions</span><span class="tok-punctuation">:</span> <span class="tok-punctuation">{</span>
+      <span class="tok-propertyName tok-definition">input</span><span class="tok-punctuation">:</span> <span class="tok-variableName">resolve</span><span class="tok-punctuation">(</span><span class="tok-variableName">__dirname</span><span class="tok-punctuation">,</span> <span class="tok-string">'src/entries/forms.ts'</span><span class="tok-punctuation">)</span><span class="tok-punctuation">,</span>
+      <span class="tok-propertyName tok-definition">output</span><span class="tok-punctuation">:</span> <span class="tok-punctuation">{</span>
+        <span class="tok-propertyName tok-definition">entryFileNames</span><span class="tok-punctuation">:</span> <span class="tok-string">'forms.iife.js'</span><span class="tok-punctuation">,</span>
+        <span class="tok-propertyName tok-definition">format</span><span class="tok-punctuation">:</span> <span class="tok-string">'iife'</span><span class="tok-punctuation">,</span>
+        <span class="tok-propertyName tok-definition">name</span><span class="tok-punctuation">:</span> <span class="tok-string">'Forms'</span>
+      <span class="tok-punctuation">}</span>
+    <span class="tok-punctuation">}</span>
+  <span class="tok-punctuation">}</span>
+<span class="tok-punctuation">}</span><span class="tok-punctuation">)</span><span class="tok-punctuation">;</span>
+</code></pre>
+<p><strong>Why separate Vite configs?</strong> Rollup (Vite's bundler) cannot build multiple IIFE bundles in a single pass due to code-splitting limitations. Separate bundles are desirable where large components or significant groupings are used independently in separate areas of the application. IIFE format requires all code inlined, but multiple entry points trigger code-splitting. Separate configs work around this constraint while providing excellent developer experience.</p>
+<h3 id="npm-scripts">NPM Scripts</h3>
+<pre><code class="language-json"><span class="tok-punctuation">{</span>
+  <span class="tok-propertyName">&quot;build&quot;</span><span class="tok-punctuation">:</span> <span class="tok-string">&quot;npm run build:forms &amp;&amp; npm run build:value-tool&quot;</span><span class="tok-punctuation">,</span>
+  <span class="tok-propertyName">&quot;build:forms&quot;</span><span class="tok-punctuation">:</span> <span class="tok-string">&quot;vite build --config vite.config.forms.js&quot;</span><span class="tok-punctuation">,</span>
+  <span class="tok-propertyName">&quot;watch:forms&quot;</span><span class="tok-punctuation">:</span> <span class="tok-string">&quot;vite build --watch --config vite.config.forms.js&quot;</span>
+<span class="tok-punctuation">}</span>
+</code></pre>
+<p>During development, <code>npm run watch:forms</code> rebuilds only the forms bundle in sub-second increments—far faster than rebuilding everything.</p>
+<h3 id="shadow-dom-consideration">Shadow DOM Consideration</h3>
+<p>I use <code>shadow: &quot;none&quot;</code> to disable Shadow DOM encapsulation:</p>
+<pre><code class="language-svelte">&lt;svelte:options customElement={{ tag: &quot;add-calculator&quot;, shadow: &quot;none&quot; }} /&gt;
+</code></pre>
+<p>This allows global styles (Bulma CSS, Font Awesome) to apply to components without duplication. Component-specific styles use prefixed class names (<code>.add-calculator</code>) to avoid conflicts. For truly isolated components, I omit this option to get default Shadow DOM encapsulation.</p>
+<h2 id="benefits-in-practice">Benefits in Practice</h2>
+<h3 id="1-progressive-enhancement">1. Progressive Enhancement</h3>
+<p>I can add rich interactivity to existing server-rendered pages without refactoring the entire application. Each page remains simple HTML with optional enhanced functionality.</p>
+<h3 id="2-framework-independence">2. Framework Independence</h3>
+<p>Custom Elements are framework-agnostic. They work alongside Alpine.js, jQuery, or vanilla JavaScript without conflicts. If I ever migrate to a different backend framework, the components work unchanged.</p>
+<h3 id="3-standards-compliance">3. Standards Compliance</h3>
+<p>Web Components are a W3C standard supported by all modern browsers. No polyfills needed, no framework lock-in.</p>
+<h3 id="4-developer-experience">4. Developer Experience</h3>
+<p>Svelte's developer experience is exceptional:</p>
+<ul>
+<li>TypeScript with strict typing</li>
+<li>Excellent VS Code extension with syntax highlighting</li>
+<li>Fast builds with Vite</li>
+<li>Hot module replacement during development</li>
+</ul>
+<h3 id="5-maintainability">5. Maintainability</h3>
+<p>Each component encapsulates its logic, state, and behavior. No more hunting through global JavaScript files to understand where state lives or how events propagate.</p>
+<h2 id="real-world-example-calculator-components">Real-World Example: Calculator Components</h2>
+<p>I've created a simple demonstration page showcasing calculator components built with this architecture:</p>
+<p><strong><a href="https://www.appsoftware.com/tools/utilities/calculators">View the Calculators Demo →</a></strong></p>
+<p><img src="assets/building-reusable-ui-components-with-svelte-5-cust-2.1916e0a6-5ffb-4094-aa6e-58e548397955.png" alt="Svelte Calculators Demo"></p>
+<p>These calculators demonstrate:</p>
+<ul>
+<li><strong>Reactive state</strong>: Values update automatically as you type</li>
+<li><strong>Computed properties</strong>: Results calculate without manual event handlers</li>
+<li><strong>Clean encapsulation</strong>: Each component manages its own state</li>
+<li><strong>Styling integration</strong>: Bulma CSS applies from the parent page</li>
+</ul>
+<p>The code is minimal, the components are reusable, and the user experience is smooth.</p>
+<h2 id="code-organization">Code Organization</h2>
+<pre><code>SrcScriptsSvelte/
+├── src/
+│   ├── entries/                           # Bundle entry points
+│   │   ├── forms.ts
+│   │   └── value-tool.ts
+│   ├── components/                        # Svelte components
+│   │   ├── AddCalculator.svelte
+│   │   ├── MultiplyCalculator.svelte
+│   │   └──ValueTool.svelte
+│   └── lib/                               # Shared utilities
+│       ├── value-tool/
+│       │   ├── types.ts
+│       │   ├── imageProcessor.ts
+│       │   └── histogramRenderer.ts
+├── vite.config.forms.js                   # Forms bundle config
+└── vite.config.value-tool.js              # ValueTool bundle config
+</code></pre>
+<p>Utilities are organized by feature in <code>lib/</code> folders, with TypeScript interfaces separated into <code>types.ts</code> files. This makes it easy to find related code and promotes reusability.</p>
+<h2 id="when-to-create-a-new-bundle">When to Create a New Bundle</h2>
+<p>I follow these guidelines:</p>
+<p><strong>Create a standalone bundle when:</strong></p>
+<ul>
+<li>The component is large (&gt;40KB)</li>
+<li>It's used independently on a single page</li>
+<li>It has significant supporting utilities</li>
+<li>Changes shouldn't invalidate other component caches</li>
+</ul>
+<p><strong>Add to the forms bundle when:</strong></p>
+<ul>
+<li>The component is small (&lt;10KB)</li>
+<li>It's likely to be used with other form components</li>
+<li>It shares utilities with existing form components</li>
+</ul>
+<h2 id="lessons-learned">Lessons Learned</h2>
+<h3 id="1-start-simple">1. Start Simple</h3>
+<p>I initially tried building all bundles in one Vite config with environment variables. This failed due to Rollup's IIFE limitations. The simpler approach—separate configs—works better and is easier to understand.</p>
+<h3 id="2-watch-mode-is-essential">2. Watch Mode is Essential</h3>
+<p>Building all three bundles takes ~2 seconds. During development, watching a single bundle rebuilds in &lt;1 second. Use <code>npm run watch:forms</code> and iterate quickly.</p>
+<h3 id="3-typescript-strictness-pays-off">3. TypeScript Strictness Pays Off</h3>
+<p>Strict TypeScript catches bugs early. I define interfaces for all data structures and use typed function parameters throughout. This makes refactoring safe and IDE autocomplete accurate.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>Svelte 5 Custom Elements provide an elegant solution for adding interactive components to server-rendered applications. By compiling to browser-native Custom Elements, I get:</p>
+<ul>
+<li><strong>Clean encapsulation</strong> of logic and state</li>
+<li><strong>Standards compliance</strong> without framework lock-in</li>
+<li><strong>Progressive enhancement</strong> without full SPA rewrite</li>
+<li><strong>Excellent developer experience</strong> with modern tooling</li>
+<li><strong>Maintainable architecture</strong> that scales with the application</li>
+</ul>
+<p>The approach works beautifully with ASP.NET MVC, but the same patterns apply to any backend framework. If you're looking to add sophisticated client-side interactivity without committing to a full SPA architecture, Svelte 5 Custom Elements are worth exploring.</p>
+
+            </div>
+            <nav class="pagination" aria-label="Neighbouring posts">
+                <a class="button pagination__prev" href="new-free-favicon-icon-generator-available-on-appsoftwarecom.html"><span class="button__icon">←</span><span class="button__text">New (Free) Favicon &#x2F; Icon Generator Available on appsoftware.com</span></a>
+                <a class="button pagination__next" href="net-10-file-based-apps-demonstration-c-scripting.html"><span class="button__text">.NET 10 - File Based Apps Demonstration (C# Scripting)</span><span class="button__icon">→</span></a>
+            </nav>
+        </article>
+    </main>
+        <footer class="footer">
+            <div class="footer__inner">
+                <div class="copyright">
+                    <span>&copy; 2026 g9n Blog</span>
+                    <span class="footer__separator" aria-hidden="true">::</span>
+                    <span>Published with <a href="https://etherpk.com" rel="noopener">EtherPK</a></span>
+                    <span class="footer__separator" aria-hidden="true">::</span><a href="feed.xml">Feed</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+        <script src="theme/search.js" defer></script>
+</body>
+</html>

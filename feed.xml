@@ -41,6 +41,160 @@
       <description>Welcome to my blog. This is where I intend (intend, not promise) to put my (hopefully) regular writings in an effort to be more intentional about what I&apos;m working on and thinking about, communicate…</description>
     </item>
     <item>
+      <title>Introducing Agent Kanban</title>
+      <link>https://blog.g9n.com/introducing-agent-kanban.html</link>
+      <guid>https://blog.g9n.com/introducing-agent-kanban.html</guid>
+      <pubDate>Wed, 13 May 2026 00:00:00 GMT</pubDate>
+      <description>AI coding agents work inside chat sessions. A chat session is good at local reasoning - you give it a task, it works through the problem, it produces code. But the session itself is ephemeral. When…</description>
+    </item>
+    <item>
+      <title>AS Notes - VS Code Notes, Docs and Wikilink Markdown Editing</title>
+      <link>https://blog.g9n.com/as-notes-vs-code-notes-docs-and-wikilink-markdown-editing.html</link>
+      <guid>https://blog.g9n.com/as-notes-vs-code-notes-docs-and-wikilink-markdown-editing.html</guid>
+      <pubDate>Mon, 30 Mar 2026 00:00:00 GMT</pubDate>
+      <description>What is AS Notes? AS Notes brings markdown editing with [[wikilink]] for notes, documentation, blogs and wikis directly into VS Code and compatible editors (e.g. Antigravity, Cursor, Windsurf). With…</description>
+    </item>
+    <item>
+      <title>You Need Deterministic Gates for Probabilistic AI Agents</title>
+      <link>https://blog.g9n.com/you-need-probabilistic-gates-for-deterministic-ai-agents.html</link>
+      <guid>https://blog.g9n.com/you-need-probabilistic-gates-for-deterministic-ai-agents.html</guid>
+      <pubDate>Sun, 15 Mar 2026 00:00:00 GMT</pubDate>
+      <description>Referencing this MCP is Dead; Long Live MCP! (via Hacker News), I wanted to highlight what I think is the key principle behind this that will be true for the future of working with AI Agents: You…</description>
+    </item>
+    <item>
+      <title>Fixing AGENT / LLM Context Decay in VS Code with Git Worktrees</title>
+      <link>https://blog.g9n.com/fixing-agent-llm-context-decay-in-vs-code-with-git-worktrees.html</link>
+      <guid>https://blog.g9n.com/fixing-agent-llm-context-decay-in-vs-code-with-git-worktrees.html</guid>
+      <pubDate>Thu, 12 Mar 2026 00:00:00 GMT</pubDate>
+      <description>The extension source is available on GitHub and the extension available on the VS Code Marketplace. Where We Left Off In a previous post, I introduced VS Code Agent Kanban. The key idea in this…</description>
+    </item>
+    <item>
+      <title>Introducing VS Code Agent Kanban: Task Management for the AI-Assisted Developer</title>
+      <link>https://blog.g9n.com/introducing-vs-code-agent-kanban-task-management-for-the-ai-assisted-developer.html</link>
+      <guid>https://blog.g9n.com/introducing-vs-code-agent-kanban-task-management-for-the-ai-assisted-developer.html</guid>
+      <pubDate>Sun, 08 Mar 2026 00:00:00 GMT</pubDate>
+      <description>VS Code Agent Kanban is available on VS Code Marketplace | GitHub Note: VS Code Agent Kanban has had a major update since this post to add an optional Git worktree workflow (detailed here),…</description>
+    </item>
+    <item>
+      <title>VS Code Kingfisher Extension: Colour Your VS Code Windows Without Breaking Your Team&apos;s Settings</title>
+      <link>https://blog.g9n.com/vs-code-kingfisher-extension-colour-your-vs-code-windows-without-breaking-your-teams-settings.html</link>
+      <guid>https://blog.g9n.com/vs-code-kingfisher-extension-colour-your-vs-code-windows-without-breaking-your-teams-settings.html</guid>
+      <pubDate>Sun, 08 Mar 2026 00:00:00 GMT</pubDate>
+      <description>Colour Your VS Code Windows Without Breaking Your Team&apos;s Settings VS Code Marketplace | GitHub Repository If you work across multiple projects simultaneously, you&apos;ll know it can get difficult…</description>
+    </item>
+    <item>
+      <title>Debugging a SQLite WASM Heap Fragmentation Bug in a VS Code Extension</title>
+      <link>https://blog.g9n.com/debugging-a-sqlite-wasm-heap-fragmentation-bug-in-a-vs-code-extension.html</link>
+      <guid>https://blog.g9n.com/debugging-a-sqlite-wasm-heap-fragmentation-bug-in-a-vs-code-extension.html</guid>
+      <pubDate>Thu, 05 Mar 2026 00:00:00 GMT</pubDate>
+      <description>While building AS Notes (A wikilink-based knowledge management VS Code extension - https://github.com/appsoftwareltd/as-notes) - I ran into a subtle and genuinely interesting bug involving…</description>
+    </item>
+    <item>
+      <title>An Effective AI Agent Pattern: Plan, Tasks, Implementation</title>
+      <link>https://blog.g9n.com/an-effective-ai-agent-pattern-plan-tasks-implementation.html</link>
+      <guid>https://blog.g9n.com/an-effective-ai-agent-pattern-plan-tasks-implementation.html</guid>
+      <pubDate>Tue, 03 Mar 2026 00:00:00 GMT</pubDate>
+      <description>For source files view the repository: https://github.com/gbro3n/agent-flow The agent-flow repository serves as a template for a flow I&apos;ve recently been using for agent-assisted coding - with…</description>
+    </item>
+    <item>
+      <title>Building a Light Weight Personal MCP Server for Google Data</title>
+      <link>https://blog.g9n.com/building-a-light-weight-personal-mcp-server-implementation.html</link>
+      <guid>https://blog.g9n.com/building-a-light-weight-personal-mcp-server-implementation.html</guid>
+      <pubDate>Mon, 02 Mar 2026 00:00:00 GMT</pubDate>
+      <description>I&apos;d been looking at MCP implementations for accessing my personal Google data in the various AI tools I&apos;ve been using. Zapier have an MCP offering that leverages their existing tooling to make…</description>
+    </item>
+    <item>
+      <title>AS Notes: Turn VS Code Into Your Personal Knowledge Management System (PKMS)</title>
+      <link>https://blog.g9n.com/as-notes-turn-vs-code-into-your-personal-knowledge-management-system-pkms.html</link>
+      <guid>https://blog.g9n.com/as-notes-turn-vs-code-into-your-personal-knowledge-management-system-pkms.html</guid>
+      <pubDate>Mon, 02 Mar 2026 00:00:00 GMT</pubDate>
+      <description>If you already live in VS Code, maybe you like managing your notes there too? AS Notes is a VS Code extension that brings the power of wikilink-based knowledge management - the kind you&apos;d find in…</description>
+    </item>
+    <item>
+      <title>OpenClaw: Running a Secure, Capable, Low Cost Claw (with Hetzner, Tailscale, Discord and Zapier MCP)</title>
+      <link>https://blog.g9n.com/openclaw-running-a-secure-capable-lowcost-claw-hetzner-tailscale-discord-zapier-mcp.html</link>
+      <guid>https://blog.g9n.com/openclaw-running-a-secure-capable-lowcost-claw-hetzner-tailscale-discord-zapier-mcp.html</guid>
+      <pubDate>Tue, 24 Feb 2026 00:00:00 GMT</pubDate>
+      <description>Update: I&apos;ve since replaced Zapier with a private custom MCP server that handles the Google API integration. It was less convenient than Zapier, since I had to build it, but it gives me control over…</description>
+    </item>
+    <item>
+      <title>Local LLM Setup on Windows with Ollama and LM Studio (Lenovo ThinkPad P1 Gen 4 with a RTX A3000)</title>
+      <link>https://blog.g9n.com/local-llm-setup-on-windows-with-ollama-and-lm-studio-lenovo-thinkpad-p1-gen-4-with-a-rtx-a3000.html</link>
+      <guid>https://blog.g9n.com/local-llm-setup-on-windows-with-ollama-and-lm-studio-lenovo-thinkpad-p1-gen-4-with-a-rtx-a3000.html</guid>
+      <pubDate>Sun, 22 Feb 2026 00:00:00 GMT</pubDate>
+      <description>Introduction This is a walkthrough of my set up of local LLM capability on a Lenovo ThinkPad P1 Gen 4 (with a RTX A3000 6GB VRAM) graphics card, using Ollamafor CLI and VS Code Copilot chat access,…</description>
+    </item>
+    <item>
+      <title>Building a (Bad) Local AI Coding Agent Harness from Scratch</title>
+      <link>https://blog.g9n.com/building-a-bad-local-ai-coding-agent-harness-from-scratch.html</link>
+      <guid>https://blog.g9n.com/building-a-bad-local-ai-coding-agent-harness-from-scratch.html</guid>
+      <pubDate>Sun, 22 Feb 2026 00:00:00 GMT</pubDate>
+      <description>The original document for this post is available with full source code on GitHub This is a walk-through of how I built a terminal-based coding agent in ~400 lines of vanilla Node.js, running entirely…</description>
+    </item>
+    <item>
+      <title>A Timeline of Interesting Takes on Agentic AI Use in Software Engineering</title>
+      <link>https://blog.g9n.com/a-timeline-of-interesting-takes-on-agentic-ai-capability-in-software-engineering.html</link>
+      <guid>https://blog.g9n.com/a-timeline-of-interesting-takes-on-agentic-ai-capability-in-software-engineering.html</guid>
+      <pubDate>Wed, 28 Jan 2026 00:00:00 GMT</pubDate>
+      <description>I&apos;m keeping this post up to date with interesting takes on AI use in a software engineering context, as I find them. Sentiment on the date that I started this post seems to be changing from generally…</description>
+    </item>
+    <item>
+      <title>A Centralised Approach to AI / LLM Agent Instruction Using Git Submodules</title>
+      <link>https://blog.g9n.com/a-centralised-approach-to-ai-llm-agent-instruction-using-git-submodules.html</link>
+      <guid>https://blog.g9n.com/a-centralised-approach-to-ai-llm-agent-instruction-using-git-submodules.html</guid>
+      <pubDate>Wed, 21 Jan 2026 00:00:00 GMT</pubDate>
+      <description>A guide to organising and replicating instructions for AI / LLM coding assistants Introduction As AI coding assistants have become increasingly capable, I&apos;ve developed a structured approach to…</description>
+    </item>
+    <item>
+      <title>.NET 10 and NuGet Audit: Identifying Root Packages for Vulnerable Transitive Dependencies</title>
+      <link>https://blog.g9n.com/net-10-and-nuget-audit-identifying-root-packages-for-vulnerable-transitive-dependencies.html</link>
+      <guid>https://blog.g9n.com/net-10-and-nuget-audit-identifying-root-packages-for-vulnerable-transitive-dependencies.html</guid>
+      <pubDate>Thu, 27 Nov 2025 00:00:00 GMT</pubDate>
+      <description>As of .NET 10, defaults for NuGetAuditMode in NuGet Audit have changed, and this may mean additional warnings regarding NuGet package vulnerabilities (NU1901, NU1902, NU1903, NU1904, NU1905) in your…</description>
+    </item>
+    <item>
+      <title>Setting up Google Antigravity (Coming from VSCode)</title>
+      <link>https://blog.g9n.com/setting-up-google-antigravity-coming-from-vscode.html</link>
+      <guid>https://blog.g9n.com/setting-up-google-antigravity-coming-from-vscode.html</guid>
+      <pubDate>Wed, 19 Nov 2025 00:00:00 GMT</pubDate>
+      <description>This post covers setting up Google Antigravity, the new VS Code fork for agentic AI coding, when coming from VS Code. Primarily I am a .NET / web developer, so some of this post will focus on set up…</description>
+    </item>
+    <item>
+      <title>VSCode tasks.json - capturing NuGet Package Vulnerability Warnings</title>
+      <link>https://blog.g9n.com/vscode-tasksjson-capturing-nuget-package-vulnerability-warnings.html</link>
+      <guid>https://blog.g9n.com/vscode-tasksjson-capturing-nuget-package-vulnerability-warnings.html</guid>
+      <pubDate>Tue, 18 Nov 2025 00:00:00 GMT</pubDate>
+      <description>I ran into a problem today where I was seeing warnings regarding NuGet packages with reported vulnerabilities, but was not seeing the output under the &apos;Problems&apos; tab in VSCode. In an effort to fully…</description>
+    </item>
+    <item>
+      <title>.NET 10 - File Based Apps Demonstration (C# Scripting)</title>
+      <link>https://blog.g9n.com/net-10-file-based-apps-demonstration-c-scripting.html</link>
+      <guid>https://blog.g9n.com/net-10-file-based-apps-demonstration-c-scripting.html</guid>
+      <pubDate>Wed, 12 Nov 2025 00:00:00 GMT</pubDate>
+      <description>Sample Project (Github ): https://github.com/gbro3n/dotnet-10-file-based-apps-test This simple app demonstrates the new Microsoft .NET 10 File Based Apps capability. Now we can use C# where we might…</description>
+    </item>
+    <item>
+      <title>Building Reusable UI Components with Svelte 5 Custom Elements</title>
+      <link>https://blog.g9n.com/building-reusable-ui-components-with-svelte-5-custom-elements.html</link>
+      <guid>https://blog.g9n.com/building-reusable-ui-components-with-svelte-5-custom-elements.html</guid>
+      <pubDate>Sat, 01 Nov 2025 00:00:00 GMT</pubDate>
+      <description>Modern web applications often face a common challenge: how do you add sophisticated, interactive components to server-rendered pages without rewriting your entire application as a single-page app…</description>
+    </item>
+    <item>
+      <title>New (Free) Favicon / Icon Generator Available on appsoftware.com</title>
+      <link>https://blog.g9n.com/new-free-favicon-icon-generator-available-on-appsoftwarecom.html</link>
+      <guid>https://blog.g9n.com/new-free-favicon-icon-generator-available-on-appsoftwarecom.html</guid>
+      <pubDate>Sun, 26 Oct 2025 00:00:00 GMT</pubDate>
+      <description>Introducing Our Privacy-Focused Favicon Generator We&apos;ve added a new tool to our suite of free web utilities: a favicon generator that processes everything in your browser. If you&apos;ve ever needed to…</description>
+    </item>
+    <item>
+      <title>Open Source Tools and Web Utilities from App Software Ltd</title>
+      <link>https://blog.g9n.com/open-source-tools-and-web-utilities-from-app-software-ltd.html</link>
+      <guid>https://blog.g9n.com/open-source-tools-and-web-utilities-from-app-software-ltd.html</guid>
+      <pubDate>Wed, 01 Oct 2025 00:00:00 GMT</pubDate>
+      <description>As developers, we often encounter repetitive tasks that can eat up valuable development time. App Software Ltd has released two powerful open-source .NET tools and three privacy-focused web-based…</description>
+    </item>
+    <item>
       <title>Hackers, Painters and Kanban for Software as a Creative Process</title>
       <link>https://blog.g9n.com/hackers-painters-and-kanban-for-software-as-a-creative-process.html</link>
       <guid>https://blog.g9n.com/hackers-painters-and-kanban-for-software-as-a-creative-process.html</guid>

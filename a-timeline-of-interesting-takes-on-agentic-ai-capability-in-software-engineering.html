@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="EtherPK">
+    <title>A Timeline of Interesting Takes on Agentic AI Use in Software Engineering :: g9n Blog</title>
+    <meta name="description" content="I&#39;m keeping this post up to date with interesting takes on AI use in a software engineering context, as I find them. Sentiment on the date that I started this post seems to be changing from generally…">
+    <link rel="stylesheet" href="theme/theme.css">
+    
+    
+    <link rel="alternate" type="application/rss+xml" title="g9n Blog" href="feed.xml">
+    <script defer src="https://analytics.appsoftware.com/telemetry.js" data-website-id="6913dde8-61ce-4739-90fe-3abeeb6ab0a4"></script>
+</head>
+<body class="layout-terminal">
+    <a class="skip-link" href="#content">Skip to content</a>
+    <div class="container">
+        <header class="header">
+            <div class="header__inner">
+                <a class="site-title logo" href="index.html">
+                    <span class="logo__mark"><!-- The EtherPK icon (resources/brand/etherpk-icon-*.svg), inline so the page fetches nothing and it takes the text colour; aria-hidden because the title beside it is the name. Fill the "logo" include, or edit this partial, for your own. -->
+                                             <svg class="site-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 191.82 166.13" width="24" height="21" aria-hidden="true" focusable="false"><path fill="currentColor" fill-rule="evenodd" d="M67.09,132.92,47.93,166.13H9.59L0,149.52,86.33,0H105.5L19.17,149.52H38.34l19.17-33.2h76.8l9.59,16.6Zm48-83.12,9.65,16.71H143.9L115.08,16.6q-24,41.57-48,83.12H143.9q14.37,24.9,28.76,49.8h-96l-9.59,16.61H182.24l9.58-16.61-38.34-66.4H96C95.85,82.9,113.39,52.73,115.08,49.8Z"/></svg>
+</span>
+                    <span class="logo__text">g9n Blog</span>
+                    <span class="logo__cursor" aria-hidden="true"></span>
+                </a>
+                <button class="nav-toggle menu-trigger" type="button" aria-controls="site-nav" aria-expanded="false" aria-label="Menu">Menu</button>
+            </div>
+            <div class="nav-backdrop" hidden></div>
+            <nav id="site-nav" class="menu site-nav" aria-label="Site">
+                <ul class="menu__inner site-nav-list">
+                </ul>
+                <form class="site-search" role="search" data-search-index="search.json" data-search-script="search-index.js">
+                    <label class="visually-hidden" for="site-search-input">Search</label>
+                    <input id="site-search-input" type="search" name="q" placeholder="$ search" autocomplete="off">
+                    <div class="site-search-results" role="listbox" hidden></div>
+                </form>
+            </nav>
+        </header>
+    <main id="content" class="content">
+        <article class="post">
+            <h1 class="post-title">A Timeline of Interesting Takes on Agentic AI Use in Software Engineering</h1>
+            <div class="post-meta"><time class="post-date" datetime="2026-01-28">2026-01-28</time> :: <span class="post-reading">10 min read</span></div>
+        <nav class="toc framed" aria-label="Table of contents">
+            <p class="toc__title">:: Table of contents</p>
+            <ul>
+                <li class="toc-level-2"><a href="#how-i-use-claude-code-separation-of-implementation-and-planning-by-boris-tane">How I Use Claude Code (Separation of Implementation and Planning by Boris Tane)</a></li><li class="toc-level-2"><a href="#stop-thinking-of-ai-as-a-coworker-its-an-exoskeleton-kasava">Stop Thinking of AI as a Coworker. It&#39;s an Exoskeleton. | Kasava</a></li><li class="toc-level-2"><a href="#andrej-karpathys-notes-on-agentic-ai-use">Andrej Karpathy&#39;s Notes on Agentic AI Use</a></li><li class="toc-level-2"><a href="#engineers-are-starting-to-comment-that-agentic-ai-helps-their-thinking">Engineers are Starting to Comment That Agentic AI Helps Their Thinking</a></li><li class="toc-level-2"><a href="#linus-torvalds-is-vibe-coding">Linus Torvalds is Vibe Coding</a></li><li class="toc-level-2"><a href="#why-llms-and-ai-agents-wont-remove-the-need-for-software-engineers">Why LLMs and AI Agents Won&#39;t Remove the Need for Software Engineers.</a></li><li class="toc-level-2"><a href="#ai-is-a-horse">AI is a Horse</a></li>
+            </ul>
+        </nav>
+            <div class="post-content">
+<p>I'm keeping this post up to date with interesting takes on AI use in a software engineering context, as I find them. Sentiment on the date that I started this post seems to be changing from generally dismissive with spots of over optimistic promises of 'Vibe Coding' utopia, to a rational acceptance of a significant net positive when used with a human in the loop by competent software engineers.</p>
+<p>I think the progression and keen observations from prominent engineers is interesting to watch, so this is my record of that:</p>
+<h2 id="how-i-use-claude-code-separation-of-implementation-and-planning-by-boris-tane">How I Use Claude Code (Separation of Implementation and Planning by Boris Tane)</h2>
+<p>Post: <a href="https://boristane.com/blog/how-i-use-claude-code/">https://boristane.com/blog/how-i-use-claude-code/</a></p>
+<p>HN: <a href="https://news.ycombinator.com/item?id=47106686">https://news.ycombinator.com/item?id=47106686</a></p>
+<p>This is the flow I've found myself working towards. Essentially maintaining more and more layered documentation for the LLM produces better and more consistent results. What is great here is the emphasis on the use of such documents in the planning phase. I'm feeling much more motivated to write solid documentation recently, because I know someone (the LLM) is actually going to read it! I've noticed my efforts and skill acquisition have moved sharply from app developer towards DevOps and architecture / management, but I think I'll always be grateful for the application engineering experience that I think the next wave of devs might miss out on.</p>
+<p>I've also noted such a huge gulf between some developers describing 'prompting things into existence' and the approach described in this article. Both types seem to report success, though my experience is that the latter seems more realistic, and much more likely to produce robust code that's likely to be maintainable for long term or project critical goals.</p>
+<h2 id="stop-thinking-of-ai-as-a-coworker-its-an-exoskeleton-kasava">Stop Thinking of AI as a Coworker. It's an Exoskeleton. | Kasava</h2>
+<p><a href="https://www.kasava.dev/blog/ai-as-exoskeleton">https://www.kasava.dev/blog/ai-as-exoskeleton</a></p>
+<p>This post by Ben Gregory, linked on Hacker News makes the case that agentic AI should be thought of something that augments, not replaces humans and so should be thought of like an exoskeleton.</p>
+<p>I think this is true, though using agentic AI effectively takes more learning than existing physical exoskeletons that simply make movements you know stronger.</p>
+<h2 id="andrej-karpathys-notes-on-agentic-ai-use">Andrej Karpathy's Notes on Agentic AI Use</h2>
+<p>(January 2026)</p>
+<p><a href="https://xcancel.com/karpathy/status/2015883857489522876">https://xcancel.com/karpathy/status/2015883857489522876</a></p>
+<p>Based on my personal experience, this is a both an insightful and realistic take on the use of agentic AI in software engineering workflows as of January 2026, and so is worth repeating verbatim:</p>
+<blockquote>
+<p>Coding workflow. Given the latest lift in LLM coding capability, like many others I rapidly went from about 80% manual+autocomplete coding and 20% agents in November to 80% agent coding and 20% edits+touchups in December. i.e. I really am mostly programming in English now, a bit sheepishly telling the LLM what code to write... in words. It hurts the ego a bit but the power to operate over software in large &quot;code actions&quot; is just too net useful, especially once you adapt to it, configure it, learn to use it, and wrap your head around what it can and cannot do. This is easily the biggest change to my basic coding workflow in ~2 decades of programming and it happened over the course of a few weeks. I'd expect something similar to be happening to well into double digit percent of engineers out there, while the awareness of it in the general population feels well into low single digit percent.</p>
+<p>IDEs/agent swarms/fallability. Both the &quot;no need for IDE anymore&quot; hype and the &quot;agent swarm&quot; hype is imo too much for right now. The models definitely still make mistakes and if you have any code you actually care about I would watch them like a hawk, in a nice large IDE on the side. The mistakes have changed a lot - they are not simple syntax errors anymore, they are subtle conceptual errors that a slightly sloppy, hasty junior dev might do. The most common category is that the models make wrong assumptions on your behalf and just run along with them without checking. They also don't manage their confusion, they don't seek clarifications, they don't surface inconsistencies, they don't present tradeoffs, they don't push back when they should, and they are still a little too sycophantic. Things get better in plan mode, but there is some need for a lightweight inline plan mode. They also really like to overcomplicate code and APIs, they bloat abstractions, they don't clean up dead code after themselves, etc. They will implement an inefficient, bloated, brittle construction over 1000 lines of code and it's up to you to be like &quot;umm couldn't you just do this instead?&quot; and they will be like &quot;of course!&quot; and immediately cut it down to 100 lines. They still sometimes change/remove comments and code they don't like or don't sufficiently understand as side effects, even if it is orthogonal to the task at hand. All of this happens despite a few simple attempts to fix it via instructions in CLAUDE . md. Despite all these issues, it is still a net huge improvement and it's very difficult to imagine going back to manual coding. TLDR everyone has their developing flow, my current is a small few CC sessions on the left in ghostty windows/tabs and an IDE on the right for viewing the code + manual edits.</p>
+<p>Tenacity. It's so interesting to watch an agent relentlessly work at something. They never get tired, they never get demoralized, they just keep going and trying things where a person would have given up long ago to fight another day. It's a &quot;feel the AGI&quot; moment to watch it struggle with something for a long time just to come out victorious 30 minutes later. You realize that stamina is a core bottleneck to work and that with LLMs in hand it has been dramatically increased.</p>
+<p>Speedups. It's not clear how to measure the &quot;speedup&quot; of LLM assistance. Certainly I feel net way faster at what I was going to do, but the main effect is that I do a lot more than I was going to do because 1) I can code up all kinds of things that just wouldn't have been worth coding before and 2) I can approach code that I couldn't work on before because of knowledge/skill issue. So certainly it's speedup, but it's possibly a lot more an expansion.</p>
+<p>Leverage. LLMs are exceptionally good at looping until they meet specific goals and this is where most of the &quot;feel the AGI&quot; magic is to be found. Don't tell it what to do, give it success criteria and watch it go. Get it to write tests first and then pass them. Put it in the loop with a browser MCP. Write the naive algorithm that is very likely correct first, then ask it to optimize it while preserving correctness. Change your approach from imperative to declarative to get the agents looping longer and gain leverage.</p>
+<p>Fun. I didn't anticipate that with agents programming feels <em>more</em> fun because a lot of the fill in the blanks drudgery is removed and what remains is the creative part. I also feel less blocked/stuck (which is not fun) and I experience a lot more courage because there's almost always a way to work hand in hand with it to make some positive progress. I have seen the opposite sentiment from other people too; LLM coding will split up engineers based on those who primarily liked coding and those who primarily liked building.</p>
+<p>Atrophy. I've already noticed that I am slowly starting to atrophy my ability to write code manually. Generation (writing code) and discrimination (reading code) are different capabilities in the brain. Largely due to all the little mostly syntactic details involved in programming, you can review code just fine even if you struggle to write it.</p>
+<p>Slopacolypse. I am bracing for 2026 as the year of the slopacolypse across all of github, substack, arxiv, X/instagram, and generally all digital media. We're also going to see a lot more AI hype productivity theater (is that even possible?), on the side of actual, real improvements.</p>
+<p>Questions. A few of the questions on my mind:</p>
+<ul>
+<li>What happens to the &quot;10X engineer&quot; - the ratio of productivity between the mean and the max engineer? It's quite possible that this grows <em>a lot</em>.</li>
+<li>Armed with LLMs, do generalists increasingly outperform specialists? LLMs are a lot better at fill in the blanks (the micro) than grand strategy (the macro).</li>
+<li>What does LLM coding feel like in the future? Is it like playing StarCraft? Playing Factorio? Playing music?</li>
+<li>How much of society is bottlenecked by digital knowledge work?</li>
+</ul>
+<p>TLDR Where does this leave us? LLM agent capabilities (Claude &amp; Codex especially) have crossed some kind of threshold of coherence around December 2025 and caused a phase shift in software engineering and closely related. The intelligence part suddenly feels quite a bit ahead of all the rest of it - integrations (tools, knowledge), the necessity for new organizational workflows, processes, diffusion more generally. 2026 is going to be a high energy year as the industry metabolizes the new capability.</p>
+</blockquote>
+<h2 id="engineers-are-starting-to-comment-that-agentic-ai-helps-their-thinking">Engineers are Starting to Comment That Agentic AI Helps Their Thinking</h2>
+<p>(22nd January 2026)</p>
+<p><a href="https://philipotoole.com/why-talking-to-llms-has-improved-my-thinking/">https://philipotoole.com/why-talking-to-llms-has-improved-my-thinking/</a></p>
+<p>This helped me to realise that AI helps me to think through problems as though I had an always-at-hand colleage with very broad knowledge to &quot;Rubber Duck&quot; problems with.</p>
+<blockquote>
+<p>I agree with the authors observations here. I think rather than it being purely language related, there's a link to the practice of 'rubber ducking', where when you start to explain your problem to someone else it forces you to step through the problem as you start to explain the context, the steps you've tried and where you're stuck. I think LLMs can be that other person for us sometimes, except that other person has a great broad range of expertise.</p>
+</blockquote>
+<p><a href="https://news.ycombinator.com/item?id=46728197#46729565">https://news.ycombinator.com/item?id=46728197#46729565</a></p>
+<h2 id="linus-torvalds-is-vibe-coding">Linus Torvalds is Vibe Coding</h2>
+<p>(January 2026)</p>
+<p>The creator of the Linux kernel, Linus Torvalds, appears to be embracing vibe coding.</p>
+<p><a href="https://github.com/torvalds/AudioNoise/blob/main/README.md">https://github.com/torvalds/AudioNoise/blob/main/README.md</a></p>
+<blockquote>
+<p>Also note that the python visualizer tool has been basically written by vibe-coding. I know more about analog filters -- and that's not saying much -- than I do about python. It started out as my typical &quot;google and do the monkey-see-monkey-do&quot; kind of programming, but then I cut out the middle-man -- me -- and just used Google Antigravity to do the audio sample visualizer.</p>
+</blockquote>
+<p><a href="https://x.com/rauchg/status/2010411457880772924">https://x.com/rauchg/status/2010411457880772924</a></p>
+<p><img src="assets/a-timeline-of-interesting-takes-on-agentic-ai-use.3084d9e2-04e4-4577-a4d7-ec0258d18a2e.png" alt="Linus Torvalds Vibe Coding"></p>
+<h2 id="why-llms-and-ai-agents-wont-remove-the-need-for-software-engineers">Why LLMs and AI Agents Won't Remove the Need for Software Engineers.</h2>
+<p>(By me 31st January 2025, almost 1 year ago)</p>
+<p>Here I make comparisons between agentic AI and 'low code' solutions. I think many of my observations regarding the limitations of agentic AI stand, though I would say that the problems are much less prevalent in the leading models when used together with their harnesses from their creators (e.g. Claude Opus 4.5 with Claude Code and GPT 5.2 with Codex).</p>
+<p><a href="https://substack.com/home/post/p-156156135">https://substack.com/home/post/p-156156135</a></p>
+<h2 id="ai-is-a-horse">AI is a Horse</h2>
+<p>(By Kevin Conner 2nd August 2024)</p>
+<p><a href="https://kconner.com/2024/08/02/ai-is-a-horse.html">https://kconner.com/2024/08/02/ai-is-a-horse.html</a></p>
+<p>To quote this post by Kevin Conner (I only read this recently), I think this captures the use of Agentic AI really well, even to today.</p>
+<blockquote>
+<p>AI is a horse</p>
+<p>It is faster than your feet depending on the terrain</p>
+<p>It is way slower and less reliable than a train but can go more places</p>
+<p>It eats a lot</p>
+<p>You cannot simply tell it to go to the store for you</p>
+<p>You have to tell it where to turn even if it might guess right sometimes</p>
+<p>You have to keep it on the road even if it usually stays on the road</p>
+<p>You can only lead it to water, you cannot make it drink</p>
+<p>A good one runs at the shadow of the whip</p>
+<p>We are skeptical of those that talk</p>
+</blockquote>
+
+            </div>
+            <nav class="pagination" aria-label="Neighbouring posts">
+                <a class="button pagination__prev" href="a-centralised-approach-to-ai-llm-agent-instruction-using-git-submodules.html"><span class="button__icon">←</span><span class="button__text">A Centralised Approach to AI &#x2F; LLM Agent Instruction Using Git Submodules</span></a>
+                <a class="button pagination__next" href="building-a-bad-local-ai-coding-agent-harness-from-scratch.html"><span class="button__text">Building a (Bad) Local AI Coding Agent Harness from Scratch</span><span class="button__icon">→</span></a>
+            </nav>
+        </article>
+    </main>
+        <footer class="footer">
+            <div class="footer__inner">
+                <div class="copyright">
+                    <span>&copy; 2026 g9n Blog</span>
+                    <span class="footer__separator" aria-hidden="true">::</span>
+                    <span>Published with <a href="https://etherpk.com" rel="noopener">EtherPK</a></span>
+                    <span class="footer__separator" aria-hidden="true">::</span><a href="feed.xml">Feed</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+        <script src="theme/search.js" defer></script>
+</body>
+</html>

@@ -3,9 +3,9 @@
     "id": "g9n-blog",
     "name": "g9n Blog",
     "kind": "blog",
-    "theme": "etherpk-terminal"
+    "theme": "g9n-blog-theme-etherpk-terminal"
   },
-  "generatedAt": "2026-09-20T15:51:03.133Z",
+  "generatedAt": "2026-09-20T16:51:13.514Z",
   "ok": true,
   "errors": [],
   "warnings": [],
@@ -148,6 +148,138 @@
       "kind": "page",
       "slug": "hackers-painters-and-kanban-for-software-as-a-creative-process",
       "url": "hackers-painters-and-kanban-for-software-as-a-creative-process.html"
+    },
+    {
+      "concept": "Introducing Agent Kanban",
+      "kind": "page",
+      "slug": "introducing-agent-kanban",
+      "url": "introducing-agent-kanban.html"
+    },
+    {
+      "concept": "Open Source Tools and Web Utilities from App Software Ltd",
+      "kind": "page",
+      "slug": "open-source-tools-and-web-utilities-from-app-software-ltd",
+      "url": "open-source-tools-and-web-utilities-from-app-software-ltd.html"
+    },
+    {
+      "concept": "New (Free) Favicon / Icon Generator Available on appsoftware.com",
+      "kind": "page",
+      "slug": "new-free-favicon-icon-generator-available-on-appsoftwarecom",
+      "url": "new-free-favicon-icon-generator-available-on-appsoftwarecom.html"
+    },
+    {
+      "concept": "Building Reusable UI Components with Svelte 5 Custom Elements",
+      "kind": "page",
+      "slug": "building-reusable-ui-components-with-svelte-5-custom-elements",
+      "url": "building-reusable-ui-components-with-svelte-5-custom-elements.html"
+    },
+    {
+      "concept": ".NET 10 - File Based Apps Demonstration (C# Scripting)",
+      "kind": "page",
+      "slug": "net-10-file-based-apps-demonstration-c-scripting",
+      "url": "net-10-file-based-apps-demonstration-c-scripting.html"
+    },
+    {
+      "concept": "VSCode tasks.json - capturing NuGet Package Vulnerability Warnings",
+      "kind": "page",
+      "slug": "vscode-tasksjson-capturing-nuget-package-vulnerability-warnings",
+      "url": "vscode-tasksjson-capturing-nuget-package-vulnerability-warnings.html"
+    },
+    {
+      "concept": "Setting up Google Antigravity (Coming from VSCode)",
+      "kind": "page",
+      "slug": "setting-up-google-antigravity-coming-from-vscode",
+      "url": "setting-up-google-antigravity-coming-from-vscode.html"
+    },
+    {
+      "concept": ".NET 10 and NuGet Audit: Identifying Root Packages for Vulnerable Transitive Dependencies",
+      "kind": "page",
+      "slug": "net-10-and-nuget-audit-identifying-root-packages-for-vulnerable-transitive-dependencies",
+      "url": "net-10-and-nuget-audit-identifying-root-packages-for-vulnerable-transitive-dependencies.html"
+    },
+    {
+      "concept": "A Centralised Approach to AI / LLM Agent Instruction Using Git Submodules",
+      "kind": "page",
+      "slug": "a-centralised-approach-to-ai-llm-agent-instruction-using-git-submodules",
+      "url": "a-centralised-approach-to-ai-llm-agent-instruction-using-git-submodules.html"
+    },
+    {
+      "concept": "A Timeline of Interesting Takes on Agentic AI Use in Software Engineering",
+      "kind": "page",
+      "slug": "a-timeline-of-interesting-takes-on-agentic-ai-capability-in-software-engineering",
+      "url": "a-timeline-of-interesting-takes-on-agentic-ai-capability-in-software-engineering.html"
+    },
+    {
+      "concept": "Local LLM Setup on Windows with Ollama and LM Studio (Lenovo ThinkPad P1 Gen 4 with a RTX A3000)",
+      "kind": "page",
+      "slug": "local-llm-setup-on-windows-with-ollama-and-lm-studio-lenovo-thinkpad-p1-gen-4-with-a-rtx-a3000",
+      "url": "local-llm-setup-on-windows-with-ollama-and-lm-studio-lenovo-thinkpad-p1-gen-4-with-a-rtx-a3000.html"
+    },
+    {
+      "concept": "Building a (Bad) Local AI Coding Agent Harness from Scratch",
+      "kind": "page",
+      "slug": "building-a-bad-local-ai-coding-agent-harness-from-scratch",
+      "url": "building-a-bad-local-ai-coding-agent-harness-from-scratch.html"
+    },
+    {
+      "concept": "OpenClaw: Running a Secure, Capable, Low Cost Claw (with Hetzner, Tailscale, Discord and Zapier MCP)",
+      "kind": "page",
+      "slug": "openclaw-running-a-secure-capable-lowcost-claw-hetzner-tailscale-discord-zapier-mcp",
+      "url": "openclaw-running-a-secure-capable-lowcost-claw-hetzner-tailscale-discord-zapier-mcp.html"
+    },
+    {
+      "concept": "Building a Light Weight Personal MCP Server for Google Data",
+      "kind": "page",
+      "slug": "building-a-light-weight-personal-mcp-server-implementation",
+      "url": "building-a-light-weight-personal-mcp-server-implementation.html"
+    },
+    {
+      "concept": "AS Notes: Turn VS Code Into Your Personal Knowledge Management System (PKMS)",
+      "kind": "page",
+      "slug": "as-notes-turn-vs-code-into-your-personal-knowledge-management-system-pkms",
+      "url": "as-notes-turn-vs-code-into-your-personal-knowledge-management-system-pkms.html"
+    },
+    {
+      "concept": "An Effective AI Agent Pattern: Plan, Tasks, Implementation",
+      "kind": "page",
+      "slug": "an-effective-ai-agent-pattern-plan-tasks-implementation",
+      "url": "an-effective-ai-agent-pattern-plan-tasks-implementation.html"
+    },
+    {
+      "concept": "Debugging a SQLite WASM Heap Fragmentation Bug in a VS Code Extension",
+      "kind": "page",
+      "slug": "debugging-a-sqlite-wasm-heap-fragmentation-bug-in-a-vs-code-extension",
+      "url": "debugging-a-sqlite-wasm-heap-fragmentation-bug-in-a-vs-code-extension.html"
+    },
+    {
+      "concept": "Introducing VS Code Agent Kanban: Task Management for the AI-Assisted Developer",
+      "kind": "page",
+      "slug": "introducing-vs-code-agent-kanban-task-management-for-the-ai-assisted-developer",
+      "url": "introducing-vs-code-agent-kanban-task-management-for-the-ai-assisted-developer.html"
+    },
+    {
+      "concept": "VS Code Kingfisher Extension: Colour Your VS Code Windows Without Breaking Your Team's Settings",
+      "kind": "page",
+      "slug": "vs-code-kingfisher-extension-colour-your-vs-code-windows-without-breaking-your-teams-settings",
+      "url": "vs-code-kingfisher-extension-colour-your-vs-code-windows-without-breaking-your-teams-settings.html"
+    },
+    {
+      "concept": "Fixing AGENT / LLM Context Decay in VS Code with Git Worktrees",
+      "kind": "page",
+      "slug": "fixing-agent-llm-context-decay-in-vs-code-with-git-worktrees",
+      "url": "fixing-agent-llm-context-decay-in-vs-code-with-git-worktrees.html"
+    },
+    {
+      "concept": "You Need Deterministic Gates for Probabilistic AI Agents",
+      "kind": "page",
+      "slug": "you-need-probabilistic-gates-for-deterministic-ai-agents",
+      "url": "you-need-probabilistic-gates-for-deterministic-ai-agents.html"
+    },
+    {
+      "concept": "AS Notes - VS Code Notes, Docs and Wikilink Markdown Editing",
+      "kind": "page",
+      "slug": "as-notes-vs-code-notes-docs-and-wikilink-markdown-editing",
+      "url": "as-notes-vs-code-notes-docs-and-wikilink-markdown-editing.html"
     }
   ],
   "excluded": [
@@ -185,6 +317,10 @@
     },
     {
       "concept": "2026-09-18",
+      "reason": "not-public"
+    },
+    {
+      "concept": "2026-09-17",
       "reason": "not-public"
     },
     {
@@ -11584,10 +11720,6 @@
       "reason": "not-public"
     },
     {
-      "concept": "2026-09-17",
-      "reason": "not-public"
-    },
-    {
       "concept": "2026-09-11",
       "reason": "not-public"
     },
@@ -11654,6 +11786,26 @@
     {
       "concept": "Meditation",
       "reason": "protected"
+    },
+    {
+      "concept": "Welcome to the App Software Ltd Blog",
+      "reason": "not-public"
+    },
+    {
+      "concept": "I'm not a 'Vibe Coder', but when I am, this is my set up",
+      "reason": "not-public"
+    },
+    {
+      "concept": "4 Rules for Successful Vibe Coding",
+      "reason": "not-public"
+    },
+    {
+      "concept": "\"Taste\" - Where coding with agentic AI / LLMs really costs us",
+      "reason": "not-public"
+    },
+    {
+      "concept": "What happened to AWS Cloudfront? (Payment Plans Rant)",
+      "reason": "not-public"
     }
   ],
   "collisions": [],
@@ -11681,7 +11833,50 @@
       "pasted-image-20211014080839-2c667eab.2fab5098-e029-449b-9e3f-f291177df0a8.png",
       "pasted-image-20220106161055-ee5d5a89.cdbd1e47-2784-4cda-83e9-eac4ccf21b83.png",
       "pasted-image-20220106160712-090ebdb5.734e07e2-d9df-473f-a019-39fb9cedb657.png",
-      "pasted-image-20220106160905-6893adf5.37c6bc04-3c3b-48bc-b4a1-0d2f981a9894.png"
+      "pasted-image-20220106160905-6893adf5.37c6bc04-3c3b-48bc-b4a1-0d2f981a9894.png",
+      "introducing-agent-kanban.8ae474d0-0486-4644-b999-155a8bd3f269.png",
+      "introducing-agent-kanban-2.7fe278b5-ab1c-4c8a-b38d-3a380097f47c.png",
+      "open-source-tools-and-web-utilities-from-app-softw.d0e761c1-e844-4e68-a57d-7be39742df86.png",
+      "open-source-tools-and-web-utilities-from-app-softw-2.686546d0-9585-4409-b14b-337c650bbe4a.png",
+      "open-source-tools-and-web-utilities-from-app-softw-3.869cd332-2589-4070-b47c-fb719aec515a.png",
+      "open-source-tools-and-web-utilities-from-app-softw-4.f9318728-98d2-40ba-9b9b-be3fc4b0724f.png",
+      "new-free-favicon-icon-generator-available-on-appso.b78b17a7-00a2-43fa-ab9f-5373c2baf630.png",
+      "building-reusable-ui-components-with-svelte-5-cust.3e31cb5c-dbbb-4154-b19e-282dd41abc50.png",
+      "building-reusable-ui-components-with-svelte-5-cust-2.1916e0a6-5ffb-4094-aa6e-58e548397955.png",
+      "net-10-file-based-apps-demonstration-c-scripting.24274c74-cb25-4bbf-8393-30a1d57aac02.png",
+      "net-10-file-based-apps-demonstration-c-scripting-2.193bf522-9240-4f83-8511-9bd4f4ca5bcd.png",
+      "net-10-file-based-apps-demonstration-c-scripting-3.830c41a4-c7a8-48ce-9b03-928ee02ffedd.png",
+      "setting-up-google-antigravity-coming-from-vscode.b157726e-7523-4ac5-aa73-f04a81aba377.png",
+      "setting-up-google-antigravity-coming-from-vscode-2.755a24d7-0311-4521-a66a-5036aca9c2ca.png",
+      "setting-up-google-antigravity-coming-from-vscode-3.804a15c3-b0c4-4b1b-8a32-7d8e1fc24930.png",
+      "setting-up-google-antigravity-coming-from-vscode-4.c26f4cd5-d97b-474d-8456-c9d80d36ec9f.png",
+      "setting-up-google-antigravity-coming-from-vscode-5.f3fdd7b5-46b1-48e6-a13b-0836afe09b85.png",
+      "setting-up-google-antigravity-coming-from-vscode-6.c2f421d6-3e3c-47fb-9a68-de2ee3d6376f.png",
+      "a-centralised-approach-to-ai-llm-agent-instruction.309c72ef-8615-4b11-bcfd-f23abe5d4ff7.png",
+      "a-timeline-of-interesting-takes-on-agentic-ai-use.3084d9e2-04e4-4577-a4d7-ec0258d18a2e.png",
+      "building-a-bad-local-ai-coding-agent-harness-from-scratch.f555dde0-cbc4-4a57-93d5-c780cff4a0dd.png",
+      "openclaw-running-a-secure-capable-low-cost-claw.07f49a95-ce80-46a8-ae55-00568dae0728.png",
+      "openclaw-running-a-secure-capable-low-cost-claw-2.55d3c1e9-cd00-4932-835a-c860b336fc02.png",
+      "as-notes-turn-vs-code-into-your-personal-knowledge.064aefaa-682f-4c1b-bb32-5adf2163760e.png",
+      "as-notes-turn-vs-code-into-your-personal-knowledge-2.45c825bd-51a6-42c1-a92e-276f1026e2af.png",
+      "as-notes-turn-vs-code-into-your-personal-knowledge-3.29cae758-594f-4170-bb07-96bcd8056198.png",
+      "introducing-vs-code-agent-kanban-task-management.e25ee7f7-5cfc-4dca-8917-d0ab720e3bad.png",
+      "introducing-vs-code-agent-kanban-task-management-2.e8782f23-77e3-47e1-afcc-55d85e4fedc1.png",
+      "kingfisher-icon-full.1c87fc24-f455-45c0-bb79-7f695c4518df.png",
+      "vs-code-kingfisher-extension-colour-your-vs-code-windows.39befe93-7e6c-4bf3-a12e-ada0199b0bb5.png",
+      "fixing-agent-llm-context-decay-in-vs-code-with-git-worktrees.6583f866-ea54-49c0-afc8-25eabe8f80a5.png",
+      "fixing-agent-llm-context-decay-in-vs-code-with-git-worktrees-2.57862bfe-74f0-4d5b-9d0f-e23d7217c5f4.png",
+      "fixing-agent-llm-context-decay-in-vs-code-with-git-worktrees-3.8a3e18db-0b67-4420-a49c-fb0ac127a4f4.png",
+      "fixing-agent-llm-context-decay-in-vs-code-with-git-worktrees-4.29698e8a-a541-49cd-8a0d-b63e160e74ab.png",
+      "as-notes-vs-code-notes-docs-and-wikilink-markdown-editing.dc8bf70a-c602-4565-80dc-db7eb2f6dc5b.png",
+      "as-notes-vs-code-notes-docs-and-wikilink-markdown-editing-2.0751f662-ac8c-430f-90a3-e838acd20f4e.png",
+      "as-notes-vs-code-notes-docs-and-wikilink-markdown-editing-3.c61082db-28e0-49bb-909f-916dfde0c321.png",
+      "as-notes-vs-code-notes-docs-and-wikilink-markdown-editing-4.b3213796-833e-4415-8547-609728ec225e.png",
+      "as-notes-vs-code-notes-docs-and-wikilink-markdown-editing-5.90538266-07a6-4669-8c3a-f753951f60d6.png",
+      "as-notes-vs-code-notes-docs-and-wikilink-markdown-editing-6.3c106fbc-0a94-4fc2-9301-199ca8e7858e.png",
+      "as-notes-vs-code-notes-docs-and-wikilink-markdown-editing-7.df1cfff7-f74d-4c89-a3a1-6b35c6e35030.png",
+      "as-notes-vs-code-notes-docs-and-wikilink-markdown-editing-8.bed1ab1e-e261-4bcf-b929-3eb5c7b7d1f4.png",
+      "as-notes-vs-code-notes-docs-and-wikilink-markdown-editing-9.2637cdfa-6869-44c4-b6d1-3d3a06c2ea39.png"
     ],
     "missing": []
   },
@@ -11720,11 +11915,12 @@
     }
   ],
   "external": [
-    "https://etherpk.com"
+    "https://etherpk.com",
+    "https://analytics.appsoftware.com/telemetry.js"
   ],
   "publicInNoPublication": [],
   "theme": {
-    "source": "bundled",
+    "source": "graph",
     "name": "etherpk-terminal",
     "version": "1.0.0"
   }

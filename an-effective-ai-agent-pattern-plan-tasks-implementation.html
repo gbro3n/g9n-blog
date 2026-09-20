@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="EtherPK">
+    <title>An Effective AI Agent Pattern: Plan, Tasks, Implementation :: g9n Blog</title>
+    <meta name="description" content="For source files view the repository: https:&#x2F;&#x2F;github.com&#x2F;gbro3n&#x2F;agent-flow The agent-flow repository serves as a template for a flow I&#39;ve recently been using for agent-assisted coding - with…">
+    <link rel="stylesheet" href="theme/theme.css">
+    
+    
+    <link rel="alternate" type="application/rss+xml" title="g9n Blog" href="feed.xml">
+    <script defer src="https://analytics.appsoftware.com/telemetry.js" data-website-id="6913dde8-61ce-4739-90fe-3abeeb6ab0a4"></script>
+</head>
+<body class="layout-terminal">
+    <a class="skip-link" href="#content">Skip to content</a>
+    <div class="container">
+        <header class="header">
+            <div class="header__inner">
+                <a class="site-title logo" href="index.html">
+                    <span class="logo__mark"><!-- The EtherPK icon (resources/brand/etherpk-icon-*.svg), inline so the page fetches nothing and it takes the text colour; aria-hidden because the title beside it is the name. Fill the "logo" include, or edit this partial, for your own. -->
+                                             <svg class="site-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 191.82 166.13" width="24" height="21" aria-hidden="true" focusable="false"><path fill="currentColor" fill-rule="evenodd" d="M67.09,132.92,47.93,166.13H9.59L0,149.52,86.33,0H105.5L19.17,149.52H38.34l19.17-33.2h76.8l9.59,16.6Zm48-83.12,9.65,16.71H143.9L115.08,16.6q-24,41.57-48,83.12H143.9q14.37,24.9,28.76,49.8h-96l-9.59,16.61H182.24l9.58-16.61-38.34-66.4H96C95.85,82.9,113.39,52.73,115.08,49.8Z"/></svg>
+</span>
+                    <span class="logo__text">g9n Blog</span>
+                    <span class="logo__cursor" aria-hidden="true"></span>
+                </a>
+                <button class="nav-toggle menu-trigger" type="button" aria-controls="site-nav" aria-expanded="false" aria-label="Menu">Menu</button>
+            </div>
+            <div class="nav-backdrop" hidden></div>
+            <nav id="site-nav" class="menu site-nav" aria-label="Site">
+                <ul class="menu__inner site-nav-list">
+                </ul>
+                <form class="site-search" role="search" data-search-index="search.json" data-search-script="search-index.js">
+                    <label class="visually-hidden" for="site-search-input">Search</label>
+                    <input id="site-search-input" type="search" name="q" placeholder="$ search" autocomplete="off">
+                    <div class="site-search-results" role="listbox" hidden></div>
+                </form>
+            </nav>
+        </header>
+    <main id="content" class="content">
+        <article class="post">
+            <h1 class="post-title">An Effective AI Agent Pattern: Plan, Tasks, Implementation</h1>
+            <div class="post-meta"><time class="post-date" datetime="2026-03-03">2026-03-03</time> :: <span class="post-reading">3 min read</span></div>
+        <nav class="toc framed" aria-label="Table of contents">
+            <p class="toc__title">:: Table of contents</p>
+            <ul>
+                <li class="toc-level-2"><a href="#getting-started">Getting Started</a></li><li class="toc-level-2"><a href="#the-process">The Process</a></li><li class="toc-level-3"><a href="#memorymd">memory.md</a></li><li class="toc-level-3"><a href="#planmd">plan.md</a></li><li class="toc-level-3"><a href="#todomd">todo.md</a></li><li class="toc-level-2"><a href="#conclusion">Conclusion</a></li>
+            </ul>
+        </nav>
+            <div class="post-content">
+<p><strong>For source files view the repository:  <a href="https://github.com/gbro3n/agent-flow"><i class="fa-brands fa-github" style="width: 20px"></i> https://github.com/gbro3n/agent-flow</a></strong></p>
+<p>The <a href="https://github.com/gbro3n/agent-flow">agent-flow</a> repository serves as a template for a flow I've recently been using for agent-assisted coding - with impressive results.</p>
+<p>Even with the best models, agent-assisted coding can be hit and miss. A good <code>AGENTS.md</code> that covers most of the mistakes you find agents making can go a long way, but this flow has been producing outsized results over the last couple of weeks.</p>
+<p>It takes a little more discipline than hacking away in the chat window until you get what you want, but this process makes a &quot;one shot&quot; success more likely, and really pays off when things get complicated and the agent needs more of a steer.</p>
+<blockquote>
+<p>The result is that I've been moving through the build of features of a size and complexity that I'd normally expect agents to struggle with, with incredible speed and precision. I'm confident that with this flow, agentic coding provides a huge net positive in my productivity, where before I could not have said with certainty that it made me faster over the long term.</p>
+</blockquote>
+<p>I work mostly with Claude Sonnet 4.6 and Opus 4.6, but I started this flow after initial testing with these newer Claude versions, so I am confident that the flow has made a difference. This process gives enough structure to the agent that I'm less likely to feel the need to reach for Opus, and that I can complete tasks faster and at less cost with Sonnet.</p>
+<h2 id="getting-started">Getting Started</h2>
+<ul>
+<li>Copy the contents of this repository into your project root.</li>
+<li>Read <code>AGENTS.md</code> — it's the core document that drives the agent's behaviour.</li>
+<li>Start a planning session by typing <code>plan</code> in the chat window.</li>
+</ul>
+<h2 id="the-process">The Process</h2>
+<p>For full detail read <code>AGENTS.md</code> — it's not that long. Here's a summary:</p>
+<p><code>AGENTS.md</code> is set up to make the process clear to your agent:</p>
+<h3 id="memorymd">memory.md</h3>
+<p>A persistent space for the agent to record anything useful for the long-term life of the project. Unlike <code>plan.md</code> and <code>todo.md</code>, <code>memory.md</code> is not reset between tasks — think of it as the agent's long-term project memory.</p>
+<h3 id="planmd">plan.md</h3>
+<p>Start here. Write out your requirements in <code>plan.md</code> before involving the agent.</p>
+<p>The benefits are two-fold:</p>
+<ul>
+<li>You are more likely to produce clear and detailed requirements when writing in a file than when typing in the chat window.</li>
+<li>Your input persists beyond the agent's context window and is easy to refer back to for both you and the agent.</li>
+</ul>
+<p><code>plan.md</code> uses a conversational format with a summary section at the top. Both you and the agent write responses in this file. You can also add <code>[comment: &lt;text&gt;]</code> inline in the agent's responses to steer it.</p>
+<pre><code>[user]: &lt;instruction for agent&gt;
+
+[agent]: &lt;agent response&gt;
+
+[user]: &lt;instruction for agent&gt;
+
+[agent]: &lt;agent response&gt;
+
+</code></pre>
+<p><strong><code>AGENTS.md</code> instructs the agent not to implement anything until it has produced a task list and received your explicit confirmation.</strong></p>
+<p>To start a planning session, type <code>plan</code> in the chat window.</p>
+<blockquote>
+<p>Tip: Reset <code>plan.md</code> and the agent context after completing a feature.</p>
+</blockquote>
+<h3 id="todomd">todo.md</h3>
+<p>Once planning is complete, the agent produces a task list in <code>todo.md</code>. This gives the agent a concise, concrete set of anchors to work from as it moves through the implementation.</p>
+<p>To start implementation, type <code>implement</code> in the chat window.</p>
+<blockquote>
+<p>Tip: Reset <code>todo.md</code> after completing a group of related features.</p>
+</blockquote>
+<h2 id="conclusion">Conclusion</h2>
+<p>I would encourage you to give a flow like this a try if you haven't already and hopefully you'll see improved results in your agentic workflows.</p>
+
+            </div>
+            <nav class="pagination" aria-label="Neighbouring posts">
+                <a class="button pagination__prev" href="building-a-light-weight-personal-mcp-server-implementation.html"><span class="button__icon">←</span><span class="button__text">Building a Light Weight Personal MCP Server for Google Data</span></a>
+                <a class="button pagination__next" href="debugging-a-sqlite-wasm-heap-fragmentation-bug-in-a-vs-code-extension.html"><span class="button__text">Debugging a SQLite WASM Heap Fragmentation Bug in a VS Code Extension</span><span class="button__icon">→</span></a>
+            </nav>
+        </article>
+    </main>
+        <footer class="footer">
+            <div class="footer__inner">
+                <div class="copyright">
+                    <span>&copy; 2026 g9n Blog</span>
+                    <span class="footer__separator" aria-hidden="true">::</span>
+                    <span>Published with <a href="https://etherpk.com" rel="noopener">EtherPK</a></span>
+                    <span class="footer__separator" aria-hidden="true">::</span><a href="feed.xml">Feed</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+        <script src="theme/search.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="EtherPK">
+    <title>OpenClaw: Running a Secure, Capable, Low Cost Claw (with Hetzner, Tailscale, Discord and Zapier MCP) :: g9n Blog</title>
+    <meta name="description" content="Update: I&#39;ve since replaced Zapier with a private custom MCP server that handles the Google API integration. It was less convenient than Zapier, since I had to build it, but it gives me control over…">
+    <link rel="stylesheet" href="theme/theme.css">
+    
+    
+    <link rel="alternate" type="application/rss+xml" title="g9n Blog" href="feed.xml">
+    <script defer src="https://analytics.appsoftware.com/telemetry.js" data-website-id="6913dde8-61ce-4739-90fe-3abeeb6ab0a4"></script>
+</head>
+<body class="layout-terminal">
+    <a class="skip-link" href="#content">Skip to content</a>
+    <div class="container">
+        <header class="header">
+            <div class="header__inner">
+                <a class="site-title logo" href="index.html">
+                    <span class="logo__mark"><!-- The EtherPK icon (resources/brand/etherpk-icon-*.svg), inline so the page fetches nothing and it takes the text colour; aria-hidden because the title beside it is the name. Fill the "logo" include, or edit this partial, for your own. -->
+                                             <svg class="site-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 191.82 166.13" width="24" height="21" aria-hidden="true" focusable="false"><path fill="currentColor" fill-rule="evenodd" d="M67.09,132.92,47.93,166.13H9.59L0,149.52,86.33,0H105.5L19.17,149.52H38.34l19.17-33.2h76.8l9.59,16.6Zm48-83.12,9.65,16.71H143.9L115.08,16.6q-24,41.57-48,83.12H143.9q14.37,24.9,28.76,49.8h-96l-9.59,16.61H182.24l9.58-16.61-38.34-66.4H96C95.85,82.9,113.39,52.73,115.08,49.8Z"/></svg>
+</span>
+                    <span class="logo__text">g9n Blog</span>
+                    <span class="logo__cursor" aria-hidden="true"></span>
+                </a>
+                <button class="nav-toggle menu-trigger" type="button" aria-controls="site-nav" aria-expanded="false" aria-label="Menu">Menu</button>
+            </div>
+            <div class="nav-backdrop" hidden></div>
+            <nav id="site-nav" class="menu site-nav" aria-label="Site">
+                <ul class="menu__inner site-nav-list">
+                </ul>
+                <form class="site-search" role="search" data-search-index="search.json" data-search-script="search-index.js">
+                    <label class="visually-hidden" for="site-search-input">Search</label>
+                    <input id="site-search-input" type="search" name="q" placeholder="$ search" autocomplete="off">
+                    <div class="site-search-results" role="listbox" hidden></div>
+                </form>
+            </nav>
+        </header>
+    <main id="content" class="content">
+        <article class="post">
+            <h1 class="post-title">OpenClaw: Running a Secure, Capable, Low Cost Claw (with Hetzner, Tailscale, Discord and Zapier MCP)</h1>
+            <div class="post-meta"><time class="post-date" datetime="2026-02-24">2026-02-24</time> :: <span class="post-reading">9 min read</span></div>
+        <nav class="toc framed" aria-label="Table of contents">
+            <p class="toc__title">:: Table of contents</p>
+            <ul>
+                <li class="toc-level-2"><a href="#the-server-cost-efficiency">The Server (Cost Efficiency)</a></li><li class="toc-level-2"><a href="#dedicated-ssh-key-security">Dedicated SSH Key (Security)</a></li><li class="toc-level-2"><a href="#tailscale-configuration-security">Tailscale Configuration (Security)</a></li><li class="toc-level-2"><a href="#firewall-security">Firewall (Security)</a></li><li class="toc-level-2"><a href="#installing-openclaw">Installing OpenClaw</a></li><li class="toc-level-3"><a href="#tailscale-configuration-for-openclaw">Tailscale Configuration for Openclaw</a></li><li class="toc-level-2"><a href="#observability-security">Observability (Security)</a></li><li class="toc-level-2"><a href="#backup">Backup</a></li><li class="toc-level-2"><a href="#model-selection-security-cost-efficiency">Model Selection (Security, Cost Efficiency)</a></li><li class="toc-level-2"><a href="#model-api-budgets-and-limits-cost-efficiency">Model API Budgets and Limits (Cost Efficiency)</a></li><li class="toc-level-2"><a href="#personal-data-access-and-safety-privacy-security">Personal Data Access and Safety (Privacy, Security)</a></li><li class="toc-level-3"><a href="#channel-selection-discord-vs-whatsapp">Channel Selection - Discord vs Whatsapp</a></li><li class="toc-level-3"><a href="#zapier-mcp-server-security">Zapier MCP Server (Security)</a></li><li class="toc-level-3"><a href="#read-vs-write-your-choice-privacy-security">Read vs Write - Your Choice (Privacy, Security)</a></li><li class="toc-level-2"><a href="#conclusion">Conclusion</a></li>
+            </ul>
+        </nav>
+            <div class="post-content">
+<blockquote>
+<p>Update: I've since replaced Zapier with a private custom MCP server that handles the Google API integration. It was less convenient than Zapier, since I had to build it, but it gives me control over the response sizes to keep context size down and it's essentially free to run.</p>
+</blockquote>
+<p>Curiosity has got the better of me, and I've decided to tinker with OpenClaw. I'm also motivated by by a) the challenge of running OpenClaw securely at every level (machine isolation, network isolation and protection of personal data) and b) showing people that you don't need a Mac Mini, or even a dedicated device to do it (and there by saving many personal budgets and the planet at the same time!).</p>
+<p><strong>TLDR: The result - Google Calendar summary via Discord, OpenClaw and Zapier:</strong></p>
+<p><img src="assets/openclaw-running-a-secure-capable-low-cost-claw.07f49a95-ce80-46a8-ae55-00568dae0728.png" alt="Google Calendar summary via Discord, OpenClaw and Zapier"></p>
+<p>First off, where do we put this?</p>
+<h2 id="the-server-cost-efficiency">The Server (Cost Efficiency)</h2>
+<p>OpenClaw has gained notoriety for running globally on the hardware it is installed via a global npm install <code>npm install -g openclaw@latest</code>. OpenClaw is powerful in that it potentially has access to everything on the machine, including its own installation and configuration data (including any SSH / API keys on the device). To mitigate the risk, people are buying Mac Mini's to isolate OpenClaw, but this is expensive and overkill.</p>
+<p>Instead, I set up a Hetzner Cloud Server.</p>
+<p>I had to go with what they had, since <a href="https://old.reddit.com/r/BuyFromEU/comments/1rce0lf/hetzner_european_hosting_provider_to_increase">Hetzner servers are seeing huge demand recently</a>. The server below is more than fast enough, and keeps my costs down to approx €6 per month (which is a lot cheaper and more environmentally friendly than buying a dedicated machine for might just be an experiment). You can get cheaper cost optimised servers if available, which will also be fine. I ended up with:</p>
+<blockquote>
+<p>CPX22 x86 2 VCPU, 4GB memory</p>
+</blockquote>
+<h2 id="dedicated-ssh-key-security">Dedicated SSH Key (Security)</h2>
+<p>I created a dedicated SSH key for this Hetzner server. While we're going to lock down access so that the server cannot be reached publicly - the risk that the key might be exposed is still present and so should be unique to this server.</p>
+<h2 id="tailscale-configuration-security">Tailscale Configuration (Security)</h2>
+<p>The first thing I did after connecting was to install Tailscale and add the node to my tailnet. Tailscale by default creates a network, so it's important to configure tags and ACLs so that the open claw server can't connect to anything else on your tailnet. Another reason we're using Tailscale is so that we can provide a private connection to the OpenClaw web dashboard when it's up and running.</p>
+<p>To achieve this, I have my tailnet configured with <code>admin</code> and <code>infra</code> nodes. <code>admin</code> nodes can connect to <code>infra</code> nodes but not vice-versa, and <code>infra</code> nodes cannot connect to each other. The OpenClaw server is obviously, an <code>infra</code> node here.</p>
+<pre><code>&quot;grants&quot;: [
+	// Allow admin tagged devices to access all devices
+	// and ports on the tailnet. Infra devices (tag:infra) have no matching grant and
+	// cannot initiate connections to any other device (implicit deny).
+	{
+		&quot;src&quot;: [&quot;tag:admin&quot;],
+		&quot;dst&quot;: [&quot;*&quot;],
+		&quot;ip&quot;:  [&quot;*&quot;],
+	},
+	// Allow users in &quot;group:example&quot; to access &quot;tag:example&quot;, but only from
+	// devices that are running macOS and have enabled Tailscale client auto-updating.
+	// {&quot;src&quot;: [&quot;group:example&quot;], &quot;dst&quot;: [&quot;tag:example&quot;], &quot;ip&quot;: [&quot;*&quot;], &quot;srcPosture&quot;:[&quot;posture:autoUpdateMac&quot;]},
+],
+</code></pre>
+<h2 id="firewall-security">Firewall (Security)</h2>
+<p>With the server setup with the tailnet, we can now apply a firewall on the Hetzner dashboard. We set up the firewall to:</p>
+<ul>
+<li>Block all inbound access (including SSH)</li>
+<li>Allow all outbound access</li>
+</ul>
+<p>We now SSH in via the tailnet, which allows our connection while any SSH connection attempts via the hosts public IP are blocked.</p>
+<h2 id="installing-openclaw">Installing OpenClaw</h2>
+<p>We're now ready to install OpenClaw. The specifics of setting up and much of the initial configuration are outside the scope of this write-up though.</p>
+<p>Having followed the TUI prmpts to get OpenClaw set up, we now have the directory where OpenClaw will maintain it's data.</p>
+<p><code>~/.openclaw</code></p>
+<h3 id="tailscale-configuration-for-openclaw">Tailscale Configuration for Openclaw</h3>
+<p>Since we are using a private tailnet, we can disable other authentication. The configuration of the UI below also shows configuration for binding the server to the loopback address for web UI access.</p>
+<pre><code>&quot;gateway&quot;: {
+    &quot;controlUi&quot;: {
+      &quot;dangerouslyDisableDeviceAuth&quot;: true
+    },
+    &quot;port&quot;: 18789,
+    &quot;mode&quot;: &quot;local&quot;,
+    &quot;bind&quot;: &quot;loopback&quot;,
+</code></pre>
+<p>To serve over HTTPS, which the OpenClaw UI requires for some application features. We will use <code>tailscale serve</code>. Ensure that you <strong>DO NOT</strong> include the set up of Tailscale funnel, which allows public traffic to access the server, and defeats the point of the tailnet setup.</p>
+<pre><code>tailscale serve --bg 18789
+</code></pre>
+<h2 id="observability-security">Observability (Security)</h2>
+<p>To keep an eye on what OpenClaw is upto, I set up a Git repository to track the OpenClaw install's state. Intemittently, I will commit and commit the contents of <code>~/.openclaw</code> to the repository, so I can track what configuration I and OpenClaw itself change as configuration progresses.</p>
+<p>Note that is a local Git repository only. While a Git origin server could be configured, there is going to be sensitive data such as API keys in the application state and the less places this information is replicated, the less of a security risk this is.</p>
+<h2 id="backup">Backup</h2>
+<p>Backups can be achived via Hetzner snapshots. OpenClaw can modify it's own configuration and some of its code. This seems like something that could go wrong, so periodic snapshots seem sensible just in case this proves useful.</p>
+<h2 id="model-selection-security-cost-efficiency">Model Selection (Security, Cost Efficiency)</h2>
+<p>The OpenClaw founder Peter Steinberger specifically recommends <strong>NOT</strong> using low cost models or weak local models as they are gullible and more susceptible to prompt injection than larger models such as <code>Claude Sonnet 4.6</code> or <code>Claude Opus 4.6</code>. That said, OpenClaw can go through tokens fast, and so Sonnet is probably the more practical selection. Some recommend using a dual model approach, or even using local models to avoid remote model costs, but this requires the hardware (Mac Minis) etc to be able to run them, and does not address the aforementioned prompt injection  susceptibility issue.</p>
+<h2 id="model-api-budgets-and-limits-cost-efficiency">Model API Budgets and Limits (Cost Efficiency)</h2>
+<p>If you don't like nasty surprises, I would strongly advise setting cost limits and budgets when using remote models. If using Claude AI, you can set these here:</p>
+<p><a href="https://platform.claude.com/settings/limits">https://platform.claude.com/settings/limits</a></p>
+<h2 id="personal-data-access-and-safety-privacy-security">Personal Data Access and Safety (Privacy, Security)</h2>
+<p>To make OpenClaw useful, you're likely to want to give it access to personal data outside of what you directly tell OpenClaw.</p>
+<p>This is a multi-layered issue. Careful consideration needs to be given to every decision to provide data to OpenClaw. For me, the way to do this is via channel selection (Discord only) and proxying cloud service data access via <a href="https://mcp.zapier.com/mcp/servers/">Zapier MCP Servers</a>.</p>
+<p>Zapier MCP has proven to be by far the most convenient (which makes paying attention to security easier) means of configuring access to personal data.</p>
+<h3 id="channel-selection-discord-vs-whatsapp">Channel Selection - Discord vs Whatsapp</h3>
+<p>I haven't yet assessed Telegram and believe it sits in the middle of Whatsapp and Discord in terms of privacy control, Whatsapp access made me uncomfortable due to the potential unpredictability of what OpenClaw might do with that access and because. Because OpenClaw’s WhatsApp bridge essentially acts as a &quot;linked device,&quot; it operates on a push-based architecture. This means every notification hitting your account - from private DMs to busy group chats is pushed to the OpenClaw Gateway. From a privacy perspective, this is &quot;global&quot; access; the agent is technically a silent observer of your entire account, and you are relying on OpenClaw’s internal logic to &quot;ignore&quot; what it shouldn't see.</p>
+<p>Discord, by contrast, operates on a scoped permission model enforced at the platform level. A Discord bot is physically blind to your world until specific gates are opened.</p>
+<ul>
+<li>
+<p>The Invitation: It must be explicitly invited to a specific server.</p>
+</li>
+<li>
+<p>The Channel Gate: It can only see messages in channels where it has been granted &quot;View Channel&quot; permissions.</p>
+</li>
+<li>
+<p>The Intent Gate: Specifc intents must be allowed in the Developer Portal.</p>
+</li>
+</ul>
+<p>On Discord, the platform decides what the bot sees; on WhatsApp, the bot decides what to ignore.</p>
+<p>This is an important concept: Platform level controls are deterministic where bot decisions are probabilistic. <strong>Use platform level controls wherever possible.</strong></p>
+<h3 id="zapier-mcp-server-security">Zapier MCP Server (Security)</h3>
+<p>Rather than setting up access keys and scopes via Google Cloud Console, Zapier have MCP server tooling, which makes for a convenient way to bundle all of your personal data access in one place. Zapiers UI makes it easy to configure permissions on a per provider basis.</p>
+<p>For example, I have linked my Google Account with Calendar read only permissions. Zapier triggers the Google OAuth flow for granting the required permissions.</p>
+<p><a href="https://mcp.zapier.com/mcp/servers/">https://mcp.zapier.com/mcp/servers/</a></p>
+<p><img src="assets/openclaw-running-a-secure-capable-low-cost-claw-2.55d3c1e9-cd00-4932-835a-c860b336fc02.png" alt="Zapier MCP Server"></p>
+<p>Once configured, you give OpenClaw the Zapier MCP Server token.</p>
+<pre><code>https://mcp.zapier.com/api/v1/connect?token=xxxxxxxx
+</code></pre>
+<p>This is where OpenClaw showed real capability. I was able to give OpenClaw the token in chat, and it configured access to the server itself. It even recommended restrictions on the <code>mcporter</code> configuration, applied them and restarted it's own service.</p>
+<p>OpenClaw now has a single MCP server that it can use to discover and combine my personal data sources which I hope can make it truly useful. Importantly, I have retained fine grain and easy control over the way in which OpenClaw can interact with each service.</p>
+<h3 id="read-vs-write-your-choice-privacy-security">Read vs Write - Your Choice (Privacy, Security)</h3>
+<p>Once you have your Zapier MCP server configured in OpenClaw, you can add and remove access to thousands of integrations as required.</p>
+<p>How far you go with this, how useful you make OpenClaw is up to you.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>I'm more impressed than I expected to be, but the major unlock that stops this from being more hassel than it's worth is the Zapier MCP integration. As of now I have something that feels like a real personal assistant, accessible via a user friendly chat interface in Discord, and I'm quite pleased with that.</p>
+<p>I'm hitting Claude API rate limits too quickly for my liking, but this is a Claude limitation, not a limitation of this setup.</p>
+<p>No doubt as LLMs get more capable and costs go down, these sorts of issues will be mitigated and 'Claws' like OpenClaw, will become truly useful personal assistants. Not everyone has the technical skill to secure an installation of OpenClaw in its current state of development, but the set up and configuration will become more user friendly over time.</p>
+<p>OpenClaw and Zapier are in my mind, glue, but I think this glue has the potential to be very powerful. I don't doubt that now we have been shown what can be done and how to achieve it, along with what sorts of problems need to be solved, many more options for achieving similar capability will be along soon.</p>
+
+            </div>
+            <nav class="pagination" aria-label="Neighbouring posts">
+                <a class="button pagination__prev" href="local-llm-setup-on-windows-with-ollama-and-lm-studio-lenovo-thinkpad-p1-gen-4-with-a-rtx-a3000.html"><span class="button__icon">←</span><span class="button__text">Local LLM Setup on Windows with Ollama and LM Studio (Lenovo ThinkPad P1 Gen 4 with a RTX A3000)</span></a>
+                <a class="button pagination__next" href="as-notes-turn-vs-code-into-your-personal-knowledge-management-system-pkms.html"><span class="button__text">AS Notes: Turn VS Code Into Your Personal Knowledge Management System (PKMS)</span><span class="button__icon">→</span></a>
+            </nav>
+        </article>
+    </main>
+        <footer class="footer">
+            <div class="footer__inner">
+                <div class="copyright">
+                    <span>&copy; 2026 g9n Blog</span>
+                    <span class="footer__separator" aria-hidden="true">::</span>
+                    <span>Published with <a href="https://etherpk.com" rel="noopener">EtherPK</a></span>
+                    <span class="footer__separator" aria-hidden="true">::</span><a href="feed.xml">Feed</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+        <script src="theme/search.js" defer></script>
+</body>
+</html>

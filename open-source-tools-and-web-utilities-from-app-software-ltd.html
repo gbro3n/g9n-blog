@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="EtherPK">
+    <title>Open Source Tools and Web Utilities from App Software Ltd :: g9n Blog</title>
+    <meta name="description" content="As developers, we often encounter repetitive tasks that can eat up valuable development time. App Software Ltd has released two powerful open-source .NET tools and three privacy-focused web-based…">
+    <link rel="stylesheet" href="theme/theme.css">
+    
+    
+    <link rel="alternate" type="application/rss+xml" title="g9n Blog" href="feed.xml">
+    <script defer src="https://analytics.appsoftware.com/telemetry.js" data-website-id="6913dde8-61ce-4739-90fe-3abeeb6ab0a4"></script>
+</head>
+<body class="layout-terminal">
+    <a class="skip-link" href="#content">Skip to content</a>
+    <div class="container">
+        <header class="header">
+            <div class="header__inner">
+                <a class="site-title logo" href="index.html">
+                    <span class="logo__mark"><!-- The EtherPK icon (resources/brand/etherpk-icon-*.svg), inline so the page fetches nothing and it takes the text colour; aria-hidden because the title beside it is the name. Fill the "logo" include, or edit this partial, for your own. -->
+                                             <svg class="site-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 191.82 166.13" width="24" height="21" aria-hidden="true" focusable="false"><path fill="currentColor" fill-rule="evenodd" d="M67.09,132.92,47.93,166.13H9.59L0,149.52,86.33,0H105.5L19.17,149.52H38.34l19.17-33.2h76.8l9.59,16.6Zm48-83.12,9.65,16.71H143.9L115.08,16.6q-24,41.57-48,83.12H143.9q14.37,24.9,28.76,49.8h-96l-9.59,16.61H182.24l9.58-16.61-38.34-66.4H96C95.85,82.9,113.39,52.73,115.08,49.8Z"/></svg>
+</span>
+                    <span class="logo__text">g9n Blog</span>
+                    <span class="logo__cursor" aria-hidden="true"></span>
+                </a>
+                <button class="nav-toggle menu-trigger" type="button" aria-controls="site-nav" aria-expanded="false" aria-label="Menu">Menu</button>
+            </div>
+            <div class="nav-backdrop" hidden></div>
+            <nav id="site-nav" class="menu site-nav" aria-label="Site">
+                <ul class="menu__inner site-nav-list">
+                </ul>
+                <form class="site-search" role="search" data-search-index="search.json" data-search-script="search-index.js">
+                    <label class="visually-hidden" for="site-search-input">Search</label>
+                    <input id="site-search-input" type="search" name="q" placeholder="$ search" autocomplete="off">
+                    <div class="site-search-results" role="listbox" hidden></div>
+                </form>
+            </nav>
+        </header>
+    <main id="content" class="content">
+        <article class="post">
+            <h1 class="post-title">Open Source Tools and Web Utilities from App Software Ltd</h1>
+            <div class="post-meta"><time class="post-date" datetime="2025-10-01">2025-10-01</time> :: <span class="post-reading">10 min read</span></div>
+        <nav class="toc framed" aria-label="Table of contents">
+            <p class="toc__title">:: Table of contents</p>
+            <ul>
+                <li class="toc-level-2"><a href="#open-source-net-tools">Open Source .NET Tools</a></li><li class="toc-level-2"><a href="#net-licence-key-generator">.NET Licence Key Generator</a></li><li class="toc-level-3"><a href="#what-it-does">What It Does</a></li><li class="toc-level-3"><a href="#key-features">Key Features</a></li><li class="toc-level-3"><a href="#how-it-works">How It Works</a></li><li class="toc-level-3"><a href="#example-usage">Example Usage</a></li><li class="toc-level-3"><a href="#github-metrics">GitHub Metrics</a></li><li class="toc-level-3"><a href="#installation">Installation</a></li><li class="toc-level-2"><a href="#net-project-rename">.NET Project Rename</a></li><li class="toc-level-3"><a href="#what-it-does-2">What It Does</a></li><li class="toc-level-3"><a href="#the-problem-it-solves">The Problem It Solves</a></li><li class="toc-level-3"><a href="#key-features-2">Key Features</a></li><li class="toc-level-3"><a href="#how-it-works-2">How It Works</a></li><li class="toc-level-3"><a href="#usage-examples">Usage Examples</a></li><li class="toc-level-3"><a href="#command-line-options">Command-Line Options</a></li><li class="toc-level-3"><a href="#example-output">Example Output</a></li><li class="toc-level-3"><a href="#prerequisites">Prerequisites</a></li><li class="toc-level-3"><a href="#github-metrics-2">GitHub Metrics</a></li><li class="toc-level-2"><a href="#free-web-based-developer-tools">Free Web-Based Developer Tools</a></li><li class="toc-level-3"><a href="#text-formatter">Text Formatter</a></li><li class="toc-level-4"><a href="#what-it-does-3">What It Does</a></li><li class="toc-level-4"><a href="#key-features-3">Key Features</a></li><li class="toc-level-4"><a href="#use-cases">Use Cases</a></li><li class="toc-level-3"><a href="#image-processor-and-optimizer">Image Processor and Optimizer</a></li><li class="toc-level-4"><a href="#what-it-does-4">What It Does</a></li><li class="toc-level-4"><a href="#key-features-4">Key Features</a></li><li class="toc-level-4"><a href="#supported-formats">Supported Formats</a></li><li class="toc-level-4"><a href="#common-use-cases">Common Use Cases</a></li><li class="toc-level-4"><a href="#privacy-security">Privacy &amp; Security</a></li><li class="toc-level-4"><a href="#technical-details">Technical Details</a></li><li class="toc-level-3"><a href="#scrap-pad">Scrap Pad</a></li><li class="toc-level-4"><a href="#what-it-does-5">What It Does</a></li><li class="toc-level-4"><a href="#key-features-5">Key Features</a></li><li class="toc-level-4"><a href="#use-cases-2">Use Cases</a></li><li class="toc-level-2"><a href="#why-these-tools-matter">Why These Tools Matter</a></li><li class="toc-level-3"><a href="#open-source-commitment">Open Source Commitment</a></li><li class="toc-level-2"><a href="#get-started">Get Started</a></li><li class="toc-level-3"><a href="#open-source-tools">Open Source Tools</a></li><li class="toc-level-3"><a href="#web-based-tools">Web-Based Tools</a></li>
+            </ul>
+        </nav>
+            <div class="post-content">
+<p>As developers, we often encounter repetitive tasks that can eat up valuable development time. App Software Ltd has released two powerful open-source .NET tools and three privacy-focused web-based utilities that address common pain points in modern development workflows. Let's explore what makes these tools valuable for the development community.</p>
+<h2 id="open-source-net-tools">Open Source .NET Tools</h2>
+<p>App Software Ltd maintains two essential open-source tools for .NET developers: <strong>dotnet-licence-key-generator</strong> and <strong>dotnet-project-rename</strong>.</p>
+<h2 id="net-licence-key-generator">.NET Licence Key Generator</h2>
+<p><strong>Repository:</strong> <a href="https://github.com/appsoftwareltd/dotnet-licence-key-generator">github.com/appsoftwareltd/dotnet-licence-key-generator</a></p>
+<h3 id="what-it-does">What It Does</h3>
+<p>The .NET Licence Key Generator provides a robust, lightweight solution for generating and verifying software licence keys. It implements a Partial Key Verification System (PKV), which offers a defence against key generators (keygens) that might be built to crack your licence key system.</p>
+<p>The tool is based on Brandon Staggs' article on implementing a partial serial number verification system in Delphi, ported to C# with enhancements.</p>
+<h3 id="key-features">Key Features</h3>
+<ul>
+<li><strong>No &quot;Phone Home&quot; Required</strong>: Licence keys can be verified offline without needing to contact a remote server</li>
+<li><strong>Revocation Capability</strong>: Ability to blacklist licence keys that have been distributed without authorization</li>
+<li><strong>Security Through Partial Verification</strong>: The full key generation data is not required for verification, making it harder to reverse-engineer a keygen</li>
+<li><strong>High Performance</strong>: Tested up to 1,000,000 key generation and verification cycles in just 10.2 seconds</li>
+<li><strong>Cross-Platform</strong>: Targets .NET Standard 1.0, compatible with .NET Core 1.0+, .NET Framework 4.5+, and modern .NET</li>
+</ul>
+<h3 id="how-it-works">How It Works</h3>
+<p>The system generates licence keys using:</p>
+<ol>
+<li><strong>A seed value</strong>: Unique to each context (e.g., user ID or application instance)</li>
+<li><strong>Key byte sets</strong>: Arbitrary bytes unique to your application</li>
+</ol>
+<p>During verification, only a <strong>subset</strong> of the key bytes used to generate the full key are tested. This means the complete key generation algorithm doesn't need to be compiled into your distributed application, making it significantly more difficult for attackers to reverse-engineer.</p>
+<h3 id="example-usage">Example Usage</h3>
+<p><strong>Key Generation</strong> (server-side only):</p>
+<pre><code class="language-csharp"><span class="tok-keyword">var</span> <span class="tok-variableName tok-definition">keyByteSets</span> <span class="tok-operator">=</span> <span class="tok-keyword">new</span>[]
+{
+    <span class="tok-keyword">new</span> <span class="tok-variableName">KeyByteSet</span>(<span class="tok-variableName">keyByteNumber</span>: <span class="tok-number">1</span>, <span class="tok-variableName">keyByteA</span>: <span class="tok-number">58</span>, <span class="tok-variableName">keyByteB</span>: <span class="tok-number">6</span>, <span class="tok-variableName">keyByteC</span>: <span class="tok-number">97</span>),
+    <span class="tok-keyword">new</span> <span class="tok-variableName">KeyByteSet</span>(<span class="tok-variableName">keyByteNumber</span>: <span class="tok-number">2</span>, <span class="tok-variableName">keyByteA</span>: <span class="tok-number">96</span>, <span class="tok-variableName">keyByteB</span>: <span class="tok-number">254</span>, <span class="tok-variableName">keyByteC</span>: <span class="tok-number">23</span>),
+    <span class="tok-comment">// ... more key bytes</span>
+};
+
+<span class="tok-keyword">var</span> <span class="tok-variableName tok-definition">pkvKeyGenerator</span> <span class="tok-operator">=</span> <span class="tok-keyword">new</span> <span class="tok-variableName">PkvKeyGenerator</span>();
+<span class="tok-typeName">int</span> <span class="tok-variableName">seed</span> <span class="tok-operator">=</span> <span class="tok-keyword">new</span> <span class="tok-variableName">Random</span>().<span class="tok-variableName">Next</span>(<span class="tok-number">0</span>, <span class="tok-typeName">int</span>.<span class="tok-variableName">MaxValue</span>);
+<span class="tok-typeName">string</span> <span class="tok-variableName">licenceKey</span> <span class="tok-operator">=</span> <span class="tok-variableName">pkvKeyGenerator</span>.<span class="tok-variableName">MakeKey</span>(<span class="tok-variableName">seed</span>, <span class="tok-variableName">keyByteSets</span>);
+</code></pre>
+<p><strong>Key Verification</strong> (client application):</p>
+<pre><code class="language-csharp"><span class="tok-comment">// Only include a subset of the key bytes used in generation</span>
+<span class="tok-keyword">var</span> <span class="tok-variableName tok-definition">keyByteSets</span> <span class="tok-operator">=</span> <span class="tok-keyword">new</span>[]
+{
+    <span class="tok-keyword">new</span> <span class="tok-variableName">KeyByteSet</span>(<span class="tok-variableName">keyByteNumber</span>: <span class="tok-number">1</span>, <span class="tok-variableName">keyByteA</span>: <span class="tok-number">58</span>, <span class="tok-variableName">keyByteB</span>: <span class="tok-number">6</span>, <span class="tok-variableName">keyByteC</span>: <span class="tok-number">97</span>),
+    <span class="tok-keyword">new</span> <span class="tok-variableName">KeyByteSet</span>(<span class="tok-variableName">keyByteNumber</span>: <span class="tok-number">5</span>, <span class="tok-variableName">keyByteA</span>: <span class="tok-number">62</span>, <span class="tok-variableName">keyByteB</span>: <span class="tok-number">4</span>, <span class="tok-variableName">keyByteC</span>: <span class="tok-number">234</span>),
+    <span class="tok-keyword">new</span> <span class="tok-variableName">KeyByteSet</span>(<span class="tok-variableName">keyByteNumber</span>: <span class="tok-number">8</span>, <span class="tok-variableName">keyByteA</span>: <span class="tok-number">6</span>, <span class="tok-variableName">keyByteB</span>: <span class="tok-number">88</span>, <span class="tok-variableName">keyByteC</span>: <span class="tok-number">32</span>)
+};
+
+<span class="tok-keyword">var</span> <span class="tok-variableName tok-definition">pkvKeyVerifier</span> <span class="tok-operator">=</span> <span class="tok-keyword">new</span> <span class="tok-variableName">PkvKeyVerifier</span>();
+<span class="tok-keyword">var</span> <span class="tok-variableName tok-definition">result</span> <span class="tok-operator">=</span> <span class="tok-variableName">pkvKeyVerifier</span>.<span class="tok-variableName">VerifyKey</span>(
+    <span class="tok-variableName">key</span>: <span class="tok-variableName">licenceKey</span>,
+    <span class="tok-variableName">keyByteSetsToVerify</span>: <span class="tok-variableName">keyByteSets</span>,
+    <span class="tok-variableName">totalKeyByteSets</span>: <span class="tok-number">8</span>,
+    <span class="tok-variableName">blackListedSeeds</span>: <span class="tok-atom">null</span>
+);
+</code></pre>
+<h3 id="github-metrics">GitHub Metrics</h3>
+<p>While specific star and fork counts fluctuate, this repository has gained recognition in the .NET community as a go-to solution for implementing licence key systems. The project is actively maintained and includes comprehensive documentation, unit tests, and sample applications demonstrating both key generation and verification.</p>
+<h3 id="installation">Installation</h3>
+<p>Available as NuGet packages:</p>
+<ul>
+<li><strong>AppSoftware.LicenceEngine.KeyGenerator</strong> - For your key generation server</li>
+<li><strong>AppSoftware.LicenceEngine.KeyVerification</strong> - For your distributed application</li>
+</ul>
+<pre><code class="language-bash">dotnet add package AppSoftware.LicenceEngine.KeyGenerator
+dotnet add package AppSoftware.LicenceEngine.KeyVerification
+</code></pre>
+<hr>
+<h2 id="net-project-rename">.NET Project Rename</h2>
+<p><strong>Repository:</strong> <a href="https://github.com/appsoftwareltd/dotnet-project-rename">github.com/appsoftwareltd/dotnet-project-rename</a></p>
+<h3 id="what-it-does-2">What It Does</h3>
+<p>.NET Project Rename is a powerful command-line tool that performs deep, recursive find-and-replace operations across:</p>
+<ul>
+<li><strong>File contents</strong></li>
+<li><strong>File names</strong></li>
+<li><strong>Directory names</strong></li>
+</ul>
+<p>This is invaluable when you're reusing an existing project as a template for a new project and need to rename namespaces, project names, and references throughout the entire codebase.</p>
+<p><img src="assets/open-source-tools-and-web-utilities-from-app-softw.d0e761c1-e844-4e68-a57d-7be39742df86.png" alt=".NET Project Rename Tool Console Output"></p>
+<h3 id="the-problem-it-solves">The Problem It Solves</h3>
+<p>Imagine you have a project called <code>Foo.Bar</code> used throughout namespaces, project names, file names, and folder names. You want to transform it into <code>My.New.Project</code>. Manually renaming everything would be tedious and error-prone. This tool automates the entire process.</p>
+<h3 id="key-features-2">Key Features</h3>
+<ul>
+<li><strong>Recursive Processing</strong>: Operates on all files and directories within the specified path</li>
+<li><strong>Case-Sensitive Replacement</strong>: Precise control over what gets replaced</li>
+<li><strong>Smart File Handling</strong>: Automatically avoids corrupting version control and IDE directories (<code>.git</code>, <code>.svn</code>, <code>.vs</code>)</li>
+<li><strong>Case-Only Rename Support</strong>: Handles case-only changes correctly (e.g., <code>foo</code> to <code>Foo</code>)</li>
+<li><strong>Interactive or Scripted</strong>: Run with command-line arguments or in interactive mode</li>
+<li><strong>Remote Execution</strong>: Can be run directly from GitHub without downloading</li>
+</ul>
+<h3 id="how-it-works-2">How It Works</h3>
+<p>Built using <strong>dotnet-script</strong>, this tool runs as a <code>.csx</code> file, making it lightweight and easy to execute without compilation.</p>
+<h3 id="usage-examples">Usage Examples</h3>
+<p><strong>Interactive Mode:</strong></p>
+<pre><code class="language-bash">dotnet script https://raw.githubusercontent.com/appsoftwareltd/dotnet-project-rename/master/src/dotnet-script/app.csx
+</code></pre>
+<p>The tool will prompt you for:</p>
+<ul>
+<li>Root directory path</li>
+<li>Find text (case sensitive)</li>
+<li>Replace text (case sensitive)</li>
+</ul>
+<p><strong>Command-Line Mode:</strong></p>
+<pre><code class="language-bash">dotnet script https://raw.githubusercontent.com/appsoftwareltd/dotnet-project-rename/master/src/dotnet-script/app.csx <span class="tok-propertyName">--</span> <span class="tok-propertyName">-d</span> <span class="tok-string">&quot;&lt;Start Directory&gt;&quot;</span> <span class="tok-propertyName">-f</span> <span class="tok-string">&quot;&lt;Find Text&gt;&quot;</span> <span class="tok-propertyName">-r</span> <span class="tok-string">&quot;&lt;Replace Text&gt;&quot;</span>
+</code></pre>
+<h3 id="command-line-options">Command-Line Options</h3>
+<ul>
+<li><code>-d</code> : Directory path</li>
+<li><code>-f</code> : Find text</li>
+<li><code>-r</code> : Replace text</li>
+<li><code>--help</code> : Display help text</li>
+</ul>
+<h3 id="example-output">Example Output</h3>
+<p>After execution, you'll see a summary like:</p>
+<pre><code>Finished.
+Replaced 156 occurrences in files
+Replaced 23 occurrences in file names
+Replaced 8 occurrences in directory names
+</code></pre>
+<h3 id="prerequisites">Prerequisites</h3>
+<ul>
+<li>.NET Core 2.2 runtime or higher</li>
+<li>dotnet-script tool (install via <code>dotnet tool install -g dotnet-script</code>)</li>
+</ul>
+<h3 id="github-metrics-2">GitHub Metrics</h3>
+<p>This utility has proven popular among developers who regularly work with project templates or need to fork and rebrand existing codebases. Its simplicity and effectiveness have made it a go-to tool for project renaming tasks.</p>
+<hr>
+<h2 id="free-web-based-developer-tools">Free Web-Based Developer Tools</h2>
+<p>In addition to our open-source .NET tools, App Software Ltd provides three powerful, <strong>privacy-focused</strong> web-based utilities that run entirely in your browser. These tools require no installation, no registration, and process all data client-side to ensure your privacy.</p>
+<h3 id="text-formatter">Text Formatter</h3>
+<p><strong>URL:</strong> <a href="https://www.appsoftware.com/tools/utilities/text-formatter">appsoftware.com/tools/utilities/text-formatter</a></p>
+<p><img src="assets/open-source-tools-and-web-utilities-from-app-softw-2.686546d0-9585-4409-b14b-337c650bbe4a.png" alt="Text Formatter Tool"></p>
+<h4 id="what-it-does-3">What It Does</h4>
+<p>Text Formatter is a versatile tool for formatting, validating, and transforming text data. It provides comprehensive support for JSON, XML, HTML, and plain text operations including beautification, minification, validation, and Base64 encoding/decoding.</p>
+<h4 id="key-features-3">Key Features</h4>
+<ul>
+<li><strong>Multi-Format Support</strong>: JSON, XML, HTML, and plain text processing</li>
+<li><strong>JSON Operations</strong>:
+<ul>
+<li>Format/beautify JSON with configurable indentation</li>
+<li>Minify JSON to reduce file size</li>
+<li>Validate JSON syntax with detailed error reporting</li>
+<li>Sort JSON keys alphabetically</li>
+</ul>
+</li>
+<li><strong>XML Processing</strong>:
+<ul>
+<li>Format/beautify XML with proper indentation</li>
+<li>Validate XML structure</li>
+</ul>
+</li>
+<li><strong>HTML Beautification</strong>: Format messy HTML code</li>
+<li><strong>Text Utilities</strong>:
+<ul>
+<li>Base64 encoding and decoding</li>
+<li>Remove line breaks from multi-line text</li>
+</ul>
+</li>
+<li><strong>Real-Time Processing</strong>: Instant feedback as you work</li>
+<li><strong>Copy to Clipboard</strong>: One-click copying of formatted results</li>
+</ul>
+<h4 id="use-cases">Use Cases</h4>
+<ul>
+<li><strong>API Development</strong>: Format and validate JSON responses during API testing</li>
+<li><strong>Data Transformation</strong>: Convert between different text encodings</li>
+<li><strong>Code Review</strong>: Beautify minified JSON/XML for readability</li>
+<li><strong>Configuration Management</strong>: Validate and format configuration files</li>
+<li><strong>Web Development</strong>: Clean up HTML markup</li>
+</ul>
+<hr>
+<h3 id="image-processor-and-optimizer">Image Processor and Optimizer</h3>
+<p><strong>URL:</strong> <a href="https://www.appsoftware.com/tools/utilities/image-processor">appsoftware.com/tools/utilities/image-processor</a></p>
+<p><img src="assets/open-source-tools-and-web-utilities-from-app-softw-3.869cd332-2589-4070-b47c-fb719aec515a.png" alt="Image Processor and Optimizer Tool"></p>
+<h4 id="what-it-does-4">What It Does</h4>
+<p>The Image Processor and Optimizer is a free, <strong>100% privacy-focused</strong> online tool that processes images entirely in your web browser. Unlike traditional image optimisation services that require uploading your files to remote servers, this tool performs all operations client-side using JavaScript and browser APIs, ensuring your images <strong>never leave your device</strong>.</p>
+<h4 id="key-features-4">Key Features</h4>
+<ul>
+<li><strong>Format Conversion</strong>: Convert between JPEG, PNG, WebP, BMP, TIFF, and GIF formats</li>
+<li><strong>SVG to Raster Conversion</strong>: Convert vector SVG files (logos, icons, illustrations) to raster formats</li>
+<li><strong>Image Optimization</strong>: Adjust quality settings (1-100%) for JPEG and WebP to balance file size and visual quality</li>
+<li><strong>Intelligent Resizing</strong>: Resize images with automatic aspect ratio preservation using max width/height controls</li>
+<li><strong>Black &amp; White Conversion</strong>: Transform color images to grayscale instantly</li>
+<li><strong>Bulk Processing</strong>: Upload and process multiple images simultaneously with consistent settings</li>
+<li><strong>Progress Tracking</strong>: Monitor real-time progress with visual indicators for each image</li>
+<li><strong>Smart Naming</strong>: Processed images include parameter suffixes (e.g., <code>_optimized_resized_q85_w800_h600.jpg</code>)</li>
+<li><strong>Complete Privacy</strong>: All processing happens in your browser - your images never touch our servers</li>
+</ul>
+<h4 id="supported-formats">Supported Formats</h4>
+<ul>
+<li><strong>Input</strong>: JPEG/JPG, PNG, WebP, BMP, TIFF, GIF, SVG</li>
+<li><strong>Output</strong>: JPEG/JPG, PNG, WebP, BMP, TIFF, GIF</li>
+</ul>
+<p><strong>WebP Support</strong>: Native WebP encoding and decoding through browser APIs, offering superior compression compared to JPEG or PNG. Supported in all modern browsers including Chrome, Firefox, Edge, Safari 14+, and Opera.</p>
+<h4 id="common-use-cases">Common Use Cases</h4>
+<ul>
+<li><strong>Web Optimization</strong>: Convert images to WebP format for faster page loads</li>
+<li><strong>SVG to Raster</strong>: Convert vector logos and icons to PNG or JPEG for email signatures, social media, or legacy systems</li>
+<li><strong>Social Media</strong>: Resize images to meet platform-specific dimension requirements</li>
+<li><strong>Photography</strong>: Quick format conversion and resizing for online portfolios or galleries</li>
+<li><strong>E-commerce</strong>: Batch process product images to consistent dimensions and formats</li>
+<li><strong>Document Processing</strong>: Convert colour scans to grayscale to reduce file sizes</li>
+<li><strong>Storage Optimization</strong>: Compress images to save cloud storage space without visible quality loss</li>
+</ul>
+<h4 id="privacy-security">Privacy &amp; Security</h4>
+<p>Your privacy is paramount. This image processor operates entirely within your web browser using client-side JavaScript. <strong>No images are uploaded to our servers or any third-party service.</strong> This means:</p>
+<ul>
+<li>Complete privacy - your images remain on your device</li>
+<li>No data retention - we never see your images</li>
+<li>No usage tracking - we cannot track what you process</li>
+<li>Offline capability - works without internet after initial page load</li>
+<li>No file size limits - process images of any size your browser can handle</li>
+</ul>
+<h4 id="technical-details">Technical Details</h4>
+<p>The tool uses a hybrid processing approach for optimal compatibility and performance:</p>
+<ul>
+<li><strong>Canvas API</strong>: Handles WebP input/output using native browser capabilities</li>
+<li><strong>Jimp Library</strong>: Processes PNG, JPEG, BMP, TIFF, and GIF formats</li>
+<li><strong>Client-Side Only</strong>: All code runs in your browser with no server dependencies</li>
+</ul>
+<hr>
+<h3 id="scrap-pad">Scrap Pad</h3>
+<p><strong>URL:</strong> <a href="https://www.appsoftware.com/tools/utilities/scrap-pad">appsoftware.com/tools/utilities/scrap-pad</a></p>
+<p><img src="assets/open-source-tools-and-web-utilities-from-app-softw-4.f9318728-98d2-40ba-9b9b-be3fc4b0724f.png" alt="Software Developer Scrap Pad Tool"></p>
+<h4 id="what-it-does-5">What It Does</h4>
+<p>Scrap Pad is a simple online note-taking tool that allows you to jot down and save quick notes accessible from any device with a web browser. It's perfect for capturing ideas, snippets, reminders, and temporary information you need to access across devices.</p>
+<h4 id="key-features-5">Key Features</h4>
+<ul>
+<li><strong>Multi-Device Access</strong>: Access your notes from any device with a web browser</li>
+<li><strong>Persistent Storage</strong>: Notes are saved to your account and persist across sessions</li>
+<li><strong>Clean Interface</strong>: Distraction-free writing environment</li>
+<li><strong>Instant Sync</strong>: Notes are synchronised in real-time when you save</li>
+<li><strong>Simple and Fast</strong>: No complex features - just a straightforward notepad</li>
+</ul>
+<h4 id="use-cases-2">Use Cases</h4>
+<ul>
+<li><strong>Quick Notes</strong>: Jot down ideas, reminders, or temporary information</li>
+<li><strong>Code Snippets</strong>: Store small code fragments for later reference</li>
+<li><strong>Cross-Device Clipboard</strong>: Share text between your devices</li>
+<li><strong>Meeting Notes</strong>: Capture quick notes during meetings</li>
+<li><strong>Draft Messages</strong>: Compose messages or emails before sending</li>
+</ul>
+<hr>
+<h2 id="why-these-tools-matter">Why These Tools Matter</h2>
+<p>These open-source tools and web-based utilities solve real-world problems that developers face regularly:</p>
+<ol>
+<li>
+<p><strong>dotnet-licence-key-generator</strong> addresses the common need for software licensing without requiring complex infrastructure or &quot;phone home&quot; functionality.</p>
+</li>
+<li>
+<p><strong>dotnet-project-rename</strong> eliminates hours of tedious manual find-and-replace work when bootstrapping new projects from existing codebases.</p>
+</li>
+<li>
+<p><strong>Text Formatter</strong> provides instant formatting and validation for common data formats without leaving your browser or installing plugins.</p>
+</li>
+<li>
+<p><strong>Image Processor</strong> offers professional-grade image optimisation with complete privacy - no uploads, no tracking, no data retention.</p>
+</li>
+<li>
+<p><strong>Scrap Pad</strong> simplifies cross-device note-taking without the complexity of full-featured note applications.</p>
+</li>
+</ol>
+<h3 id="open-source-commitment">Open Source Commitment</h3>
+<p>These tools are released under permissive open-source licenses:</p>
+<ul>
+<li><strong>dotnet-licence-key-generator</strong>: Creative Commons Attribution 2.0 UK License</li>
+<li><strong>dotnet-project-rename</strong>: MIT License</li>
+</ul>
+<p>App Software Ltd welcomes contributions and sponsorship from commercial users to support continued development and maintenance of these tools.</p>
+<h2 id="get-started">Get Started</h2>
+<h3 id="open-source-tools">Open Source Tools</h3>
+<p>Visit the GitHub repositories to explore the source code, view comprehensive documentation, and contribute to these projects:</p>
+<ul>
+<li><a href="https://github.com/appsoftwareltd/dotnet-licence-key-generator">dotnet-licence-key-generator</a></li>
+<li><a href="https://github.com/appsoftwareltd/dotnet-project-rename">dotnet-project-rename</a></li>
+</ul>
+<h3 id="web-based-tools">Web-Based Tools</h3>
+<p>Try these free, privacy-focused tools directly in your browser:</p>
+<ul>
+<li><a href="https://www.appsoftware.com/tools/utilities/text-formatter">Text Formatter</a> - Format and validate JSON, XML, HTML, and text</li>
+<li><a href="https://www.appsoftware.com/tools/utilities/image-processor">Image Processor</a> - Optimize and convert images with complete privacy</li>
+<li><a href="https://www.appsoftware.com/tools/utilities/scrap-pad">Scrap Pad</a> - Quick note-taking across all your devices</li>
+</ul>
+<p>Whether you're building commercial software that needs licensing, frequently creating new projects from templates, formatting data, processing images, or capturing quick notes, these tools can save you significant time and effort while maintaining professional quality standards.</p>
+<hr>
+<p>*App Software Ltd specialises in .NET development, software architecture, and cloud solutions. For bespoke software development and consulting, visit <a href="https://www.appsoftware.com">appsoftware.com</a> send a message <a href="https://www.appsoftware.com/contact">here</a>.</p>
+
+            </div>
+            <nav class="pagination" aria-label="Neighbouring posts">
+                <a class="button pagination__prev" href="hackers-painters-and-kanban-for-software-as-a-creative-process.html"><span class="button__icon">←</span><span class="button__text">Hackers, Painters and Kanban for Software as a Creative Process</span></a>
+                <a class="button pagination__next" href="new-free-favicon-icon-generator-available-on-appsoftwarecom.html"><span class="button__text">New (Free) Favicon &#x2F; Icon Generator Available on appsoftware.com</span><span class="button__icon">→</span></a>
+            </nav>
+        </article>
+    </main>
+        <footer class="footer">
+            <div class="footer__inner">
+                <div class="copyright">
+                    <span>&copy; 2026 g9n Blog</span>
+                    <span class="footer__separator" aria-hidden="true">::</span>
+                    <span>Published with <a href="https://etherpk.com" rel="noopener">EtherPK</a></span>
+                    <span class="footer__separator" aria-hidden="true">::</span><a href="feed.xml">Feed</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+        <script src="theme/search.js" defer></script>
+</body>
+</html>

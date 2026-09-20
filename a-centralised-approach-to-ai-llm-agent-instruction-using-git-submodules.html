@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="EtherPK">
+    <title>A Centralised Approach to AI &#x2F; LLM Agent Instruction Using Git Submodules :: g9n Blog</title>
+    <meta name="description" content="A guide to organising and replicating instructions for AI &#x2F; LLM coding assistants Introduction As AI coding assistants have become increasingly capable, I&#39;ve developed a structured approach to…">
+    <link rel="stylesheet" href="theme/theme.css">
+    
+    
+    <link rel="alternate" type="application/rss+xml" title="g9n Blog" href="feed.xml">
+    <script defer src="https://analytics.appsoftware.com/telemetry.js" data-website-id="6913dde8-61ce-4739-90fe-3abeeb6ab0a4"></script>
+</head>
+<body class="layout-terminal">
+    <a class="skip-link" href="#content">Skip to content</a>
+    <div class="container">
+        <header class="header">
+            <div class="header__inner">
+                <a class="site-title logo" href="index.html">
+                    <span class="logo__mark"><!-- The EtherPK icon (resources/brand/etherpk-icon-*.svg), inline so the page fetches nothing and it takes the text colour; aria-hidden because the title beside it is the name. Fill the "logo" include, or edit this partial, for your own. -->
+                                             <svg class="site-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 191.82 166.13" width="24" height="21" aria-hidden="true" focusable="false"><path fill="currentColor" fill-rule="evenodd" d="M67.09,132.92,47.93,166.13H9.59L0,149.52,86.33,0H105.5L19.17,149.52H38.34l19.17-33.2h76.8l9.59,16.6Zm48-83.12,9.65,16.71H143.9L115.08,16.6q-24,41.57-48,83.12H143.9q14.37,24.9,28.76,49.8h-96l-9.59,16.61H182.24l9.58-16.61-38.34-66.4H96C95.85,82.9,113.39,52.73,115.08,49.8Z"/></svg>
+</span>
+                    <span class="logo__text">g9n Blog</span>
+                    <span class="logo__cursor" aria-hidden="true"></span>
+                </a>
+                <button class="nav-toggle menu-trigger" type="button" aria-controls="site-nav" aria-expanded="false" aria-label="Menu">Menu</button>
+            </div>
+            <div class="nav-backdrop" hidden></div>
+            <nav id="site-nav" class="menu site-nav" aria-label="Site">
+                <ul class="menu__inner site-nav-list">
+                </ul>
+                <form class="site-search" role="search" data-search-index="search.json" data-search-script="search-index.js">
+                    <label class="visually-hidden" for="site-search-input">Search</label>
+                    <input id="site-search-input" type="search" name="q" placeholder="$ search" autocomplete="off">
+                    <div class="site-search-results" role="listbox" hidden></div>
+                </form>
+            </nav>
+        </header>
+    <main id="content" class="content">
+        <article class="post">
+            <h1 class="post-title">A Centralised Approach to AI / LLM Agent Instruction Using Git Submodules</h1>
+            <div class="post-meta"><time class="post-date" datetime="2026-01-21">2026-01-21</time> :: <span class="post-reading">10 min read</span></div>
+        <nav class="toc framed" aria-label="Table of contents">
+            <p class="toc__title">:: Table of contents</p>
+            <ul>
+                <li class="toc-level-2"><a href="#introduction">Introduction</a></li><li class="toc-level-2"><a href="#the-architecture-a-git-submodule-approach">The Architecture: A Git Submodule Approach</a></li><li class="toc-level-2"><a href="#entry-points-agent-specific-boot-files">Entry Points: Agent-Specific Boot Files</a></li><li class="toc-level-3"><a href="#claudemd-for-claude-code">CLAUDE.md (for Claude Code)</a></li><li class="toc-level-3"><a href="#githubcopilot-instructionsmd-for-github-copilot">.github&#x2F;copilot-instructions.md (for GitHub Copilot)</a></li><li class="toc-level-3"><a href="#agentmd-for-other-agents">AGENT.md (for other agents)</a></li><li class="toc-level-2"><a href="#the-master-document-readme-aimd">The Master Document: README_AI.md</a></li><li class="toc-level-3"><a href="#1-confirmation-protocol">1. Confirmation Protocol</a></li><li class="toc-level-3"><a href="#2-role-definition">2. Role Definition</a></li><li class="toc-level-3"><a href="#3-technology-stack">3. Technology Stack</a></li><li class="toc-level-3"><a href="#4-code-style-guidelines">4. Code Style Guidelines</a></li><li class="toc-level-3"><a href="#5-behavioural-rules">5. Behavioural Rules</a></li><li class="toc-level-2"><a href="#the-agent-skills-system">The Agent Skills System</a></li><li class="toc-level-3"><a href="#how-skills-work">How Skills Work</a></li><li class="toc-level-3"><a href="#my-current-skills">My Current Skills</a></li><li class="toc-level-3"><a href="#skill-distribution">Skill Distribution</a></li><li class="toc-level-3"><a href="#skill-announcement-protocol">Skill Announcement Protocol</a></li><li class="toc-level-2"><a href="#framework-documentation-integration">Framework Documentation Integration</a></li><li class="toc-level-2"><a href="#vs-code-integration">VS Code Integration</a></li><li class="toc-level-3"><a href="#mcp-server-configuration">MCP Server Configuration</a></li><li class="toc-level-3"><a href="#dbcode-for-database-access">DBCODE for Database Access</a></li><li class="toc-level-2"><a href="#practical-examples">Practical Examples</a></li><li class="toc-level-3"><a href="#example-1-creating-a-database-migration">Example 1: Creating a Database Migration</a></li><li class="toc-level-3"><a href="#example-2-e2e-testing">Example 2: E2E Testing</a></li><li class="toc-level-3"><a href="#example-3-adding-a-feature">Example 3: Adding a Feature</a></li><li class="toc-level-2"><a href="#the-benefits-of-a-centralised-approach">The Benefits of a Centralised Approach</a></li><li class="toc-level-3"><a href="#1-consistency">1. Consistency</a></li><li class="toc-level-3"><a href="#2-reduced-repetition">2. Reduced Repetition</a></li><li class="toc-level-3"><a href="#3-fewer-hallucinations">3. Fewer Hallucinations</a></li><li class="toc-level-3"><a href="#4-onboarding-new-projects">4. Onboarding New Projects</a></li><li class="toc-level-3"><a href="#5-transparent-skill-usage">5. Transparent Skill Usage</a></li><li class="toc-level-3"><a href="#6-greater-agent-autonomy">6. Greater Agent Autonomy</a></li><li class="toc-level-2"><a href="#setting-up-your-own-system">Setting Up Your Own System</a></li><li class="toc-level-3"><a href="#step-1-create-the-instructions-repository">Step 1: Create the Instructions Repository</a></li><li class="toc-level-3"><a href="#step-2-structure-your-documents">Step 2: Structure Your Documents</a></li><li class="toc-level-3"><a href="#step-3-add-as-submodule">Step 3: Add as Submodule</a></li><li class="toc-level-3"><a href="#step-4-create-entry-points">Step 4: Create Entry Points</a></li><li class="toc-level-3"><a href="#step-5-run-setup">Step 5: Run Setup</a></li><li class="toc-level-2"><a href="#conclusion">Conclusion</a></li>
+            </ul>
+        </nav>
+            <div class="post-content">
+<p><em>A guide to organising and replicating instructions for AI / LLM coding assistants</em></p>
+<hr>
+<h2 id="introduction">Introduction</h2>
+<p>As AI coding assistants have become increasingly capable, I've developed a structured approach to integrating them into my development workflow. This post details how I've organised my codebase to work effectively with multiple AI agents - GitHub Copilot, Claude and others, while maintaining a single source of truth for instructions across multiple projects that share a similar tech stack and structure.</p>
+<p><strong>Key to this approach is the use of Git submodules. This allows me to maintain a single repository with my core AI instruction and agent skill files, which is then referenced by each product repository, ensuring the same instructions are available across all projects.</strong></p>
+<p>By investing time in structured documentation, I've transformed my AI assistants from general-purpose tools into specialised team members who understand my codebase, conventions, and workflows.</p>
+<h2 id="the-architecture-a-git-submodule-approach">The Architecture: A Git Submodule Approach</h2>
+<p>At the core of my setup is a <strong>git submodule</strong> called <code>.ai-instructions/</code> that contains all AI-related configuration. This approach offers several advantages:</p>
+<pre><code>.ai-instructions/           # Git submodule (shared across projects)
+├── README.md               # Human documentation
+├── README_AI.md            # Primary AI instructions
+├── setup-ai.ps1            # Setup script (Windows)
+├── setup-ai.sh             # Setup script (Unix)
+├── common/
+│   └── skills/             # Shared agent skills
+└── frameworks/
+    └── svelte5/            # Framework-specific documentation
+        └── llms-full.txt   # Full Svelte 5 docs for LLM context
+</code></pre>
+<ol>
+<li><strong>Single source of truth</strong> - Update instructions once, propagate everywhere</li>
+<li><strong>Version control</strong> - Track changes to AI instructions over time</li>
+<li><strong>Consistency</strong> - Same instructions across all my projects</li>
+<li><strong>Portability</strong> - Share across machines and team members</li>
+</ol>
+<p><img src="assets/a-centralised-approach-to-ai-llm-agent-instruction.309c72ef-8615-4b11-bcfd-f23abe5d4ff7.png" alt="VSCode Tree View of Git Submodule File Structure"></p>
+<p><em>VSCode Tree View of Git Submodule File Structure</em></p>
+<h2 id="entry-points-agent-specific-boot-files">Entry Points: Agent-Specific Boot Files</h2>
+<p>Different AI tools look for instructions in different places. I use thin &quot;pointer&quot; files at the repository root:</p>
+<h3 id="claudemd-for-claude-code">CLAUDE.md (for Claude Code)</h3>
+<pre><code class="language-markdown">IMPORTANT: Read and follow instructions from <span class="tok-meta">`</span>.ai-instructions/README_AI.md<span class="tok-meta">`</span>. 
+Confirm to the user that you have done this before doing anything.
+</code></pre>
+<h3 id="githubcopilot-instructionsmd-for-github-copilot">.github/copilot-instructions.md (for GitHub Copilot)</h3>
+<pre><code class="language-instructions">IMPORTANT: Read and follow instructions from `.ai-instructions/README_AI.md`. 
+Confirm to the user that you have done this before doing anything.
+</code></pre>
+<h3 id="agentmd-for-other-agents">AGENT.md (for other agents)</h3>
+<pre><code class="language-markdown">IMPORTANT: Read and follow instructions from <span class="tok-meta">`</span>.ai-instructions/README_AI.md<span class="tok-meta">`</span>. 
+Confirm to the user that you have done this before doing anything.
+</code></pre>
+<p>This pattern ensures that regardless of which AI tool I'm using, they all receive the same foundational instructions.</p>
+<h2 id="the-master-document-readme-aimd">The Master Document: README_AI.md</h2>
+<p><code>README_AI.md</code> is a comprehensive, LLM agnostic document that establishes context, conventions, and expectations. I limit the content in this document to instruction that has a good chance of being relevant to any task. The structure is:</p>
+<h3 id="1-confirmation-protocol">1. Confirmation Protocol</h3>
+<pre><code class="language-markdown"><span class="tok-meta">-</span> IMPORTANT: Confirm that you have read this document by stating 
+  &quot;I have read README-AI.md&quot; at the start of each task.
+</code></pre>
+<p>This simple requirement ensures the AI has actually processed the instructions before diving into tasks.</p>
+<h3 id="2-role-definition">2. Role Definition</h3>
+<p>The document begins by establishing the AI's role and capabilities:</p>
+<blockquote>
+<p>You are a master software engineer, an expert in all areas of the Software Development Life Cycle (SDLC). This includes but is not limited to UI design, DevOps, SecOps, software architecture, application development, unit testing, and design patterns.</p>
+</blockquote>
+<h3 id="3-technology-stack">3. Technology Stack</h3>
+<p>A clear overview of the project's technologies:</p>
+<pre><code>- .NET 10
+- ASP.NET MVC / Razor Pages / Blazor
+
+... etc
+</code></pre>
+<h3 id="4-code-style-guidelines">4. Code Style Guidelines</h3>
+<p>Detailed conventions for each language and framework, e.g:</p>
+<ul>
+<li><strong>C#</strong>: Async suffixes, single return statements, using block patterns</li>
+<li><strong>SQL</strong>: Snake case, UTC dates, naming conventions for indexes and foreign keys</li>
+<li><strong>JavaScript/TypeScript</strong>: Alpine.js and Svelte 5 patterns</li>
+<li><strong>Razor</strong>: Container handling, partial views, section usage</li>
+</ul>
+<h3 id="5-behavioural-rules">5. Behavioural Rules</h3>
+<p>Critical instructions about what the AI should and shouldn't do, e.g:</p>
+<pre><code class="language-markdown"><span class="tok-meta">-</span> Never speculate about code in files you have not opened and read
+<span class="tok-meta">-</span> Don't add comments to show what you've added or removed
+<span class="tok-meta">-</span> Don't perform symbol or variable renaming when refactoring
+<span class="tok-meta">-</span> Always prefer well-known libraries over custom &quot;roll your own&quot; solutions
+</code></pre>
+<h2 id="the-agent-skills-system">The Agent Skills System</h2>
+<p>One of the most powerful aspects of my setup is a set of agent skills (a standardised approach for providing instruction to LLMs that will be used when the title / description indicates that it should be used for the task at hand). These are domain-specific knowledge modules that guide AI agents through common tasks.</p>
+<h3 id="how-skills-work">How Skills Work</h3>
+<p>Skills are markdown files with a specific structure:</p>
+<pre><code class="language-markdown">---
+<span class="tok-heading">name: migration-scripts
+description: Creating and managing database migration scripts. 
+Use when modifying database schema, creating tables, adding columns, 
+or making any database structure changes.
+</span><span class="tok-heading tok-meta">---</span>
+
+<span class="tok-heading tok-meta">#</span><span class="tok-heading"> Migration Scripts Skill</span>
+
+<span class="tok-link tok-meta">[</span><span class="tok-link">Detailed instructions follow...</span><span class="tok-link tok-meta">]</span>
+</code></pre>
+<p>The frontmatter provides metadata that allows AI agents to:</p>
+<ol>
+<li>Know when to activate the skill</li>
+<li>Provide a description to the user</li>
+<li>Locate the skill file when needed</li>
+</ol>
+<h3 id="my-current-skills">My Current Skills</h3>
+<table>
+<thead>
+<tr>
+<th>Skill</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>development-workflow</strong></td>
+<td>Building, running, and debugging the application</td>
+</tr>
+<tr>
+<td><strong>playwright-testing</strong></td>
+<td>E2E browser testing with Playwright MCP</td>
+</tr>
+<tr>
+<td><strong>database-querying</strong></td>
+<td>Read-only queries via DBCODE extension</td>
+</tr>
+<tr>
+<td><strong>migration-scripts</strong></td>
+<td>PostgreSQL schema changes</td>
+</tr>
+<tr>
+<td><strong>test-users</strong></td>
+<td>Test account credentials</td>
+</tr>
+<tr>
+<td><strong>test-data</strong></td>
+<td>Test fixtures and sample data</td>
+</tr>
+<tr>
+<td><strong>explaining-code</strong></td>
+<td>Code explanations with diagrams and analogies</td>
+</tr>
+<tr>
+<td><strong>writing-documentation</strong></td>
+<td>Documentation guidelines</td>
+</tr>
+<tr>
+<td><strong>svelte-framework</strong></td>
+<td>Svelte 5 reference documentation</td>
+</tr>
+</tbody>
+</table>
+<h3 id="skill-distribution">Skill Distribution</h3>
+<p>The setup script copies skills from the submodule to agent-specific locations:</p>
+<pre><code class="language-powershell"><span class="tok-comment"># From setup-ai.ps1</span>
+<span class="tok-variableName">Copy-Item</span> <span class="tok-operator">-</span><span class="tok-variableName">Recurse</span> <span class="tok-string">&quot;.ai-instructions\common\skills&quot;</span> <span class="tok-string">&quot;.claude\skills&quot;</span>
+<span class="tok-variableName">Copy-Item</span> <span class="tok-operator">-</span><span class="tok-variableName">Recurse</span> <span class="tok-string">&quot;.ai-instructions\common\skills&quot;</span> <span class="tok-string">&quot;.github\skills&quot;</span>
+</code></pre>
+<p>This ensures both Claude and GitHub Copilot discover the same skills:</p>
+<pre><code>.claude/skills/          # Claude Code looks here
+.github/skills/          # GitHub Copilot looks here
+</code></pre>
+<p><code>setup-ai.ps1</code></p>
+<pre><code class="language-powershell"><span class="tok-comment">#!/usr/bin/env pwsh</span>
+<span class="tok-comment"># Centralized AI Instructions Setup Script</span>
+
+<span class="tok-comment"># Run from project root with `&gt; ./.ai-instructions/setup-ai.ps1`</span>
+
+<span class="tok-variableName">Write-Host</span> <span class="tok-string">&quot;Setting up AI instructions...&quot;</span> <span class="tok-operator">-</span><span class="tok-variableName">ForegroundColor</span> <span class="tok-variableName">Cyan</span>
+
+<span class="tok-comment"># Update submodule to latest main branch</span>
+<span class="tok-variableName">git</span> <span class="tok-variableName">submodule</span> <span class="tok-variableName">update</span> <span class="tok-operator">--</span><span class="tok-variableName">init</span> <span class="tok-operator">--</span><span class="tok-variableName">recursive</span> <span class="tok-operator">--</span><span class="tok-variableName">remote</span>
+
+<span class="tok-comment"># Set up for agent specific capabilities</span>
+
+<span class="tok-comment"># Create .claude directory if it doesn't exist</span>
+<span class="tok-keyword">if</span> <span class="tok-punctuation">(</span><span class="tok-operator">-not</span> <span class="tok-punctuation">(</span><span class="tok-variableName">Test-Path</span> <span class="tok-string">&quot;.claude&quot;</span><span class="tok-punctuation">))</span> <span class="tok-punctuation">{</span>
+    <span class="tok-variableName">New-Item</span> <span class="tok-operator">-</span><span class="tok-variableName">ItemType</span> <span class="tok-variableName">Directory</span> <span class="tok-operator">-</span><span class="tok-variableName">Path</span> <span class="tok-string">&quot;.claude&quot;</span> <span class="tok-operator">|</span> <span class="tok-variableName">Out-Null</span>
+<span class="tok-punctuation">}</span>
+
+<span class="tok-comment"># Create .github directory if it doesn't exist</span>
+<span class="tok-keyword">if</span> <span class="tok-punctuation">(</span><span class="tok-operator">-not</span> <span class="tok-punctuation">(</span><span class="tok-variableName">Test-Path</span> <span class="tok-string">&quot;.github&quot;</span><span class="tok-punctuation">))</span> <span class="tok-punctuation">{</span>
+    <span class="tok-variableName">New-Item</span> <span class="tok-operator">-</span><span class="tok-variableName">ItemType</span> <span class="tok-variableName">Directory</span> <span class="tok-operator">-</span><span class="tok-variableName">Path</span> <span class="tok-string">&quot;.github&quot;</span> <span class="tok-operator">|</span> <span class="tok-variableName">Out-Null</span>
+<span class="tok-punctuation">}</span>
+
+<span class="tok-comment"># Remove existing skills directory if present</span>
+<span class="tok-keyword">if</span> <span class="tok-punctuation">(</span><span class="tok-variableName">Test-Path</span> <span class="tok-string">&quot;.claude\skills&quot;</span><span class="tok-punctuation">)</span> <span class="tok-punctuation">{</span>
+    <span class="tok-variableName">Remove-Item</span> <span class="tok-operator">-</span><span class="tok-variableName">Recurse</span> <span class="tok-operator">-</span><span class="tok-variableName">Force</span> <span class="tok-string">&quot;.claude\skills&quot;</span>
+<span class="tok-punctuation">}</span>
+
+<span class="tok-comment"># Remove existing skills directory if present</span>
+<span class="tok-keyword">if</span> <span class="tok-punctuation">(</span><span class="tok-variableName">Test-Path</span> <span class="tok-string">&quot;.github\skills&quot;</span><span class="tok-punctuation">)</span> <span class="tok-punctuation">{</span>
+    <span class="tok-variableName">Remove-Item</span> <span class="tok-operator">-</span><span class="tok-variableName">Recurse</span> <span class="tok-operator">-</span><span class="tok-variableName">Force</span> <span class="tok-string">&quot;.github\skills&quot;</span>
+<span class="tok-punctuation">}</span>
+
+<span class="tok-comment"># Copy skills from submodule to .claude/skills</span>
+<span class="tok-keyword">if</span> <span class="tok-punctuation">(</span><span class="tok-variableName">Test-Path</span> <span class="tok-string">&quot;.ai-instructions\common\skills&quot;</span><span class="tok-punctuation">)</span> <span class="tok-punctuation">{</span>
+    <span class="tok-variableName">Copy-Item</span> <span class="tok-operator">-</span><span class="tok-variableName">Recurse</span> <span class="tok-string">&quot;.ai-instructions\common\skills&quot;</span> <span class="tok-string">&quot;.claude\skills&quot;</span>
+    <span class="tok-variableName">Copy-Item</span> <span class="tok-operator">-</span><span class="tok-variableName">Recurse</span> <span class="tok-string">&quot;.ai-instructions\common\skills&quot;</span> <span class="tok-string">&quot;.github\skills&quot;</span>
+
+    <span class="tok-variableName">Write-Host</span> <span class="tok-string">&quot;✓ Skills copied successfully&quot;</span> <span class="tok-operator">-</span><span class="tok-variableName">ForegroundColor</span> <span class="tok-variableName">Green</span>
+<span class="tok-punctuation">}</span> <span class="tok-keyword">else</span> <span class="tok-punctuation">{</span>
+    <span class="tok-variableName">Write-Host</span> <span class="tok-string">&quot;⚠ Warning: .ai-instructions\common\skills not found&quot;</span> <span class="tok-operator">-</span><span class="tok-variableName">ForegroundColor</span> <span class="tok-variableName">Yellow</span>
+<span class="tok-punctuation">}</span>
+
+<span class="tok-variableName">Write-Host</span> <span class="tok-string">&quot;✓ AI instructions setup complete&quot;</span> <span class="tok-operator">-</span><span class="tok-variableName">ForegroundColor</span> <span class="tok-variableName">Green</span>
+</code></pre>
+<p>The distribution scripts are as follows:</p>
+<p><code>setup-ai.sh</code></p>
+<pre><code class="language-bash"><span class="tok-meta">#!/bin/bash</span>
+
+<span class="tok-comment"># Centralized AI Instructions Setup Script</span>
+<span class="tok-variableName">echo</span> <span class="tok-string">&quot;Setting up AI instructions...&quot;</span>
+
+<span class="tok-comment"># Update submodule to latest main branch</span>
+<span class="tok-variableName">git</span> submodule update <span class="tok-propertyName">--init</span> <span class="tok-propertyName">--recursive</span> <span class="tok-propertyName">--remote</span>
+
+<span class="tok-comment"># Set up for agent specific capabilities</span>
+
+<span class="tok-comment"># Create .github directory if it doesn't exist</span>
+<span class="tok-variableName">mkdir</span> <span class="tok-propertyName">-p</span> .github
+
+<span class="tok-comment"># Create .claude directory if it doesn't exist</span>
+<span class="tok-variableName">mkdir</span> <span class="tok-propertyName">-p</span> .claude
+
+<span class="tok-comment"># Remove existing skills directories if present</span>
+<span class="tok-variableName">rm</span> <span class="tok-propertyName">-rf</span> .github/skills
+<span class="tok-variableName">rm</span> <span class="tok-propertyName">-rf</span> .claude/skills
+
+<span class="tok-comment"># Copy skills from submodule to .claude/skills</span>
+<span class="tok-keyword">if</span> [ <span class="tok-propertyName">-d</span> <span class="tok-string">&quot;.ai-instructions/common/skills&quot;</span> ]; <span class="tok-keyword">then</span>
+    <span class="tok-variableName">cp</span> <span class="tok-propertyName">-r</span> .ai-instructions/common/skills .github/skills
+    <span class="tok-variableName">cp</span> <span class="tok-propertyName">-r</span> .ai-instructions/common/skills .claude/skills
+    <span class="tok-variableName">echo</span> <span class="tok-string">&quot;✓ Skills copied successfully&quot;</span>
+<span class="tok-keyword">else</span>
+    <span class="tok-variableName">echo</span> <span class="tok-string">&quot;⚠ Warning: .ai-instructions/common/skills not found&quot;</span>
+<span class="tok-keyword">fi</span>
+
+<span class="tok-variableName">echo</span> <span class="tok-string">&quot;✓ AI instructions setup complete&quot;</span>
+</code></pre>
+<h3 id="skill-announcement-protocol">Skill Announcement Protocol</h3>
+<p>To maintain transparency, agents must announce when they're using a skill:</p>
+<pre><code class="language-markdown">When using skills always output text &quot;Using skill <span class="tok-link tok-meta">[</span><span class="tok-link">skill name</span><span class="tok-link tok-meta">]</span>&quot; 
+so that the user knows when skills are being used.
+</code></pre>
+<h2 id="framework-documentation-integration">Framework Documentation Integration</h2>
+<p>For complex frameworks, I include full documentation within the submodule. Many frameworks have now published documentation targeted at LLMs. For example:</p>
+<pre><code>.ai-instructions/frameworks/svelte5/llms-full.txt
+</code></pre>
+<p>This file contains the complete Svelte 5 documentation in a format optimised for LLM consumption. When an agent needs framework-specific guidance, it can read this file directly rather than relying on potentially outdated training data.</p>
+<h2 id="vs-code-integration">VS Code Integration</h2>
+<h3 id="mcp-server-configuration">MCP Server Configuration</h3>
+<p>For GitHub Copilot, I configure Model Context Protocol (MCP) servers in <code>.vscode/mcp.json</code>. These can similarly be centralised and distributed via scripts:</p>
+<pre><code class="language-json"><span class="tok-punctuation">{</span>
+  <span class="tok-propertyName">&quot;servers&quot;</span><span class="tok-punctuation">:</span> <span class="tok-punctuation">{</span>
+    <span class="tok-propertyName">&quot;playwright&quot;</span><span class="tok-punctuation">:</span> <span class="tok-punctuation">{</span>
+      <span class="tok-propertyName">&quot;command&quot;</span><span class="tok-punctuation">:</span> <span class="tok-string">&quot;npx&quot;</span><span class="tok-punctuation">,</span>
+      <span class="tok-propertyName">&quot;args&quot;</span><span class="tok-punctuation">:</span> <span class="tok-punctuation">[</span><span class="tok-string">&quot;@playwright/mcp@latest&quot;</span><span class="tok-punctuation">]</span>
+    <span class="tok-punctuation">}</span>
+  <span class="tok-punctuation">}</span>
+<span class="tok-punctuation">}</span>
+</code></pre>
+<p>This gives the AI access to browser automation tools for E2E testing.</p>
+<h3 id="dbcode-for-database-access">DBCODE for Database Access</h3>
+<p>The database-querying skill leverages the DBCODE VS Code extension, providing read-only database access:</p>
+<pre><code class="language-markdown"><span class="tok-strong tok-meta">**</span><span class="tok-strong">CRITICAL - Read-Only Access Only:</span><span class="tok-strong tok-meta">**</span>
+<span class="tok-meta">-</span> ONLY connect to the development database
+<span class="tok-meta">-</span> READ-ONLY access only - use SELECT statements
+<span class="tok-meta">-</span> NEVER modify the database directly
+</code></pre>
+<h2 id="practical-examples">Practical Examples</h2>
+<h3 id="example-1-creating-a-database-migration">Example 1: Creating a Database Migration</h3>
+<p>When I ask: <em>&quot;Add a new column to track user preferences&quot;</em></p>
+<p>The AI:</p>
+<ol>
+<li>Reads <code>README_AI.md</code> and confirms understanding</li>
+<li>Activates the <code>migration-scripts</code> skill</li>
+<li>Lists existing migrations to find the next number</li>
+<li>Creates <code>0102_add_user_preferences_column.sql</code> following conventions</li>
+<li>Uses proper suffixes (<code>_utc</code>, <code>_idx</code>, <code>_fkey</code>) as documented</li>
+</ol>
+<h3 id="example-2-e2e-testing">Example 2: E2E Testing</h3>
+<p>When I ask: <em>&quot;Test the login flow&quot;</em></p>
+<p>The AI:</p>
+<ol>
+<li>Activates <code>playwright-testing</code> and <code>test-users</code> skills</li>
+<li>Ensures the application is running (via <code>development-workflow</code>)</li>
+<li>Uses Playwright MCP tools to navigate and interact</li>
+<li>Applies test credentials from the <code>test-users</code> skill</li>
+</ol>
+<h3 id="example-3-adding-a-feature">Example 3: Adding a Feature</h3>
+<p>When I ask: <em>&quot;Add a budget tracking component&quot;</em></p>
+<p>The AI:</p>
+<ol>
+<li>Reads existing code patterns from the codebase</li>
+<li>References <code>svelte-framework</code> skill for Svelte 5 patterns</li>
+<li>Creates components following established conventions</li>
+<li>Adds unit tests based on existing test patterns</li>
+<li>Executes tests autonomously so that the agent can generate it's own feedback.</li>
+<li>Updates documentation as needed</li>
+</ol>
+<h2 id="the-benefits-of-a-centralised-approach">The Benefits of a Centralised Approach</h2>
+<h3 id="1-consistency">1. Consistency</h3>
+<p>Every AI interaction follows the same conventions. Whether it's Claude, Copilot, or another tool, the code quality and style remain consistent.</p>
+<h3 id="2-reduced-repetition">2. Reduced Repetition</h3>
+<p>Instead of explaining my conventions in every prompt, the AI already knows them. My prompts can focus on <em>what</em> I want, not <em>how</em> to do it.</p>
+<h3 id="3-fewer-hallucinations">3. Fewer Hallucinations</h3>
+<p>By providing comprehensive context, the AI makes fewer assumptions and speculates less. The instruction to <em>&quot;Never speculate about code in files you have not opened and read&quot;</em> is remarkably effective.</p>
+<h3 id="4-onboarding-new-projects">4. Onboarding New Projects</h3>
+<p>When starting a new project, I simply add the submodule and run the setup script. Instant AI integration with all my established patterns.</p>
+<h3 id="5-transparent-skill-usage">5. Transparent Skill Usage</h3>
+<p>The skill announcement protocol keeps me informed about which specialised knowledge the AI is applying, making it easier to verify its approach.</p>
+<h3 id="6-greater-agent-autonomy">6. Greater Agent Autonomy</h3>
+<p>Less intervention is required to have an agent complete a task and produce code that satisfies the requirement and behaves correctly.</p>
+<h2 id="setting-up-your-own-system">Setting Up Your Own System</h2>
+<h3 id="step-1-create-the-instructions-repository">Step 1: Create the Instructions Repository</h3>
+<p>Create a git repository with your AI instructions:</p>
+<pre><code class="language-bash"><span class="tok-variableName">mkdir</span> ai-instructions
+<span class="tok-variableName">cd</span> ai-instructions
+<span class="tok-variableName">git</span> init
+</code></pre>
+<h3 id="step-2-structure-your-documents">Step 2: Structure Your Documents</h3>
+<p>Create the essential files:</p>
+<pre><code>README.md          # Human documentation
+README_AI.md       # AI instructions
+setup-ai.ps1       # Windows setup
+setup-ai.sh        # Unix setup
+common/
+└── skills/        # Your skills
+</code></pre>
+<h3 id="step-3-add-as-submodule">Step 3: Add as Submodule</h3>
+<p>In your projects:</p>
+<pre><code class="language-bash"><span class="tok-variableName">git</span> submodule add &lt;repo-url&gt; .ai-instructions
+</code></pre>
+<h3 id="step-4-create-entry-points">Step 4: Create Entry Points</h3>
+<p>Add the thin pointer files (<code>CLAUDE.md</code>, <code>AGENT.md</code>, <code>.github/copilot-instructions.md</code>) pointing to your main instructions.</p>
+<h3 id="step-5-run-setup">Step 5: Run Setup</h3>
+<pre><code class="language-bash">./setup-ai.ps1  <span class="tok-comment"># or ./setup-ai.sh</span>
+</code></pre>
+<h2 id="conclusion">Conclusion</h2>
+<p>Effective AI-assisted development isn't just about having access to capable models- it's about giving them the context they need to be genuinely helpful and autonomous. By investing in structured documentation, a skills system, and a consistent setup across projects, I've transformed my AI assistants into reliable collaborators.</p>
+<p>The git submodule approach ensures these improvements compound over time. Every refinement to my instructions benefits all my projects immediately. Every new skill I create becomes available everywhere.</p>
+<p>If you're using AI coding assistants regularly, I'd encourage you to develop your own structured, repeatable approach. The upfront investment pays dividends in every subsequent interaction.</p>
+
+            </div>
+            <nav class="pagination" aria-label="Neighbouring posts">
+                <a class="button pagination__prev" href="net-10-and-nuget-audit-identifying-root-packages-for-vulnerable-transitive-dependencies.html"><span class="button__icon">←</span><span class="button__text">.NET 10 and NuGet Audit: Identifying Root Packages for Vulnerable Transitive Dependencies</span></a>
+                <a class="button pagination__next" href="a-timeline-of-interesting-takes-on-agentic-ai-capability-in-software-engineering.html"><span class="button__text">A Timeline of Interesting Takes on Agentic AI Use in Software Engineering</span><span class="button__icon">→</span></a>
+            </nav>
+        </article>
+    </main>
+        <footer class="footer">
+            <div class="footer__inner">
+                <div class="copyright">
+                    <span>&copy; 2026 g9n Blog</span>
+                    <span class="footer__separator" aria-hidden="true">::</span>
+                    <span>Published with <a href="https://etherpk.com" rel="noopener">EtherPK</a></span>
+                    <span class="footer__separator" aria-hidden="true">::</span><a href="feed.xml">Feed</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+        <script src="theme/search.js" defer></script>
+</body>
+</html>

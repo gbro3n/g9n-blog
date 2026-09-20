@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="EtherPK">
+    <title>Building a Light Weight Personal MCP Server for Google Data :: g9n Blog</title>
+    <meta name="description" content="I&#39;d been looking at MCP implementations for accessing my personal Google data in the various AI tools I&#39;ve been using. Zapier have an MCP offering that leverages their existing tooling to make…">
+    <link rel="stylesheet" href="theme/theme.css">
+    
+    
+    <link rel="alternate" type="application/rss+xml" title="g9n Blog" href="feed.xml">
+    <script defer src="https://analytics.appsoftware.com/telemetry.js" data-website-id="6913dde8-61ce-4739-90fe-3abeeb6ab0a4"></script>
+</head>
+<body class="layout-terminal">
+    <a class="skip-link" href="#content">Skip to content</a>
+    <div class="container">
+        <header class="header">
+            <div class="header__inner">
+                <a class="site-title logo" href="index.html">
+                    <span class="logo__mark"><!-- The EtherPK icon (resources/brand/etherpk-icon-*.svg), inline so the page fetches nothing and it takes the text colour; aria-hidden because the title beside it is the name. Fill the "logo" include, or edit this partial, for your own. -->
+                                             <svg class="site-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 191.82 166.13" width="24" height="21" aria-hidden="true" focusable="false"><path fill="currentColor" fill-rule="evenodd" d="M67.09,132.92,47.93,166.13H9.59L0,149.52,86.33,0H105.5L19.17,149.52H38.34l19.17-33.2h76.8l9.59,16.6Zm48-83.12,9.65,16.71H143.9L115.08,16.6q-24,41.57-48,83.12H143.9q14.37,24.9,28.76,49.8h-96l-9.59,16.61H182.24l9.58-16.61-38.34-66.4H96C95.85,82.9,113.39,52.73,115.08,49.8Z"/></svg>
+</span>
+                    <span class="logo__text">g9n Blog</span>
+                    <span class="logo__cursor" aria-hidden="true"></span>
+                </a>
+                <button class="nav-toggle menu-trigger" type="button" aria-controls="site-nav" aria-expanded="false" aria-label="Menu">Menu</button>
+            </div>
+            <div class="nav-backdrop" hidden></div>
+            <nav id="site-nav" class="menu site-nav" aria-label="Site">
+                <ul class="menu__inner site-nav-list">
+                </ul>
+                <form class="site-search" role="search" data-search-index="search.json" data-search-script="search-index.js">
+                    <label class="visually-hidden" for="site-search-input">Search</label>
+                    <input id="site-search-input" type="search" name="q" placeholder="$ search" autocomplete="off">
+                    <div class="site-search-results" role="listbox" hidden></div>
+                </form>
+            </nav>
+        </header>
+    <main id="content" class="content">
+        <article class="post">
+            <h1 class="post-title">Building a Light Weight Personal MCP Server for Google Data</h1>
+            <div class="post-meta"><time class="post-date" datetime="2026-03-02">2026-03-02</time> :: <span class="post-reading">4 min read</span></div>
+        <nav class="toc framed" aria-label="Table of contents">
+            <p class="toc__title">:: Table of contents</p>
+            <ul>
+                <li class="toc-level-2"><a href="#connect-mcp-demo">Connect MCP Demo</a></li><li class="toc-level-3"><a href="#features">Features</a></li><li class="toc-level-3"><a href="#google-oauth">Google OAuth</a></li><li class="toc-level-3"><a href="#connecting-an-mcp-client">Connecting an MCP Client</a></li>
+            </ul>
+        </nav>
+            <div class="post-content">
+<p>I'd been looking at MCP implementations for accessing my personal Google data in the various AI tools I've been using. <a href="https://mcp.zapier.com/mcp/servers">Zapier</a> have an MCP offering that leverages their existing tooling to make bundling and authenticating remote services easy and convenient. However, Zapier looked to prove expensive in two ways.</p>
+<p>Firstly, Zapier requires a £24/month subscription to use their service beyond 100 requests per month. That's fine for testing but not for daily integration into the tools I actually use.</p>
+<p>The second cost is subtler: context bloat. Zapier's MCP implementation exposes a broad set of generic endpoints, which may not map cleanly to the parameters you actually need to query your data efficiently. When an LLM or agent has to reason over a larger, noisier tool surface to accomplish something as simple as checking today's calendar or retrieving tasks from a specific list, it burns more tokens than necessary. At scale, that adds up.</p>
+<p>So I experimented with building a small, purpose-built MCP server. This is less convenient than Zapier in that it requires your own Google OAuth client set up in <a href="https://console.cloud.google.com/">Google Cloud Console</a> - Zapier abstracts that away with their own client. But once past that hurdle, the implementation is straightforward and you get precise control over what tools are exposed and how they behave.</p>
+<p>You can review the implementation here:</p>
+<h2 id="connect-mcp-demo">Connect MCP Demo</h2>
+<p><strong><a href="https://github.com/appsoftwareltd/connect-mcp-demo">https://github.com/appsoftwareltd/connect-mcp-demo</a></strong></p>
+<p>The server is a Node.js/TypeScript application built on Express. It uses the <a href="https://github.com/modelcontextprotocol/typescript-sdk">MCP TypeScript SDK</a> to register tools and handle the MCP protocol, and <a href="https://kysely.dev/">Kysely</a> as a type-safe query builder against a PostgreSQL database for OAuth token persistence.</p>
+<h3 id="features">Features</h3>
+<ul>
+<li><strong>Google Calendar</strong> (read-only) - list calendars, list/get/search events</li>
+<li><strong>Google Tasks</strong> (read-only) - list task lists, list/get tasks</li>
+<li><strong>Weather</strong> - current conditions for any location via the Google Weather and Geocoding APIs</li>
+<li><strong>API key authentication</strong> - ID + secret pair protects all endpoints</li>
+<li><strong>OAuth token management</strong> - automatic access token refresh, persisted to PostgreSQL</li>
+<li><strong>Idempotent migrations</strong> - SQL migration scripts run automatically on startup</li>
+</ul>
+<hr>
+<h3 id="google-oauth">Google OAuth</h3>
+<p>The Google Cloud project requires the Calendar API, Tasks API, Weather API, and Geocoding API enabled. You need two credential types: an OAuth 2.0 client ID and secret (for Calendar and Tasks) and an API key (for Weather and Geocoding).</p>
+<p>After configuring those credentials in <code>config.json</code>, authenticate by opening the following URL in a browser:</p>
+<pre><code>http://localhost:3000/auth/google?apiKeyId=your-api-key-id&amp;apiKeySecret=your-api-key-secret
+</code></pre>
+<p>You'll be redirected to Google's OAuth consent screen to approve the requested scopes (read-only Calendar and Tasks). Google then redirects back to the configured callback URL on the MCP server, which stores the access and refresh tokens in the database, keyed to the API key ID used to initiate the flow. From that point on, the server handles token refresh automatically - no credential handling required in the LLM client.</p>
+<hr>
+<h3 id="connecting-an-mcp-client">Connecting an MCP Client</h3>
+<p>The server exposes two MCP transport endpoints:</p>
+<ul>
+<li><strong><code>/mcp</code></strong> - <a href="https://modelcontextprotocol.io/">Streamable HTTP</a> transport (current standard, recommended)</li>
+<li><strong><code>/sse</code></strong> - Legacy SSE transport (for older clients that don't support Streamable HTTP)</li>
+</ul>
+<p>For VS Code, add the following to your settings:</p>
+<pre><code class="language-json"><span class="tok-punctuation">{</span>
+  <span class="tok-propertyName">&quot;mcp&quot;</span><span class="tok-punctuation">:</span> <span class="tok-punctuation">{</span>
+    <span class="tok-propertyName">&quot;servers&quot;</span><span class="tok-punctuation">:</span> <span class="tok-punctuation">{</span>
+      <span class="tok-propertyName">&quot;connect-mcp&quot;</span><span class="tok-punctuation">:</span> <span class="tok-punctuation">{</span>
+        <span class="tok-propertyName">&quot;type&quot;</span><span class="tok-punctuation">:</span> <span class="tok-string">&quot;http&quot;</span><span class="tok-punctuation">,</span>
+        <span class="tok-propertyName">&quot;url&quot;</span><span class="tok-punctuation">:</span> <span class="tok-string">&quot;http://localhost:3000/mcp?apiKeyId=your-api-key-id&amp;apiKeySecret=your-api-key-secret&quot;</span>
+      <span class="tok-punctuation">}</span>
+    <span class="tok-punctuation">}</span>
+  <span class="tok-punctuation">}</span>
+<span class="tok-punctuation">}</span>
+</code></pre>
+<p>Once connected, the MCP client discovers available tools via the standard MCP protocol. The server exposes eight tools:</p>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>Description</th>
+<th>Key Parameters</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>list_calendars</code></td>
+<td>List all Google Calendars</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>list_calendar_events</code></td>
+<td>List events from a calendar within a time range</td>
+<td><code>calendarId</code>, <code>timeMin</code>, <code>timeMax</code>, <code>maxResults</code></td>
+</tr>
+<tr>
+<td><code>get_calendar_event</code></td>
+<td>Get a single calendar event by ID</td>
+<td><code>calendarId</code>, <code>eventId</code></td>
+</tr>
+<tr>
+<td><code>search_calendar_events</code></td>
+<td>Search calendar events by query string</td>
+<td><code>calendarId</code>, <code>query</code>, <code>timeMin</code>, <code>timeMax</code></td>
+</tr>
+<tr>
+<td><code>list_task_lists</code></td>
+<td>List all Google Task Lists</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>list_tasks</code></td>
+<td>List tasks in a task list</td>
+<td><code>taskListId</code>, <code>showCompleted</code>, <code>dueMin</code>, <code>dueMax</code>, <code>maxResults</code></td>
+</tr>
+<tr>
+<td><code>get_task</code></td>
+<td>Get a single task by ID</td>
+<td><code>taskListId</code>, <code>taskId</code></td>
+</tr>
+<tr>
+<td><code>get_weather</code></td>
+<td>Get current weather for a location</td>
+<td><code>location</code></td>
+</tr>
+</tbody>
+</table>
+<p>The tool set is intentionally minimal - each tool maps directly to a Google API call with only the parameters you actually need. That narrow surface is the whole point: less noise for the LLM means fewer unnecessary tokens spent on reasoning about what to call and how.</p>
+<hr>
+<p>Visit the repository at <a href="https://github.com/appsoftwareltd/connect-mcp-demo">https://github.com/appsoftwareltd/connect-mcp-demo</a> for full setup documentation, Docker deployment notes, and pre-built REST Client request files for testing.</p>
+
+            </div>
+            <nav class="pagination" aria-label="Neighbouring posts">
+                <a class="button pagination__prev" href="as-notes-turn-vs-code-into-your-personal-knowledge-management-system-pkms.html"><span class="button__icon">←</span><span class="button__text">AS Notes: Turn VS Code Into Your Personal Knowledge Management System (PKMS)</span></a>
+                <a class="button pagination__next" href="an-effective-ai-agent-pattern-plan-tasks-implementation.html"><span class="button__text">An Effective AI Agent Pattern: Plan, Tasks, Implementation</span><span class="button__icon">→</span></a>
+            </nav>
+        </article>
+    </main>
+        <footer class="footer">
+            <div class="footer__inner">
+                <div class="copyright">
+                    <span>&copy; 2026 g9n Blog</span>
+                    <span class="footer__separator" aria-hidden="true">::</span>
+                    <span>Published with <a href="https://etherpk.com" rel="noopener">EtherPK</a></span>
+                    <span class="footer__separator" aria-hidden="true">::</span><a href="feed.xml">Feed</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+        <script src="theme/search.js" defer></script>
+</body>
+</html>

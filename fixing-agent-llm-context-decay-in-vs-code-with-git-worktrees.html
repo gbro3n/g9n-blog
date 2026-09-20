@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="EtherPK">
+    <title>Fixing AGENT &#x2F; LLM Context Decay in VS Code with Git Worktrees :: g9n Blog</title>
+    <meta name="description" content="The extension source is available on GitHub and the extension available on the VS Code Marketplace. Where We Left Off In a previous post, I introduced VS Code Agent Kanban. The key idea in this…">
+    <link rel="stylesheet" href="theme/theme.css">
+    
+    
+    <link rel="alternate" type="application/rss+xml" title="g9n Blog" href="feed.xml">
+    <script defer src="https://analytics.appsoftware.com/telemetry.js" data-website-id="6913dde8-61ce-4739-90fe-3abeeb6ab0a4"></script>
+</head>
+<body class="layout-terminal">
+    <a class="skip-link" href="#content">Skip to content</a>
+    <div class="container">
+        <header class="header">
+            <div class="header__inner">
+                <a class="site-title logo" href="index.html">
+                    <span class="logo__mark"><!-- The EtherPK icon (resources/brand/etherpk-icon-*.svg), inline so the page fetches nothing and it takes the text colour; aria-hidden because the title beside it is the name. Fill the "logo" include, or edit this partial, for your own. -->
+                                             <svg class="site-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 191.82 166.13" width="24" height="21" aria-hidden="true" focusable="false"><path fill="currentColor" fill-rule="evenodd" d="M67.09,132.92,47.93,166.13H9.59L0,149.52,86.33,0H105.5L19.17,149.52H38.34l19.17-33.2h76.8l9.59,16.6Zm48-83.12,9.65,16.71H143.9L115.08,16.6q-24,41.57-48,83.12H143.9q14.37,24.9,28.76,49.8h-96l-9.59,16.61H182.24l9.58-16.61-38.34-66.4H96C95.85,82.9,113.39,52.73,115.08,49.8Z"/></svg>
+</span>
+                    <span class="logo__text">g9n Blog</span>
+                    <span class="logo__cursor" aria-hidden="true"></span>
+                </a>
+                <button class="nav-toggle menu-trigger" type="button" aria-controls="site-nav" aria-expanded="false" aria-label="Menu">Menu</button>
+            </div>
+            <div class="nav-backdrop" hidden></div>
+            <nav id="site-nav" class="menu site-nav" aria-label="Site">
+                <ul class="menu__inner site-nav-list">
+                </ul>
+                <form class="site-search" role="search" data-search-index="search.json" data-search-script="search-index.js">
+                    <label class="visually-hidden" for="site-search-input">Search</label>
+                    <input id="site-search-input" type="search" name="q" placeholder="$ search" autocomplete="off">
+                    <div class="site-search-results" role="listbox" hidden></div>
+                </form>
+            </nav>
+        </header>
+    <main id="content" class="content">
+        <article class="post">
+            <h1 class="post-title">Fixing AGENT / LLM Context Decay in VS Code with Git Worktrees</h1>
+            <div class="post-meta"><time class="post-date" datetime="2026-03-12">2026-03-12</time> :: <span class="post-reading">5 min read</span></div>
+        <nav class="toc framed" aria-label="Table of contents">
+            <p class="toc__title">:: Table of contents</p>
+            <ul>
+                <li class="toc-level-2"><a href="#where-we-left-off">Where We Left Off</a></li><li class="toc-level-2"><a href="#git-worktrees">Git Worktrees</a></li><li class="toc-level-2"><a href="#making-it-work">Making it Work</a></li><li class="toc-level-2"><a href="#summary">Summary</a></li>
+            </ul>
+        </nav>
+            <div class="post-content">
+<blockquote>
+<p>The extension source is available on <a href="https://github.com/appsoftwareltd/vscode-agent-kanban">GitHub</a> and the extension available on the <a href="https://marketplace.visualstudio.com/items?itemName=AppSoftwareLtd.vscode-agent-kanban">VS Code Marketplace</a>.</p>
+</blockquote>
+<h2 id="where-we-left-off">Where We Left Off</h2>
+<p>In a previous post, I introduced <a href="https://www.appsoftware.com/blog/introducing-vs-code-agent-kanban-task-management-for-the-ai-assisted-developer">VS Code Agent Kanban</a>. The key idea in this extension is the formalisation of a <code>plan</code>, <code>todo</code> <code>implement</code> flow that required the agent to converse in markdown files that I'd been using for a while - but manually managing the files (The reasoning and benefits of that flow are covered in <a href="https://www.appsoftware.com/blog/introducing-vs-code-agent-kanban-task-management-for-the-ai-assisted-developer">the linked post</a>).</p>
+<blockquote>
+<p><em>For a good reference on this flow, I would recommend this article by Boris Tane <a href="https://boristane.com/blog/how-i-use-claude-code/">boristane.com/blog/how-i-use-claude-code</a>. I had been using this flow for a while, but this article helped solidify it for me.</em></p>
+</blockquote>
+<p>A <strong>kanban board</strong> with lanes mapped to folders where the task markdown files live has gone a long way to helping organise those files, while the AGENTS.md instruction remains to prompt the agent to work in those files (the 'plan', 'todo' 'implement' conversation in the files is the important bit here, the kanban board just helps with the admin).</p>
+<p><img src="assets/fixing-agent-llm-context-decay-in-vs-code-with-git-worktrees.6583f866-ea54-49c0-afc8-25eabe8f80a5.png" alt="VS Code Agent Kanban Board"></p>
+<p>However, I ran into a secondary issue here whereby previously I was having the agent work in fixed name files <code>plan.md</code> and <code>todo.md</code>, but with the kanban board, the file names were specific to task and lane. <strong>While I could initially tell the agent which file to work in, the further back in the context that instruction was pushed, the less likely the agent was to remember it.</strong></p>
+<p>I added commands for the <code>@kanban</code> Copilot chat participant to inject a reference to the active task file, refreshing its name in the working context. This works via the <code>/refresh</code> command, and is still an optional flow in the tool where the user is working on smaller, simpler tasks. <code>AGENTS.md</code> has a sentinel section injected so that the agent is reminded on every turn that it should be checking for the referenced file. Still however, without the user remembering to use the refresh participant commands, the agent was liable to forget to converse in the task file.</p>
+<h2 id="git-worktrees">Git Worktrees</h2>
+<p>The solution to this is Git worktrees (available in <code>v2.0.0</code>). Git worktrees are a standard Git feature that facilitates the creation of separate working directories mapped to branches, all linked to the same underlying repository.</p>
+<p>VS Code Agent Kanban now has functionality to create worktrees and the associated Git branches from tasks in a one-to-one mapping.</p>
+<p>Using worktrees, the extension is able to detect that it is working in the context of a worktree, infer the associated task, and update the sentinel section in <code>AGENTS.md</code> with a reference to a specific task.</p>
+<pre><code class="language-markdown"><span class="tok-comment">&lt;!-- BEGIN AGENT KANBAN — DO NOT EDIT THIS SECTION --&gt;</span>
+<span class="tok-heading tok-meta">##</span><span class="tok-heading"> Agent Kanban</span>
+
+<span class="tok-strong tok-meta">**</span><span class="tok-strong">Active Task:</span><span class="tok-strong tok-meta">**</span> Implement OAuth2
+<span class="tok-strong tok-meta">**</span><span class="tok-strong">Task File:</span><span class="tok-strong tok-meta">**</span> <span class="tok-meta">`</span>.agentkanban/tasks/doing/task_20260312_091234567_oauth2.md<span class="tok-meta">`</span>
+
+Read the task file above before responding.
+Read <span class="tok-meta">`</span>.agentkanban/INSTRUCTION.md<span class="tok-meta">`</span> for task workflow rules.
+<span class="tok-comment">&lt;!-- END AGENT KANBAN --&gt;</span>
+</code></pre>
+<p>In this workflow, the <code>AGENTS.md</code> is sent with every turn, and the agent adheres to the <code>plan</code>, <code>todo</code>, <code>implement</code> flow, while reliably sticking to conversing in the task file.</p>
+<h2 id="making-it-work">Making it Work</h2>
+<p>We still needed to prevent the modified <code>AGENTS.md</code> from being committed with the specific task name so that we didn't have to deal with that on the merge back to the trunk. <code>git update-index --skip-worktree AGENTS.md</code> is used to tell Git to ignore the local changes to the file.</p>
+<p>We also needed to ensure that changes to the task file in the original branch were committed so that it was present and up-to-date when VS Code switched to the new worktree.</p>
+<p>A combination of Git commands and VS Code APIs are used to manage the automatic switch to the new worktree (some options are available with regards to worktree location and reopening in the same / a different window).</p>
+<p><em>Creation of worktree by <code>@kanban</code> command</em></p>
+<p><img src="assets/fixing-agent-llm-context-decay-in-vs-code-with-git-worktrees-2.57862bfe-74f0-4d5b-9d0f-e23d7217c5f4.png" alt="Creation of Git Worktrees Participant Command"></p>
+<p><em>Creation of worktree from the task board</em></p>
+<p><img src="assets/fixing-agent-llm-context-decay-in-vs-code-with-git-worktrees-3.8a3e18db-0b67-4420-a49c-fb0ac127a4f4.png" alt="Creation of Git Worktrees  Task board"></p>
+<p>The new worktree can be initialised via the <code>/worktree</code> command or by clicking a button on the task in the task board.</p>
+<p>VS Code has built in functionality for switching the window between worktrees.</p>
+<p><em>The resulting VS Code window with the worktree initialised</em></p>
+<p><img src="assets/fixing-agent-llm-context-decay-in-vs-code-with-git-worktrees-4.29698e8a-a541-49cd-8a0d-b63e160e74ab.png" alt="Pasted image"></p>
+<h2 id="summary">Summary</h2>
+<p>This optionality formalises the process further, and makes the management of multiple task markdown files far more manageable while solving the problem of adhering to a specifically named task file.</p>
+<p><strong>Worktrees in themselves are a great feature, making it feasible to separate and switch between multiple long-running agent sessions within the same codebase, which was something that the original <code>plan</code>, <code>todo</code>, <code>implement</code> flow did not help with.</strong></p>
+<p>I hope you find this useful. If you think this process could be improved, feel free to comment / get in touch. We're all learning to use these new tools effectively alongside our existing (hopefully not soon to be obsolete) skills, and I've learned A LOT from all of you in the last few months (thank you 🙏)</p>
+
+            </div>
+            <nav class="pagination" aria-label="Neighbouring posts">
+                <a class="button pagination__prev" href="introducing-vs-code-agent-kanban-task-management-for-the-ai-assisted-developer.html"><span class="button__icon">←</span><span class="button__text">Introducing VS Code Agent Kanban: Task Management for the AI-Assisted Developer</span></a>
+                <a class="button pagination__next" href="you-need-probabilistic-gates-for-deterministic-ai-agents.html"><span class="button__text">You Need Deterministic Gates for Probabilistic AI Agents</span><span class="button__icon">→</span></a>
+            </nav>
+        </article>
+    </main>
+        <footer class="footer">
+            <div class="footer__inner">
+                <div class="copyright">
+                    <span>&copy; 2026 g9n Blog</span>
+                    <span class="footer__separator" aria-hidden="true">::</span>
+                    <span>Published with <a href="https://etherpk.com" rel="noopener">EtherPK</a></span>
+                    <span class="footer__separator" aria-hidden="true">::</span><a href="feed.xml">Feed</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+        <script src="theme/search.js" defer></script>
+</body>
+</html>

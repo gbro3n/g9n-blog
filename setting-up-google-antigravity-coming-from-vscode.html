@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="EtherPK">
+    <title>Setting up Google Antigravity (Coming from VSCode) :: g9n Blog</title>
+    <meta name="description" content="This post covers setting up Google Antigravity, the new VS Code fork for agentic AI coding, when coming from VS Code. Primarily I am a .NET &#x2F; web developer, so some of this post will focus on set up…">
+    <link rel="stylesheet" href="theme/theme.css">
+    
+    
+    <link rel="alternate" type="application/rss+xml" title="g9n Blog" href="feed.xml">
+    <script defer src="https://analytics.appsoftware.com/telemetry.js" data-website-id="6913dde8-61ce-4739-90fe-3abeeb6ab0a4"></script>
+</head>
+<body class="layout-terminal">
+    <a class="skip-link" href="#content">Skip to content</a>
+    <div class="container">
+        <header class="header">
+            <div class="header__inner">
+                <a class="site-title logo" href="index.html">
+                    <span class="logo__mark"><!-- The EtherPK icon (resources/brand/etherpk-icon-*.svg), inline so the page fetches nothing and it takes the text colour; aria-hidden because the title beside it is the name. Fill the "logo" include, or edit this partial, for your own. -->
+                                             <svg class="site-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 191.82 166.13" width="24" height="21" aria-hidden="true" focusable="false"><path fill="currentColor" fill-rule="evenodd" d="M67.09,132.92,47.93,166.13H9.59L0,149.52,86.33,0H105.5L19.17,149.52H38.34l19.17-33.2h76.8l9.59,16.6Zm48-83.12,9.65,16.71H143.9L115.08,16.6q-24,41.57-48,83.12H143.9q14.37,24.9,28.76,49.8h-96l-9.59,16.61H182.24l9.58-16.61-38.34-66.4H96C95.85,82.9,113.39,52.73,115.08,49.8Z"/></svg>
+</span>
+                    <span class="logo__text">g9n Blog</span>
+                    <span class="logo__cursor" aria-hidden="true"></span>
+                </a>
+                <button class="nav-toggle menu-trigger" type="button" aria-controls="site-nav" aria-expanded="false" aria-label="Menu">Menu</button>
+            </div>
+            <div class="nav-backdrop" hidden></div>
+            <nav id="site-nav" class="menu site-nav" aria-label="Site">
+                <ul class="menu__inner site-nav-list">
+                </ul>
+                <form class="site-search" role="search" data-search-index="search.json" data-search-script="search-index.js">
+                    <label class="visually-hidden" for="site-search-input">Search</label>
+                    <input id="site-search-input" type="search" name="q" placeholder="$ search" autocomplete="off">
+                    <div class="site-search-results" role="listbox" hidden></div>
+                </form>
+            </nav>
+        </header>
+    <main id="content" class="content">
+        <article class="post">
+            <h1 class="post-title">Setting up Google Antigravity (Coming from VSCode)</h1>
+            <div class="post-meta"><time class="post-date" datetime="2025-11-19">2025-11-19</time> :: <span class="post-reading">2 min read</span></div>
+        <nav class="toc framed" aria-label="Table of contents">
+            <p class="toc__title">:: Table of contents</p>
+            <ul>
+                <li class="toc-level-2"><a href="#importing-vscode-settings-and-extensions">Importing VSCode Settings and Extensions</a></li><li class="toc-level-2"><a href="#changing-the-default-extension-marketplace">Changing the Default Extension Marketplace</a></li><li class="toc-level-2"><a href="#further-setup">Further Setup</a></li>
+            </ul>
+        </nav>
+            <div class="post-content">
+<p>This post covers setting up <a href="https://antigravity.google/">Google Antigravity</a>, the new <a href="https://code.visualstudio.com/">VS Code</a> fork for agentic AI coding, when coming from VS Code.</p>
+<p>Primarily I am a .NET / web developer, so some of this post will focus on set up for .NET / C#, but much of it will be common to many developer workflows.</p>
+<h2 id="importing-vscode-settings-and-extensions">Importing VSCode Settings and Extensions</h2>
+<p>You cannot use the official Microsoft/GitHub sign-in sync built into VS Code to automatically sync settings with Antigravity IDE. Importing from a VSCode profile export also seems to not be available.</p>
+<p>What you can do is use the built in commands for importing settings and extensions.</p>
+<p><img src="assets/setting-up-google-antigravity-coming-from-vscode.b157726e-7523-4ac5-aa73-f04a81aba377.png" alt="Import VS Code settings and Extensions command"></p>
+<h2 id="changing-the-default-extension-marketplace">Changing the Default Extension Marketplace</h2>
+<p>The default marketplace for Antigravity is  <a href="https://open-vsx.org/vscode/gallery">https://open-vsx.org/vscode/gallery</a>, but I found it was performing slowly.</p>
+<p>To use the Visual Studio Market place, you can change URLs to:</p>
+<p>Marketplace Item URL</p>
+<p><a href="https://marketplace.visualstudio.com/items">https://marketplace.visualstudio.com/items</a></p>
+<p>Marketplace Gallery URL</p>
+<p><a href="https://marketplace.visualstudio.com/_apis/public/gallery">https://marketplace.visualstudio.com/_apis/public/gallery</a></p>
+<p>Use <code>Ctrl + ,</code> (or the non Windows equivalent) to open settings and navigate to 'Editor' where you will see inputs for the marketplace URLs.</p>
+<p><img src="assets/setting-up-google-antigravity-coming-from-vscode-2.755a24d7-0311-4521-a66a-5036aca9c2ca.png" alt="Antigravity Marketplace Settings"></p>
+<p>Unfortunately, even with the marketplace changed, the <a href="https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csdevkit">C# Dev Kit</a> extension cannot be used in Google Antigravity. Like Cursor (Anysphere's AI IDE), Antigravity is a fork of VS Code and is therefore considered a third-party IDE and so not licensed to use the C# Dev Kit.</p>
+<p><img src="assets/setting-up-google-antigravity-coming-from-vscode-3.804a15c3-b0c4-4b1b-8a32-7d8e1fc24930.png" alt="C# Dev Kit not available outside of VSCode warning"></p>
+<p>I will be exploring using <a href="https://marketplace.visualstudio.com/items?itemName=JetBrains.resharper-code">ReSharper for Visual Studio Code</a> instead.</p>
+<p>Other extensions such as <a href="https://open-vsx.org/namespace/ms-dotnettools">The official C# extension by Microsoft</a> are not installable due to a version conflict, though does not appear to be restricted by licence. The same is true of some other extensions.</p>
+<p><img src="assets/setting-up-google-antigravity-coming-from-vscode-4.c26f4cd5-d97b-474d-8456-c9d80d36ec9f.png" alt="Coreclr Debugging Error Message"></p>
+<p>In the short term I'm using the following unofficial extension to facilitate basic debugging:</p>
+<p><a href="https://open-vsx.org/vscode/item?itemName=muhammad-sammy.csharp">https://open-vsx.org/vscode/item?itemName=muhammad-sammy.csharp</a></p>
+<p><img src="assets/setting-up-google-antigravity-coming-from-vscode-5.f3fdd7b5-46b1-48e6-a13b-0836afe09b85.png" alt="C# extension"></p>
+<p><img src="assets/setting-up-google-antigravity-coming-from-vscode-6.c2f421d6-3e3c-47fb-9a68-de2ee3d6376f.png" alt="C# extension installation warning"></p>
+<h2 id="further-setup">Further Setup</h2>
+<p>Further setup information will be added here as I make progress in setting up Antigravity.</p>
+
+            </div>
+            <nav class="pagination" aria-label="Neighbouring posts">
+                <a class="button pagination__prev" href="vscode-tasksjson-capturing-nuget-package-vulnerability-warnings.html"><span class="button__icon">←</span><span class="button__text">VSCode tasks.json - capturing NuGet Package Vulnerability Warnings</span></a>
+                <a class="button pagination__next" href="net-10-and-nuget-audit-identifying-root-packages-for-vulnerable-transitive-dependencies.html"><span class="button__text">.NET 10 and NuGet Audit: Identifying Root Packages for Vulnerable Transitive Dependencies</span><span class="button__icon">→</span></a>
+            </nav>
+        </article>
+    </main>
+        <footer class="footer">
+            <div class="footer__inner">
+                <div class="copyright">
+                    <span>&copy; 2026 g9n Blog</span>
+                    <span class="footer__separator" aria-hidden="true">::</span>
+                    <span>Published with <a href="https://etherpk.com" rel="noopener">EtherPK</a></span>
+                    <span class="footer__separator" aria-hidden="true">::</span><a href="feed.xml">Feed</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+        <script src="theme/search.js" defer></script>
+</body>
+</html>

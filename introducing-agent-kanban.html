@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="EtherPK">
+    <title>Introducing Agent Kanban :: g9n Blog</title>
+    <meta name="description" content="AI coding agents work inside chat sessions. A chat session is good at local reasoning - you give it a task, it works through the problem, it produces code. But the session itself is ephemeral. When…">
+    <link rel="stylesheet" href="theme/theme.css">
+    
+    
+    <link rel="alternate" type="application/rss+xml" title="g9n Blog" href="feed.xml">
+    <script defer src="https://analytics.appsoftware.com/telemetry.js" data-website-id="6913dde8-61ce-4739-90fe-3abeeb6ab0a4"></script>
+</head>
+<body class="layout-terminal">
+    <a class="skip-link" href="#content">Skip to content</a>
+    <div class="container">
+        <header class="header">
+            <div class="header__inner">
+                <a class="site-title logo" href="index.html">
+                    <span class="logo__mark"><!-- The EtherPK icon (resources/brand/etherpk-icon-*.svg), inline so the page fetches nothing and it takes the text colour; aria-hidden because the title beside it is the name. Fill the "logo" include, or edit this partial, for your own. -->
+                                             <svg class="site-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 191.82 166.13" width="24" height="21" aria-hidden="true" focusable="false"><path fill="currentColor" fill-rule="evenodd" d="M67.09,132.92,47.93,166.13H9.59L0,149.52,86.33,0H105.5L19.17,149.52H38.34l19.17-33.2h76.8l9.59,16.6Zm48-83.12,9.65,16.71H143.9L115.08,16.6q-24,41.57-48,83.12H143.9q14.37,24.9,28.76,49.8h-96l-9.59,16.61H182.24l9.58-16.61-38.34-66.4H96C95.85,82.9,113.39,52.73,115.08,49.8Z"/></svg>
+</span>
+                    <span class="logo__text">g9n Blog</span>
+                    <span class="logo__cursor" aria-hidden="true"></span>
+                </a>
+                <button class="nav-toggle menu-trigger" type="button" aria-controls="site-nav" aria-expanded="false" aria-label="Menu">Menu</button>
+            </div>
+            <div class="nav-backdrop" hidden></div>
+            <nav id="site-nav" class="menu site-nav" aria-label="Site">
+                <ul class="menu__inner site-nav-list">
+                </ul>
+                <form class="site-search" role="search" data-search-index="search.json" data-search-script="search-index.js">
+                    <label class="visually-hidden" for="site-search-input">Search</label>
+                    <input id="site-search-input" type="search" name="q" placeholder="$ search" autocomplete="off">
+                    <div class="site-search-results" role="listbox" hidden></div>
+                </form>
+            </nav>
+        </header>
+    <main id="content" class="content">
+        <article class="post">
+            <h1 class="post-title">Introducing Agent Kanban</h1>
+            <div class="post-meta"><time class="post-date" datetime="2026-05-13">2026-05-13</time> :: <span class="post-reading">6 min read</span></div>
+        <nav class="toc framed" aria-label="Table of contents">
+            <p class="toc__title">:: Table of contents</p>
+            <ul>
+                <li class="toc-level-2"><a href="#what-agent-kanban-is">What Agent Kanban is</a></li><li class="toc-level-2"><a href="#how-it-works">How it works</a></li><li class="toc-level-3"><a href="#select-a-task-start-working">Select a task, start working</a></li><li class="toc-level-3"><a href="#resume-without-rebuilding-context">Resume without rebuilding context</a></li><li class="toc-level-3"><a href="#curate-what-matters">Curate what matters</a></li><li class="toc-level-3"><a href="#share-context-across-people-and-sessions">Share context across people and sessions</a></li><li class="toc-level-2"><a href="#the-workflow">The workflow</a></li><li class="toc-level-2"><a href="#board-level-configuration">Board-level configuration</a></li><li class="toc-level-3"><a href="#shared-agent-instructions-agentsmd">Shared agent instructions (AGENTS.md)</a></li><li class="toc-level-3"><a href="#board-memory-and-technical-documents">Board memory and technical documents</a></li><li class="toc-level-2"><a href="#integration-surface">Integration surface</a></li><li class="toc-level-2"><a href="#what-it-is-not">What it is not</a></li><li class="toc-level-2"><a href="#technical-details">Technical details</a></li><li class="toc-level-2"><a href="#get-started">Get started</a></li>
+            </ul>
+        </nav>
+            <div class="post-content">
+<p>AI coding agents work inside chat sessions. A chat session is good at local reasoning - you give it a task, it works through the problem, it produces code. But the session itself is ephemeral. When you close the tab, clear the context, or start a new conversation, the reasoning and decisions from that session are gone.</p>
+<p>For small tasks this is fine. For anything that spans multiple sessions, involves more than one person, or needs to be revisited later, it breaks down quickly.</p>
+<p>Common failure modes:</p>
+<ul>
+<li>Context is trapped inside a single chat tab. The next session starts cold.</li>
+<li>Resuming work requires retelling the problem from scratch, or dragging forward a bloated transcript that's mostly noise.</li>
+<li>Decisions made during implementation are recorded only in chat history - not against the task they relate to.</li>
+<li>Team members can't pick up where someone else left off without a manual handover.</li>
+<li>The agent operates with a partial view of the project because wider state lives somewhere else entirely.</li>
+</ul>
+<p>These problems compound. A feature that takes three sessions to implement means three separate chat contexts, none of which are connected. A task that pauses for a week and gets picked up again means rebuilding all the reasoning that already happened. A team working with AI agents means everyone has their own isolated context silos.</p>
+<h2 id="what-agent-kanban-is">What Agent Kanban is</h2>
+<p>Agent Kanban is a task and context management tool for agentic software development. It connects project management (kanban boards, lanes, tasks, todos) with AI agent context persistence and curation.</p>
+<p>The core idea: the task on the board is not just a ticket - it's also where agent conversation history, decisions, steering, and attachments live. Context stays with the work it belongs to.</p>
+<p>It consists of two parts:</p>
+<ol>
+<li>
+<p><strong>A web application</strong> at <a href="https://www.agentkanban.io">agentkanban.io</a> - real-time collaborative kanban boards with rich task editing, comments, todos, file attachments, shared agent instructions, board memory, and technical documents.</p>
+</li>
+<li>
+<p><strong>A VS Code extension</strong> - connects your IDE to the board, binds GitHub Copilot chat sessions to the active task, captures conversation turns automatically, and provides resume/context injection for new sessions. MCP tools are auto-configured so the agent can read and update tasks, todos, and board memory directly.</p>
+</li>
+</ol>
+<p>AgentKanban remote task board:</p>
+<p><img src="assets/introducing-agent-kanban.8ae474d0-0486-4644-b999-155a8bd3f269.png" alt="AgentKanban remote task board"></p>
+<p>AgenKanban VS Code Extension:</p>
+<p><img src="assets/introducing-agent-kanban-2.7fe278b5-ab1c-4c8a-b38d-3a380097f47c.png" alt="AgentKanban VS Code Extension"></p>
+<h2 id="how-it-works">How it works</h2>
+<h3 id="select-a-task-start-working">Select a task, start working</h3>
+<p>In VS Code, you connect to your board with an API key, select a task, and start a GitHub Copilot chat. The extension captures each conversation turn - user prompts and agent responses - against that task on the remote board. No manual copy-paste.</p>
+<h3 id="resume-without-rebuilding-context">Resume without rebuilding context</h3>
+<p>When you come back to a task (next day, next week, different machine), you resume with task-specific context already injected into the new chat session. The agent picks up where things left off without you needing to re-explain the problem or paste in previous conversations.</p>
+<p>The resume payload includes: task description, captured turns, comments, todos, and technical notes. You control what's included.</p>
+<!-- Image: Copilot chat with resumed context -->
+<h3 id="curate-what-matters">Curate what matters</h3>
+<p>Not every turn is useful long-term. The Turns tab on each task gives you curation tools:</p>
+<ul>
+<li><strong>Pin</strong> turns that contain key decisions or architecture choices - these survive retention limits.</li>
+<li><strong>Exclude</strong> turns that are noise (debug runs, test prompts) - they're hidden from future context injection but kept for audit.</li>
+<li><strong>Fork</strong> a conversation branch into a new task while keeping the original intact.</li>
+<li><strong>Split</strong> a task when the conversation has shifted to different work.</li>
+<li><strong>Delete</strong> tail noise permanently.</li>
+</ul>
+<h3 id="share-context-across-people-and-sessions">Share context across people and sessions</h3>
+<p>Because context is stored on the task (not in a private chat tab), it's inherently shareable:</p>
+<ul>
+<li>Another developer can pick up a task and inherit the earlier reasoning.</li>
+<li>A task paused for weeks can be resumed with implementation context still attached.</li>
+<li>Product decisions and technical choices stay on the task instead of being scattered across chat histories.</li>
+</ul>
+<h2 id="the-workflow">The workflow</h2>
+<p>Agent Kanban encourages a structured workflow for non-trivial tasks:</p>
+<p><strong>Plan</strong> - Write task requirements on the board. The agent is instructed to ask clarification questions before proceeding, resolving ambiguity upfront rather than guessing during implementation.</p>
+<p><strong>TODO</strong> - The agent breaks the agreed plan into concrete TODO items on the task. These are visible and editable by both humans and the agent.</p>
+<p><strong>Implement</strong> - The agent works through the TODOs, keeping them updated as progress is made. If you need to pause and resume later, the state is on the board.</p>
+<p>This isn't enforced rigidly - you can use Agent Kanban however fits your workflow. But for larger tasks, the structure pays off.</p>
+<h2 id="board-level-configuration">Board-level configuration</h2>
+<h3 id="shared-agent-instructions-agentsmd">Shared agent instructions (AGENTS.md)</h3>
+<p>Write project-specific instructions in the board settings. These are injected into the <code>AGENTS.md</code> file in every connected workspace automatically. Define your framework, testing conventions, coding standards, or repo structure once - every team member's agent receives them without manual sync.</p>
+<h3 id="board-memory-and-technical-documents">Board memory and technical documents</h3>
+<p>Store durable project context (architecture decisions, deployment notes, conventions) in the board's Memory and Technical tabs. The VS Code extension syncs these as local read-only files so agents can reference them directly without API calls. Agents can also update them via MCP when they discover information worth preserving.</p>
+<h2 id="integration-surface">Integration surface</h2>
+<p>Agent Kanban exposes an external REST API and MCP server, both secured with scoped API keys:</p>
+<ul>
+<li><strong>REST API</strong> - CRUD operations on boards, tasks, todos, comments, assets. Useful for CI/CD integration, custom tooling, or automation.</li>
+<li><strong>MCP tools</strong> - Auto-configured by the VS Code extension. Agents can read task context, update todos, write to board memory, and download assets without leaving the conversation.</li>
+<li><strong>Webhooks</strong> - HMAC-SHA256 signed payloads for reacting to board events in external systems.</li>
+</ul>
+<h2 id="what-it-is-not">What it is not</h2>
+<p>Agent Kanban is not a replacement for your agent harness. GitHub Copilot (and other harnesses in development) still does the actual coding work. Agent Kanban manages the context around that work - organising it, persisting it, curating it, and making it resumable.</p>
+<p>It's also not an opinionated framework that takes over your workflow. You can use it for a single task and ignore it for everything else. The extension only activates when you've selected a board and task.</p>
+<h2 id="technical-details">Technical details</h2>
+<ul>
+<li>Real-time multiplayer editing via Yjs CRDTs over WebSocket</li>
+<li>Rich text task editing with Tiptap (ProseMirror)</li>
+<li>Authentication: email/password, GitHub OAuth, Google OAuth, TOTP 2FA, passkeys (WebAuthn)</li>
+<li>Deterministic turn capture from IDE extensions (currently GitHub Copilot; architecture prepared for Claude Code and Codex)</li>
+<li>Git worktree support for working on multiple tasks in parallel with isolated branches</li>
+<li>Free tier available; Pro tier for teams and higher limits</li>
+</ul>
+<h2 id="get-started">Get started</h2>
+<ol>
+<li>Register at <a href="https://www.agentkanban.io/register">agentkanban.io</a></li>
+<li>Create a board and add tasks</li>
+<li>Install the VS Code extension from <a href="https://marketplace.visualstudio.com/items?itemName=appsoftwareltd.agent-kanban-vscode">VS Code Marketplace</a> or <a href="https://open-vsx.org/extension/appsoftwareltd/agent-kanban-vscode">Open VSX</a></li>
+<li>Create an API key, paste it into the extension sidebar</li>
+<li>Select a board and task, start a Copilot chat</li>
+</ol>
+<p>Documentation: <a href="https://docs.agentkanban.io/introducing-agentkanban">docs.agentkanban.io</a></p>
+
+            </div>
+            <nav class="pagination" aria-label="Neighbouring posts">
+                <a class="button pagination__prev" href="as-notes-vs-code-notes-docs-and-wikilink-markdown-editing.html"><span class="button__icon">←</span><span class="button__text">AS Notes - VS Code Notes, Docs and Wikilink Markdown Editing</span></a>
+                <a class="button pagination__next" href="introducing-the-g9n-blog.html"><span class="button__text">Introducing the g9n blog</span><span class="button__icon">→</span></a>
+            </nav>
+        </article>
+    </main>
+        <footer class="footer">
+            <div class="footer__inner">
+                <div class="copyright">
+                    <span>&copy; 2026 g9n Blog</span>
+                    <span class="footer__separator" aria-hidden="true">::</span>
+                    <span>Published with <a href="https://etherpk.com" rel="noopener">EtherPK</a></span>
+                    <span class="footer__separator" aria-hidden="true">::</span><a href="feed.xml">Feed</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+        <script src="theme/search.js" defer></script>
+</body>
+</html>

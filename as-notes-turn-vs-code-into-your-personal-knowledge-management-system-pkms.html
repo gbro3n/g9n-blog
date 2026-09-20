@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="EtherPK">
+    <title>AS Notes: Turn VS Code Into Your Personal Knowledge Management System (PKMS) :: g9n Blog</title>
+    <meta name="description" content="If you already live in VS Code, maybe you like managing your notes there too? AS Notes is a VS Code extension that brings the power of wikilink-based knowledge management - the kind you&#39;d find in…">
+    <link rel="stylesheet" href="theme/theme.css">
+    
+    
+    <link rel="alternate" type="application/rss+xml" title="g9n Blog" href="feed.xml">
+    <script defer src="https://analytics.appsoftware.com/telemetry.js" data-website-id="6913dde8-61ce-4739-90fe-3abeeb6ab0a4"></script>
+</head>
+<body class="layout-terminal">
+    <a class="skip-link" href="#content">Skip to content</a>
+    <div class="container">
+        <header class="header">
+            <div class="header__inner">
+                <a class="site-title logo" href="index.html">
+                    <span class="logo__mark"><!-- The EtherPK icon (resources/brand/etherpk-icon-*.svg), inline so the page fetches nothing and it takes the text colour; aria-hidden because the title beside it is the name. Fill the "logo" include, or edit this partial, for your own. -->
+                                             <svg class="site-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 191.82 166.13" width="24" height="21" aria-hidden="true" focusable="false"><path fill="currentColor" fill-rule="evenodd" d="M67.09,132.92,47.93,166.13H9.59L0,149.52,86.33,0H105.5L19.17,149.52H38.34l19.17-33.2h76.8l9.59,16.6Zm48-83.12,9.65,16.71H143.9L115.08,16.6q-24,41.57-48,83.12H143.9q14.37,24.9,28.76,49.8h-96l-9.59,16.61H182.24l9.58-16.61-38.34-66.4H96C95.85,82.9,113.39,52.73,115.08,49.8Z"/></svg>
+</span>
+                    <span class="logo__text">g9n Blog</span>
+                    <span class="logo__cursor" aria-hidden="true"></span>
+                </a>
+                <button class="nav-toggle menu-trigger" type="button" aria-controls="site-nav" aria-expanded="false" aria-label="Menu">Menu</button>
+            </div>
+            <div class="nav-backdrop" hidden></div>
+            <nav id="site-nav" class="menu site-nav" aria-label="Site">
+                <ul class="menu__inner site-nav-list">
+                </ul>
+                <form class="site-search" role="search" data-search-index="search.json" data-search-script="search-index.js">
+                    <label class="visually-hidden" for="site-search-input">Search</label>
+                    <input id="site-search-input" type="search" name="q" placeholder="$ search" autocomplete="off">
+                    <div class="site-search-results" role="listbox" hidden></div>
+                </form>
+            </nav>
+        </header>
+    <main id="content" class="content">
+        <article class="post">
+            <h1 class="post-title">AS Notes: Turn VS Code Into Your Personal Knowledge Management System (PKMS)</h1>
+            <div class="post-meta"><time class="post-date" datetime="2026-03-02">2026-03-02</time> :: <span class="post-reading">5 min read</span></div>
+        <nav class="toc framed" aria-label="Table of contents">
+            <p class="toc__title">:: Table of contents</p>
+            <ul>
+                <li class="toc-level-2"><a href="#why-another-note-taking-tool">Why Another Note-Taking Tool?</a></li><li class="toc-level-2"><a href="#wikilinks-with-robust-nested-wikilink-handling">Wikilinks (With Robust Nested Wikilink Handling)</a></li><li class="toc-level-2"><a href="#page-aliases">Page Aliases</a></li><li class="toc-level-2"><a href="#tasks-management">Tasks Management</a></li><li class="toc-level-2"><a href="#backlinks-the-bigger-picture">Backlinks: The Bigger Picture</a></li><li class="toc-level-2"><a href="#daily-journal">Daily Journal</a></li><li class="toc-level-2"><a href="#markdown-preview-handling">Markdown Preview Handling</a></li><li class="toc-level-2"><a href="#privacy-first">Privacy First</a></li><li class="toc-level-2"><a href="#get-started">Get Started</a></li><li class="toc-level-2"><a href="#built-for-developers">Built for Developers</a></li>
+            </ul>
+        </nav>
+            <div class="post-content">
+<p>If you already live in VS Code, maybe you like managing your notes there too?</p>
+<p><strong>AS Notes</strong> is a VS Code extension that brings the power of wikilink-based knowledge management - the kind you'd find in Obsidian, Logseq, or Roam - directly into your editor. No Electron wrapper. No separate app. No syncing headaches. Just your markdown files, your Git repo, and the editor you already know.</p>
+<p><strong><a href="https://github.com/appsoftwareltd/as-notes"><i class="fa-brands fa-github" style="width: 20px"></i> GitHub</a></strong> | <strong><a href="https://marketplace.visualstudio.com/items?itemName=appsoftwareltd.as-notes">VS Code Marketplace</a></strong></p>
+<p><strong>1 minute demo:</strong></p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/liRULtb8Rm8?si=kmjrxlZQhgsASFoe" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+<h2 id="why-another-note-taking-tool">Why Another Note-Taking Tool?</h2>
+<p>Most developers already have a note-taking workflow, but it often lives <em>somewhere else</em> - a separate app, a browser tab, a SaaS product that owns your data. You context-switch out of your editor, lose your train of thought, and slowly stop maintaining your notes altogether.</p>
+<p>AS Notes takes a different approach:</p>
+<ul>
+<li><strong>Your data stays local.</strong> No cloud sync, telemetry or accounts. Your notes are plain markdown files in a folder you control.</li>
+<li><strong>Git-friendly by design.</strong> Every note is a <code>.md</code> file. Diff them, branch them, review them - your knowledge base gets the same versioning discipline as your code.</li>
+<li><strong>Lightweight indexing.</strong> A local SQLite database (powered by WASM - no native dependencies) keeps everything fast without bloating your workspace.</li>
+<li><strong>Leverage other markdown enhancement extensions</strong>. Keep using your Mermaid diagrams with AS Notes.</li>
+</ul>
+<h2 id="wikilinks-with-robust-nested-wikilink-handling">Wikilinks (With Robust Nested Wikilink Handling)</h2>
+<p>Type <code>[[</code> trigger page selection and autocomple control:</p>
+<ul>
+<li><strong><code>[[Page Name]]</code></strong> resolves to <code>Page Name.md</code> anywhere in your workspace - not just the current folder.</li>
+<li><strong>Nested links</strong> like <code>[[Project [[Alpha]] Notes]]</code> create multiple navigable targets. Click the inner link to go to <code>Alpha.md</code>, click the outer portions to go to <code>Project [[Alpha]] Notes.md</code>.</li>
+<li><strong>Ctrl+Click</strong> to navigate. If the target doesn't exist, it's created automatically - useful for forward-referencing pages you plan to write later.</li>
+<li><strong>Hover tooltips</strong> show you the target file, whether it exists, and how many other pages link to it.</li>
+<li><strong>Autocomplete</strong> kicks in the moment you type <code>[[</code>, listing every page and alias in your knowledge base.</li>
+</ul>
+<p>When you rename a link, AS Notes detects the change and offers to rename the underlying file and update every reference across your workspace.</p>
+<h2 id="page-aliases">Page Aliases</h2>
+<p>Sometimes a concept has more than one name. Define aliases in YAML front matter. Take the page <code>JavaScript.md</code> for example:</p>
+<pre><code class="language-yaml"><span class="tok-meta">---</span>
+<span class="tok-propertyName tok-definition">aliases</span><span class="tok-punctuation">:</span>
+  <span class="tok-punctuation">-</span> JS
+  <span class="tok-punctuation">-</span> ECMAScript
+<span class="tok-meta">---</span>
+</code></pre>
+<p>Now <code>[[JS]]</code> and <code>[[ECMAScript]]</code> both navigate to the same page. Hover tooltips show the resolution path, backlink counts include alias references, and rename tracking updates aliases in the front matter when you change them.</p>
+<h2 id="tasks-management">Tasks Management</h2>
+<p>AS Notes includes a lightweight task management system built on standard markdown checkboxes:</p>
+<p>Press <strong>Ctrl+Shift+Enter</strong> on any line to cycle through states:</p>
+<table>
+<thead>
+<tr>
+<th>You write...</th>
+<th>After toggle</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>buy milk</code></td>
+<td><code>- [ ] buy milk</code></td>
+</tr>
+<tr>
+<td><code>- [ ] buy milk</code></td>
+<td><code>- [x] buy milk</code></td>
+</tr>
+<tr>
+<td><code>- [x] buy milk</code></td>
+<td><code>buy milk</code></td>
+</tr>
+</tbody>
+</table>
+<p>The <strong>Tasks panel</strong> in the Explorer sidebar aggregates every todo across your entire knowledge base, grouped by page. Filter to show only unchecked items, click to jump to the source line, or toggle completion directly from the panel.</p>
+<p><img src="assets/as-notes-turn-vs-code-into-your-personal-knowledge.064aefaa-682f-4c1b-bb32-5adf2163760e.png" alt="AS Notes Task Panel"></p>
+<h2 id="backlinks-the-bigger-picture">Backlinks: The Bigger Picture</h2>
+<p>The <strong>Backlinks panel</strong> shows every page that links to the file you're currently editing, with the surrounding line text for context. A straightforward way to see how ideas connect across your knowledge base.</p>
+<p>Open it with <strong>Ctrl+Alt+B</strong> and it stays in sync as you navigate between files.</p>
+<p><img src="assets/as-notes-turn-vs-code-into-your-personal-knowledge-2.45c825bd-51a6-42c1-a92e-276f1026e2af.png" alt="AS Notes Backlinks"></p>
+<h2 id="daily-journal">Daily Journal</h2>
+<p>Press <strong>Ctrl+Alt+J</strong> to create or open today's journal entry. AS Notes generates a dated markdown file from a customisable template - add your own sections, prompts, or front matter to shape your daily workflow.</p>
+<p>Journal files are indexed instantly, so wikilinks and backlinks work from the moment the file is created.</p>
+<h2 id="markdown-preview-handling">Markdown Preview Handling</h2>
+<p>AS Notes translates the nested wikilink structure when rendering markdown previews, so the links and nested links correctly navigate to the target documents. We don't expect you to spend much time in Markdown Preview, but it's nice for more complex documents or if you want to view page elements supported by other extensions - <a href="https://mermaid.ai/landing?utm_medium=primary_search&amp;utm_campaign=mermaidecosystemfocus-G&amp;utm_term=mermaid%20flow&amp;utm_content=mermaid_broad&amp;utm_source=google_ads">Mermaid Diagrams</a> for example:</p>
+<p><img src="assets/as-notes-turn-vs-code-into-your-personal-knowledge-3.29cae758-594f-4170-bb07-96bcd8056198.png" alt="AS Notes Markdown Preview Handling"></p>
+<h2 id="privacy-first">Privacy First</h2>
+<p>AS Notes doesn't send your data anywhere. No telemetry, no cloud service, no account. Your notes are plain files on your filesystem - back them up however you like. The SQLite index is local and can be rebuilt at any time.</p>
+<h2 id="get-started">Get Started</h2>
+<ol>
+<li>Install <strong>AS Notes</strong> from the <a href="https://marketplace.visualstudio.com/items?itemName=appsoftwareltd.as-notes">VS Code Marketplace</a></li>
+<li>Open a folder in VS Code</li>
+<li>Run <strong>AS Notes: Initialise Workspace</strong> from the Command Palette</li>
+<li>Start typing <code>[[</code> in any markdown file</li>
+</ol>
+<p>That's it. No configuration required. If you want a sample knowledge base to explore, clone the <a href="https://github.com/appsoftwareltd/as-notes-demo-notes">demo notes repository</a> and follow the setup instructions.</p>
+<h2 id="built-for-developers">Built for Developers</h2>
+<p>AS Notes is designed for developers who want a knowledge management tool that respects the way you already work - in a text editor, with plain files, under version control. But the wikilink paradigm is powerful for anyone who thinks in connections: researchers, writers, students, or anyone building a second brain.</p>
+<p>If you've been looking for a way to manage your notes without leaving VS Code, give AS Notes a try.</p>
+<p><strong>Install from the <a href="https://marketplace.visualstudio.com/items?itemName=appsoftwareltd.as-notes">VS Code Marketplace</a></strong> | <strong>Source on <a href="https://github.com/appsoftwareltd/as-notes">GitHub</a></strong></p>
+
+            </div>
+            <nav class="pagination" aria-label="Neighbouring posts">
+                <a class="button pagination__prev" href="openclaw-running-a-secure-capable-lowcost-claw-hetzner-tailscale-discord-zapier-mcp.html"><span class="button__icon">←</span><span class="button__text">OpenClaw: Running a Secure, Capable, Low Cost Claw (with Hetzner, Tailscale, Discord and Zapier MCP)</span></a>
+                <a class="button pagination__next" href="building-a-light-weight-personal-mcp-server-implementation.html"><span class="button__text">Building a Light Weight Personal MCP Server for Google Data</span><span class="button__icon">→</span></a>
+            </nav>
+        </article>
+    </main>
+        <footer class="footer">
+            <div class="footer__inner">
+                <div class="copyright">
+                    <span>&copy; 2026 g9n Blog</span>
+                    <span class="footer__separator" aria-hidden="true">::</span>
+                    <span>Published with <a href="https://etherpk.com" rel="noopener">EtherPK</a></span>
+                    <span class="footer__separator" aria-hidden="true">::</span><a href="feed.xml">Feed</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+        <script src="theme/search.js" defer></script>
+</body>
+</html>

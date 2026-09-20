@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="EtherPK">
+    <title>.NET 10 and NuGet Audit: Identifying Root Packages for Vulnerable Transitive Dependencies :: g9n Blog</title>
+    <meta name="description" content="As of .NET 10, defaults for NuGetAuditMode in NuGet Audit have changed, and this may mean additional warnings regarding NuGet package vulnerabilities (NU1901, NU1902, NU1903, NU1904, NU1905) in your…">
+    <link rel="stylesheet" href="theme/theme.css">
+    
+    
+    <link rel="alternate" type="application/rss+xml" title="g9n Blog" href="feed.xml">
+    <script defer src="https://analytics.appsoftware.com/telemetry.js" data-website-id="6913dde8-61ce-4739-90fe-3abeeb6ab0a4"></script>
+</head>
+<body class="layout-terminal">
+    <a class="skip-link" href="#content">Skip to content</a>
+    <div class="container">
+        <header class="header">
+            <div class="header__inner">
+                <a class="site-title logo" href="index.html">
+                    <span class="logo__mark"><!-- The EtherPK icon (resources/brand/etherpk-icon-*.svg), inline so the page fetches nothing and it takes the text colour; aria-hidden because the title beside it is the name. Fill the "logo" include, or edit this partial, for your own. -->
+                                             <svg class="site-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 191.82 166.13" width="24" height="21" aria-hidden="true" focusable="false"><path fill="currentColor" fill-rule="evenodd" d="M67.09,132.92,47.93,166.13H9.59L0,149.52,86.33,0H105.5L19.17,149.52H38.34l19.17-33.2h76.8l9.59,16.6Zm48-83.12,9.65,16.71H143.9L115.08,16.6q-24,41.57-48,83.12H143.9q14.37,24.9,28.76,49.8h-96l-9.59,16.61H182.24l9.58-16.61-38.34-66.4H96C95.85,82.9,113.39,52.73,115.08,49.8Z"/></svg>
+</span>
+                    <span class="logo__text">g9n Blog</span>
+                    <span class="logo__cursor" aria-hidden="true"></span>
+                </a>
+                <button class="nav-toggle menu-trigger" type="button" aria-controls="site-nav" aria-expanded="false" aria-label="Menu">Menu</button>
+            </div>
+            <div class="nav-backdrop" hidden></div>
+            <nav id="site-nav" class="menu site-nav" aria-label="Site">
+                <ul class="menu__inner site-nav-list">
+                </ul>
+                <form class="site-search" role="search" data-search-index="search.json" data-search-script="search-index.js">
+                    <label class="visually-hidden" for="site-search-input">Search</label>
+                    <input id="site-search-input" type="search" name="q" placeholder="$ search" autocomplete="off">
+                    <div class="site-search-results" role="listbox" hidden></div>
+                </form>
+            </nav>
+        </header>
+    <main id="content" class="content">
+        <article class="post">
+            <h1 class="post-title">.NET 10 and NuGet Audit: Identifying Root Packages for Vulnerable Transitive Dependencies</h1>
+            <div class="post-meta"><time class="post-date" datetime="2025-11-27">2025-11-27</time> :: <span class="post-reading">9 min read</span></div>
+        <nav class="toc framed" aria-label="Table of contents">
+            <p class="toc__title">:: Table of contents</p>
+            <ul>
+                <li class="toc-level-2"><a href="#the-challenge-identifying-root-packages-for-transitive-dependencies">The Challenge: Identifying Root Packages for Transitive Dependencies</a></li><li class="toc-level-2"><a href="#prerequisites">Prerequisites</a></li><li class="toc-level-2"><a href="#how-to-run">How to Run</a></li><li class="toc-level-3"><a href="#using-dotnet-run">Using dotnet run</a></li><li class="toc-level-2"><a href="#how-it-works">How it Works</a></li><li class="toc-level-2"><a href="#script-c-file-based-app">Script (C# File Based App):</a></li><li class="toc-level-2"><a href="#example-report-output">Example Report Output:</a></li><li class="toc-level-2"><a href="#solution-exampleappsln">Solution: ExampleApp.sln</a></li><li class="toc-level-3"><a href="#moderate-severity-11">moderate Severity (11)</a></li><li class="toc-level-3"><a href="#low-severity-3">low Severity (3)</a></li><li class="toc-level-2"><a href="#summary-by-package">Summary by Package</a></li><li class="toc-level-2"><a href="#recommended-actions">Recommended Actions</a></li><li class="toc-level-3"><a href="#how-to-update-packages">How to Update Packages</a></li><li class="toc-level-2"><a href="#summary">Summary</a></li>
+            </ul>
+        </nav>
+            <div class="post-content">
+<p>As of .NET 10, defaults for <code>NuGetAuditMode</code> in NuGet Audit have changed, and this may mean additional warnings regarding NuGet package vulnerabilities (<code>NU1901</code>, <code>NU1902</code>, <code>NU1903</code>, <code>NU1904</code>, <code>NU1905</code>) in your .NET applications. After upgrading to .NET 10 from .NET 8, builds started reporting vulnerabilities that had not been reported before. GitHub vulnerability scanning hadn't spotted them, and this seems to be because the vulnerable packages were not directly referenced in the app (because they are transitive (indirect) references via other directly referenced packages).</p>
+<p>Microsoft documentation says:</p>
+<blockquote>
+<p>NuGetAuditMode defaults to all when a project targets net10.0 or higher. Otherwise NuGetAuditMode defaults to direct. When a project multi-targets, if any one target framework selects all, then audit will use this value for all target frameworks.</p>
+<p><a href="https://learn.microsoft.com/en-us/nuget/concepts/auditing-packages#configuring-nuget-audit">https://learn.microsoft.com/en-us/nuget/concepts/auditing-packages#configuring-nuget-audit</a></p>
+</blockquote>
+<p><strong>To Summarise:</strong></p>
+<p><strong>Previous Default:</strong> In older versions of the .NET SDK (pre-10), the NuGet Audit feature was sometimes set to only check direct dependencies by default (NuGetAuditMode set to direct).</p>
+<p><strong>New .NET 10 Default:</strong> When a project targets net10.0 or higher, the default for the audit mode changes to all.</p>
+<p>This means that when you run dotnet restore or build your project, the system now automatically scans both direct and transitive dependencies for vulnerabilities.</p>
+<p><code>NuGetAuditMode</code>:</p>
+<table aria-label="Configuring NuGet Audit" class="table table-sm margin-top-none">
+<thead>
+<tr>
+<th>MSBuild Property</th>
+<th>Default</th>
+<th>Possible values</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NuGetAuditMode</td>
+<td>See 1 below</td>
+<td><code>direct</code> and <code>all</code></td>
+<td>If you'd like to audit top-level dependencies only, you can set the value to <code>direct</code>. NuGetAuditMode is not applicable for packages.config projects.</td>
+</tr>
+<tr>
+<td>NuGetAuditLevel</td>
+<td>low</td>
+<td><code>low</code>, <code>moderate</code>, <code>high</code>, and <code>critical</code></td>
+<td>The minimum severity level to report. If you'd like to see <code>moderate</code>, <code>high</code>, and <code>critical</code> advisories (exclude <code>low</code>), set the value to <code>moderate</code></td>
+</tr>
+<tr>
+<td>NuGetAudit</td>
+<td>true</td>
+<td><code>true</code> and <code>false</code></td>
+<td>If you wish to not receive security audit reports, you can opt-out of the experience entirely by setting the value to <code>false</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="the-challenge-identifying-root-packages-for-transitive-dependencies">The Challenge: Identifying Root Packages for Transitive Dependencies</h2>
+<p>Manually overriding transitive package versions in a <code>.csproj</code> file can be brittle and high-maintenance in large projects. The risk of introducing a breaking change to the primary package is a possibility. We also do not want to add configuration for packages that we do not have a direct dependency on.</p>
+<p>The aim is to identify the root packages and upgrade those.</p>
+<p>Identification can be achieved using 2 <code>dotnet</code> utilities:</p>
+<pre><code>&gt; dotnet list [solution] package --vulnerable
+&gt; dotnet nuget why [solution] [packageName]
+</code></pre>
+<p>Running these commands manually for all reported vulnerable packages can be arduous in large projects, and so I have created a C# file based app (file based apps are new in .NET 10 - read more here <a href="https://www.appsoftware.com/blog/net-10-file-based-apps-demonstration-c-scripting">https://www.appsoftware.com/blog/net-10-file-based-apps-demonstration-c-scripting</a>) to automatically list vulnerable packages, and then call <code>dotnet nuget why</code> and parse the output to link the vulnerability to the root package.</p>
+<h2 id="prerequisites">Prerequisites</h2>
+<ol>
+<li><strong>.NET 10 SDK</strong> installed (verify with <code>dotnet --version</code>). This is required to run file based apps.</li>
+</ol>
+<h2 id="how-to-run">How to Run</h2>
+<h3 id="using-dotnet-run">Using <code>dotnet run</code></h3>
+<p>Run the file based app using <code>dotnet run</code></p>
+<pre><code class="language-powershell"><span class="tok-variableName">dotnet</span> <span class="tok-variableName">run</span> <span class="tok-variableName">VulnerabilityScanner</span><span class="tok-punctuation">.</span><span class="tok-variableName">cs</span>
+</code></pre>
+<h2 id="how-it-works">How it Works</h2>
+<p>The script:</p>
+<ol>
+<li><strong>Scans for Solutions</strong>: Identifies solution files (<code>.sln</code>) in the current directory.</li>
+<li><strong>Identifies Vulnerabilities</strong>: Finds all packages with known security issues using <code>dotnet list package --vulnerable</code></li>
+<li><strong>Traces Root Causes</strong>: Determines which top-level packages are bringing in vulnerable transitive dependencies</li>
+<li><strong>Generates Report</strong>: Creates <code>vulnerabilities_&lt;datestamp&gt;.md</code> report.</li>
+</ol>
+<h2 id="script-c-file-based-app">Script (C# File Based App):</h2>
+<p>Save as <code>VulnerabilityScanner.cs</code> in the same directory as your <code>.sln</code> file(s) and run with <code>dotnet run --file VulnerabilityScanner.cs</code></p>
+<p>This script is maintained on <a href="https://github.com/appsoftwareltd/nuget-audit-root-package-identification"><i class="fa-brands fa-github"></i> GitHub</a></p>
+<pre><code class="language-csharp"><span class="tok-comment">// &gt; dotnet run --file VulnerabilityScanner.cs          </span>
+
+<span class="tok-keyword">using</span> <span class="tok-variableName">System</span>;
+<span class="tok-keyword">using</span> <span class="tok-variableName">System</span>.<span class="tok-variableName">Collections</span>.<span class="tok-variableName">Generic</span>;
+<span class="tok-keyword">using</span> <span class="tok-variableName">System</span>.<span class="tok-variableName">Diagnostics</span>;
+<span class="tok-keyword">using</span> <span class="tok-variableName">System</span>.<span class="tok-variableName">IO</span>;
+<span class="tok-keyword">using</span> <span class="tok-variableName">System</span>.<span class="tok-variableName">Linq</span>;
+<span class="tok-keyword">using</span> <span class="tok-variableName">System</span>.<span class="tok-variableName">Text</span>;
+<span class="tok-keyword">using</span> <span class="tok-variableName">System</span>.<span class="tok-variableName">Text</span>.<span class="tok-variableName">RegularExpressions</span>;
+
+<span class="tok-variableName">Console</span>.<span class="tok-variableName">WriteLine</span>(<span class="tok-string">&quot;Starting vulnerability scan...&quot;</span>);
+
+<span class="tok-comment">// Automatically discover all solution files in the current directory</span>
+<span class="tok-keyword">var</span> <span class="tok-variableName tok-definition">solutions</span> <span class="tok-operator">=</span> <span class="tok-variableName">Directory</span>.<span class="tok-variableName">GetFiles</span>(<span class="tok-variableName">Directory</span>.<span class="tok-variableName">GetCurrentDirectory</span>(), <span class="tok-string">&quot;*.sln&quot;</span>)
+    .<span class="tok-variableName">Select</span>(<span class="tok-variableName">Path</span>.<span class="tok-variableName">GetFileName</span>)
+    .<span class="tok-variableName">Where</span>(<span class="tok-variableName">f</span> <span class="tok-operator">=&gt;</span> <span class="tok-variableName">f</span> <span class="tok-operator">!=</span> <span class="tok-atom">null</span>)
+    .<span class="tok-variableName">Cast</span><span class="tok-operator">&lt;</span><span class="tok-typeName">string</span><span class="tok-operator">&gt;</span>()
+    .<span class="tok-variableName">ToArray</span>();
+
+<span class="tok-keyword">if</span> (<span class="tok-variableName">solutions</span>.<span class="tok-variableName">Length</span> <span class="tok-operator">==</span> <span class="tok-number">0</span>)
+{
+    <span class="tok-variableName">Console</span>.<span class="tok-variableName">WriteLine</span>(<span class="tok-string">&quot;Error: No solution files (.sln) found in the current directory.&quot;</span>);
+    <span class="tok-variableName">Environment</span>.<span class="tok-variableName">Exit</span>(<span class="tok-number">1</span>);
+}
+
+<span class="tok-variableName">Console</span>.<span class="tok-variableName">WriteLine</span>(<span class="tok-variableName">$</span><span class="tok-string">&quot;Found {solutions.Length} solution file(s): {string.Join(&quot;</span>, <span class="tok-string">&quot;, solutions)}&quot;</span>);
+
+<span class="tok-keyword">var</span> <span class="tok-variableName tok-definition">allVulnerabilities</span> <span class="tok-operator">=</span> <span class="tok-keyword">new</span> <span class="tok-variableName">List</span><span class="tok-operator">&lt;</span><span class="tok-variableName">VulnerabilityInfo</span><span class="tok-operator">&gt;</span>();
+
+<span class="tok-keyword">foreach</span> (<span class="tok-keyword">var</span> <span class="tok-variableName tok-definition">solution</span> <span class="tok-keyword">in</span> <span class="tok-variableName">solutions</span>)
+{
+    <span class="tok-keyword">if</span> (<span class="tok-operator">!</span><span class="tok-variableName">File</span>.<span class="tok-variableName">Exists</span>(<span class="tok-variableName">solution</span>))
+    {
+        <span class="tok-variableName">Console</span>.<span class="tok-variableName">WriteLine</span>(<span class="tok-variableName">$</span><span class="tok-string">&quot;Warning: Solution file not found: {solution}&quot;</span>);
+        <span class="tok-keyword">continue</span>;
+    }
+
+    <span class="tok-variableName">Console</span>.<span class="tok-variableName">WriteLine</span>(<span class="tok-variableName">$</span><span class="tok-string">&quot;\nScanning {solution}...&quot;</span>);
+
+    <span class="tok-comment">// Run dotnet list package --vulnerable</span>
+    <span class="tok-keyword">var</span> <span class="tok-variableName tok-definition">vulnerableOutput</span> <span class="tok-operator">=</span> <span class="tok-variableName">RunCommand</span>(<span class="tok-string">&quot;dotnet&quot;</span>, <span class="tok-variableName">$</span><span class="tok-string">&quot;list \&quot;{solution}\&quot; package --vulnerable&quot;</span>);
+
+    <span class="tok-keyword">var</span> <span class="tok-variableName tok-definition">vulnerabilities</span> <span class="tok-operator">=</span> <span class="tok-variableName">ParseVulnerabilities</span>(<span class="tok-variableName">vulnerableOutput</span>, <span class="tok-variableName">solution</span>);
+
+    <span class="tok-comment">// Get distinct package names to avoid redundant lookups</span>
+    <span class="tok-keyword">var</span> <span class="tok-variableName tok-definition">distinctPackages</span> <span class="tok-operator">=</span> <span class="tok-variableName">vulnerabilities</span>
+        .<span class="tok-variableName">Select</span>(<span class="tok-variableName">v</span> <span class="tok-operator">=&gt;</span> <span class="tok-variableName">v</span>.<span class="tok-variableName">PackageName</span>)
+        .<span class="tok-variableName">Distinct</span>()
+        .<span class="tok-variableName">ToList</span>();
+
+    <span class="tok-comment">// Build a cache of root packages for each unique vulnerable package</span>
+    <span class="tok-keyword">var</span> <span class="tok-variableName tok-definition">rootPackageCache</span> <span class="tok-operator">=</span> <span class="tok-keyword">new</span> <span class="tok-variableName">Dictionary</span><span class="tok-operator">&lt;</span><span class="tok-typeName">string</span>, <span class="tok-variableName">List</span><span class="tok-operator">&lt;</span><span class="tok-typeName">string</span><span class="tok-operator">&gt;&gt;</span>();
+
+    <span class="tok-keyword">foreach</span> (<span class="tok-keyword">var</span> <span class="tok-variableName tok-definition">packageName</span> <span class="tok-keyword">in</span> <span class="tok-variableName">distinctPackages</span>)
+    {
+        <span class="tok-variableName">Console</span>.<span class="tok-variableName">WriteLine</span>(<span class="tok-variableName">$</span><span class="tok-string">&quot;  Finding root cause for {packageName}...&quot;</span>);
+        <span class="tok-variableName">rootPackageCache</span>[<span class="tok-variableName">packageName</span>] <span class="tok-operator">=</span> <span class="tok-variableName">FindRootPackages</span>(<span class="tok-variableName">packageName</span>, <span class="tok-variableName">solution</span>);
+    }
+
+    <span class="tok-comment">// Assign root packages from cache to each vulnerability</span>
+    <span class="tok-keyword">foreach</span> (<span class="tok-keyword">var</span> <span class="tok-variableName tok-definition">vuln</span> <span class="tok-keyword">in</span> <span class="tok-variableName">vulnerabilities</span>)
+    {
+        <span class="tok-variableName">vuln</span>.<span class="tok-variableName">RootPackages</span> <span class="tok-operator">=</span> <span class="tok-variableName">rootPackageCache</span>[<span class="tok-variableName">vuln</span>.<span class="tok-variableName">PackageName</span>];
+    }
+
+    <span class="tok-variableName">allVulnerabilities</span>.<span class="tok-variableName">AddRange</span>(<span class="tok-variableName">vulnerabilities</span>);
+}
+
+<span class="tok-comment">// Generate markdown report</span>
+<span class="tok-variableName">GenerateMarkdownReport</span>(<span class="tok-variableName">allVulnerabilities</span>);
+
+<span class="tok-variableName">Console</span>.<span class="tok-variableName">WriteLine</span>(<span class="tok-string">&quot;\nVulnerability scan complete! Report saved to vulnerabilities_&lt;datestamp&gt;.md&quot;</span>);
+
+<span class="tok-comment">// Helper methods</span>
+<span class="tok-typeName">string</span> <span class="tok-variableName tok-definition">RunCommand</span>(<span class="tok-typeName">string</span> <span class="tok-variableName">command</span>, <span class="tok-typeName">string</span> <span class="tok-variableName">arguments</span>)
+{
+    <span class="tok-keyword">var</span> <span class="tok-variableName tok-definition">process</span> <span class="tok-operator">=</span> <span class="tok-keyword">new</span> <span class="tok-variableName">Process</span>
+    {
+        <span class="tok-variableName">StartInfo</span> <span class="tok-operator">=</span> <span class="tok-keyword">new</span> <span class="tok-variableName">ProcessStartInfo</span>
+        {
+            <span class="tok-variableName">FileName</span> <span class="tok-operator">=</span> <span class="tok-variableName">command</span>,
+            <span class="tok-variableName">Arguments</span> <span class="tok-operator">=</span> <span class="tok-variableName">arguments</span>,
+            <span class="tok-variableName">RedirectStandardOutput</span> <span class="tok-operator">=</span> <span class="tok-atom">true</span>,
+            <span class="tok-variableName">RedirectStandardError</span> <span class="tok-operator">=</span> <span class="tok-atom">true</span>,
+            <span class="tok-variableName">UseShellExecute</span> <span class="tok-operator">=</span> <span class="tok-atom">false</span>,
+            <span class="tok-variableName">CreateNoWindow</span> <span class="tok-operator">=</span> <span class="tok-atom">true</span>,
+            <span class="tok-variableName">WorkingDirectory</span> <span class="tok-operator">=</span> <span class="tok-variableName">Directory</span>.<span class="tok-variableName">GetCurrentDirectory</span>()
+        }
+    };
+
+    <span class="tok-keyword">var</span> <span class="tok-variableName tok-definition">output</span> <span class="tok-operator">=</span> <span class="tok-keyword">new</span> <span class="tok-variableName">StringBuilder</span>();
+    <span class="tok-variableName">process</span>.<span class="tok-variableName">OutputDataReceived</span> <span class="tok-operator">+=</span> (<span class="tok-variableName">sender</span>, <span class="tok-variableName">e</span>) <span class="tok-operator">=&gt;</span> { <span class="tok-keyword">if</span> (<span class="tok-variableName">e</span>.<span class="tok-variableName">Data</span> <span class="tok-operator">!=</span> <span class="tok-atom">null</span>) <span class="tok-variableName">output</span>.<span class="tok-variableName">AppendLine</span>(<span class="tok-variableName">e</span>.<span class="tok-variableName">Data</span>); };
+    <span class="tok-variableName">process</span>.<span class="tok-variableName">ErrorDataReceived</span> <span class="tok-operator">+=</span> (<span class="tok-variableName">sender</span>, <span class="tok-variableName">e</span>) <span class="tok-operator">=&gt;</span> { <span class="tok-keyword">if</span> (<span class="tok-variableName">e</span>.<span class="tok-variableName">Data</span> <span class="tok-operator">!=</span> <span class="tok-atom">null</span>) <span class="tok-variableName">output</span>.<span class="tok-variableName">AppendLine</span>(<span class="tok-variableName">e</span>.<span class="tok-variableName">Data</span>); };
+
+    <span class="tok-variableName">process</span>.<span class="tok-variableName">Start</span>();
+    <span class="tok-variableName">process</span>.<span class="tok-variableName">BeginOutputReadLine</span>();
+    <span class="tok-variableName">process</span>.<span class="tok-variableName">BeginErrorReadLine</span>();
+    <span class="tok-variableName">process</span>.<span class="tok-variableName">WaitForExit</span>();
+
+    <span class="tok-keyword">return</span> <span class="tok-variableName">output</span>.<span class="tok-variableName">ToString</span>();
+}
+
+<span class="tok-variableName">List</span><span class="tok-operator">&lt;</span><span class="tok-variableName">VulnerabilityInfo</span><span class="tok-operator">&gt;</span> <span class="tok-variableName tok-definition">ParseVulnerabilities</span>(<span class="tok-typeName">string</span> <span class="tok-variableName">output</span>, <span class="tok-typeName">string</span> <span class="tok-variableName">solution</span>)
+{
+    <span class="tok-keyword">var</span> <span class="tok-variableName tok-definition">vulnerabilities</span> <span class="tok-operator">=</span> <span class="tok-keyword">new</span> <span class="tok-variableName">List</span><span class="tok-operator">&lt;</span><span class="tok-variableName">VulnerabilityInfo</span><span class="tok-operator">&gt;</span>();
+    <span class="tok-keyword">var</span> <span class="tok-variableName tok-definition">lines</span> <span class="tok-operator">=</span> <span class="tok-variableName">output</span>.<span class="tok-variableName">Split</span>(<span class="tok-keyword">new</span>[] { <span class="tok-string">'\n'</span>, <span class="tok-string">'\r'</span> }, <span class="tok-variableName">StringSplitOptions</span>.<span class="tok-variableName">RemoveEmptyEntries</span>);
+
+    <span class="tok-keyword">foreach</span> (<span class="tok-keyword">var</span> <span class="tok-variableName tok-definition">line</span> <span class="tok-keyword">in</span> <span class="tok-variableName">lines</span>)
+    {
+        <span class="tok-comment">// Match MSBuild warning format: path\project.csproj : warning NUXXX: Package 'Name' Version has a known severity vulnerability, URL</span>
+        <span class="tok-keyword">var</span> <span class="tok-variableName tok-definition">warningMatch</span> <span class="tok-operator">=</span> <span class="tok-variableName">Regex</span>.<span class="tok-variableName">Match</span>(<span class="tok-variableName">line</span>,
+            <span class="tok-string">@&quot;([^:]+\.csproj)\s*:\s*warning\s+(NU\d+):\s*Package\s+'([^']+)'\s+([^\s]+)\s+has\s+a\s+known\s+(\w+)\s+severity\s+vulnerability,\s+(https://[^\s\[\]]+)&quot;</span>,
+            <span class="tok-variableName">RegexOptions</span>.<span class="tok-variableName">IgnoreCase</span>);
+
+        <span class="tok-keyword">if</span> (<span class="tok-variableName">warningMatch</span>.<span class="tok-variableName">Success</span>)
+        {
+            <span class="tok-keyword">var</span> <span class="tok-variableName tok-definition">projectPath</span> <span class="tok-operator">=</span> <span class="tok-variableName">warningMatch</span>.<span class="tok-variableName">Groups</span>[<span class="tok-number">1</span>].<span class="tok-variableName">Value</span>.<span class="tok-variableName">Trim</span>();
+            <span class="tok-keyword">var</span> <span class="tok-variableName tok-definition">packageName</span> <span class="tok-operator">=</span> <span class="tok-variableName">warningMatch</span>.<span class="tok-variableName">Groups</span>[<span class="tok-number">3</span>].<span class="tok-variableName">Value</span>;
+            <span class="tok-keyword">var</span> <span class="tok-variableName tok-definition">version</span> <span class="tok-operator">=</span> <span class="tok-variableName">warningMatch</span>.<span class="tok-variableName">Groups</span>[<span class="tok-number">4</span>].<span class="tok-variableName">Value</span>;
+            <span class="tok-keyword">var</span> <span class="tok-variableName tok-definition">severity</span> <span class="tok-operator">=</span> <span class="tok-variableName">warningMatch</span>.<span class="tok-variableName">Groups</span>[<span class="tok-number">5</span>].<span class="tok-variableName">Value</span>;
+            <span class="tok-keyword">var</span> <span class="tok-variableName tok-definition">advisoryUrl</span> <span class="tok-operator">=</span> <span class="tok-variableName">warningMatch</span>.<span class="tok-variableName">Groups</span>[<span class="tok-number">6</span>].<span class="tok-variableName">Value</span>;
+
+            <span class="tok-variableName">vulnerabilities</span>.<span class="tok-variableName">Add</span>(<span class="tok-keyword">new</span> <span class="tok-variableName">VulnerabilityInfo</span>
+            {
+                <span class="tok-variableName">Solution</span> <span class="tok-operator">=</span> <span class="tok-variableName">solution</span>,
+                <span class="tok-variableName">Project</span> <span class="tok-operator">=</span> <span class="tok-variableName">projectPath</span>,
+                <span class="tok-variableName">PackageName</span> <span class="tok-operator">=</span> <span class="tok-variableName">packageName</span>,
+                <span class="tok-variableName">Version</span> <span class="tok-operator">=</span> <span class="tok-variableName">version</span>,
+                <span class="tok-variableName">Severity</span> <span class="tok-operator">=</span> <span class="tok-variableName">severity</span>,
+                <span class="tok-variableName">AdvisoryUrl</span> <span class="tok-operator">=</span> <span class="tok-variableName">advisoryUrl</span>,
+                <span class="tok-variableName">RootPackages</span> <span class="tok-operator">=</span> <span class="tok-keyword">new</span> <span class="tok-variableName">List</span><span class="tok-operator">&lt;</span><span class="tok-typeName">string</span><span class="tok-operator">&gt;</span>()
+            });
+        }
+    }
+
+    <span class="tok-keyword">return</span> <span class="tok-variableName">vulnerabilities</span>;
+}
+
+<span class="tok-variableName">List</span><span class="tok-operator">&lt;</span><span class="tok-typeName">string</span><span class="tok-operator">&gt;</span> <span class="tok-variableName tok-definition">FindRootPackages</span>(<span class="tok-typeName">string</span> <span class="tok-variableName">packageName</span>, <span class="tok-typeName">string</span> <span class="tok-variableName">solution</span>)
+{
+    <span class="tok-keyword">var</span> <span class="tok-variableName tok-definition">rootPackages</span> <span class="tok-operator">=</span> <span class="tok-keyword">new</span> <span class="tok-variableName">List</span><span class="tok-operator">&lt;</span><span class="tok-typeName">string</span><span class="tok-operator">&gt;</span>();
+
+    <span class="tok-comment">// Get list of projects in the solution to filter them out from dependencies</span>
+    <span class="tok-keyword">var</span> <span class="tok-variableName tok-definition">projectsOutput</span> <span class="tok-operator">=</span> <span class="tok-variableName">RunCommand</span>(<span class="tok-string">&quot;dotnet&quot;</span>, <span class="tok-variableName">$</span><span class="tok-string">&quot;sln \&quot;{solution}\&quot; list&quot;</span>);
+    <span class="tok-keyword">var</span> <span class="tok-variableName tok-definition">solutionProjects</span> <span class="tok-operator">=</span> <span class="tok-variableName">projectsOutput</span>.<span class="tok-variableName">Split</span>(<span class="tok-keyword">new</span>[] { <span class="tok-string">'\n'</span>, <span class="tok-string">'\r'</span> }, <span class="tok-variableName">StringSplitOptions</span>.<span class="tok-variableName">RemoveEmptyEntries</span>)
+        .<span class="tok-variableName">Where</span>(<span class="tok-variableName">line</span> <span class="tok-operator">=&gt;</span> <span class="tok-variableName">line</span>.<span class="tok-variableName">EndsWith</span>(<span class="tok-string">&quot;.csproj&quot;</span>))
+        .<span class="tok-variableName">Select</span>(<span class="tok-variableName">line</span> <span class="tok-operator">=&gt;</span> <span class="tok-variableName">Path</span>.<span class="tok-variableName">GetFileNameWithoutExtension</span>(<span class="tok-variableName">line</span>))
+        .<span class="tok-variableName">ToHashSet</span>(<span class="tok-variableName">StringComparer</span>.<span class="tok-variableName">OrdinalIgnoreCase</span>);
+
+    <span class="tok-comment">// Use dotnet nuget why to find the dependency chain</span>
+    <span class="tok-keyword">var</span> <span class="tok-variableName tok-definition">whyOutput</span> <span class="tok-operator">=</span> <span class="tok-variableName">RunCommand</span>(<span class="tok-string">&quot;dotnet&quot;</span>, <span class="tok-variableName">$</span><span class="tok-string">&quot;nuget why \&quot;{solution}\&quot; {packageName}&quot;</span>);
+
+    <span class="tok-keyword">var</span> <span class="tok-variableName tok-definition">lines</span> <span class="tok-operator">=</span> <span class="tok-variableName">whyOutput</span>.<span class="tok-variableName">Split</span>(<span class="tok-keyword">new</span>[] { <span class="tok-string">'\n'</span>, <span class="tok-string">'\r'</span> }, <span class="tok-variableName">StringSplitOptions</span>.<span class="tok-variableName">RemoveEmptyEntries</span>);
+
+    <span class="tok-typeName">string</span><span class="tok-operator">?</span> <span class="tok-variableName">currentProject</span> <span class="tok-operator">=</span> <span class="tok-atom">null</span>;
+    <span class="tok-typeName">string</span><span class="tok-operator">?</span> <span class="tok-variableName">rootPackage</span> <span class="tok-operator">=</span> <span class="tok-atom">null</span>;
+    <span class="tok-typeName">bool</span> <span class="tok-variableName">inDependencyGraph</span> <span class="tok-operator">=</span> <span class="tok-atom">false</span>;
+
+    <span class="tok-keyword">foreach</span> (<span class="tok-keyword">var</span> <span class="tok-variableName tok-definition">line</span> <span class="tok-keyword">in</span> <span class="tok-variableName">lines</span>)
+    {
+        <span class="tok-comment">// Match project line: &quot;Project 'ProjectName' has the following dependency graph(s) for 'PackageName'&quot;</span>
+        <span class="tok-keyword">var</span> <span class="tok-variableName tok-definition">projectMatch</span> <span class="tok-operator">=</span> <span class="tok-variableName">Regex</span>.<span class="tok-variableName">Match</span>(<span class="tok-variableName">line</span>, <span class="tok-string">@&quot;Project\s+'([^']+)'\s+has\s+the\s+following\s+dependency&quot;</span>);
+        <span class="tok-keyword">if</span> (<span class="tok-variableName">projectMatch</span>.<span class="tok-variableName">Success</span>)
+        {
+            <span class="tok-variableName">currentProject</span> <span class="tok-operator">=</span> <span class="tok-variableName">projectMatch</span>.<span class="tok-variableName">Groups</span>[<span class="tok-number">1</span>].<span class="tok-variableName">Value</span>;
+            <span class="tok-variableName">rootPackage</span> <span class="tok-operator">=</span> <span class="tok-atom">null</span>;
+            <span class="tok-variableName">inDependencyGraph</span> <span class="tok-operator">=</span> <span class="tok-atom">true</span>;
+            <span class="tok-keyword">continue</span>;
+        }
+
+        <span class="tok-comment">// Skip &quot;does not have a dependency&quot; lines</span>
+        <span class="tok-keyword">if</span> (<span class="tok-variableName">line</span>.<span class="tok-variableName">Contains</span>(<span class="tok-string">&quot;does not have a dependency&quot;</span>))
+        {
+            <span class="tok-variableName">inDependencyGraph</span> <span class="tok-operator">=</span> <span class="tok-atom">false</span>;
+            <span class="tok-keyword">continue</span>;
+        }
+
+        <span class="tok-comment">// Skip framework lines like &quot;[net10.0]&quot;</span>
+        <span class="tok-keyword">if</span> (<span class="tok-variableName">line</span>.<span class="tok-variableName">Trim</span>().<span class="tok-variableName">StartsWith</span>(<span class="tok-string">&quot;[&quot;</span>) <span class="tok-operator">&amp;&amp;</span> <span class="tok-variableName">line</span>.<span class="tok-variableName">Trim</span>().<span class="tok-variableName">EndsWith</span>(<span class="tok-string">&quot;]&quot;</span>))
+        {
+            <span class="tok-keyword">continue</span>;
+        }
+
+        <span class="tok-comment">// Look for the first package in the dependency tree (the root cause)</span>
+        <span class="tok-comment">// It will be the first line with a package name after the framework line</span>
+        <span class="tok-keyword">if</span> (<span class="tok-variableName">inDependencyGraph</span> <span class="tok-operator">&amp;&amp;</span> <span class="tok-variableName">currentProject</span> <span class="tok-operator">!=</span> <span class="tok-atom">null</span> <span class="tok-operator">&amp;&amp;</span> <span class="tok-variableName">rootPackage</span> <span class="tok-operator">==</span> <span class="tok-atom">null</span>)
+        {
+            <span class="tok-comment">// Match lines with package names and versions: &quot;   └─ PackageName (vX.X.X)&quot;</span>
+            <span class="tok-keyword">var</span> <span class="tok-variableName tok-definition">packageMatch</span> <span class="tok-operator">=</span> <span class="tok-variableName">Regex</span>.<span class="tok-variableName">Match</span>(<span class="tok-variableName">line</span>, <span class="tok-string">@&quot;[└├─│\s]+([A-Za-z0-9_.]+)\s+\(v([\d.]+)\)&quot;</span>);
+            <span class="tok-keyword">if</span> (<span class="tok-variableName">packageMatch</span>.<span class="tok-variableName">Success</span>)
+            {
+                <span class="tok-keyword">var</span> <span class="tok-variableName tok-definition">pkg</span> <span class="tok-operator">=</span> <span class="tok-variableName">packageMatch</span>.<span class="tok-variableName">Groups</span>[<span class="tok-number">1</span>].<span class="tok-variableName">Value</span>;
+                <span class="tok-comment">// This is the root package that brings in the vulnerable dependency</span>
+                <span class="tok-comment">// Filter out project references from the solution and the target package itself</span>
+                <span class="tok-keyword">if</span> (<span class="tok-operator">!</span><span class="tok-variableName">pkg</span>.<span class="tok-variableName">Equals</span>(<span class="tok-variableName">packageName</span>, <span class="tok-variableName">StringComparison</span>.<span class="tok-variableName">OrdinalIgnoreCase</span>) <span class="tok-operator">&amp;&amp;</span>
+                    <span class="tok-operator">!</span><span class="tok-variableName">solutionProjects</span>.<span class="tok-variableName">Contains</span>(<span class="tok-variableName">pkg</span>))
+                {
+                    <span class="tok-variableName">rootPackage</span> <span class="tok-operator">=</span> <span class="tok-variableName">pkg</span>;
+                    <span class="tok-comment">// Just add the root package name, not the project</span>
+                    <span class="tok-keyword">if</span> (<span class="tok-operator">!</span><span class="tok-variableName">rootPackages</span>.<span class="tok-variableName">Contains</span>(<span class="tok-variableName">rootPackage</span>))
+                    {
+                        <span class="tok-variableName">rootPackages</span>.<span class="tok-variableName">Add</span>(<span class="tok-variableName">rootPackage</span>);
+                    }
+                    <span class="tok-variableName">inDependencyGraph</span> <span class="tok-operator">=</span> <span class="tok-atom">false</span>; <span class="tok-comment">// Stop looking for this project</span>
+                }
+            }
+        }
+    }
+
+    <span class="tok-keyword">return</span> <span class="tok-variableName">rootPackages</span>.<span class="tok-variableName">Any</span>() <span class="tok-operator">?</span> <span class="tok-variableName">rootPackages</span> : <span class="tok-keyword">new</span> <span class="tok-variableName">List</span><span class="tok-operator">&lt;</span><span class="tok-typeName">string</span><span class="tok-operator">&gt;</span> { <span class="tok-string">&quot;No dependency found&quot;</span> };
+}
+<span class="tok-keyword">void</span> <span class="tok-variableName">GenerateMarkdownReport</span>(<span class="tok-variableName">List</span><span class="tok-operator">&lt;</span><span class="tok-variableName">VulnerabilityInfo</span><span class="tok-operator">&gt;</span> <span class="tok-variableName">vulnerabilities</span>)
+{
+    <span class="tok-keyword">var</span> <span class="tok-variableName tok-definition">markdown</span> <span class="tok-operator">=</span> <span class="tok-keyword">new</span> <span class="tok-variableName">StringBuilder</span>();
+
+    <span class="tok-variableName">markdown</span>.<span class="tok-variableName">AppendLine</span>(<span class="tok-string">&quot;# NuGet Package Vulnerability Report&quot;</span>);
+    <span class="tok-variableName">markdown</span>.<span class="tok-variableName">AppendLine</span>();
+    <span class="tok-variableName">markdown</span>.<span class="tok-variableName">AppendLine</span>(<span class="tok-variableName">$</span><span class="tok-string">&quot;**Generated:** {DateTime.Now:yyyy-MM-dd HH:mm:ss}&quot;</span>);
+    <span class="tok-variableName">markdown</span>.<span class="tok-variableName">AppendLine</span>();
+    <span class="tok-variableName">markdown</span>.<span class="tok-variableName">AppendLine</span>(<span class="tok-variableName">$</span><span class="tok-string">&quot;**Total Vulnerabilities Found:** {vulnerabilities.Count}&quot;</span>);
+    <span class="tok-variableName">markdown</span>.<span class="tok-variableName">AppendLine</span>();
+
+    <span class="tok-comment">// Group by solution</span>
+    <span class="tok-keyword">var</span> <span class="tok-variableName tok-definition">bySolution</span> <span class="tok-operator">=</span> <span class="tok-variableName">vulnerabilities</span>.<span class="tok-variableName">GroupBy</span>(<span class="tok-variableName">v</span> <span class="tok-operator">=&gt;</span> <span class="tok-variableName">v</span>.<span class="tok-variableName">Solution</span>);
+
+    <span class="tok-keyword">foreach</span> (<span class="tok-keyword">var</span> <span class="tok-variableName tok-definition">solutionGroup</span> <span class="tok-keyword">in</span> <span class="tok-variableName">bySolution</span>)
+    {
+        <span class="tok-variableName">markdown</span>.<span class="tok-variableName">AppendLine</span>(<span class="tok-variableName">$</span><span class="tok-string">&quot;## Solution: {solutionGroup.Key}&quot;</span>);
+        <span class="tok-variableName">markdown</span>.<span class="tok-variableName">AppendLine</span>();
+
+        <span class="tok-comment">// Group by severity</span>
+        <span class="tok-keyword">var</span> <span class="tok-variableName tok-definition">bySeverity</span> <span class="tok-operator">=</span> <span class="tok-variableName">solutionGroup</span>.<span class="tok-variableName">GroupBy</span>(<span class="tok-variableName">v</span> <span class="tok-operator">=&gt;</span> <span class="tok-variableName">v</span>.<span class="tok-variableName">Severity</span>)
+            .<span class="tok-variableName">OrderByDescending</span>(<span class="tok-variableName">g</span> <span class="tok-operator">=&gt;</span> <span class="tok-variableName">GetSeverityOrder</span>(<span class="tok-variableName">g</span>.<span class="tok-variableName">Key</span>));
+
+        <span class="tok-keyword">foreach</span> (<span class="tok-keyword">var</span> <span class="tok-variableName tok-definition">severityGroup</span> <span class="tok-keyword">in</span> <span class="tok-variableName">bySeverity</span>)
+        {
+            <span class="tok-comment">// Group by package/version/project to consolidate duplicate entries with different advisories</span>
+            <span class="tok-keyword">var</span> <span class="tok-variableName tok-definition">consolidatedVulns</span> <span class="tok-operator">=</span> <span class="tok-variableName">severityGroup</span>
+                .<span class="tok-variableName">GroupBy</span>(<span class="tok-variableName">v</span> <span class="tok-operator">=&gt;</span> <span class="tok-keyword">new</span> { <span class="tok-variableName">v</span>.<span class="tok-variableName">PackageName</span>, <span class="tok-variableName">v</span>.<span class="tok-variableName">Version</span>, <span class="tok-variableName">v</span>.<span class="tok-variableName">Project</span>, <span class="tok-variableName">RootPackages</span> <span class="tok-operator">=</span> <span class="tok-typeName">string</span>.<span class="tok-variableName">Join</span>(<span class="tok-string">&quot;,&quot;</span>, <span class="tok-variableName">v</span>.<span class="tok-variableName">RootPackages</span>.<span class="tok-variableName">OrderBy</span>(<span class="tok-variableName">x</span> <span class="tok-operator">=&gt;</span> <span class="tok-variableName">x</span>)) })
+                .<span class="tok-variableName">Select</span>(<span class="tok-variableName">g</span> <span class="tok-operator">=&gt;</span> <span class="tok-keyword">new</span>
+                {
+                    <span class="tok-variableName">g</span>.<span class="tok-variableName">Key</span>.<span class="tok-variableName">PackageName</span>,
+                    <span class="tok-variableName">g</span>.<span class="tok-variableName">Key</span>.<span class="tok-variableName">Version</span>,
+                    <span class="tok-variableName">g</span>.<span class="tok-variableName">Key</span>.<span class="tok-variableName">Project</span>,
+                    <span class="tok-variableName">RootPackages</span> <span class="tok-operator">=</span> <span class="tok-variableName">g</span>.<span class="tok-variableName">First</span>().<span class="tok-variableName">RootPackages</span>,
+                    <span class="tok-variableName">Advisories</span> <span class="tok-operator">=</span> <span class="tok-variableName">g</span>.<span class="tok-variableName">Select</span>(<span class="tok-variableName">v</span> <span class="tok-operator">=&gt;</span> <span class="tok-variableName">v</span>.<span class="tok-variableName">AdvisoryUrl</span>).<span class="tok-variableName">Distinct</span>().<span class="tok-variableName">ToList</span>()
+                })
+                .<span class="tok-variableName">OrderBy</span>(<span class="tok-variableName">v</span> <span class="tok-operator">=&gt;</span> <span class="tok-variableName">v</span>.<span class="tok-variableName">PackageName</span>)
+                .<span class="tok-variableName">ThenBy</span>(<span class="tok-variableName">v</span> <span class="tok-operator">=&gt;</span> <span class="tok-variableName">Path</span>.<span class="tok-variableName">GetFileName</span>(<span class="tok-variableName">v</span>.<span class="tok-variableName">Project</span>))
+                .<span class="tok-variableName">ToList</span>();
+
+            <span class="tok-variableName">markdown</span>.<span class="tok-variableName">AppendLine</span>(<span class="tok-variableName">$</span><span class="tok-string">&quot;### {severityGroup.Key} Severity ({consolidatedVulns.Count})&quot;</span>);
+            <span class="tok-variableName">markdown</span>.<span class="tok-variableName">AppendLine</span>();
+            <span class="tok-variableName">markdown</span>.<span class="tok-variableName">AppendLine</span>(<span class="tok-string">&quot;| Package | Version | Project | Root Package(s) | Advisory |&quot;</span>);
+            <span class="tok-variableName">markdown</span>.<span class="tok-variableName">AppendLine</span>(<span class="tok-string">&quot;|---------|---------|---------|-----------------|----------|&quot;</span>);
+
+            <span class="tok-keyword">foreach</span> (<span class="tok-keyword">var</span> <span class="tok-variableName tok-definition">vuln</span> <span class="tok-keyword">in</span> <span class="tok-variableName">consolidatedVulns</span>)
+            {
+                <span class="tok-keyword">var</span> <span class="tok-variableName tok-definition">rootPackagesStr</span> <span class="tok-operator">=</span> <span class="tok-typeName">string</span>.<span class="tok-variableName">Join</span>(<span class="tok-string">&quot;&lt;br/&gt;&quot;</span>, <span class="tok-variableName">vuln</span>.<span class="tok-variableName">RootPackages</span>.<span class="tok-variableName">Take</span>(<span class="tok-number">3</span>));
+                <span class="tok-keyword">if</span> (<span class="tok-variableName">vuln</span>.<span class="tok-variableName">RootPackages</span>.<span class="tok-variableName">Count</span> <span class="tok-operator">&gt;</span> <span class="tok-number">3</span>)
+                {
+                    <span class="tok-variableName">rootPackagesStr</span> <span class="tok-operator">+=</span> <span class="tok-variableName">$</span><span class="tok-string">&quot;&lt;br/&gt;...and {vuln.RootPackages.Count - 3} more&quot;</span>;
+                }
+
+                <span class="tok-keyword">var</span> <span class="tok-variableName tok-definition">projectName</span> <span class="tok-operator">=</span> <span class="tok-variableName">Path</span>.<span class="tok-variableName">GetFileName</span>(<span class="tok-variableName">vuln</span>.<span class="tok-variableName">Project</span>);
+
+                <span class="tok-comment">// Consolidate multiple advisories into numbered links</span>
+                <span class="tok-typeName">string</span> <span class="tok-variableName">advisoryLinks</span>;
+                <span class="tok-keyword">if</span> (<span class="tok-variableName">vuln</span>.<span class="tok-variableName">Advisories</span>.<span class="tok-variableName">Count</span> <span class="tok-operator">==</span> <span class="tok-number">1</span>)
+                {
+                    <span class="tok-variableName">advisoryLinks</span> <span class="tok-operator">=</span> <span class="tok-variableName">$</span><span class="tok-string">&quot;[Link]({vuln.Advisories[0]})&quot;</span>;
+                }
+                <span class="tok-keyword">else</span>
+                {
+                    <span class="tok-variableName">advisoryLinks</span> <span class="tok-operator">=</span> <span class="tok-typeName">string</span>.<span class="tok-variableName">Join</span>(<span class="tok-string">&quot;&lt;br/&gt;&quot;</span>, <span class="tok-variableName">vuln</span>.<span class="tok-variableName">Advisories</span>.<span class="tok-variableName">Select</span>((<span class="tok-variableName">url</span>, <span class="tok-variableName">idx</span>) <span class="tok-operator">=&gt;</span> <span class="tok-variableName">$</span><span class="tok-string">&quot;[Link {idx + 1}]({url})&quot;</span>));
+                }
+
+                <span class="tok-variableName">markdown</span>.<span class="tok-variableName">AppendLine</span>(<span class="tok-variableName">$</span><span class="tok-string">&quot;| {vuln.PackageName} | {vuln.Version} | {projectName} | {rootPackagesStr} | {advisoryLinks} |&quot;</span>);
+            }
+
+            <span class="tok-variableName">markdown</span>.<span class="tok-variableName">AppendLine</span>();
+        }
+    }
+
+    <span class="tok-comment">// Summary section</span>
+    <span class="tok-variableName">markdown</span>.<span class="tok-variableName">AppendLine</span>(<span class="tok-string">&quot;## Summary by Package&quot;</span>);
+    <span class="tok-variableName">markdown</span>.<span class="tok-variableName">AppendLine</span>();
+
+    <span class="tok-keyword">var</span> <span class="tok-variableName tok-definition">byPackage</span> <span class="tok-operator">=</span> <span class="tok-variableName">vulnerabilities</span>.<span class="tok-variableName">GroupBy</span>(<span class="tok-variableName">v</span> <span class="tok-operator">=&gt;</span> <span class="tok-variableName">v</span>.<span class="tok-variableName">PackageName</span>)
+        .<span class="tok-variableName">OrderByDescending</span>(<span class="tok-variableName">g</span> <span class="tok-operator">=&gt;</span> <span class="tok-variableName">g</span>.<span class="tok-variableName">Count</span>());
+
+    <span class="tok-variableName">markdown</span>.<span class="tok-variableName">AppendLine</span>(<span class="tok-string">&quot;| Package | Occurrences | Severity | Affected Versions |&quot;</span>);
+    <span class="tok-variableName">markdown</span>.<span class="tok-variableName">AppendLine</span>(<span class="tok-string">&quot;|---------|-------------|----------|-------------------|&quot;</span>);
+
+    <span class="tok-keyword">foreach</span> (<span class="tok-keyword">var</span> <span class="tok-variableName tok-definition">packageGroup</span> <span class="tok-keyword">in</span> <span class="tok-variableName">byPackage</span>)
+    {
+        <span class="tok-keyword">var</span> <span class="tok-variableName tok-definition">count</span> <span class="tok-operator">=</span> <span class="tok-variableName">packageGroup</span>.<span class="tok-variableName">Count</span>();
+        <span class="tok-keyword">var</span> <span class="tok-variableName tok-definition">severity</span> <span class="tok-operator">=</span> <span class="tok-variableName">packageGroup</span>.<span class="tok-variableName">First</span>().<span class="tok-variableName">Severity</span>;
+        <span class="tok-keyword">var</span> <span class="tok-variableName tok-definition">versions</span> <span class="tok-operator">=</span> <span class="tok-typeName">string</span>.<span class="tok-variableName">Join</span>(<span class="tok-string">&quot;, &quot;</span>, <span class="tok-variableName">packageGroup</span>.<span class="tok-variableName">Select</span>(<span class="tok-variableName">v</span> <span class="tok-operator">=&gt;</span> <span class="tok-variableName">v</span>.<span class="tok-variableName">Version</span>).<span class="tok-variableName">Distinct</span>());
+
+        <span class="tok-variableName">markdown</span>.<span class="tok-variableName">AppendLine</span>(<span class="tok-variableName">$</span><span class="tok-string">&quot;| {packageGroup.Key} | {count} | {severity} | {versions} |&quot;</span>);
+    }
+
+    <span class="tok-variableName">markdown</span>.<span class="tok-variableName">AppendLine</span>();
+    <span class="tok-variableName">markdown</span>.<span class="tok-variableName">AppendLine</span>(<span class="tok-string">&quot;## Recommended Actions&quot;</span>);
+    <span class="tok-variableName">markdown</span>.<span class="tok-variableName">AppendLine</span>();
+    <span class="tok-variableName">markdown</span>.<span class="tok-variableName">AppendLine</span>(<span class="tok-string">&quot;1. **High Severity**: Update immediately&quot;</span>);
+    <span class="tok-variableName">markdown</span>.<span class="tok-variableName">AppendLine</span>(<span class="tok-string">&quot;2. **Moderate Severity**: Plan update in next sprint&quot;</span>);
+    <span class="tok-variableName">markdown</span>.<span class="tok-variableName">AppendLine</span>(<span class="tok-string">&quot;3. **Low Severity**: Update during regular maintenance&quot;</span>);
+    <span class="tok-variableName">markdown</span>.<span class="tok-variableName">AppendLine</span>();
+    <span class="tok-variableName">markdown</span>.<span class="tok-variableName">AppendLine</span>(<span class="tok-string">&quot;### How to Update Packages&quot;</span>);
+    <span class="tok-variableName">markdown</span>.<span class="tok-variableName">AppendLine</span>();
+    <span class="tok-variableName">markdown</span>.<span class="tok-variableName">AppendLine</span>(<span class="tok-string">&quot;```bash&quot;</span>);
+    <span class="tok-variableName">markdown</span>.<span class="tok-variableName">AppendLine</span>(<span class="tok-string">&quot;# Update a specific package in a project&quot;</span>);
+    <span class="tok-variableName">markdown</span>.<span class="tok-variableName">AppendLine</span>(<span class="tok-string">&quot;dotnet add [project] package [PackageName] --version [LatestVersion]&quot;</span>);
+    <span class="tok-variableName">markdown</span>.<span class="tok-variableName">AppendLine</span>();
+    <span class="tok-variableName">markdown</span>.<span class="tok-variableName">AppendLine</span>(<span class="tok-string">&quot;# For transitive dependencies, add explicit reference&quot;</span>);
+    <span class="tok-variableName">markdown</span>.<span class="tok-variableName">AppendLine</span>(<span class="tok-string">&quot;# Example:&quot;</span>);
+    <span class="tok-variableName">markdown</span>.<span class="tok-variableName">AppendLine</span>(<span class="tok-string">&quot;# dotnet add package System.Text.Json --version 10.0.0&quot;</span>);
+    <span class="tok-variableName">markdown</span>.<span class="tok-variableName">AppendLine</span>(<span class="tok-string">&quot;```&quot;</span>);
+
+    <span class="tok-variableName">File</span>.<span class="tok-variableName">WriteAllText</span>(<span class="tok-variableName">$</span><span class="tok-string">&quot;vulnerabilities_{DateTime.Now.ToString(&quot;</span><span class="tok-variableName">yyyy_MM_dd_HHmmss</span><span class="tok-string">&quot;)}.md&quot;</span>, <span class="tok-variableName">markdown</span>.<span class="tok-variableName">ToString</span>());
+}
+
+<span class="tok-typeName">int</span> <span class="tok-variableName tok-definition">GetSeverityOrder</span>(<span class="tok-typeName">string</span> <span class="tok-variableName">severity</span>)
+{
+    <span class="tok-keyword">return</span> <span class="tok-variableName">severity</span>.<span class="tok-variableName">ToLower</span>() <span class="tok-keyword">switch</span>
+    {
+        <span class="tok-string">&quot;high&quot;</span> <span class="tok-operator">=&gt;</span> <span class="tok-number">3</span>,
+        <span class="tok-string">&quot;moderate&quot;</span> <span class="tok-operator">=&gt;</span> <span class="tok-number">2</span>,
+        <span class="tok-string">&quot;low&quot;</span> <span class="tok-operator">=&gt;</span> <span class="tok-number">1</span>,
+        <span class="tok-variableName">_</span> <span class="tok-operator">=&gt;</span> <span class="tok-number">0</span>
+    };
+}
+
+<span class="tok-keyword">class</span> <span class="tok-variableName tok-definition">VulnerabilityInfo</span>
+{
+    <span class="tok-keyword">public</span> <span class="tok-keyword">required</span> <span class="tok-typeName">string</span> <span class="tok-variableName">Solution</span> { <span class="tok-keyword">get</span>; <span class="tok-keyword">set</span>; }
+    <span class="tok-keyword">public</span> <span class="tok-keyword">required</span> <span class="tok-typeName">string</span> <span class="tok-variableName">Project</span> { <span class="tok-keyword">get</span>; <span class="tok-keyword">set</span>; }
+    <span class="tok-keyword">public</span> <span class="tok-keyword">required</span> <span class="tok-typeName">string</span> <span class="tok-variableName">PackageName</span> { <span class="tok-keyword">get</span>; <span class="tok-keyword">set</span>; }
+    <span class="tok-keyword">public</span> <span class="tok-keyword">required</span> <span class="tok-typeName">string</span> <span class="tok-variableName">Version</span> { <span class="tok-keyword">get</span>; <span class="tok-keyword">set</span>; }
+    <span class="tok-keyword">public</span> <span class="tok-keyword">required</span> <span class="tok-typeName">string</span> <span class="tok-variableName">Severity</span> { <span class="tok-keyword">get</span>; <span class="tok-keyword">set</span>; }
+    <span class="tok-keyword">public</span> <span class="tok-keyword">required</span> <span class="tok-typeName">string</span> <span class="tok-variableName">AdvisoryUrl</span> { <span class="tok-keyword">get</span>; <span class="tok-keyword">set</span>; }
+    <span class="tok-keyword">public</span> <span class="tok-keyword">required</span> <span class="tok-variableName">List</span><span class="tok-operator">&lt;</span><span class="tok-typeName">string</span><span class="tok-operator">&gt;</span> <span class="tok-variableName">RootPackages</span> { <span class="tok-keyword">get</span>; <span class="tok-keyword">set</span>; }
+}
+</code></pre>
+<h2 id="example-report-output">Example Report Output:</h2>
+<hr>
+<h1 id="nuget-package-vulnerability-report">NuGet Package Vulnerability Report</h1>
+<p><strong>Generated:</strong> 2025-01-01 00:00:00</p>
+<p><strong>Total Vulnerabilities Found:</strong> 4</p>
+<h2 id="solution-exampleappsln">Solution: ExampleApp.sln</h2>
+<h3 id="moderate-severity-11">moderate Severity (11)</h3>
+<table>
+<thead>
+<tr>
+<th>Package</th>
+<th>Version</th>
+<th>Project</th>
+<th>Root Package(s)</th>
+<th>Advisory</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Azure.Identity</td>
+<td>1.10.3</td>
+<td>ExampleApp.Web.csproj</td>
+<td>dbup</td>
+<td><a href="https://github.com/advisories/GHSA-m5vv-6r4h-3vj9">Link</a></td>
+</tr>
+<tr>
+<td>Azure.Identity</td>
+<td>1.10.3</td>
+<td>ExampleApp.UnitTests.csproj</td>
+<td>dbup</td>
+<td><a href="https://github.com/advisories/GHSA-m5vv-6r4h-3vj9">Link</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="low-severity-3">low Severity (3)</h3>
+<table>
+<thead>
+<tr>
+<th>Package</th>
+<th>Version</th>
+<th>Project</th>
+<th>Root Package(s)</th>
+<th>Advisory</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Microsoft.Identity.Client</td>
+<td>4.56.0</td>
+<td>ExampleApp.UnitTests.csproj</td>
+<td>dbup</td>
+<td><a href="https://github.com/advisories/GHSA-x674-v45j-fwxw">Link</a></td>
+</tr>
+<tr>
+<td>Microsoft.Identity.Client</td>
+<td>4.56.0</td>
+<td>ExampleApp.Web.csproj</td>
+<td>dbup</td>
+<td><a href="https://github.com/advisories/GHSA-x674-v45j-fwxw">Link</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="summary-by-package">Summary by Package</h2>
+<table>
+<thead>
+<tr>
+<th>Package</th>
+<th>Occurrences</th>
+<th>Severity</th>
+<th>Affected Versions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Azure.Identity</td>
+<td>2</td>
+<td>moderate</td>
+<td>1.10.3</td>
+</tr>
+<tr>
+<td>Microsoft.Identity.Client</td>
+<td>2</td>
+<td>moderate</td>
+<td>4.56.0</td>
+</tr>
+</tbody>
+</table>
+<h2 id="recommended-actions">Recommended Actions</h2>
+<ol>
+<li><strong>High Severity</strong>: Update immediately</li>
+<li><strong>Moderate Severity</strong>: Plan update in next sprint</li>
+<li><strong>Low Severity</strong>: Update during regular maintenance</li>
+</ol>
+<h3 id="how-to-update-packages">How to Update Packages</h3>
+<p>Ideally, update the root package. If you need to override the vulnerable dependency you can do so as follows, but with an awareness that this can create behavioural changes in your application.</p>
+<pre><code class="language-bash"><span class="tok-comment"># Update a specific package in a project</span>
+dotnet add [project] package [PackageName] <span class="tok-propertyName">--version</span> [LatestVersion]
+
+<span class="tok-comment"># For transitive dependencies, add explicit reference</span>
+<span class="tok-comment"># Example:</span>
+<span class="tok-comment"># dotnet add package System.Text.Json --version 10.0.0</span>
+</code></pre>
+<hr>
+<h2 id="summary">Summary</h2>
+<p>Hopefully this post and script help you to manage transitive NuGet package vulnerabilities in your .NET apps.</p>
+<p>References:</p>
+<ul>
+<li><a href="https://learn.microsoft.com/en-us/nuget/concepts/auditing-packages#configuring-nuget-audit">https://learn.microsoft.com/en-us/nuget/concepts/auditing-packages#configuring-nuget-audit</a></li>
+<li><a href="https://learn.microsoft.com/en-us/nuget/concepts/auditing-packages#security-vulnerabilities-found-with-updates">https://learn.microsoft.com/en-us/nuget/concepts/auditing-packages#security-vulnerabilities-found-with-updates</a></li>
+<li><a href="https://learn.microsoft.com/en-us/nuget/concepts/auditing-packages">https://learn.microsoft.com/en-us/nuget/concepts/auditing-packages</a></li>
+</ul>
+
+            </div>
+            <nav class="pagination" aria-label="Neighbouring posts">
+                <a class="button pagination__prev" href="setting-up-google-antigravity-coming-from-vscode.html"><span class="button__icon">←</span><span class="button__text">Setting up Google Antigravity (Coming from VSCode)</span></a>
+                <a class="button pagination__next" href="a-centralised-approach-to-ai-llm-agent-instruction-using-git-submodules.html"><span class="button__text">A Centralised Approach to AI &#x2F; LLM Agent Instruction Using Git Submodules</span><span class="button__icon">→</span></a>
+            </nav>
+        </article>
+    </main>
+        <footer class="footer">
+            <div class="footer__inner">
+                <div class="copyright">
+                    <span>&copy; 2026 g9n Blog</span>
+                    <span class="footer__separator" aria-hidden="true">::</span>
+                    <span>Published with <a href="https://etherpk.com" rel="noopener">EtherPK</a></span>
+                    <span class="footer__separator" aria-hidden="true">::</span><a href="feed.xml">Feed</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+        <script src="theme/search.js" defer></script>
+</body>
+</html>

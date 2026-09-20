@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="EtherPK">
+    <title>.NET 10 - File Based Apps Demonstration (C# Scripting) :: g9n Blog</title>
+    <meta name="description" content="Sample Project (Github ): https:&#x2F;&#x2F;github.com&#x2F;gbro3n&#x2F;dotnet-10-file-based-apps-test This simple app demonstrates the new Microsoft .NET 10 File Based Apps capability. Now we can use C# where we might…">
+    <link rel="stylesheet" href="theme/theme.css">
+    
+    
+    <link rel="alternate" type="application/rss+xml" title="g9n Blog" href="feed.xml">
+    <script defer src="https://analytics.appsoftware.com/telemetry.js" data-website-id="6913dde8-61ce-4739-90fe-3abeeb6ab0a4"></script>
+</head>
+<body class="layout-terminal">
+    <a class="skip-link" href="#content">Skip to content</a>
+    <div class="container">
+        <header class="header">
+            <div class="header__inner">
+                <a class="site-title logo" href="index.html">
+                    <span class="logo__mark"><!-- The EtherPK icon (resources/brand/etherpk-icon-*.svg), inline so the page fetches nothing and it takes the text colour; aria-hidden because the title beside it is the name. Fill the "logo" include, or edit this partial, for your own. -->
+                                             <svg class="site-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 191.82 166.13" width="24" height="21" aria-hidden="true" focusable="false"><path fill="currentColor" fill-rule="evenodd" d="M67.09,132.92,47.93,166.13H9.59L0,149.52,86.33,0H105.5L19.17,149.52H38.34l19.17-33.2h76.8l9.59,16.6Zm48-83.12,9.65,16.71H143.9L115.08,16.6q-24,41.57-48,83.12H143.9q14.37,24.9,28.76,49.8h-96l-9.59,16.61H182.24l9.58-16.61-38.34-66.4H96C95.85,82.9,113.39,52.73,115.08,49.8Z"/></svg>
+</span>
+                    <span class="logo__text">g9n Blog</span>
+                    <span class="logo__cursor" aria-hidden="true"></span>
+                </a>
+                <button class="nav-toggle menu-trigger" type="button" aria-controls="site-nav" aria-expanded="false" aria-label="Menu">Menu</button>
+            </div>
+            <div class="nav-backdrop" hidden></div>
+            <nav id="site-nav" class="menu site-nav" aria-label="Site">
+                <ul class="menu__inner site-nav-list">
+                </ul>
+                <form class="site-search" role="search" data-search-index="search.json" data-search-script="search-index.js">
+                    <label class="visually-hidden" for="site-search-input">Search</label>
+                    <input id="site-search-input" type="search" name="q" placeholder="$ search" autocomplete="off">
+                    <div class="site-search-results" role="listbox" hidden></div>
+                </form>
+            </nav>
+        </header>
+    <main id="content" class="content">
+        <article class="post">
+            <h1 class="post-title">.NET 10 - File Based Apps Demonstration (C# Scripting)</h1>
+            <div class="post-meta"><time class="post-date" datetime="2025-11-12">2025-11-12</time> :: <span class="post-reading">3 min read</span></div>
+        <nav class="toc framed" aria-label="Table of contents">
+            <p class="toc__title">:: Table of contents</p>
+            <ul>
+                <li class="toc-level-3"><a href="#c-file-based-app-example-script-examplecs">C# File Based App Example Script (example.cs)</a></li><li class="toc-level-2"><a href="#debugging-file-based-apps-using-vscode-and-c-dev-kit">Debugging File Based Apps (using VSCode and C# Dev Kit)</a></li><li class="toc-level-2"><a href="#more-on-net-10">More on .NET 10</a></li>
+            </ul>
+        </nav>
+            <div class="post-content">
+<p><strong>Sample Project (Github</strong> <i class="fa-brands fa-github"></i><strong>)</strong>: <a href="https://github.com/gbro3n/dotnet-10-file-based-apps-test">https://github.com/gbro3n/dotnet-10-file-based-apps-test</a></p>
+<p>This simple app demonstrates the new Microsoft .NET 10 File Based Apps capability.</p>
+<p>Now we can use C# where we might have once turned to Python, JavaScript (via Node.js) or another interpreted language. As of today this makes C# a good option for CLI utilities, automation scripts, and tooling, without a full project setup.</p>
+<p>C# scripting capability has been previously enabled by the <a href="https://github.com/dotnet-script/dotnet-script">dotnet-script project</a>. I have been using it for running utility scripts such as <a href="https://github.com/appsoftwareltd/dotnet-project-rename">this deep file contents / file / folder renaming tool</a>, but file based apps makes scripting a first class citizen and removes the need for <code>dotnet tool</code> installation.</p>
+<p>This sample script demonstrates the referencing of a Nuget package, using <code>Microsoft.Data.SQLite@8.0.0</code> to create and write to an SQLite database and read out the table contents.</p>
+<p>To run the script, with <a href="https://dotnet.microsoft.com/en-us/download/dotnet/10.0">.NET 10</a> installed, simply run:</p>
+<pre><code>dotnet run example.cs
+</code></pre>
+<p>You can essentially do anything you can in a full Solution / Project based .NET app <a href="https://www.reddit.com/r/dotnet/comments/1oujt1l/new_features_in_net_10_and_c_14/">expose a mini API</a>. Of course as complexity grows you might find you want to upgrade to a project, which .NET 10 also facilitates via <code>dotnet project convert</code>.</p>
+<pre><code>dotnet project convert example.cs
+</code></pre>
+<h3 id="c-file-based-app-example-script-examplecs">C# File Based App Example Script (example.cs)</h3>
+<pre><code class="language-csharp"><span class="tok-variableName">#nullable</span> <span class="tok-variableName">enable</span>
+
+<span class="tok-comment">// This directive imports the Microsoft.Data.SQLite package, needed to interact with the SQLite database file.</span>
+
+<span class="tok-variableName">#</span>:<span class="tok-variableName">package</span> <span class="tok-variableName">Microsoft</span>.<span class="tok-variableName">Data</span>.<span class="tok-variableName">SQLite</span><span class="tok-meta">@8</span><span class="tok-number">.0.0</span>
+
+<span class="tok-keyword">using</span> <span class="tok-variableName">Microsoft</span>.<span class="tok-variableName">Data</span>.<span class="tok-variableName">Sqlite</span>;
+
+<span class="tok-comment">// Application Entry Point (Top-Level Statements)</span>
+
+<span class="tok-keyword">const</span> <span class="tok-typeName">string</span> <span class="tok-variableName">DbFileName</span> <span class="tok-operator">=</span> <span class="tok-string">&quot;app_run_log.db&quot;</span>;
+<span class="tok-keyword">const</span> <span class="tok-typeName">string</span> <span class="tok-variableName">ConnectionString</span> <span class="tok-operator">=</span> <span class="tok-variableName">$</span><span class="tok-string">&quot;Data Source={DbFileName}&quot;</span>;
+<span class="tok-keyword">const</span> <span class="tok-typeName">string</span> <span class="tok-variableName">TableName</span> <span class="tok-operator">=</span> <span class="tok-string">&quot;RunHistory&quot;</span>;
+
+<span class="tok-variableName">Console</span>.<span class="tok-variableName">WriteLine</span>(<span class="tok-variableName">$</span><span class="tok-string">&quot;Database file location (relative to script): {DbFileName}&quot;</span>);
+
+<span class="tok-keyword">var</span> <span class="tok-variableName tok-definition">runTime</span> <span class="tok-operator">=</span> <span class="tok-typeName">DateTime</span>.<span class="tok-variableName">UtcNow</span>;
+
+<span class="tok-variableName">Console</span>.<span class="tok-variableName">WriteLine</span>(<span class="tok-variableName">$</span><span class="tok-string">&quot;Logging execution time: {runTime:yyyy-MM-dd HH:mm:ss} UTC&quot;</span>);
+
+<span class="tok-keyword">try</span>
+{
+    <span class="tok-keyword">await</span> <span class="tok-keyword">using</span> <span class="tok-keyword">var</span> <span class="tok-variableName tok-definition">connection</span> <span class="tok-operator">=</span> <span class="tok-keyword">new</span> <span class="tok-variableName">SqliteConnection</span>(<span class="tok-variableName">ConnectionString</span>);
+    <span class="tok-keyword">await</span> <span class="tok-variableName">connection</span>.<span class="tok-variableName">OpenAsync</span>();
+
+    <span class="tok-keyword">var</span> <span class="tok-variableName tok-definition">createTableCommand</span> <span class="tok-operator">=</span> <span class="tok-variableName">connection</span>.<span class="tok-variableName">CreateCommand</span>();
+
+    <span class="tok-variableName">createTableCommand</span>.<span class="tok-variableName">CommandText</span> <span class="tok-operator">=</span>
+    <span class="tok-variableName">$</span><span class="tok-string">@&quot;</span>
+        <span class="tok-string">CREATE TABLE IF NOT EXISTS {TableName} (</span>
+            <span class="tok-string">Id INTEGER PRIMARY KEY AUTOINCREMENT,</span>
+            <span class="tok-string">ExecutionTime TEXT NOT NULL</span>
+        <span class="tok-string">);</span>
+    <span class="tok-string">&quot;</span>;
+
+    <span class="tok-keyword">await</span> <span class="tok-variableName">createTableCommand</span>.<span class="tok-variableName">ExecuteNonQueryAsync</span>();
+
+    <span class="tok-variableName">Console</span>.<span class="tok-variableName">WriteLine</span>(<span class="tok-variableName">$</span><span class="tok-string">&quot;\nDatabase connection successful. Table '{TableName}' ensured.&quot;</span>);
+
+    <span class="tok-keyword">var</span> <span class="tok-variableName tok-definition">insertCommand</span> <span class="tok-operator">=</span> <span class="tok-variableName">connection</span>.<span class="tok-variableName">CreateCommand</span>();
+
+    <span class="tok-variableName">insertCommand</span>.<span class="tok-variableName">CommandText</span> <span class="tok-operator">=</span>
+    <span class="tok-variableName">$</span><span class="tok-string">@&quot;</span>
+        <span class="tok-string">INSERT INTO {TableName} (ExecutionTime) </span>
+        <span class="tok-string">VALUES (@ExecutionTime);</span>
+    <span class="tok-string">&quot;</span>;
+
+    <span class="tok-variableName">insertCommand</span>.<span class="tok-variableName">Parameters</span>.<span class="tok-variableName">AddWithValue</span>(<span class="tok-string">&quot;@ExecutionTime&quot;</span>, <span class="tok-variableName">runTime</span>.<span class="tok-variableName">ToString</span>(<span class="tok-string">&quot;o&quot;</span>));
+
+    <span class="tok-typeName">int</span> <span class="tok-variableName">rowsAffected</span> <span class="tok-operator">=</span> <span class="tok-keyword">await</span> <span class="tok-variableName">insertCommand</span>.<span class="tok-variableName">ExecuteNonQueryAsync</span>();
+
+    <span class="tok-keyword">if</span> (<span class="tok-variableName">rowsAffected</span> <span class="tok-operator">&gt;</span> <span class="tok-number">0</span>)
+    {
+        <span class="tok-variableName">Console</span>.<span class="tok-variableName">ForegroundColor</span> <span class="tok-operator">=</span> <span class="tok-variableName">ConsoleColor</span>.<span class="tok-variableName">Green</span>;
+        <span class="tok-variableName">Console</span>.<span class="tok-variableName">WriteLine</span>(<span class="tok-variableName">$</span><span class="tok-string">&quot;\nSUCCESS: Recorded run time into the database.&quot;</span>);
+        <span class="tok-variableName">Console</span>.<span class="tok-variableName">ResetColor</span>();
+    }
+
+    <span class="tok-keyword">var</span> <span class="tok-variableName tok-definition">selectCommand</span> <span class="tok-operator">=</span> <span class="tok-variableName">connection</span>.<span class="tok-variableName">CreateCommand</span>();
+
+    <span class="tok-variableName">selectCommand</span>.<span class="tok-variableName">CommandText</span> <span class="tok-operator">=</span>
+    <span class="tok-variableName">$</span><span class="tok-string">@&quot;</span>
+        <span class="tok-string">SELECT Id, ExecutionTime FROM {TableName} </span>
+        <span class="tok-string">ORDER BY Id ASC;</span>
+    <span class="tok-string">&quot;</span>;
+
+    <span class="tok-keyword">await</span> <span class="tok-keyword">using</span> <span class="tok-keyword">var</span> <span class="tok-variableName tok-definition">reader</span> <span class="tok-operator">=</span> <span class="tok-keyword">await</span> <span class="tok-variableName">selectCommand</span>.<span class="tok-variableName">ExecuteReaderAsync</span>();
+
+    <span class="tok-variableName">Console</span>.<span class="tok-variableName">WriteLine</span>(<span class="tok-variableName">$</span><span class="tok-string">&quot;\n--- All Recorded App Runs in {DbFileName} ---&quot;</span>);
+
+    <span class="tok-keyword">if</span> (<span class="tok-operator">!</span><span class="tok-variableName">reader</span>.<span class="tok-variableName">HasRows</span>)
+    {
+        <span class="tok-variableName">Console</span>.<span class="tok-variableName">WriteLine</span>(<span class="tok-string">&quot;No previous runs found.&quot;</span>);
+    }
+    <span class="tok-keyword">else</span>
+    {
+        <span class="tok-keyword">while</span> (<span class="tok-keyword">await</span> <span class="tok-variableName">reader</span>.<span class="tok-variableName">ReadAsync</span>())
+        {
+            <span class="tok-typeName">long</span> <span class="tok-variableName">id</span> <span class="tok-operator">=</span> <span class="tok-variableName">reader</span>.<span class="tok-variableName">GetInt64</span>(<span class="tok-number">0</span>);
+            <span class="tok-typeName">string</span> <span class="tok-variableName">executionTime</span> <span class="tok-operator">=</span> <span class="tok-variableName">reader</span>.<span class="tok-variableName">GetString</span>(<span class="tok-number">1</span>);
+
+            <span class="tok-variableName">Console</span>.<span class="tok-variableName">WriteLine</span>(<span class="tok-variableName">$</span><span class="tok-string">&quot;Entry #{id,-4} | Logged UTC Time: {executionTime}&quot;</span>);
+        }
+    }
+}
+<span class="tok-keyword">catch</span> (<span class="tok-variableName">Exception</span> <span class="tok-variableName">ex</span>)
+{
+    <span class="tok-variableName">Console</span>.<span class="tok-variableName">ForegroundColor</span> <span class="tok-operator">=</span> <span class="tok-variableName">ConsoleColor</span>.<span class="tok-variableName">Red</span>;
+    <span class="tok-variableName">Console</span>.<span class="tok-variableName">WriteLine</span>(<span class="tok-variableName">$</span><span class="tok-string">&quot;\nFATAL ERROR: Could not connect to or write to SQLite database.&quot;</span>);
+    <span class="tok-variableName">Console</span>.<span class="tok-variableName">WriteLine</span>(<span class="tok-variableName">$</span><span class="tok-string">&quot;Details: {ex.Message}&quot;</span>);
+    <span class="tok-variableName">Console</span>.<span class="tok-variableName">ResetColor</span>();
+}
+
+<span class="tok-variableName">Console</span>.<span class="tok-variableName">WriteLine</span>(<span class="tok-string">&quot;Finished&quot;</span>);
+
+<span class="tok-keyword">return</span> <span class="tok-number">0</span>;
+</code></pre>
+<p><strong>Result:</strong></p>
+<p><img src="assets/net-10-file-based-apps-demonstration-c-scripting.24274c74-cb25-4bbf-8393-30a1d57aac02.png" alt="Pasted image"></p>
+<h2 id="debugging-file-based-apps-using-vscode-and-c-dev-kit">Debugging File Based Apps (using VSCode and C# Dev Kit)</h2>
+<p>To debug you will need the <a href="https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csdevkit">C# Dev Kit Extension</a> installed in <a href="https://code.visualstudio.com/">VSCode</a>. From there you just need to start the app using 'Run and Debug' (rather than the <code>dotnet run</code> CLI command) and when prompted select the suggested C# debugger.</p>
+<p><img src="assets/net-10-file-based-apps-demonstration-c-scripting-2.193bf522-9240-4f83-8511-9bd4f4ca5bcd.png" alt="Debugging .NET 10 File Based Apps (Set Up)"></p>
+<p>From there you will be able to debug and step through like you would a Node.js app or a full .NET project with a launch configuration.</p>
+<p><img src="assets/net-10-file-based-apps-demonstration-c-scripting-3.830c41a4-c7a8-48ce-9b03-928ee02ffedd.png" alt="Debugging .NET 10 File Based Apps"></p>
+<h2 id="more-on-net-10">More on .NET 10</h2>
+<p>For everything else that comes with .NET 10 (and C# 14) you can find out more in the <a href="https://learn.microsoft.com/en-us/dotnet/core/whats-new/dotnet-10/overview">What's new in .NET 10</a> overview.</p>
+
+            </div>
+            <nav class="pagination" aria-label="Neighbouring posts">
+                <a class="button pagination__prev" href="building-reusable-ui-components-with-svelte-5-custom-elements.html"><span class="button__icon">←</span><span class="button__text">Building Reusable UI Components with Svelte 5 Custom Elements</span></a>
+                <a class="button pagination__next" href="vscode-tasksjson-capturing-nuget-package-vulnerability-warnings.html"><span class="button__text">VSCode tasks.json - capturing NuGet Package Vulnerability Warnings</span><span class="button__icon">→</span></a>
+            </nav>
+        </article>
+    </main>
+        <footer class="footer">
+            <div class="footer__inner">
+                <div class="copyright">
+                    <span>&copy; 2026 g9n Blog</span>
+                    <span class="footer__separator" aria-hidden="true">::</span>
+                    <span>Published with <a href="https://etherpk.com" rel="noopener">EtherPK</a></span>
+                    <span class="footer__separator" aria-hidden="true">::</span><a href="feed.xml">Feed</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+        <script src="theme/search.js" defer></script>
+</body>
+</html>

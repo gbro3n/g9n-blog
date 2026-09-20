@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="EtherPK">
+    <title>You Need Deterministic Gates for Probabilistic AI Agents :: g9n Blog</title>
+    <meta name="description" content="Referencing this MCP is Dead; Long Live MCP! (via Hacker News), I wanted to highlight what I think is the key principle behind this that will be true for the future of working with AI Agents: You…">
+    <link rel="stylesheet" href="theme/theme.css">
+    
+    
+    <link rel="alternate" type="application/rss+xml" title="g9n Blog" href="feed.xml">
+    <script defer src="https://analytics.appsoftware.com/telemetry.js" data-website-id="6913dde8-61ce-4739-90fe-3abeeb6ab0a4"></script>
+</head>
+<body class="layout-terminal">
+    <a class="skip-link" href="#content">Skip to content</a>
+    <div class="container">
+        <header class="header">
+            <div class="header__inner">
+                <a class="site-title logo" href="index.html">
+                    <span class="logo__mark"><!-- The EtherPK icon (resources/brand/etherpk-icon-*.svg), inline so the page fetches nothing and it takes the text colour; aria-hidden because the title beside it is the name. Fill the "logo" include, or edit this partial, for your own. -->
+                                             <svg class="site-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 191.82 166.13" width="24" height="21" aria-hidden="true" focusable="false"><path fill="currentColor" fill-rule="evenodd" d="M67.09,132.92,47.93,166.13H9.59L0,149.52,86.33,0H105.5L19.17,149.52H38.34l19.17-33.2h76.8l9.59,16.6Zm48-83.12,9.65,16.71H143.9L115.08,16.6q-24,41.57-48,83.12H143.9q14.37,24.9,28.76,49.8h-96l-9.59,16.61H182.24l9.58-16.61-38.34-66.4H96C95.85,82.9,113.39,52.73,115.08,49.8Z"/></svg>
+</span>
+                    <span class="logo__text">g9n Blog</span>
+                    <span class="logo__cursor" aria-hidden="true"></span>
+                </a>
+                <button class="nav-toggle menu-trigger" type="button" aria-controls="site-nav" aria-expanded="false" aria-label="Menu">Menu</button>
+            </div>
+            <div class="nav-backdrop" hidden></div>
+            <nav id="site-nav" class="menu site-nav" aria-label="Site">
+                <ul class="menu__inner site-nav-list">
+                </ul>
+                <form class="site-search" role="search" data-search-index="search.json" data-search-script="search-index.js">
+                    <label class="visually-hidden" for="site-search-input">Search</label>
+                    <input id="site-search-input" type="search" name="q" placeholder="$ search" autocomplete="off">
+                    <div class="site-search-results" role="listbox" hidden></div>
+                </form>
+            </nav>
+        </header>
+    <main id="content" class="content">
+        <article class="post">
+            <h1 class="post-title">You Need Deterministic Gates for Probabilistic AI Agents</h1>
+            <div class="post-meta"><time class="post-date" datetime="2026-03-15">2026-03-15</time> :: <span class="post-reading">3 min read</span></div>
+        <nav class="toc framed" aria-label="Table of contents">
+            <p class="toc__title">:: Table of contents</p>
+            <ul>
+                <li class="toc-level-2"><a href="#other-tools-moving-in-a-deterministic-direction">Other Tools Moving in a Deterministic Direction</a></li><li class="toc-level-2"><a href="#summary">Summary</a></li>
+            </ul>
+        </nav>
+            <div class="post-content">
+<p>Referencing this <a href="https://chrlschn.dev/blog/2026/03/mcp-is-dead-long-live-mcp/">MCP is Dead; Long Live MCP!</a> (via <a href="https://news.ycombinator.com/item?id=47380270">Hacker News</a>), I wanted to highlight what I think is the key principle behind this that will be true for the future of working with AI Agents:</p>
+<blockquote>
+<p>You Need <strong>Deterministic</strong> Gates for <strong>Probabilistic</strong> AI Agents</p>
+</blockquote>
+<p>The referenced article addresses the current zeitgeist that favours agents using CLI directly rather than MCP (or other less structured means of calling APIs).</p>
+<p>Agent Skills, AGENTS.md etc are all tools for improving the behaviour of LLMs, whether that be via <strong>increased skill</strong> or greater <strong>predictability</strong>. But at the point that the agent is still in control, outcomes are still <strong>probablistic</strong>. We forego <strong>guarantees</strong> around behaviour so we can benefit from the <strong>creativity</strong> of AI.</p>
+<p>If we want guarantees, (and we do when it comes to security and correct processing of data), we need <strong>deterministic gates</strong>. The most robust, best specified means of achieving this is <strong>MCP</strong>, and currently, the best way to manage this in teams is via remote MCP over HTTP.</p>
+<p>This is why I'm using remote MCP over HTTP for anything that matters. Yes MCP can add some overhead compared to direct CLI usage, but you can also build in optimisations that <em>deterministically</em> reduce the response size from remote APIs and therefore <strong>reducing context bloat</strong>. It's also a lot easier to share remote MCP servers, just like the internet helped us share software.</p>
+<p>For an example of a light weight MCP over HTTP implementation, see my example of a <a href="https://github.com/appsoftwareltd/connect-mcp-demo">custom MCP server for Google Workspace integration</a>.</p>
+<p>I'm happy for the the agent to use its intelligence and creativity to help me solve problems, but for a range of operations, I want a gate past which actions run with the certainty of normal software functions. This might be so that I can enforce scoped operations rather than give an agent access to everything an API offers, or I just because I want to be sure about what data is read or changed and how. There are many safety critical applications ins software that require the same.</p>
+<h2 id="other-tools-moving-in-a-deterministic-direction">Other Tools Moving in a Deterministic Direction</h2>
+<p>Other tooling around AI we're seeing evolve around Agentic AI is adding deterministic gates that the probabilistic AI agents work with.</p>
+<p><strong>NanoClaw</strong> is an example of an application that sells itself on using deterministic filtering of your WhatsApp messages before the agent gets to see them, and proxies API keys so the agent never gets them - this is a similar type of deterministic gate that allows for more confidence when working with AI.</p>
+<h2 id="summary">Summary</h2>
+<p>Certainty around fundamental principles in software such as security and correctness of process requires determinism. AI Agents while improving will never be 100% deterministic (that's what code's for!).</p>
+
+            </div>
+            <nav class="pagination" aria-label="Neighbouring posts">
+                <a class="button pagination__prev" href="fixing-agent-llm-context-decay-in-vs-code-with-git-worktrees.html"><span class="button__icon">←</span><span class="button__text">Fixing AGENT &#x2F; LLM Context Decay in VS Code with Git Worktrees</span></a>
+                <a class="button pagination__next" href="as-notes-vs-code-notes-docs-and-wikilink-markdown-editing.html"><span class="button__text">AS Notes - VS Code Notes, Docs and Wikilink Markdown Editing</span><span class="button__icon">→</span></a>
+            </nav>
+        </article>
+    </main>
+        <footer class="footer">
+            <div class="footer__inner">
+                <div class="copyright">
+                    <span>&copy; 2026 g9n Blog</span>
+                    <span class="footer__separator" aria-hidden="true">::</span>
+                    <span>Published with <a href="https://etherpk.com" rel="noopener">EtherPK</a></span>
+                    <span class="footer__separator" aria-hidden="true">::</span><a href="feed.xml">Feed</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+        <script src="theme/search.js" defer></script>
+</body>
+</html>
