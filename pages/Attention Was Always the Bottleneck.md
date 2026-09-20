@@ -4,7 +4,8 @@ description: Attention bottlenecks were always there, they have just shifted
 date: 2026-09-01
 author: Gareth Brown
 public: true
-layout: blog
+publications:
+  - g9n-blog
 ---
 
 In earlier days, we didn't want to spend our attention on machine code or assembly, and later memory management an garbage collection. So we invented tools and abstractions so that we didn't have to think about these things any more. We had more valuable problems and since we could automate them away, they were no longer deemed worth our attention.

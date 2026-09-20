@@ -1,10 +1,12 @@
 ---
 title: The skills I think we might gain (AI)
-description: Some rough notes on what I feel we might gain as we loose the edge from our coding skills
+description: Some rough notes on what I feel we might gain as we loose the edge
+  from our coding skills
 date: 2026-06-24
 author: Gareth Brown
 public: true
-layout: blog
+publications:
+  - g9n-blog
 ---
 
 The general consensus, and common sense seem to dictate that the more we lean on LLMs for coding, the weaker our ability to code by hand will become. I feel like it's something all experienced engineers will be able to get back if they decide they want to put the effort in, but the AI genie doesn't look like it's going back in the bottle any time soon, and so the motivation to put that effort in is always going to be competing with the motivation for doing something else important.

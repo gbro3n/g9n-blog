@@ -4,7 +4,8 @@ description: How sentiment seems to be changing among prominent programmers
 date: 2026-08-30
 author: Gareth Brown
 public: true
-layout: blog
+publications:
+  - g9n-blog
 ---
 
 A few months ago, it was easy to find AI sceptics among prominent programmers. Just over a year ago [DHH](https://x.com/dhh?lang=en) was interviewed on the [Lex Friedman Podcast](https://www.youtube.com/watch?v=vagyIcmIGOQ). Now appearing again on the recent [episode](https://www.youtube.com/watch?v=NYFGCESmikA), DHH's opinion seems to have shifted significantly.

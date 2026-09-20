@@ -1,9 +1,9 @@
 ---
-title: Contact
+title: g9b Blog Contact
 description: Contact
-layout: docs
+public: true
+publications:
+  - g9n-blog
 ---
-
-# Contact
 
 If you have questions or if anything you find on this blog is of interest to you, contact me at <gareth.brown@g9n.com>

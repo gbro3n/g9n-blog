@@ -4,7 +4,8 @@ description: Play a video game every now and again
 date: 2026-09-01
 author: Gareth Brown
 public: true
-layout: blog
+publications:
+  - g9n-blog
 ---
 
 As a developer, something that contributes to feelings of burnout is constantly dealing with faults, and software that has not yet been completed.

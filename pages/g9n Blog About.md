@@ -1,9 +1,9 @@
 ---
-title: About
+title: g9n Blog About
 description: About
-layout: docs
+public: true
+publications:
+  - g9n-blog
 ---
-
-# About
 
 My name is Gareth Brown and I'm a software engineer living in the UK.
