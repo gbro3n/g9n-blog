@@ -2,7 +2,7 @@
 
 This folder is a website published by [EtherPK](https://etherpk.com) from the publication
 `g9n-blog`. Every file in it except `CNAME` and `robots.txt` is regenerated on each
-publish, so edit the notes, the publication page, its include pages and its theme in EtherPK,
+publish, so edit the notes, the publication page, its include pages and its theme in the EtherPK app,
 not here.
 
 - Preview: open `index.html` in a browser; search works from disk too.
