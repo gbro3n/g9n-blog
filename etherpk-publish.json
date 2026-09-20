@@ -3,9 +3,9 @@
     "id": "g9n-blog",
     "name": "g9n Blog",
     "kind": "blog",
-    "theme": "g9n-blog-theme-etherpk-terminal"
+    "theme": "etherpk-terminal"
   },
-  "generatedAt": "2026-09-20T13:19:57.643Z",
+  "generatedAt": "2026-09-20T15:51:03.133Z",
   "ok": true,
   "errors": [],
   "warnings": [],
@@ -11724,7 +11724,7 @@
   ],
   "publicInNoPublication": [],
   "theme": {
-    "source": "graph",
+    "source": "bundled",
     "name": "etherpk-terminal",
     "version": "1.0.0"
   }
