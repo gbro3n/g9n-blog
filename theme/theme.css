@@ -212,6 +212,27 @@ li.task.done { color: var(--color-muted); text-decoration: line-through; }
 .button:hover { background: var(--accent); color: var(--background); }
 .button.inline { display: inline-flex; }
 .read-more { margin-top: 10px; }
+.all-posts { margin: 30px 0 0; }
+/* The contents page of a docs site: the outline as a tree, then any page it leaves out. */
+.page-index-list { list-style: none; margin: 0; padding: 0; }
+.page-index-list .page-index-list { padding-left: 24px; }
+.page-index-list li { margin: 6px 0; }
+.page-index-list li::before { content: "- "; color: var(--accent); }
+.page-index-list a { color: var(--color); }
+.page-index-list a:hover { color: var(--accent); }
+.page-index-group-label { color: var(--color-muted); }
+.page-index-group-label::after { content: ":"; }
+.page-index-other { margin: 30px 0 10px; font-size: 1.1rem; }
+.page-index-other::before { content: "## "; color: var(--accent); }
+/* The archives: a year as a prompt-style heading, then one line per post. */
+.archive-year { margin: 30px 0 10px; font-size: 1.1rem; }
+.archive-year::before { content: "## "; color: var(--accent); }
+.archive-list { list-style: none; margin: 0; padding: 0; }
+.archive-list li { margin: 6px 0; }
+.archive-list time { color: var(--color-muted); margin-right: 12px; font-variant-numeric: tabular-nums; }
+.archive-list a { color: var(--color); }
+.archive-list a:hover { color: var(--accent); }
+.archive-excerpt { color: var(--color-muted); }
 .framed { border: 1px solid var(--accent); padding: 20px; }
 .toc { margin: 20px 0 40px; }
 .toc__title { margin: 0 0 10px; color: var(--accent); }
