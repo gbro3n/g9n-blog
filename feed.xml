@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>g9n Blog</title>
+    <link>https://blog.g9n.com/</link>
+    <description>g9n Blog</description>
+    <atom:link href="https://blog.g9n.com/feed.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>Attention Was Always the Bottleneck (AI)</title>
+      <link>https://blog.g9n.com/attention-was-always-the-bottleneck-ai.html</link>
+      <guid>https://blog.g9n.com/attention-was-always-the-bottleneck-ai.html</guid>
+      <pubDate>Tue, 01 Sep 2026 00:00:00 GMT</pubDate>
+      <description>In earlier days, we didn&apos;t want to spend our attention on machine code or assembly, and later memory management an garbage collection. So we invented tools and abstractions so that we didn&apos;t have to…</description>
+    </item>
+    <item>
+      <title>Make Sure You Spend Time With Tech You Enjoy</title>
+      <link>https://blog.g9n.com/make-sure-you-spend-time-with-tech-you-enjoy.html</link>
+      <guid>https://blog.g9n.com/make-sure-you-spend-time-with-tech-you-enjoy.html</guid>
+      <pubDate>Tue, 01 Sep 2026 00:00:00 GMT</pubDate>
+      <description>As a developer, something that contributes to feelings of burnout is constantly dealing with faults, and software that has not yet been completed. An antidote to this I find, is to carve out some…</description>
+    </item>
+    <item>
+      <title>Observations Around Prominent Programmer Sentiment and AI</title>
+      <link>https://blog.g9n.com/observations-around-prominent-programmer-sentiment-and-ai.html</link>
+      <guid>https://blog.g9n.com/observations-around-prominent-programmer-sentiment-and-ai.html</guid>
+      <pubDate>Sun, 30 Aug 2026 00:00:00 GMT</pubDate>
+      <description>A few months ago, it was easy to find AI sceptics among prominent programmers. Just over a year ago DHH was interviewed on the Lex Friedman Podcast. Now appearing again on the recent episode, DHH&apos;s…</description>
+    </item>
+    <item>
+      <title>The skills I think we might gain (AI)</title>
+      <link>https://blog.g9n.com/the-skills-i-think-we-might-gain-ai.html</link>
+      <guid>https://blog.g9n.com/the-skills-i-think-we-might-gain-ai.html</guid>
+      <pubDate>Wed, 24 Jun 2026 00:00:00 GMT</pubDate>
+      <description>The general consensus, and common sense seem to dictate that the more we lean on LLMs for coding, the weaker our ability to code by hand will become. I feel like it&apos;s something all experienced…</description>
+    </item>
+    <item>
+      <title>Introducing the g9n blog</title>
+      <link>https://blog.g9n.com/introducing-the-g9n-blog.html</link>
+      <guid>https://blog.g9n.com/introducing-the-g9n-blog.html</guid>
+      <pubDate>Sun, 17 May 2026 00:00:00 GMT</pubDate>
+      <description>Welcome to my blog. This is where I intend (intend, not promise) to put my (hopefully) regular writings in an effort to be more intentional about what I&apos;m working on and thinking about, communicate…</description>
+    </item>
+  </channel>
+</rss>

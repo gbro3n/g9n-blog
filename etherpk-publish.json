@@ -5,17 +5,11 @@
     "kind": "blog",
     "theme": "g9n-blog-theme-etherpk-terminal"
   },
-  "generatedAt": "2026-09-20T10:46:08.133Z",
+  "generatedAt": "2026-09-20T10:55:12.495Z",
   "ok": true,
   "errors": [],
   "warnings": [],
-  "info": [
-    {
-      "level": "info",
-      "code": "no-site-url",
-      "message": "The publication has no `url`, so no sitemap or feed is written; add one to the publication page to get both."
-    }
-  ],
+  "info": [],
   "included": [
     {
       "concept": "Attention Was Always the Bottleneck (AI)",
