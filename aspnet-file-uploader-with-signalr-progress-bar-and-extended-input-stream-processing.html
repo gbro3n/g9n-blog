@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="EtherPK">
+    <title>ASP.NET File Uploader with SignalR Progress Bar and Extended Input Stream Processing :: g9n Blog</title>
+    <meta name="description" content="Note: This is a copy of an old and fairly popular blog post that I have had requests to reinstate the links and source code for. The .sln file has been updated for VS 2015. If you run into trouble…">
+    <link rel="stylesheet" href="theme/theme.css">
+    
+    
+    <link rel="alternate" type="application/rss+xml" title="g9n Blog" href="feed.xml">
+</head>
+<body class="layout-terminal">
+    <a class="skip-link" href="#content">Skip to content</a>
+    <div class="container">
+        <header class="header">
+            <div class="header__inner">
+                <a class="site-title logo" href="index.html">
+                    <span class="logo__mark"><!-- The EtherPK icon (resources/brand/etherpk-icon-*.svg), inline so the page fetches nothing and it takes the text colour; aria-hidden because the title beside it is the name. Fill the "logo" include, or edit this partial, for your own. -->
+                                             <svg class="site-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 191.82 166.13" width="24" height="21" aria-hidden="true" focusable="false"><path fill="currentColor" fill-rule="evenodd" d="M67.09,132.92,47.93,166.13H9.59L0,149.52,86.33,0H105.5L19.17,149.52H38.34l19.17-33.2h76.8l9.59,16.6Zm48-83.12,9.65,16.71H143.9L115.08,16.6q-24,41.57-48,83.12H143.9q14.37,24.9,28.76,49.8h-96l-9.59,16.61H182.24l9.58-16.61-38.34-66.4H96C95.85,82.9,113.39,52.73,115.08,49.8Z"/></svg>
+</span>
+                    <span class="logo__text">g9n Blog</span>
+                    <span class="logo__cursor" aria-hidden="true"></span>
+                </a>
+                <button class="nav-toggle menu-trigger" type="button" aria-controls="site-nav" aria-expanded="false" aria-label="Menu">Menu</button>
+            </div>
+            <div class="nav-backdrop" hidden></div>
+            <nav id="site-nav" class="menu site-nav" aria-label="Site">
+                <ul class="menu__inner site-nav-list">
+                <li class="">
+                    <a href="a-custom-workflow-to-publish-from-obsidian-to-blotim.html">A Custom Workflow to Publish from Obsidian to Blot.im</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="a-rough-guide-to-building-a-retro-pie-bar-top-arcade-game-machine.html">A Rough Guide to Building a Retro Pie Bar Top Arcade Game Machine</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="a-utility-class-for-finding-database-deadlocks-in-net-applications.html">A Utility Class for Finding Database Deadlocks in .NET Applications</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="api-versioning-and-basic-ui-authentication-with-openapi-swagger-swashbuckle-in-net-core-6.html">API Versioning and Basic UI Authentication with OpenAPI (Swagger Swashbuckle) in .NET Core 6</a>
+                    
+                    
+                </li>
+                <li class="nav-current ">
+                    <a href="aspnet-file-uploader-with-signalr-progress-bar-and-extended-input-stream-processing.html" aria-current="page">ASP.NET File Uploader with SignalR Progress Bar and Extended Input Stream Processing</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="attention-was-always-the-bottleneck-ai.html">Attention Was Always the Bottleneck (AI)</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="converting-enum-types-by-value-in-c.html">Converting Enum Types By Value in C#</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="fail-early-fail-fast-and-why-you-should-throw-exceptions.html">Fail Early, Fail Fast and why you should throw exceptions</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="hackers-painters-and-kanban-for-software-as-a-creative-process.html">Hackers, Painters and Kanban for Software as a Creative Process</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="how-to-create-a-deep-copy-of-an-object-in-javascript-typescript.html">How to create a deep copy of an object in JavaScript, TypeScript</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="how-to-inject-google-adsense-in-article-script-into-your-html-aspnet-core-razor.html">How to inject Google Adsense In-Article script into your HTML (ASP.NET Core Razor)</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="how-to-wrap-a-typescript-js-callback-with-async-await.html">How to wrap a TypeScript JS callback with async  await</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="implementing-microsoftextensionsloggingilogger-with-nlog.html">Implementing Microsoft.Extensions.Logging.ILogger with NLog</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="introducing-the-g9n-blog.html">Introducing the g9n blog</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="maintaining-a-blog-with-jekyll-github-pages-and-github-codespaces.html">Maintaining a Blog with Jekyll, GitHub Pages and GitHub Codespaces</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="make-sure-you-spend-time-with-tech-you-enjoy.html">Make Sure You Spend Time With Tech You Enjoy</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="managing-code-snippets-using-logseq.html">Managing Code Snippets Using Logseq</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="observations-around-prominent-programmer-sentiment-and-ai.html">Observations Around Prominent Programmer Sentiment and AI</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="robust-error-handling-in-aspnet-core.html">Robust Error Handling in ASP.NET Core</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="sanitizing-html-in-net-core.html">Sanitizing HTML in .NET Core</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="the-skills-i-think-we-might-gain-ai.html">The skills I think we might gain (AI)</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="uploading-directly-to-s3-from-client-using-pre-signed-urls-javascript-net.html">Uploading Directly to S3 from Client Using Pre-Signed URLs (JavaScript,  .NET)</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="using-github-to-host-images.html">Using GitHub to Host Images</a>
+                    
+                    
+                </li>
+                </ul>
+                <form class="site-search" role="search" data-search-index="search.json" data-search-script="search-index.js">
+                    <label class="visually-hidden" for="site-search-input">Search</label>
+                    <input id="site-search-input" type="search" name="q" placeholder="$ search" autocomplete="off">
+                    <div class="site-search-results" role="listbox" hidden></div>
+                </form>
+            </nav>
+        </header>
+    <main id="content" class="content">
+        <article class="post">
+            <h1 class="post-title">ASP.NET File Uploader with SignalR Progress Bar and Extended Input Stream Processing</h1>
+            <div class="post-meta"><time class="post-date" datetime="2013-01-08">2013-01-08</time> :: <span class="post-reading">11 min read</span></div>
+        <nav class="toc framed" aria-label="Table of contents">
+            <p class="toc__title">:: Table of contents</p>
+            <ul>
+                <li class="toc-level-2"><a href="#httpmultipartcontenttemplateparser">HttpMultipartContentTemplateParser</a></li><li class="toc-level-2"><a href="#streamindexer">StreamIndexer</a></li><li class="toc-level-2"><a href="#multipartcontentelement">MultipartContentElement</a></li>
+            </ul>
+        </nav>
+            <div class="post-content">
+<p><em>Note: This is a copy of an old and fairly popular blog post that I have had requests to reinstate the links and source code for. The .sln file has been updated for VS 2015. If you run into trouble with 404 error on upload of a file, check the HTTP handler config in web.config - HTTP handler configuration is different for IIS 10 vs older versions.</em></p>
+<p>Full source code is now on GitHub: <a href="https://github.com/garethrbrown/aspnet-signalr-upload-progress-bar">https://github.com/garethrbrown/aspnet-signalr-upload-progress-bar</a></p>
+<p><img src="assets/pasted-image-20220107103737-26d679a9.392a0bdf-a1ed-41f2-a4b2-08a8fbd569c2.png" alt=""></p>
+<p>This post describes how to build robust file uploading functionality, with progress bar using ASP.NET MVC and SignalR.</p>
+<p>Full source code can be downloaded at the end of this post.
+I needed to build a file uploader, and have the progress reporting managed by SignalR, as the project that this demo is part of involves long processing on the uploaded file, and requires a persistent, reliable connection to the client.</p>
+<p>The challenges that I needed to solve following the initial SignalR integration were:</p>
+<p><strong>Use of HttpContext.Request in MVC action requires full request stream to have been uploaded</strong></p>
+<p>File upload via an ASP.NET MVC action using HttpPostedFileBase was not suitable. Accessing some properties on the HttpContext.Request object, such as HttpContext.Request.Length, HttpContext.Request.Files, HttpContext.Request.InputStream causes ASP.NET to wait until the full HTTP request stream has been read in its entirety. In this case, that meant that I could not start pushing updates to the client from the server until the file had been uploaded, which defeated the point of having an upload progress bar.</p>
+<p>I was able to work around this by using <code>HttpContext.Request.GetBufferlessInputStream()</code> inside an HTTP handler. This allows me to begin reading from the http request body pretty much as soon as it starts uploading. This however left me with my next problem to solve.</p>
+<p><strong>Because none of the form data can be accessed during upload (this would cause ASP.NET to wait until all uploaded), no additional variables can be used at an early stage in the request</strong></p>
+<p>One such variable that was required was the SignalR client connection id, so that I could call back to the client with upload progress. To solve this problem, the HttpHandler is bound in Web.Config to all requests to .upl extention. Since the the extension of the request path was all that mattered, I was able to send the SignalR connection id as the request path file name e.g. /connection_id_here.upl. I could then parse the connection id out of Request.Url, which does not cause ASP.NET to hang.</p>
+<p>I had considered using MVC routing to circumvent the issue, however controller actions require the full request to have been uploaded before running the action method code.</p>
+<p><strong>There is no built in way to process raw HTTP request data</strong></p>
+<p>I was unable to find an existing means of processing the raw multi part content, that <code>HttpContext.Request.GetBufferlessInputStream()</code> provides access to. To solve this problem, I decompiled System.Web using <a href="http://ilspy.net">ILSpy</a> on my local machine to see how ASP.NET splits the request data when populating properties such as the Files HttpFileCollection array on the request object. Here I was able to find the relevant code, most of which is in an internal class called <strong>HttpMultipartContentTemplateParser</strong>. Once I was able to replicate this functionality, and refactor out some of the deeper dependencies, I was able to split the multipart content form data.</p>
+<p>Initially, processing of the multi part form data was in memory, so large uploads triggered exceptions.</p>
+<p>What was required here was a mechanism for writing the raw input stream data to disk, and then processing the data from a file in a chunked fashion, streaming to individual files without ever holding a full files worth of bytes in memory at any one time.</p>
+<h2 id="httpmultipartcontenttemplateparser">HttpMultipartContentTemplateParser</h2>
+<p>The code that parses the raw multipart content data, boundaries, content disposition headers is as below. This has been adapted from an internal class of the same name in .NET's System.Web.</p>
+<pre><code class="language-cs"><span class="tok-keyword">using</span> <span class="tok-variableName">System</span>;
+<span class="tok-keyword">using</span> <span class="tok-variableName">System</span>.<span class="tok-variableName">Collections</span>;
+<span class="tok-keyword">using</span> <span class="tok-variableName">System</span>.<span class="tok-variableName">Globalization</span>;
+<span class="tok-keyword">using</span> <span class="tok-variableName">System</span>.<span class="tok-variableName">Text</span>;
+
+<span class="tok-keyword">namespace</span> <span class="tok-variableName tok-definition">AppSoftware</span>.<span class="tok-variableName">SignalRFileUploader</span>.<span class="tok-variableName">HttpRequestProcessing</span>
+{
+    <span class="tok-comment">/// &amp;lt;summary&amp;gt;</span>
+    <span class="tok-comment">/// Adapted from HttpMultipartContentTemplateParser in System.Web, provides processing</span>
+    <span class="tok-comment">/// for raw http request data</span>
+    <span class="tok-comment">/// &amp;lt;/summary&amp;gt;</span>
+    <span class="tok-keyword">internal</span> <span class="tok-keyword">sealed</span> <span class="tok-keyword">class</span> <span class="tok-variableName tok-definition">HttpMultipartContentTemplateParser</span>
+    {
+        <span class="tok-keyword">private</span> <span class="tok-keyword">readonly</span> <span class="tok-variableName">StreamIndexer</span> <span class="tok-variableName">m_data</span>;
+        <span class="tok-keyword">private</span> <span class="tok-keyword">readonly</span> <span class="tok-typeName">int</span> <span class="tok-variableName">m_length</span>;
+        <span class="tok-keyword">private</span> <span class="tok-typeName">int</span> <span class="tok-variableName">m_pos</span>;
+        <span class="tok-keyword">private</span> <span class="tok-keyword">readonly</span> <span class="tok-variableName">ArrayList</span> <span class="tok-variableName">m_elements</span> <span class="tok-operator">=</span> <span class="tok-keyword">new</span> <span class="tok-variableName">ArrayList</span>();
+        <span class="tok-keyword">private</span> <span class="tok-typeName">int</span> <span class="tok-variableName">m_lineStart</span> <span class="tok-operator">=</span> <span class="tok-operator">-</span><span class="tok-number">1</span>;
+        <span class="tok-keyword">private</span> <span class="tok-typeName">int</span> <span class="tok-variableName">m_lineLength</span> <span class="tok-operator">=</span> <span class="tok-operator">-</span><span class="tok-number">1</span>;
+        <span class="tok-keyword">private</span> <span class="tok-typeName">bool</span> <span class="tok-variableName">m_lastBoundaryFound</span>;
+        <span class="tok-keyword">private</span> <span class="tok-keyword">readonly</span> <span class="tok-typeName">byte</span>[] <span class="tok-variableName">m_boundary</span>;
+        <span class="tok-keyword">private</span> <span class="tok-typeName">string</span> <span class="tok-variableName">m_partName</span>;
+        <span class="tok-keyword">private</span> <span class="tok-typeName">string</span> <span class="tok-variableName">m_partFilename</span>;
+        <span class="tok-keyword">private</span> <span class="tok-typeName">string</span> <span class="tok-variableName">m_partContentType</span>;
+        <span class="tok-keyword">private</span> <span class="tok-typeName">int</span> <span class="tok-variableName">m_partDataStart</span> <span class="tok-operator">=</span> <span class="tok-operator">-</span><span class="tok-number">1</span>;
+        <span class="tok-keyword">private</span> <span class="tok-typeName">int</span> <span class="tok-variableName">m_partDataLength</span> <span class="tok-operator">=</span> <span class="tok-operator">-</span><span class="tok-number">1</span>;
+        <span class="tok-keyword">private</span> <span class="tok-keyword">readonly</span> <span class="tok-variableName">Encoding</span> <span class="tok-variableName">m_encoding</span>;
+
+        <span class="tok-keyword">private</span> <span class="tok-variableName">HttpMultipartContentTemplateParser</span>(<span class="tok-variableName">StreamIndexer</span> <span class="tok-variableName">data</span>, <span class="tok-typeName">long</span> <span class="tok-variableName">length</span>, <span class="tok-typeName">byte</span>[] <span class="tok-variableName">boundary</span>, <span class="tok-variableName">Encoding</span> <span class="tok-variableName">encoding</span>)
+        {
+            <span class="tok-keyword">this</span>.<span class="tok-variableName">m_data</span> <span class="tok-operator">=</span> <span class="tok-variableName">data</span>;
+            <span class="tok-keyword">this</span>.<span class="tok-variableName">m_length</span> <span class="tok-operator">=</span> (<span class="tok-typeName">int</span>) <span class="tok-variableName">length</span>;
+            <span class="tok-keyword">this</span>.<span class="tok-variableName">m_boundary</span> <span class="tok-operator">=</span> <span class="tok-variableName">boundary</span>;
+            <span class="tok-keyword">this</span>.<span class="tok-variableName">m_encoding</span> <span class="tok-operator">=</span> <span class="tok-variableName">encoding</span>;
+        }
+
+        <span class="tok-keyword">private</span> <span class="tok-typeName">bool</span> <span class="tok-variableName">AtEndOfData</span>()
+        {
+            <span class="tok-keyword">return</span> <span class="tok-keyword">this</span>.<span class="tok-variableName">m_pos</span> <span class="tok-operator">&amp;</span><span class="tok-variableName">gt</span>;<span class="tok-operator">=</span> <span class="tok-keyword">this</span>.<span class="tok-variableName">m_length</span> <span class="tok-operator">||</span> <span class="tok-keyword">this</span>.<span class="tok-variableName">m_lastBoundaryFound</span>;
+        }
+
+        <span class="tok-keyword">private</span> <span class="tok-typeName">bool</span> <span class="tok-variableName">GetNextLine</span>()
+        {
+            <span class="tok-typeName">int</span> <span class="tok-variableName">i</span> <span class="tok-operator">=</span> <span class="tok-keyword">this</span>.<span class="tok-variableName">m_pos</span>;
+            <span class="tok-keyword">this</span>.<span class="tok-variableName">m_lineStart</span> <span class="tok-operator">=</span> <span class="tok-operator">-</span><span class="tok-number">1</span>;
+            <span class="tok-keyword">while</span> (<span class="tok-variableName">i</span> <span class="tok-operator">&amp;</span><span class="tok-variableName">lt</span>; <span class="tok-keyword">this</span>.<span class="tok-variableName">m_length</span>)
+            {
+                <span class="tok-keyword">if</span> (<span class="tok-keyword">this</span>.<span class="tok-variableName">m_data</span>[<span class="tok-variableName">i</span>] <span class="tok-operator">==</span> <span class="tok-number">10</span>)
+                {
+                    <span class="tok-keyword">this</span>.<span class="tok-variableName">m_lineStart</span> <span class="tok-operator">=</span> <span class="tok-keyword">this</span>.<span class="tok-variableName">m_pos</span>;
+                    <span class="tok-keyword">this</span>.<span class="tok-variableName">m_lineLength</span> <span class="tok-operator">=</span> <span class="tok-variableName">i</span> <span class="tok-operator">-</span> <span class="tok-keyword">this</span>.<span class="tok-variableName">m_pos</span>;
+                    <span class="tok-keyword">this</span>.<span class="tok-variableName">m_pos</span> <span class="tok-operator">=</span> <span class="tok-variableName">i</span> <span class="tok-operator">+</span> <span class="tok-number">1</span>;
+                    <span class="tok-keyword">if</span> (<span class="tok-keyword">this</span>.<span class="tok-variableName">m_lineLength</span> <span class="tok-operator">&amp;</span><span class="tok-variableName">gt</span>; <span class="tok-number">0</span> <span class="tok-operator">&amp;</span><span class="tok-variableName">amp</span>;<span class="tok-operator">&amp;</span><span class="tok-variableName">amp</span>; <span class="tok-keyword">this</span>.<span class="tok-variableName">m_data</span>[<span class="tok-variableName">i</span> <span class="tok-operator">-</span> <span class="tok-number">1</span>] <span class="tok-operator">==</span> <span class="tok-number">13</span>)
+                    {
+                        <span class="tok-keyword">this</span>.<span class="tok-variableName">m_lineLength</span><span class="tok-operator">--</span>;
+                        <span class="tok-keyword">break</span>;
+                    }
+                    <span class="tok-keyword">break</span>;
+                }
+                <span class="tok-keyword">else</span>
+                {
+                    <span class="tok-keyword">if</span> (<span class="tok-operator">++</span><span class="tok-variableName">i</span> <span class="tok-operator">==</span> <span class="tok-keyword">this</span>.<span class="tok-variableName">m_length</span>)
+                    {
+                        <span class="tok-keyword">this</span>.<span class="tok-variableName">m_lineStart</span> <span class="tok-operator">=</span> <span class="tok-keyword">this</span>.<span class="tok-variableName">m_pos</span>;
+                        <span class="tok-keyword">this</span>.<span class="tok-variableName">m_lineLength</span> <span class="tok-operator">=</span> <span class="tok-variableName">i</span> <span class="tok-operator">-</span> <span class="tok-keyword">this</span>.<span class="tok-variableName">m_pos</span>;
+                        <span class="tok-keyword">this</span>.<span class="tok-variableName">m_pos</span> <span class="tok-operator">=</span> <span class="tok-keyword">this</span>.<span class="tok-variableName">m_length</span>;
+                    }
+                }
+            }
+            <span class="tok-keyword">return</span> <span class="tok-keyword">this</span>.<span class="tok-variableName">m_lineStart</span> <span class="tok-operator">&amp;</span><span class="tok-variableName">gt</span>;<span class="tok-operator">=</span> <span class="tok-number">0</span>;
+        }
+
+        <span class="tok-keyword">private</span> <span class="tok-typeName">string</span> <span class="tok-variableName">ExtractValueFromContentDispositionHeader</span>(<span class="tok-typeName">string</span> <span class="tok-variableName">l</span>, <span class="tok-typeName">int</span> <span class="tok-variableName">pos</span>, <span class="tok-typeName">string</span> <span class="tok-variableName">name</span>)
+        {
+            <span class="tok-typeName">string</span> <span class="tok-variableName">text</span> <span class="tok-operator">=</span> <span class="tok-variableName">name</span> <span class="tok-operator">+</span> <span class="tok-string">&quot;=\&quot;&quot;</span>;
+            <span class="tok-typeName">int</span> <span class="tok-variableName">num</span> <span class="tok-operator">=</span> <span class="tok-variableName">CultureInfo</span>.<span class="tok-variableName">InvariantCulture</span>.<span class="tok-variableName">CompareInfo</span>.<span class="tok-variableName">IndexOf</span>(<span class="tok-variableName">l</span>, <span class="tok-variableName">text</span>, <span class="tok-variableName">pos</span>, <span class="tok-variableName">CompareOptions</span>.<span class="tok-variableName">IgnoreCase</span>);
+            <span class="tok-keyword">if</span> (<span class="tok-variableName">num</span> <span class="tok-operator">&amp;</span><span class="tok-variableName">lt</span>; <span class="tok-number">0</span>)
+            {
+                <span class="tok-keyword">return</span> <span class="tok-atom">null</span>;
+            }
+            <span class="tok-variableName">num</span> <span class="tok-operator">+=</span> <span class="tok-variableName">text</span>.<span class="tok-variableName">Length</span>;
+            <span class="tok-typeName">int</span> <span class="tok-variableName">num2</span> <span class="tok-operator">=</span> <span class="tok-variableName">l</span>.<span class="tok-variableName">IndexOf</span>(<span class="tok-string">'&quot;'</span>, <span class="tok-variableName">num</span>);
+            <span class="tok-keyword">if</span> (<span class="tok-variableName">num2</span> <span class="tok-operator">&amp;</span><span class="tok-variableName">lt</span>; <span class="tok-number">0</span>)
+            {
+                <span class="tok-keyword">return</span> <span class="tok-atom">null</span>;
+            }
+            <span class="tok-keyword">if</span> (<span class="tok-variableName">num2</span> <span class="tok-operator">==</span> <span class="tok-variableName">num</span>)
+            {
+                <span class="tok-keyword">return</span> <span class="tok-typeName">string</span>.<span class="tok-variableName">Empty</span>;
+            }
+            <span class="tok-keyword">return</span> <span class="tok-variableName">l</span>.<span class="tok-variableName">Substring</span>(<span class="tok-variableName">num</span>, <span class="tok-variableName">num2</span> <span class="tok-operator">-</span> <span class="tok-variableName">num</span>);
+        }
+
+        <span class="tok-keyword">private</span> <span class="tok-keyword">void</span> <span class="tok-variableName">ParsePartHeaders</span>()
+        {
+            <span class="tok-keyword">this</span>.<span class="tok-variableName">m_partName</span> <span class="tok-operator">=</span> <span class="tok-atom">null</span>;
+            <span class="tok-keyword">this</span>.<span class="tok-variableName">m_partFilename</span> <span class="tok-operator">=</span> <span class="tok-atom">null</span>;
+            <span class="tok-keyword">this</span>.<span class="tok-variableName">m_partContentType</span> <span class="tok-operator">=</span> <span class="tok-atom">null</span>;
+            <span class="tok-keyword">while</span> (<span class="tok-keyword">this</span>.<span class="tok-variableName">GetNextLine</span>())
+            {
+                <span class="tok-keyword">if</span> (<span class="tok-keyword">this</span>.<span class="tok-variableName">m_lineLength</span> <span class="tok-operator">==</span> <span class="tok-number">0</span>)
+                {
+                    <span class="tok-keyword">return</span>;
+                }
+                <span class="tok-typeName">byte</span>[] <span class="tok-variableName">array</span> <span class="tok-operator">=</span> <span class="tok-keyword">new</span> <span class="tok-typeName">byte</span>[<span class="tok-keyword">this</span>.<span class="tok-variableName">m_lineLength</span>];
+                <span class="tok-keyword">this</span>.<span class="tok-variableName">m_data</span>.<span class="tok-variableName">CopyBytes</span>(<span class="tok-keyword">this</span>.<span class="tok-variableName">m_data</span>, <span class="tok-keyword">this</span>.<span class="tok-variableName">m_lineStart</span>, <span class="tok-variableName">array</span>, <span class="tok-number">0</span>, <span class="tok-keyword">this</span>.<span class="tok-variableName">m_lineLength</span>); <span class="tok-comment">// Edited to remove CopyBytes dependancy</span>
+                <span class="tok-typeName">string</span> <span class="tok-meta">@string</span> <span class="tok-operator">=</span> <span class="tok-keyword">this</span>.<span class="tok-variableName">m_encoding</span>.<span class="tok-variableName">GetString</span>(<span class="tok-variableName">array</span>);
+                <span class="tok-typeName">int</span> <span class="tok-variableName">num</span> <span class="tok-operator">=</span> <span class="tok-meta">@string</span>.<span class="tok-variableName">IndexOf</span>(<span class="tok-string">':'</span>);
+                <span class="tok-keyword">if</span> (<span class="tok-variableName">num</span> <span class="tok-operator">&amp;</span><span class="tok-variableName">gt</span>;<span class="tok-operator">=</span> <span class="tok-number">0</span>)
+                {
+                    <span class="tok-typeName">string</span> <span class="tok-variableName">s</span> <span class="tok-operator">=</span> <span class="tok-meta">@string</span>.<span class="tok-variableName">Substring</span>(<span class="tok-number">0</span>, <span class="tok-variableName">num</span>);
+                    <span class="tok-keyword">if</span> (<span class="tok-variableName">s</span>.<span class="tok-variableName">Equals</span>(<span class="tok-string">&quot;Content-Disposition&quot;</span>, <span class="tok-variableName">StringComparison</span>.<span class="tok-variableName">OrdinalIgnoreCase</span>)) <span class="tok-comment">// Edited to remove StringUtil dependancy</span>
+                    {
+                        <span class="tok-keyword">this</span>.<span class="tok-variableName">m_partName</span> <span class="tok-operator">=</span> <span class="tok-keyword">this</span>.<span class="tok-variableName">ExtractValueFromContentDispositionHeader</span>(<span class="tok-meta">@string</span>, <span class="tok-variableName">num</span> <span class="tok-operator">+</span> <span class="tok-number">1</span>, <span class="tok-string">&quot;name&quot;</span>);
+                        <span class="tok-keyword">this</span>.<span class="tok-variableName">m_partFilename</span> <span class="tok-operator">=</span> <span class="tok-keyword">this</span>.<span class="tok-variableName">ExtractValueFromContentDispositionHeader</span>(<span class="tok-meta">@string</span>, <span class="tok-variableName">num</span> <span class="tok-operator">+</span> <span class="tok-number">1</span>, <span class="tok-string">&quot;filename&quot;</span>);
+                    }
+                    <span class="tok-keyword">else</span>
+                    {
+                        <span class="tok-keyword">if</span> (<span class="tok-variableName">s</span>.<span class="tok-variableName">Equals</span>(<span class="tok-string">&quot;Content-Type&quot;</span>, <span class="tok-variableName">StringComparison</span>.<span class="tok-variableName">OrdinalIgnoreCase</span>)) <span class="tok-comment">// Edited to remove StringUtil dependancy</span>
+                        {
+                            <span class="tok-keyword">this</span>.<span class="tok-variableName">m_partContentType</span> <span class="tok-operator">=</span> <span class="tok-meta">@string</span>.<span class="tok-variableName">Substring</span>(<span class="tok-variableName">num</span> <span class="tok-operator">+</span> <span class="tok-number">1</span>).<span class="tok-variableName">Trim</span>();
+                        }
+                    }
+                }
+            }
+        }
+
+        <span class="tok-keyword">private</span> <span class="tok-typeName">bool</span> <span class="tok-variableName">AtBoundaryLine</span>()
+        {
+            <span class="tok-typeName">int</span> <span class="tok-variableName">num</span> <span class="tok-operator">=</span> <span class="tok-keyword">this</span>.<span class="tok-variableName">m_boundary</span>.<span class="tok-variableName">Length</span>;
+            <span class="tok-keyword">if</span> (<span class="tok-keyword">this</span>.<span class="tok-variableName">m_lineLength</span> <span class="tok-operator">!=</span> <span class="tok-variableName">num</span> <span class="tok-operator">&amp;</span><span class="tok-variableName">amp</span>;<span class="tok-operator">&amp;</span><span class="tok-variableName">amp</span>; <span class="tok-keyword">this</span>.<span class="tok-variableName">m_lineLength</span> <span class="tok-operator">!=</span> <span class="tok-variableName">num</span> <span class="tok-operator">+</span> <span class="tok-number">2</span>)
+            {
+                <span class="tok-keyword">return</span> <span class="tok-atom">false</span>;
+            }
+            <span class="tok-keyword">for</span> (<span class="tok-typeName">int</span> <span class="tok-variableName">i</span> <span class="tok-operator">=</span> <span class="tok-number">0</span>; <span class="tok-variableName">i</span> <span class="tok-operator">&amp;</span><span class="tok-variableName">lt</span>; <span class="tok-variableName">num</span>; <span class="tok-variableName">i</span><span class="tok-operator">++</span>)
+            {
+                <span class="tok-keyword">if</span> (<span class="tok-keyword">this</span>.<span class="tok-variableName">m_data</span>[<span class="tok-keyword">this</span>.<span class="tok-variableName">m_lineStart</span> <span class="tok-operator">+</span> <span class="tok-variableName">i</span>] <span class="tok-operator">!=</span> <span class="tok-keyword">this</span>.<span class="tok-variableName">m_boundary</span>[<span class="tok-variableName">i</span>])
+                {
+                    <span class="tok-keyword">return</span> <span class="tok-atom">false</span>;
+                }
+            }
+            <span class="tok-keyword">if</span> (<span class="tok-keyword">this</span>.<span class="tok-variableName">m_lineLength</span> <span class="tok-operator">==</span> <span class="tok-variableName">num</span>)
+            {
+                <span class="tok-keyword">return</span> <span class="tok-atom">true</span>;
+            }
+            <span class="tok-keyword">if</span> (<span class="tok-keyword">this</span>.<span class="tok-variableName">m_data</span>[<span class="tok-keyword">this</span>.<span class="tok-variableName">m_lineStart</span> <span class="tok-operator">+</span> <span class="tok-variableName">num</span>] <span class="tok-operator">!=</span> <span class="tok-number">45</span> <span class="tok-operator">||</span> <span class="tok-keyword">this</span>.<span class="tok-variableName">m_data</span>[<span class="tok-keyword">this</span>.<span class="tok-variableName">m_lineStart</span> <span class="tok-operator">+</span> <span class="tok-variableName">num</span> <span class="tok-operator">+</span> <span class="tok-number">1</span>] <span class="tok-operator">!=</span> <span class="tok-number">45</span>)
+            {
+                <span class="tok-keyword">return</span> <span class="tok-atom">false</span>;
+            }
+            <span class="tok-keyword">this</span>.<span class="tok-variableName">m_lastBoundaryFound</span> <span class="tok-operator">=</span> <span class="tok-atom">true</span>;
+            <span class="tok-keyword">return</span> <span class="tok-atom">true</span>;
+        }
+
+        <span class="tok-keyword">private</span> <span class="tok-keyword">void</span> <span class="tok-variableName">ParsePartData</span>()
+        {
+            <span class="tok-keyword">this</span>.<span class="tok-variableName">m_partDataStart</span> <span class="tok-operator">=</span> <span class="tok-keyword">this</span>.<span class="tok-variableName">m_pos</span>;
+            <span class="tok-keyword">this</span>.<span class="tok-variableName">m_partDataLength</span> <span class="tok-operator">=</span> <span class="tok-operator">-</span><span class="tok-number">1</span>;
+            <span class="tok-keyword">while</span> (<span class="tok-keyword">this</span>.<span class="tok-variableName">GetNextLine</span>())
+            {
+                <span class="tok-keyword">if</span> (<span class="tok-keyword">this</span>.<span class="tok-variableName">AtBoundaryLine</span>())
+                {
+                    <span class="tok-typeName">int</span> <span class="tok-variableName">num</span> <span class="tok-operator">=</span> <span class="tok-keyword">this</span>.<span class="tok-variableName">m_lineStart</span> <span class="tok-operator">-</span> <span class="tok-number">1</span>;
+
+                    <span class="tok-comment">// Carriage return check</span>
+
+                    <span class="tok-keyword">if</span> (<span class="tok-keyword">this</span>.<span class="tok-variableName">m_data</span>[<span class="tok-variableName">num</span>] <span class="tok-operator">==</span> <span class="tok-number">10</span>)
+                    {
+                        <span class="tok-variableName">num</span><span class="tok-operator">--</span>;
+                    }
+                    <span class="tok-keyword">if</span> (<span class="tok-keyword">this</span>.<span class="tok-variableName">m_data</span>[<span class="tok-variableName">num</span>] <span class="tok-operator">==</span> <span class="tok-number">13</span>)
+                    {
+                        <span class="tok-variableName">num</span><span class="tok-operator">--</span>;
+                    }
+                    <span class="tok-keyword">this</span>.<span class="tok-variableName">m_partDataLength</span> <span class="tok-operator">=</span> <span class="tok-variableName">num</span> <span class="tok-operator">-</span> <span class="tok-keyword">this</span>.<span class="tok-variableName">m_partDataStart</span> <span class="tok-operator">+</span> <span class="tok-number">1</span>;
+                    <span class="tok-keyword">return</span>;
+                }
+            }
+        }
+
+        <span class="tok-keyword">private</span> <span class="tok-keyword">void</span> <span class="tok-variableName">ParseIntoElementList</span>()
+        {
+            <span class="tok-keyword">while</span> (<span class="tok-keyword">this</span>.<span class="tok-variableName">GetNextLine</span>() <span class="tok-operator">&amp;</span><span class="tok-variableName">amp</span>;<span class="tok-operator">&amp;</span><span class="tok-variableName">amp</span>; <span class="tok-operator">!</span><span class="tok-keyword">this</span>.<span class="tok-variableName">AtBoundaryLine</span>())
+            {
+            }
+            <span class="tok-keyword">if</span> (<span class="tok-keyword">this</span>.<span class="tok-variableName">AtEndOfData</span>())
+            {
+                <span class="tok-keyword">return</span>;
+            }
+            <span class="tok-keyword">while</span> (<span class="tok-atom">true</span>)
+            {
+                <span class="tok-keyword">this</span>.<span class="tok-variableName">ParsePartHeaders</span>();
+
+                <span class="tok-keyword">if</span> (<span class="tok-keyword">this</span>.<span class="tok-variableName">AtEndOfData</span>())
+                {
+                    <span class="tok-keyword">break</span>;
+                }
+                <span class="tok-keyword">this</span>.<span class="tok-variableName">ParsePartData</span>();
+                <span class="tok-keyword">if</span> (<span class="tok-keyword">this</span>.<span class="tok-variableName">m_partDataLength</span> <span class="tok-operator">==</span> <span class="tok-operator">-</span><span class="tok-number">1</span>)
+                {
+                    <span class="tok-keyword">return</span>;
+                }
+                <span class="tok-keyword">if</span> (<span class="tok-keyword">this</span>.<span class="tok-variableName">m_partName</span> <span class="tok-operator">!=</span> <span class="tok-atom">null</span>)
+                {
+                    <span class="tok-keyword">this</span>.<span class="tok-variableName">m_elements</span>.<span class="tok-variableName">Add</span>(<span class="tok-keyword">new</span> <span class="tok-variableName">MultipartContentElement</span>(<span class="tok-keyword">this</span>.<span class="tok-variableName">m_partName</span>, <span class="tok-keyword">this</span>.<span class="tok-variableName">m_partFilename</span>, <span class="tok-keyword">this</span>.<span class="tok-variableName">m_partContentType</span>, <span class="tok-keyword">this</span>.<span class="tok-variableName">m_data</span>, <span class="tok-keyword">this</span>.<span class="tok-variableName">m_partDataStart</span>, <span class="tok-keyword">this</span>.<span class="tok-variableName">m_partDataLength</span>));
+                }
+                <span class="tok-keyword">if</span> (<span class="tok-keyword">this</span>.<span class="tok-variableName">AtEndOfData</span>())
+                {
+                    <span class="tok-keyword">return</span>;
+                }
+            }
+        }
+
+        <span class="tok-keyword">internal</span> <span class="tok-keyword">static</span> <span class="tok-variableName">MultipartContentElement</span>[] <span class="tok-variableName">Parse</span>(<span class="tok-variableName">StreamIndexer</span> <span class="tok-variableName">data</span>, <span class="tok-typeName">long</span> <span class="tok-variableName">length</span>, <span class="tok-typeName">byte</span>[] <span class="tok-variableName">boundary</span>, <span class="tok-variableName">Encoding</span> <span class="tok-variableName">encoding</span>) <span class="tok-comment">// Edited to remove HttpRawUploadedContent dependancy</span>
+        {
+            <span class="tok-keyword">var</span> <span class="tok-variableName tok-definition">httpMultipartContentTemplateParser</span> <span class="tok-operator">=</span> <span class="tok-keyword">new</span> <span class="tok-variableName">HttpMultipartContentTemplateParser</span>(<span class="tok-variableName">data</span>, <span class="tok-variableName">length</span>, <span class="tok-variableName">boundary</span>, <span class="tok-variableName">encoding</span>);
+            <span class="tok-variableName">httpMultipartContentTemplateParser</span>.<span class="tok-variableName">ParseIntoElementList</span>();
+            <span class="tok-keyword">return</span> (<span class="tok-variableName">MultipartContentElement</span>[])<span class="tok-variableName">httpMultipartContentTemplateParser</span>.<span class="tok-variableName">m_elements</span>.<span class="tok-variableName">ToArray</span>(<span class="tok-keyword">typeof</span>(<span class="tok-variableName">MultipartContentElement</span>));
+        }
+
+        <span class="tok-keyword">internal</span> <span class="tok-keyword">static</span> <span class="tok-typeName">byte</span>[] <span class="tok-variableName">GetMultipartBoundary</span>(<span class="tok-typeName">string</span> <span class="tok-variableName">contentType</span>)
+        {
+            <span class="tok-typeName">string</span> <span class="tok-variableName">text</span> <span class="tok-operator">=</span> <span class="tok-variableName">GetAttributeFromHeader</span>(<span class="tok-variableName">contentType</span>, <span class="tok-string">&quot;boundary&quot;</span>);
+            <span class="tok-keyword">if</span> (<span class="tok-variableName">text</span> <span class="tok-operator">==</span> <span class="tok-atom">null</span>)
+            {
+                <span class="tok-keyword">return</span> <span class="tok-atom">null</span>;
+            }
+            <span class="tok-variableName">text</span> <span class="tok-operator">=</span> <span class="tok-string">&quot;--&quot;</span> <span class="tok-operator">+</span> <span class="tok-variableName">text</span>;
+            <span class="tok-keyword">return</span> <span class="tok-variableName">Encoding</span>.<span class="tok-variableName">ASCII</span>.<span class="tok-variableName">GetBytes</span>(<span class="tok-variableName">text</span>.<span class="tok-variableName">ToCharArray</span>());
+        }
+
+        <span class="tok-keyword">private</span> <span class="tok-keyword">static</span> <span class="tok-typeName">string</span> <span class="tok-variableName">GetAttributeFromHeader</span>(<span class="tok-typeName">string</span> <span class="tok-variableName">headerValue</span>, <span class="tok-typeName">string</span> <span class="tok-variableName">attrName</span>)
+        {
+            <span class="tok-keyword">if</span> (<span class="tok-variableName">headerValue</span> <span class="tok-operator">==</span> <span class="tok-atom">null</span>)
+            {
+                <span class="tok-keyword">return</span> <span class="tok-atom">null</span>;
+            }
+            <span class="tok-typeName">int</span> <span class="tok-variableName">length</span> <span class="tok-operator">=</span> <span class="tok-variableName">headerValue</span>.<span class="tok-variableName">Length</span>;
+            <span class="tok-typeName">int</span> <span class="tok-variableName">length2</span> <span class="tok-operator">=</span> <span class="tok-variableName">attrName</span>.<span class="tok-variableName">Length</span>;
+            <span class="tok-typeName">int</span> <span class="tok-variableName">i</span>;
+            <span class="tok-keyword">for</span> (<span class="tok-variableName">i</span> <span class="tok-operator">=</span> <span class="tok-number">1</span>; <span class="tok-variableName">i</span> <span class="tok-operator">&amp;</span><span class="tok-variableName">lt</span>; <span class="tok-variableName">length</span>; <span class="tok-variableName">i</span> <span class="tok-operator">+=</span> <span class="tok-variableName">length2</span>)
+            {
+                <span class="tok-variableName">i</span> <span class="tok-operator">=</span> <span class="tok-variableName">CultureInfo</span>.<span class="tok-variableName">InvariantCulture</span>.<span class="tok-variableName">CompareInfo</span>.<span class="tok-variableName">IndexOf</span>(<span class="tok-variableName">headerValue</span>, <span class="tok-variableName">attrName</span>, <span class="tok-variableName">i</span>, <span class="tok-variableName">CompareOptions</span>.<span class="tok-variableName">IgnoreCase</span>);
+                <span class="tok-keyword">if</span> (<span class="tok-variableName">i</span> <span class="tok-operator">&amp;</span><span class="tok-variableName">lt</span>; <span class="tok-number">0</span> <span class="tok-operator">||</span> <span class="tok-variableName">i</span> <span class="tok-operator">+</span> <span class="tok-variableName">length2</span> <span class="tok-operator">&amp;</span><span class="tok-variableName">gt</span>;<span class="tok-operator">=</span> <span class="tok-variableName">length</span>)
+                {
+                    <span class="tok-keyword">break</span>;
+                }
+                <span class="tok-typeName">char</span> <span class="tok-variableName">c</span> <span class="tok-operator">=</span> <span class="tok-variableName">headerValue</span>[<span class="tok-variableName">i</span> <span class="tok-operator">-</span> <span class="tok-number">1</span>];
+                <span class="tok-typeName">char</span> <span class="tok-variableName">c2</span> <span class="tok-operator">=</span> <span class="tok-variableName">headerValue</span>[<span class="tok-variableName">i</span> <span class="tok-operator">+</span> <span class="tok-variableName">length2</span>];
+                <span class="tok-keyword">if</span> ((<span class="tok-variableName">c</span> <span class="tok-operator">==</span> <span class="tok-string">';'</span> <span class="tok-operator">||</span> <span class="tok-variableName">c</span> <span class="tok-operator">==</span> <span class="tok-string">','</span> <span class="tok-operator">||</span> <span class="tok-typeName">char</span>.<span class="tok-variableName">IsWhiteSpace</span>(<span class="tok-variableName">c</span>)) <span class="tok-operator">&amp;</span><span class="tok-variableName">amp</span>;<span class="tok-operator">&amp;</span><span class="tok-variableName">amp</span>; (<span class="tok-variableName">c2</span> <span class="tok-operator">==</span> <span class="tok-string">'='</span> <span class="tok-operator">||</span> <span class="tok-typeName">char</span>.<span class="tok-variableName">IsWhiteSpace</span>(<span class="tok-variableName">c2</span>)))
+                {
+                    <span class="tok-keyword">break</span>;
+                }
+            }
+            <span class="tok-keyword">if</span> (<span class="tok-variableName">i</span> <span class="tok-operator">&amp;</span><span class="tok-variableName">lt</span>; <span class="tok-number">0</span> <span class="tok-operator">||</span> <span class="tok-variableName">i</span> <span class="tok-operator">&amp;</span><span class="tok-variableName">gt</span>;<span class="tok-operator">=</span> <span class="tok-variableName">length</span>)
+            {
+                <span class="tok-keyword">return</span> <span class="tok-atom">null</span>;
+            }
+            <span class="tok-variableName">i</span> <span class="tok-operator">+=</span> <span class="tok-variableName">length2</span>;
+            <span class="tok-keyword">while</span> (<span class="tok-variableName">i</span> <span class="tok-operator">&amp;</span><span class="tok-variableName">lt</span>; <span class="tok-variableName">length</span> <span class="tok-operator">&amp;</span><span class="tok-variableName">amp</span>;<span class="tok-operator">&amp;</span><span class="tok-variableName">amp</span>; <span class="tok-typeName">char</span>.<span class="tok-variableName">IsWhiteSpace</span>(<span class="tok-variableName">headerValue</span>[<span class="tok-variableName">i</span>]))
+            {
+                <span class="tok-variableName">i</span><span class="tok-operator">++</span>;
+            }
+            <span class="tok-keyword">if</span> (<span class="tok-variableName">i</span> <span class="tok-operator">&amp;</span><span class="tok-variableName">gt</span>;<span class="tok-operator">=</span> <span class="tok-variableName">length</span> <span class="tok-operator">||</span> <span class="tok-variableName">headerValue</span>[<span class="tok-variableName">i</span>] <span class="tok-operator">!=</span> <span class="tok-string">'='</span>)
+            {
+                <span class="tok-keyword">return</span> <span class="tok-atom">null</span>;
+            }
+            <span class="tok-variableName">i</span><span class="tok-operator">++</span>;
+            <span class="tok-keyword">while</span> (<span class="tok-variableName">i</span> <span class="tok-operator">&amp;</span><span class="tok-variableName">lt</span>; <span class="tok-variableName">length</span> <span class="tok-operator">&amp;</span><span class="tok-variableName">amp</span>;<span class="tok-operator">&amp;</span><span class="tok-variableName">amp</span>; <span class="tok-typeName">char</span>.<span class="tok-variableName">IsWhiteSpace</span>(<span class="tok-variableName">headerValue</span>[<span class="tok-variableName">i</span>]))
+            {
+                <span class="tok-variableName">i</span><span class="tok-operator">++</span>;
+            }
+            <span class="tok-keyword">if</span> (<span class="tok-variableName">i</span> <span class="tok-operator">&amp;</span><span class="tok-variableName">gt</span>;<span class="tok-operator">=</span> <span class="tok-variableName">length</span>)
+            {
+                <span class="tok-keyword">return</span> <span class="tok-atom">null</span>;
+            }
+            <span class="tok-typeName">string</span> <span class="tok-variableName">result</span>;
+            <span class="tok-keyword">if</span> (<span class="tok-variableName">i</span> <span class="tok-operator">&amp;</span><span class="tok-variableName">lt</span>; <span class="tok-variableName">length</span> <span class="tok-operator">&amp;</span><span class="tok-variableName">amp</span>;<span class="tok-operator">&amp;</span><span class="tok-variableName">amp</span>; <span class="tok-variableName">headerValue</span>[<span class="tok-variableName">i</span>] <span class="tok-operator">==</span> <span class="tok-string">'&quot;'</span>)
+            {
+                <span class="tok-keyword">if</span> (<span class="tok-variableName">i</span> <span class="tok-operator">==</span> <span class="tok-variableName">length</span> <span class="tok-operator">-</span> <span class="tok-number">1</span>)
+                {
+                    <span class="tok-keyword">return</span> <span class="tok-atom">null</span>;
+                }
+                <span class="tok-typeName">int</span> <span class="tok-variableName">num</span> <span class="tok-operator">=</span> <span class="tok-variableName">headerValue</span>.<span class="tok-variableName">IndexOf</span>(<span class="tok-string">'&quot;'</span>, <span class="tok-variableName">i</span> <span class="tok-operator">+</span> <span class="tok-number">1</span>);
+                <span class="tok-keyword">if</span> (<span class="tok-variableName">num</span> <span class="tok-operator">&amp;</span><span class="tok-variableName">lt</span>; <span class="tok-number">0</span> <span class="tok-operator">||</span> <span class="tok-variableName">num</span> <span class="tok-operator">==</span> <span class="tok-variableName">i</span> <span class="tok-operator">+</span> <span class="tok-number">1</span>)
+                {
+                    <span class="tok-keyword">return</span> <span class="tok-atom">null</span>;
+                }
+                <span class="tok-variableName">result</span> <span class="tok-operator">=</span> <span class="tok-variableName">headerValue</span>.<span class="tok-variableName">Substring</span>(<span class="tok-variableName">i</span> <span class="tok-operator">+</span> <span class="tok-number">1</span>, <span class="tok-variableName">num</span> <span class="tok-operator">-</span> <span class="tok-variableName">i</span> <span class="tok-operator">-</span> <span class="tok-number">1</span>).<span class="tok-variableName">Trim</span>();
+            }
+            <span class="tok-keyword">else</span>
+            {
+                <span class="tok-typeName">int</span> <span class="tok-variableName">num</span> <span class="tok-operator">=</span> <span class="tok-variableName">i</span>;
+                <span class="tok-keyword">while</span> (<span class="tok-variableName">num</span> <span class="tok-operator">&amp;</span><span class="tok-variableName">lt</span>; <span class="tok-variableName">length</span> <span class="tok-operator">&amp;</span><span class="tok-variableName">amp</span>;<span class="tok-operator">&amp;</span><span class="tok-variableName">amp</span>; <span class="tok-variableName">headerValue</span>[<span class="tok-variableName">num</span>] <span class="tok-operator">!=</span> <span class="tok-string">' '</span> <span class="tok-operator">&amp;</span><span class="tok-variableName">amp</span>;<span class="tok-operator">&amp;</span><span class="tok-variableName">amp</span>; <span class="tok-variableName">headerValue</span>[<span class="tok-variableName">num</span>] <span class="tok-operator">!=</span> <span class="tok-string">','</span>)
+                {
+                    <span class="tok-variableName">num</span><span class="tok-operator">++</span>;
+                }
+                <span class="tok-keyword">if</span> (<span class="tok-variableName">num</span> <span class="tok-operator">==</span> <span class="tok-variableName">i</span>)
+                {
+                    <span class="tok-keyword">return</span> <span class="tok-atom">null</span>;
+                }
+                <span class="tok-variableName">result</span> <span class="tok-operator">=</span> <span class="tok-variableName">headerValue</span>.<span class="tok-variableName">Substring</span>(<span class="tok-variableName">i</span>, <span class="tok-variableName">num</span> <span class="tok-operator">-</span> <span class="tok-variableName">i</span>).<span class="tok-variableName">Trim</span>();
+            }
+            <span class="tok-keyword">return</span> <span class="tok-variableName">result</span>;
+        }
+    }
+}
+</code></pre>
+<h2 id="streamindexer">StreamIndexer</h2>
+<p>I wrote the StreamIndexer to retain compatibility with the lifted code, providing access by indexer, while reading from the file stream which contains the raw data. The stream indexer provides a chunking capability so that the indexer does not need to refer directly back to the file stream for every read. Blocks of 8KB are read into an in memory array when determined that the Stream position being accessed is not present in the current chunk. Where access is largely sequential, this has proven to be quite efficient.</p>
+<pre><code class="language-cs"><span class="tok-keyword">namespace</span> <span class="tok-variableName tok-definition">AppSoftware</span>.<span class="tok-variableName">SignalRFileUploader</span>.<span class="tok-variableName">HttpRequestProcessing</span>
+{
+    <span class="tok-comment">/// &lt;summary&gt;</span>
+    <span class="tok-comment">/// StreamIndexer provides chunked access to underlying stream for compatibility with</span>
+    <span class="tok-comment">/// Chunked access provides efficient access to stream bytes allowing us to read via indexer at </span>
+    <span class="tok-comment">/// speed without having to load data into byte[] e.g. by using a FileStream</span>
+    <span class="tok-comment">/// &lt;/summary&gt;</span>
+    <span class="tok-keyword">public</span> <span class="tok-keyword">class</span> <span class="tok-variableName tok-definition">StreamIndexer</span>
+    {
+        <span class="tok-keyword">private</span> <span class="tok-keyword">readonly</span> <span class="tok-variableName">Stream</span> <span class="tok-variableName">m_stream</span>;
+
+        <span class="tok-keyword">private</span> <span class="tok-typeName">byte</span>[] <span class="tok-variableName">m_chunk</span> <span class="tok-operator">=</span> <span class="tok-atom">null</span>;
+
+        <span class="tok-keyword">private</span> <span class="tok-typeName">long</span> <span class="tok-variableName">m_chunkStartPos</span> <span class="tok-operator">=</span> <span class="tok-number">0</span>;
+        <span class="tok-keyword">private</span> <span class="tok-typeName">long</span> <span class="tok-variableName">m_chunkEndPos</span> <span class="tok-operator">=</span> <span class="tok-number">0</span>;
+
+        <span class="tok-keyword">public</span> <span class="tok-variableName">StreamIndexer</span>(<span class="tok-variableName">Stream</span> <span class="tok-variableName">stream</span>)
+        {
+            <span class="tok-variableName">m_stream</span> <span class="tok-operator">=</span> <span class="tok-variableName">stream</span>;
+        }
+
+        <span class="tok-keyword">public</span> <span class="tok-variableName">Stream</span> <span class="tok-variableName">Stream</span>
+        {
+            <span class="tok-keyword">get</span> { <span class="tok-keyword">return</span> <span class="tok-variableName">m_stream</span>; }
+        }
+
+        <span class="tok-keyword">public</span> <span class="tok-typeName">byte</span> <span class="tok-keyword">this</span>[<span class="tok-typeName">int</span> <span class="tok-variableName">index</span>]
+        {
+            <span class="tok-keyword">get</span>
+            {
+                <span class="tok-comment">// If the byte at index is already loaded into current chunk, return</span>
+                <span class="tok-comment">// directly from byte[], else load the chunk from stream first</span>
+
+                <span class="tok-keyword">if</span>(<span class="tok-operator">!</span>(<span class="tok-variableName">index</span> <span class="tok-operator">&amp;</span><span class="tok-variableName">gt</span>;<span class="tok-operator">=</span> <span class="tok-variableName">m_chunkStartPos</span> <span class="tok-operator">&amp;</span><span class="tok-variableName">amp</span>;<span class="tok-operator">&amp;</span><span class="tok-variableName">amp</span>; <span class="tok-variableName">index</span> <span class="tok-operator">&amp;</span><span class="tok-variableName">lt</span>;<span class="tok-operator">=</span> <span class="tok-variableName">m_chunkEndPos</span>) <span class="tok-operator">||</span> <span class="tok-variableName">m_chunk</span> <span class="tok-operator">==</span> <span class="tok-atom">null</span>)
+                {
+                    <span class="tok-typeName">int</span> <span class="tok-variableName">chunkSize</span> <span class="tok-operator">=</span> <span class="tok-number">8</span> <span class="tok-operator">*</span> <span class="tok-number">1024</span>;
+
+                    <span class="tok-typeName">long</span> <span class="tok-variableName">distanceToStreamEnd</span> <span class="tok-operator">=</span> (<span class="tok-variableName">m_stream</span>.<span class="tok-variableName">Length</span> <span class="tok-operator">-</span> <span class="tok-variableName">index</span>);
+
+                    <span class="tok-keyword">if</span> (<span class="tok-variableName">chunkSize</span> <span class="tok-operator">&amp;</span><span class="tok-variableName">gt</span>; <span class="tok-variableName">distanceToStreamEnd</span>)
+                    {
+                        <span class="tok-variableName">chunkSize</span> <span class="tok-operator">=</span> (<span class="tok-typeName">int</span>) <span class="tok-variableName">distanceToStreamEnd</span>;
+                    }
+
+                    <span class="tok-variableName">m_chunkStartPos</span> <span class="tok-operator">=</span> <span class="tok-variableName">index</span>;
+                    <span class="tok-variableName">m_chunkEndPos</span> <span class="tok-operator">=</span> (<span class="tok-variableName">index</span> <span class="tok-operator">+</span> <span class="tok-variableName">chunkSize</span>) <span class="tok-operator">-</span> <span class="tok-number">1</span>;
+
+                    <span class="tok-variableName">m_chunk</span> <span class="tok-operator">=</span> <span class="tok-keyword">new</span> <span class="tok-typeName">byte</span>[<span class="tok-variableName">chunkSize</span>];
+
+                    <span class="tok-typeName">int</span> <span class="tok-variableName">readSize</span> <span class="tok-operator">=</span> <span class="tok-variableName">m_chunk</span>.<span class="tok-variableName">Length</span>;
+
+                    <span class="tok-variableName">m_stream</span>.<span class="tok-variableName">Position</span> <span class="tok-operator">=</span> <span class="tok-variableName">index</span>;
+
+                    <span class="tok-variableName">m_stream</span>.<span class="tok-variableName">Read</span>(<span class="tok-variableName">m_chunk</span>, <span class="tok-number">0</span>, <span class="tok-variableName">readSize</span>);
+                }
+
+                <span class="tok-keyword">return</span> <span class="tok-variableName">m_chunk</span>[<span class="tok-variableName">index</span> <span class="tok-operator">-</span> <span class="tok-variableName">m_chunkStartPos</span>];
+            }
+        }
+
+        <span class="tok-keyword">public</span> <span class="tok-keyword">void</span> <span class="tok-variableName">CopyBytes</span>(<span class="tok-variableName">StreamIndexer</span> <span class="tok-variableName">streamIndexer</span>, <span class="tok-typeName">int</span> <span class="tok-variableName">streamIndexerOffset</span>, <span class="tok-typeName">byte</span>[] <span class="tok-variableName">destArray</span>, <span class="tok-typeName">int</span> <span class="tok-variableName">destArrayOffset</span>, <span class="tok-typeName">int</span> <span class="tok-variableName">count</span>)
+        {
+            <span class="tok-variableName">m_stream</span>.<span class="tok-variableName">Position</span> <span class="tok-operator">=</span> <span class="tok-variableName">streamIndexerOffset</span>;
+
+            <span class="tok-variableName">m_stream</span>.<span class="tok-variableName">Read</span>(<span class="tok-variableName">destArray</span>, <span class="tok-variableName">destArrayOffset</span>, <span class="tok-variableName">count</span>);
+        }
+    }
+}
+</code></pre>
+<h2 id="multipartcontentelement">MultipartContentElement</h2>
+<p>This class is also derived from functionality as found in System.Web. Adapted here, it retains a reference to StreamIndexer so that it does not have to hold file bytes in memory, and can access them from StreamIndexer as required.</p>
+<pre><code class="language-cs"><span class="tok-keyword">using</span> <span class="tok-variableName">System</span>.<span class="tok-variableName">IO</span>;
+<span class="tok-keyword">using</span> <span class="tok-variableName">System</span>.<span class="tok-variableName">Text</span>;
+
+<span class="tok-keyword">namespace</span> <span class="tok-variableName tok-definition">AppSoftware</span>.<span class="tok-variableName">SignalRFileUploader</span>.<span class="tok-variableName">HttpRequestProcessing</span>
+{
+    <span class="tok-keyword">internal</span> <span class="tok-keyword">sealed</span> <span class="tok-keyword">class</span> <span class="tok-variableName tok-definition">MultipartContentElement</span>
+    {
+        <span class="tok-keyword">private</span> <span class="tok-keyword">readonly</span> <span class="tok-typeName">string</span> <span class="tok-variableName">m_name</span>;
+        <span class="tok-keyword">private</span> <span class="tok-keyword">readonly</span> <span class="tok-typeName">string</span> <span class="tok-variableName">m_filename</span>;
+        <span class="tok-keyword">private</span> <span class="tok-keyword">readonly</span> <span class="tok-typeName">string</span> <span class="tok-variableName">m_contentType</span>;
+        <span class="tok-keyword">private</span> <span class="tok-typeName">byte</span>[] <span class="tok-variableName">m_data</span>; 
+        <span class="tok-keyword">private</span> <span class="tok-keyword">readonly</span> <span class="tok-typeName">int</span> <span class="tok-variableName">m_offset</span>;
+        <span class="tok-keyword">private</span> <span class="tok-keyword">readonly</span> <span class="tok-typeName">int</span> <span class="tok-variableName">m_length</span>;
+
+        <span class="tok-keyword">private</span> <span class="tok-keyword">readonly</span> <span class="tok-variableName">StreamIndexer</span> <span class="tok-variableName">m_streamIndexer</span>;
+
+        <span class="tok-keyword">internal</span> <span class="tok-variableName">MultipartContentElement</span>(<span class="tok-typeName">string</span> <span class="tok-variableName">name</span>, <span class="tok-typeName">string</span> <span class="tok-variableName">filename</span>, <span class="tok-typeName">string</span> <span class="tok-variableName">contentType</span>, <span class="tok-variableName">StreamIndexer</span> <span class="tok-variableName">streamIndexer</span>, <span class="tok-typeName">int</span> <span class="tok-variableName">offset</span>, <span class="tok-typeName">int</span> <span class="tok-variableName">length</span>)
+        {
+            <span class="tok-keyword">this</span>.<span class="tok-variableName">m_name</span> <span class="tok-operator">=</span> <span class="tok-variableName">name</span>;
+            <span class="tok-keyword">this</span>.<span class="tok-variableName">m_filename</span> <span class="tok-operator">=</span> <span class="tok-variableName">filename</span>;
+            <span class="tok-keyword">this</span>.<span class="tok-variableName">m_contentType</span> <span class="tok-operator">=</span> <span class="tok-variableName">contentType</span>;
+            <span class="tok-keyword">this</span>.<span class="tok-variableName">m_offset</span> <span class="tok-operator">=</span> <span class="tok-variableName">offset</span>;
+            <span class="tok-keyword">this</span>.<span class="tok-variableName">m_length</span> <span class="tok-operator">=</span> <span class="tok-variableName">length</span>;
+
+            <span class="tok-keyword">this</span>.<span class="tok-variableName">m_streamIndexer</span> <span class="tok-operator">=</span> <span class="tok-variableName">streamIndexer</span>;
+        }
+
+        <span class="tok-keyword">internal</span> <span class="tok-typeName">bool</span> <span class="tok-variableName">IsFile</span>
+        {
+            <span class="tok-keyword">get</span>
+            {
+                <span class="tok-keyword">return</span> <span class="tok-keyword">this</span>.<span class="tok-variableName">m_filename</span> <span class="tok-operator">!=</span> <span class="tok-atom">null</span>;
+            }
+        }
+
+        <span class="tok-keyword">internal</span> <span class="tok-typeName">string</span> <span class="tok-variableName">FileName</span>
+        {
+            <span class="tok-keyword">get</span>
+            {
+                <span class="tok-keyword">return</span> <span class="tok-keyword">this</span>.<span class="tok-variableName">m_filename</span>;
+            }
+        }
+
+        <span class="tok-keyword">internal</span> <span class="tok-typeName">bool</span> <span class="tok-variableName">IsFormItem</span>
+        {
+            <span class="tok-keyword">get</span>
+            {
+                <span class="tok-keyword">return</span> <span class="tok-keyword">this</span>.<span class="tok-variableName">m_filename</span> <span class="tok-operator">==</span> <span class="tok-atom">null</span>;
+            }
+        }
+
+        <span class="tok-keyword">internal</span> <span class="tok-typeName">string</span> <span class="tok-variableName">Name</span>
+        {
+            <span class="tok-keyword">get</span>
+            {
+                <span class="tok-keyword">return</span> <span class="tok-keyword">this</span>.<span class="tok-variableName">m_name</span>;
+            }
+        }
+
+        <span class="tok-keyword">internal</span> <span class="tok-typeName">string</span> <span class="tok-variableName">ContentType</span>
+        {
+            <span class="tok-keyword">get</span>
+            {
+                <span class="tok-keyword">return</span> <span class="tok-keyword">this</span>.<span class="tok-variableName">m_contentType</span>;
+            }
+        }
+        
+        <span class="tok-keyword">internal</span> <span class="tok-typeName">byte</span>[] <span class="tok-variableName">GetAsBytes</span>(<span class="tok-variableName">Encoding</span> <span class="tok-variableName">encoding</span>)
+        {
+            <span class="tok-keyword">this</span>.<span class="tok-variableName">m_data</span> <span class="tok-operator">=</span> <span class="tok-keyword">new</span> <span class="tok-typeName">byte</span>[<span class="tok-variableName">m_length</span>];
+
+            <span class="tok-variableName">m_streamIndexer</span>.<span class="tok-variableName">CopyBytes</span>(<span class="tok-variableName">m_streamIndexer</span>, <span class="tok-variableName">m_offset</span>, <span class="tok-keyword">this</span>.<span class="tok-variableName">m_data</span>, <span class="tok-number">0</span>, <span class="tok-variableName">m_length</span>);
+
+            <span class="tok-keyword">return</span> <span class="tok-keyword">this</span>.<span class="tok-variableName">m_data</span>;
+        }
+
+        <span class="tok-comment">/// &lt;summary&gt;</span>
+        <span class="tok-comment">/// Reads directly from stream provided by StreamIndexer</span>
+        <span class="tok-comment">/// so that file can be saved without loading into memory</span>
+        <span class="tok-comment">/// where an appropriate stream type is used.</span>
+        <span class="tok-comment">/// &lt;/summary&gt;</span>
+        <span class="tok-comment">/// &lt;param name=&quot;filePath&quot;&gt;&lt;/param&gt;</span>
+        <span class="tok-keyword">internal</span> <span class="tok-keyword">void</span> <span class="tok-variableName">SaveAsFile</span>(<span class="tok-typeName">string</span> <span class="tok-variableName">filePath</span>)
+        {
+            <span class="tok-comment">// Stream a new file using positional data and underlying stream</span>
+
+            <span class="tok-keyword">using</span> (<span class="tok-keyword">var</span> <span class="tok-variableName tok-definition">fs</span> <span class="tok-operator">=</span> <span class="tok-keyword">new</span> <span class="tok-variableName">FileStream</span>(<span class="tok-variableName">filePath</span>, <span class="tok-variableName">FileMode</span>.<span class="tok-variableName">CreateNew</span>))
+            {
+                <span class="tok-typeName">byte</span>[] <span class="tok-variableName">buffer</span> <span class="tok-operator">=</span> <span class="tok-keyword">new</span> <span class="tok-typeName">byte</span>[<span class="tok-number">8</span> <span class="tok-operator">*</span> <span class="tok-number">1024</span>];
+
+                <span class="tok-typeName">int</span> <span class="tok-variableName">length</span>;
+
+                <span class="tok-typeName">int</span> <span class="tok-variableName">bytesRemaining</span> <span class="tok-operator">=</span> <span class="tok-variableName">m_length</span>;
+
+                <span class="tok-typeName">int</span> <span class="tok-variableName">readSize</span> <span class="tok-operator">=</span> <span class="tok-variableName">buffer</span>.<span class="tok-variableName">Length</span>;
+
+                <span class="tok-comment">// Start the stream copy to start of the file content</span>
+
+                <span class="tok-variableName">m_streamIndexer</span>.<span class="tok-variableName">Stream</span>.<span class="tok-variableName">Position</span> <span class="tok-operator">=</span> <span class="tok-variableName">m_offset</span>;
+
+                <span class="tok-comment">// Only read as far as we need</span>
+
+                <span class="tok-keyword">while</span> (<span class="tok-variableName">bytesRemaining</span> <span class="tok-operator">&amp;</span><span class="tok-variableName">gt</span>; <span class="tok-number">0</span>)
+                {
+                    <span class="tok-variableName">length</span> <span class="tok-operator">=</span> <span class="tok-variableName">m_streamIndexer</span>.<span class="tok-variableName">Stream</span>.<span class="tok-variableName">Read</span>(<span class="tok-variableName">buffer</span>, <span class="tok-number">0</span>, <span class="tok-variableName">readSize</span>);
+
+                    <span class="tok-variableName">fs</span>.<span class="tok-variableName">Write</span>(<span class="tok-variableName">buffer</span>, <span class="tok-number">0</span>, <span class="tok-variableName">length</span>);
+
+                    <span class="tok-variableName">bytesRemaining</span> <span class="tok-operator">-=</span> <span class="tok-variableName">length</span>;
+
+                     <span class="tok-keyword">if</span> (<span class="tok-variableName">readSize</span> <span class="tok-operator">&amp;</span><span class="tok-variableName">gt</span>; <span class="tok-variableName">bytesRemaining</span>)
+                     {
+                         <span class="tok-variableName">readSize</span> <span class="tok-operator">=</span> <span class="tok-variableName">bytesRemaining</span>;
+                     }
+                }
+            }
+        }
+
+        <span class="tok-keyword">internal</span> <span class="tok-typeName">string</span> <span class="tok-variableName">GetAsString</span>(<span class="tok-variableName">Encoding</span> <span class="tok-variableName">encoding</span>)
+        {
+            <span class="tok-keyword">if</span> (<span class="tok-keyword">this</span>.<span class="tok-variableName">m_length</span> <span class="tok-operator">&amp;</span><span class="tok-variableName">gt</span>; <span class="tok-number">0</span>)
+            {
+                <span class="tok-keyword">return</span> <span class="tok-variableName">encoding</span>.<span class="tok-variableName">GetString</span>(<span class="tok-keyword">this</span>.<span class="tok-variableName">GetAsBytes</span>(<span class="tok-variableName">encoding</span>)); <span class="tok-comment">// Edited to remove HttpRawUploadedContent dependancy, use plain byte[]</span>
+            }
+
+            <span class="tok-keyword">return</span> <span class="tok-typeName">string</span>.<span class="tok-variableName">Empty</span>;
+        }
+    }
+}
+</code></pre>
+
+            </div>
+            <nav class="pagination" aria-label="Neighbouring posts">
+                
+                <a class="button pagination__next" href="fail-early-fail-fast-and-why-you-should-throw-exceptions.html"><span class="button__text">Fail Early, Fail Fast and why you should throw exceptions</span><span class="button__icon">→</span></a>
+            </nav>
+        </article>
+    </main>
+        <footer class="footer">
+            <div class="footer__inner">
+                <div class="copyright">
+                    <span>&copy; 2026 g9n Blog</span>
+                    <span class="footer__separator" aria-hidden="true">::</span>
+                    <span>Published with <a href="https://etherpk.com" rel="noopener">EtherPK</a></span>
+                    <span class="footer__separator" aria-hidden="true">::</span><a href="feed.xml">Feed</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+        <script src="theme/search.js" defer></script>
+</body>
+</html>

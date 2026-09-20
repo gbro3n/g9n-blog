@@ -40,5 +40,131 @@
       <pubDate>Sun, 17 May 2026 00:00:00 GMT</pubDate>
       <description>Welcome to my blog. This is where I intend (intend, not promise) to put my (hopefully) regular writings in an effort to be more intentional about what I&apos;m working on and thinking about, communicate…</description>
     </item>
+    <item>
+      <title>Hackers, Painters and Kanban for Software as a Creative Process</title>
+      <link>https://blog.g9n.com/hackers-painters-and-kanban-for-software-as-a-creative-process.html</link>
+      <guid>https://blog.g9n.com/hackers-painters-and-kanban-for-software-as-a-creative-process.html</guid>
+      <pubDate>Mon, 18 Jul 2022 00:00:00 GMT</pubDate>
+      <description>In Paul Graham&apos;s book Hackers &amp; Painters - Big Ideas From The Computer Age. A common theme that runs through the book is viewing software as a creative process, implied by the &quot;Painters&quot; in the book…</description>
+    </item>
+    <item>
+      <title>Maintaining a Blog with Jekyll, GitHub Pages and GitHub Codespaces</title>
+      <link>https://blog.g9n.com/maintaining-a-blog-with-jekyll-github-pages-and-github-codespaces.html</link>
+      <guid>https://blog.g9n.com/maintaining-a-blog-with-jekyll-github-pages-and-github-codespaces.html</guid>
+      <pubDate>Sat, 02 Jul 2022 00:00:00 GMT</pubDate>
+      <description>These are notes copied from the README.md of my public blog (the one you are reading now). Jekyll and GitHub pages have proven to a be a low friction workflow for curating and publishing posts.…</description>
+    </item>
+    <item>
+      <title>Managing Code Snippets Using Logseq</title>
+      <link>https://blog.g9n.com/managing-code-snippets-using-logseq.html</link>
+      <guid>https://blog.g9n.com/managing-code-snippets-using-logseq.html</guid>
+      <pubDate>Fri, 01 Jul 2022 00:00:00 GMT</pubDate>
+      <description>Loqseq is an excellent note taking application / outliner that facilitates low friction note taking without breaking flow while retaining control over data by using local storage. Having been wanting…</description>
+    </item>
+    <item>
+      <title>API Versioning and Basic UI Authentication with OpenAPI (Swagger Swashbuckle) in .NET Core 6</title>
+      <link>https://blog.g9n.com/api-versioning-and-basic-ui-authentication-with-openapi-swagger-swashbuckle-in-net-core-6.html</link>
+      <guid>https://blog.g9n.com/api-versioning-and-basic-ui-authentication-with-openapi-swagger-swashbuckle-in-net-core-6.html</guid>
+      <pubDate>Tue, 18 Jan 2022 00:00:00 GMT</pubDate>
+      <description>Introduction This post aims to detail how to implement an OpenAPI (Swagger) configuration in a .NET Core 6 web app that includes two API versioning strategy options (URL / HTTP header) along with…</description>
+    </item>
+    <item>
+      <title>A Rough Guide to Building a Retro Pie Bar Top Arcade Game Machine</title>
+      <link>https://blog.g9n.com/a-rough-guide-to-building-a-retro-pie-bar-top-arcade-game-machine.html</link>
+      <guid>https://blog.g9n.com/a-rough-guide-to-building-a-retro-pie-bar-top-arcade-game-machine.html</guid>
+      <pubDate>Sun, 09 Jan 2022 00:00:00 GMT</pubDate>
+      <description>Over the last few months, working towards an ominous (self-imposed) Christmas deadline, I&apos;ve been working on building a Retro Pie Bar Top Arcade Game Machine. This is &quot;for the kids&quot;, but pretty…</description>
+    </item>
+    <item>
+      <title>A Custom Workflow to Publish from Obsidian to Blot.im</title>
+      <link>https://blog.g9n.com/a-custom-workflow-to-publish-from-obsidian-to-blotim.html</link>
+      <guid>https://blog.g9n.com/a-custom-workflow-to-publish-from-obsidian-to-blotim.html</guid>
+      <pubDate>Thu, 06 Jan 2022 00:00:00 GMT</pubDate>
+      <description>This is the first post to this blog using a custom workflow that uses: Obsidian for markdown file curation. A custom tag to identify files intended for publication. A Node.js script to copy files and…</description>
+    </item>
+    <item>
+      <title>Using GitHub to Host Images</title>
+      <link>https://blog.g9n.com/using-github-to-host-images.html</link>
+      <guid>https://blog.g9n.com/using-github-to-host-images.html</guid>
+      <pubDate>Thu, 06 Jan 2022 00:00:00 GMT</pubDate>
+      <description>For simple image hosting scenarios, you can host images directly out of a public GitHub respository by following these steps: Browse to image on github.com, e.g.…</description>
+    </item>
+    <item>
+      <title>Uploading Directly to S3 from Client Using Pre-Signed URLs (JavaScript,  .NET)</title>
+      <link>https://blog.g9n.com/uploading-directly-to-s3-from-client-using-pre-signed-urls-javascript-net.html</link>
+      <guid>https://blog.g9n.com/uploading-directly-to-s3-from-client-using-pre-signed-urls-javascript-net.html</guid>
+      <pubDate>Thu, 06 Jan 2022 00:00:00 GMT</pubDate>
+      <description>Introduction The aim of this post is to demonstrate how you can upload files directly from a client (a web app in this example) to AWS S3. The advantage of doing this is that the file itself does…</description>
+    </item>
+    <item>
+      <title>Converting Enum Types By Value in C#</title>
+      <link>https://blog.g9n.com/converting-enum-types-by-value-in-c.html</link>
+      <guid>https://blog.g9n.com/converting-enum-types-by-value-in-c.html</guid>
+      <pubDate>Thu, 01 Jul 2021 00:00:00 GMT</pubDate>
+      <description>If you find yourself having to convert between values in two identical Enums and there is no way that your code base allows you to reconcile those enums into the same type, or if you have enums with…</description>
+    </item>
+    <item>
+      <title>How to wrap a TypeScript JS callback with async  await</title>
+      <link>https://blog.g9n.com/how-to-wrap-a-typescript-js-callback-with-async-await.html</link>
+      <guid>https://blog.g9n.com/how-to-wrap-a-typescript-js-callback-with-async-await.html</guid>
+      <pubDate>Thu, 25 Feb 2021 00:00:00 GMT</pubDate>
+      <description>I find that at times the standard TypeScript/JavaScript callback pattern can make code hard to read and manage. To alleviate this problem, we can wrap callbacks with promises to synchronise the call.…</description>
+    </item>
+    <item>
+      <title>How to create a deep copy of an object in JavaScript, TypeScript</title>
+      <link>https://blog.g9n.com/how-to-create-a-deep-copy-of-an-object-in-javascript-typescript.html</link>
+      <guid>https://blog.g9n.com/how-to-create-a-deep-copy-of-an-object-in-javascript-typescript.html</guid>
+      <pubDate>Thu, 25 Feb 2021 00:00:00 GMT</pubDate>
+      <description>If you already know the difference between a deep and shallow copy of an object, then you don’t need to read the very good but quite long articles I got from my Google search on the most straight…</description>
+    </item>
+    <item>
+      <title>Implementing Microsoft.Extensions.Logging.ILogger with NLog</title>
+      <link>https://blog.g9n.com/implementing-microsoftextensionsloggingilogger-with-nlog.html</link>
+      <guid>https://blog.g9n.com/implementing-microsoftextensionsloggingilogger-with-nlog.html</guid>
+      <pubDate>Thu, 25 Feb 2021 00:00:00 GMT</pubDate>
+      <description>I’ve designed this ILoggerimplementation to solve an issue I encountered today where the code I was working was wasn’t logging errors when the error occurred in a background thread. It was failing…</description>
+    </item>
+    <item>
+      <title>Sanitizing HTML in .NET Core</title>
+      <link>https://blog.g9n.com/sanitizing-html-in-net-core.html</link>
+      <guid>https://blog.g9n.com/sanitizing-html-in-net-core.html</guid>
+      <pubDate>Thu, 25 Feb 2021 00:00:00 GMT</pubDate>
+      <description>Looking through options for sanitizing HTML, I found my way to the following library: https://github.com/mganss/HtmlSanitizer HtmlSantizer uses a whitelist approach to HTML sanitization. A whitelist…</description>
+    </item>
+    <item>
+      <title>A Utility Class for Finding Database Deadlocks in .NET Applications</title>
+      <link>https://blog.g9n.com/a-utility-class-for-finding-database-deadlocks-in-net-applications.html</link>
+      <guid>https://blog.g9n.com/a-utility-class-for-finding-database-deadlocks-in-net-applications.html</guid>
+      <pubDate>Tue, 23 Feb 2021 00:00:00 GMT</pubDate>
+      <description>Database deadlocks were suspected in a large .NET Core project with around 50 transaction blocks. To help pinpoint the source of the transaction as quickly as possible, I designed this set of utility…</description>
+    </item>
+    <item>
+      <title>Robust Error Handling in ASP.NET Core</title>
+      <link>https://blog.g9n.com/robust-error-handling-in-aspnet-core.html</link>
+      <guid>https://blog.g9n.com/robust-error-handling-in-aspnet-core.html</guid>
+      <pubDate>Thu, 23 Jul 2020 00:00:00 GMT</pubDate>
+      <description>Error handling in .NET Core is great, but there are some pitfalls if not properly set up that can result in unexpected behaviour. For example - HTTP status codes that appear incorrect, or some…</description>
+    </item>
+    <item>
+      <title>How to inject Google Adsense In-Article script into your HTML (ASP.NET Core Razor)</title>
+      <link>https://blog.g9n.com/how-to-inject-google-adsense-in-article-script-into-your-html-aspnet-core-razor.html</link>
+      <guid>https://blog.g9n.com/how-to-inject-google-adsense-in-article-script-into-your-html-aspnet-core-razor.html</guid>
+      <pubDate>Tue, 24 Dec 2019 00:00:00 GMT</pubDate>
+      <description>This is how I solved the problem of how to inject a Google Adsense In-Article script within the HTML content of blog articles on a site that I manage. I wanted the in article text to appear once,…</description>
+    </item>
+    <item>
+      <title>Fail Early, Fail Fast and why you should throw exceptions</title>
+      <link>https://blog.g9n.com/fail-early-fail-fast-and-why-you-should-throw-exceptions.html</link>
+      <guid>https://blog.g9n.com/fail-early-fail-fast-and-why-you-should-throw-exceptions.html</guid>
+      <pubDate>Tue, 07 Aug 2018 00:00:00 GMT</pubDate>
+      <description>Debugging is a necessary part of software engineering. All software has bugs, and so debugging goes with the territory. Some are simple to fix. Some are only show up under certain (sometimes unusual)…</description>
+    </item>
+    <item>
+      <title>ASP.NET File Uploader with SignalR Progress Bar and Extended Input Stream Processing</title>
+      <link>https://blog.g9n.com/aspnet-file-uploader-with-signalr-progress-bar-and-extended-input-stream-processing.html</link>
+      <guid>https://blog.g9n.com/aspnet-file-uploader-with-signalr-progress-bar-and-extended-input-stream-processing.html</guid>
+      <pubDate>Tue, 08 Jan 2013 00:00:00 GMT</pubDate>
+      <description>Note: This is a copy of an old and fairly popular blog post that I have had requests to reinstate the links and source code for. The .sln file has been updated for VS 2015. If you run into trouble…</description>
+    </item>
   </channel>
 </rss>

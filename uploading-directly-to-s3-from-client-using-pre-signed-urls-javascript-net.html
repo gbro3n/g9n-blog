@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="EtherPK">
+    <title>Uploading Directly to S3 from Client Using Pre-Signed URLs (JavaScript,  .NET) :: g9n Blog</title>
+    <meta name="description" content="Introduction The aim of this post is to demonstrate how you can upload files directly from a client (a web app in this example) to AWS S3. The advantage of doing this is that the file itself does…">
+    <link rel="stylesheet" href="theme/theme.css">
+    
+    
+    <link rel="alternate" type="application/rss+xml" title="g9n Blog" href="feed.xml">
+</head>
+<body class="layout-terminal">
+    <a class="skip-link" href="#content">Skip to content</a>
+    <div class="container">
+        <header class="header">
+            <div class="header__inner">
+                <a class="site-title logo" href="index.html">
+                    <span class="logo__mark"><!-- The EtherPK icon (resources/brand/etherpk-icon-*.svg), inline so the page fetches nothing and it takes the text colour; aria-hidden because the title beside it is the name. Fill the "logo" include, or edit this partial, for your own. -->
+                                             <svg class="site-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 191.82 166.13" width="24" height="21" aria-hidden="true" focusable="false"><path fill="currentColor" fill-rule="evenodd" d="M67.09,132.92,47.93,166.13H9.59L0,149.52,86.33,0H105.5L19.17,149.52H38.34l19.17-33.2h76.8l9.59,16.6Zm48-83.12,9.65,16.71H143.9L115.08,16.6q-24,41.57-48,83.12H143.9q14.37,24.9,28.76,49.8h-96l-9.59,16.61H182.24l9.58-16.61-38.34-66.4H96C95.85,82.9,113.39,52.73,115.08,49.8Z"/></svg>
+</span>
+                    <span class="logo__text">g9n Blog</span>
+                    <span class="logo__cursor" aria-hidden="true"></span>
+                </a>
+                <button class="nav-toggle menu-trigger" type="button" aria-controls="site-nav" aria-expanded="false" aria-label="Menu">Menu</button>
+            </div>
+            <div class="nav-backdrop" hidden></div>
+            <nav id="site-nav" class="menu site-nav" aria-label="Site">
+                <ul class="menu__inner site-nav-list">
+                <li class="">
+                    <a href="a-custom-workflow-to-publish-from-obsidian-to-blotim.html">A Custom Workflow to Publish from Obsidian to Blot.im</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="a-rough-guide-to-building-a-retro-pie-bar-top-arcade-game-machine.html">A Rough Guide to Building a Retro Pie Bar Top Arcade Game Machine</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="a-utility-class-for-finding-database-deadlocks-in-net-applications.html">A Utility Class for Finding Database Deadlocks in .NET Applications</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="api-versioning-and-basic-ui-authentication-with-openapi-swagger-swashbuckle-in-net-core-6.html">API Versioning and Basic UI Authentication with OpenAPI (Swagger Swashbuckle) in .NET Core 6</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="aspnet-file-uploader-with-signalr-progress-bar-and-extended-input-stream-processing.html">ASP.NET File Uploader with SignalR Progress Bar and Extended Input Stream Processing</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="attention-was-always-the-bottleneck-ai.html">Attention Was Always the Bottleneck (AI)</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="converting-enum-types-by-value-in-c.html">Converting Enum Types By Value in C#</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="fail-early-fail-fast-and-why-you-should-throw-exceptions.html">Fail Early, Fail Fast and why you should throw exceptions</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="hackers-painters-and-kanban-for-software-as-a-creative-process.html">Hackers, Painters and Kanban for Software as a Creative Process</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="how-to-create-a-deep-copy-of-an-object-in-javascript-typescript.html">How to create a deep copy of an object in JavaScript, TypeScript</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="how-to-inject-google-adsense-in-article-script-into-your-html-aspnet-core-razor.html">How to inject Google Adsense In-Article script into your HTML (ASP.NET Core Razor)</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="how-to-wrap-a-typescript-js-callback-with-async-await.html">How to wrap a TypeScript JS callback with async  await</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="implementing-microsoftextensionsloggingilogger-with-nlog.html">Implementing Microsoft.Extensions.Logging.ILogger with NLog</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="introducing-the-g9n-blog.html">Introducing the g9n blog</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="maintaining-a-blog-with-jekyll-github-pages-and-github-codespaces.html">Maintaining a Blog with Jekyll, GitHub Pages and GitHub Codespaces</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="make-sure-you-spend-time-with-tech-you-enjoy.html">Make Sure You Spend Time With Tech You Enjoy</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="managing-code-snippets-using-logseq.html">Managing Code Snippets Using Logseq</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="observations-around-prominent-programmer-sentiment-and-ai.html">Observations Around Prominent Programmer Sentiment and AI</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="robust-error-handling-in-aspnet-core.html">Robust Error Handling in ASP.NET Core</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="sanitizing-html-in-net-core.html">Sanitizing HTML in .NET Core</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="the-skills-i-think-we-might-gain-ai.html">The skills I think we might gain (AI)</a>
+                    
+                    
+                </li>
+                <li class="nav-current ">
+                    <a href="uploading-directly-to-s3-from-client-using-pre-signed-urls-javascript-net.html" aria-current="page">Uploading Directly to S3 from Client Using Pre-Signed URLs (JavaScript,  .NET)</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="using-github-to-host-images.html">Using GitHub to Host Images</a>
+                    
+                    
+                </li>
+                </ul>
+                <form class="site-search" role="search" data-search-index="search.json" data-search-script="search-index.js">
+                    <label class="visually-hidden" for="site-search-input">Search</label>
+                    <input id="site-search-input" type="search" name="q" placeholder="$ search" autocomplete="off">
+                    <div class="site-search-results" role="listbox" hidden></div>
+                </form>
+            </nav>
+        </header>
+    <main id="content" class="content">
+        <article class="post">
+            <h1 class="post-title">Uploading Directly to S3 from Client Using Pre-Signed URLs (JavaScript,  .NET)</h1>
+            <div class="post-meta"><time class="post-date" datetime="2022-01-06">2022-01-06</time> :: <span class="post-reading">5 min read</span></div>
+        <nav class="toc framed" aria-label="Table of contents">
+            <p class="toc__title">:: Table of contents</p>
+            <ul>
+                <li class="toc-level-2"><a href="#introduction">Introduction</a></li><li class="toc-level-2"><a href="#example-code">Example Code</a></li><li class="toc-level-2"><a href="#creating-and-configuring-the-s3-bucket">Creating and Configuring the S3 Bucket</a></li><li class="toc-level-2"><a href="#the-resulting-upload-page">The Resulting Upload Page</a></li>
+            </ul>
+        </nav>
+            <div class="post-content">
+<h2 id="introduction">Introduction</h2>
+<p>The aim of this post is to demonstrate how you can upload files directly from a client (a web app in this example) to AWS S3. The advantage of doing this is that the file itself does does not pass through your web server, making your application more scalable.</p>
+<p>Reference documentation from AWS:</p>
+<p><a href="https://aws.amazon.com/blogs/compute/uploading-to-amazon-s3-directly-from-a-web-or-mobile-application/">https://aws.amazon.com/blogs/compute/uploading-to-amazon-s3-directly-from-a-web-or-mobile-application/</a></p>
+<h2 id="example-code">Example Code</h2>
+<p>Here we've built a .NET Core, C# service for getting a presigned URL using the AWS S3 SDK.</p>
+<pre><code class="language-csharp"><span class="tok-keyword">using</span> <span class="tok-variableName">System</span>;
+<span class="tok-keyword">using</span> <span class="tok-variableName">System</span>.<span class="tok-variableName">IO</span>;
+<span class="tok-keyword">using</span> <span class="tok-variableName">System</span>.<span class="tok-variableName">Threading</span>.<span class="tok-variableName">Tasks</span>;
+<span class="tok-keyword">using</span> <span class="tok-variableName">Amazon</span>.<span class="tok-variableName">S3</span>;
+<span class="tok-keyword">using</span> <span class="tok-variableName">Amazon</span>.<span class="tok-variableName">S3</span>.<span class="tok-variableName">Model</span>;
+<span class="tok-keyword">using</span> <span class="tok-variableName">Amazon</span>.<span class="tok-variableName">S3</span>.<span class="tok-variableName">Transfer</span>;
+<span class="tok-keyword">using</span> <span class="tok-variableName">Microsoft</span>.<span class="tok-variableName">Extensions</span>.<span class="tok-variableName">Logging</span>;
+<span class="tok-keyword">using</span> <span class="tok-variableName">App</span>.<span class="tok-variableName">Api</span>.<span class="tok-variableName">Common</span>.<span class="tok-variableName">Interfaces</span>;
+
+<span class="tok-keyword">namespace</span> <span class="tok-variableName tok-definition">App</span>.<span class="tok-variableName">Api</span>.<span class="tok-variableName">Common</span>.<span class="tok-variableName">Services</span>
+{
+  <span class="tok-keyword">public</span> <span class="tok-keyword">class</span> <span class="tok-variableName tok-definition">AwsS3Service</span> : <span class="tok-variableName">IAwsS3Service</span>
+  {
+      <span class="tok-keyword">private</span> <span class="tok-keyword">readonly</span> <span class="tok-variableName">IAwsSettings</span> <span class="tok-variableName">_awsS3Settings</span>;
+      <span class="tok-keyword">private</span> <span class="tok-keyword">readonly</span> <span class="tok-variableName">IEnvironmentSettings</span> <span class="tok-variableName">_environmentSettings</span>;
+      <span class="tok-keyword">private</span> <span class="tok-keyword">readonly</span> <span class="tok-variableName">ILogger</span> <span class="tok-variableName">_logger</span>;
+
+      <span class="tok-keyword">public</span> <span class="tok-variableName">AwsS3Service</span>(<span class="tok-variableName">IAwsSettings</span> <span class="tok-variableName">awsS3Settings</span>, <span class="tok-variableName">IEnvironmentSettings</span> <span class="tok-variableName">environmentSettings</span>, <span class="tok-variableName">ILogger</span> <span class="tok-variableName">logger</span>)
+      {
+          <span class="tok-variableName">_awsS3Settings</span> <span class="tok-operator">=</span> <span class="tok-variableName">awsS3Settings</span>;
+          <span class="tok-variableName">_environmentSettings</span> <span class="tok-operator">=</span> <span class="tok-variableName">environmentSettings</span>;
+          <span class="tok-variableName">_logger</span> <span class="tok-operator">=</span> <span class="tok-variableName">logger</span>;
+      }
+
+   
+      <span class="tok-keyword">public</span> <span class="tok-typeName">string</span> <span class="tok-variableName">GetPresignedUrl</span>(<span class="tok-typeName">string</span> <span class="tok-variableName">objectKey</span>)
+      {
+          <span class="tok-typeName">int</span> <span class="tok-variableName">presignedUrlTimeoutMinutes</span> <span class="tok-operator">=</span> <span class="tok-number">3600</span>;
+
+          <span class="tok-keyword">var</span> <span class="tok-variableName tok-definition">request</span> <span class="tok-operator">=</span> <span class="tok-keyword">new</span> <span class="tok-variableName">GetPreSignedUrlRequest</span>
+          {
+              <span class="tok-variableName">BucketName</span> <span class="tok-operator">=</span> <span class="tok-keyword">this</span>.<span class="tok-variableName">ClientUploadBucket</span>,
+              <span class="tok-variableName">Key</span>        <span class="tok-operator">=</span> <span class="tok-variableName">objectKey</span>,
+              <span class="tok-variableName">Verb</span>       <span class="tok-operator">=</span> <span class="tok-variableName">HttpVerb</span>.<span class="tok-variableName">PUT</span>,
+              <span class="tok-variableName">Expires</span>    <span class="tok-operator">=</span> <span class="tok-typeName">DateTime</span>.<span class="tok-variableName">UtcNow</span>.<span class="tok-variableName">AddMinutes</span>(<span class="tok-variableName">presignedUrlTimeoutMinutes</span>)
+          };
+
+          <span class="tok-typeName">string</span> <span class="tok-variableName">preSignedUrl</span>;
+
+          <span class="tok-keyword">using</span> (<span class="tok-keyword">var</span> <span class="tok-variableName tok-definition">awsAmazonS3</span> <span class="tok-operator">=</span> <span class="tok-keyword">new</span> <span class="tok-variableName">AmazonS3Client</span>(<span class="tok-variableName">_awsS3Settings</span>.<span class="tok-variableName">AccessKeyId</span>, <span class="tok-variableName">_awsS3Settings</span>.<span class="tok-variableName">SecretKey</span>, <span class="tok-keyword">new</span> <span class="tok-variableName">AmazonS3Config</span> { <span class="tok-variableName">RegionEndpoint</span> <span class="tok-operator">=</span> <span class="tok-variableName">_awsS3Settings</span>.<span class="tok-variableName">RegionEndpoint</span> }))
+          {
+              <span class="tok-variableName">preSignedUrl</span> <span class="tok-operator">=</span> <span class="tok-variableName">awsAmazonS3</span>.<span class="tok-variableName">GetPreSignedURL</span>(<span class="tok-variableName">request</span>);
+          }
+
+          <span class="tok-keyword">return</span> <span class="tok-variableName">preSignedUrl</span>;
+      }
+
+      <span class="tok-keyword">public</span> <span class="tok-typeName">string</span> <span class="tok-variableName">ClientUploadBucket</span> <span class="tok-operator">=&gt;</span> <span class="tok-variableName">$</span><span class="tok-string">&quot;client-upload-{_environmentSettings.ShortName}&quot;</span>;
+  }
+}
+</code></pre>
+<p>Here's the controller code in which we generate a unique, URL friendly file name, call the service and format the response for the client. Note that in this example code, there is no authorization for the request, which you would likely want.</p>
+<pre><code class="language-csharp"><span class="tok-comment">/// &lt;summary&gt;</span>
+<span class="tok-comment">/// Get a pre-signed URL for direct upload from the client</span>
+<span class="tok-comment">/// &lt;/summary&gt;</span>
+<span class="tok-comment">/// &lt;returns&gt;Pre-signed URL, bucket and object key&lt;/returns&gt;</span>
+[<span class="tok-variableName">HttpGet</span>(<span class="tok-string">&quot;s3-presigned-upload-url&quot;</span>)]
+[<span class="tok-variableName">ResponseCache</span>(<span class="tok-variableName">NoStore</span> <span class="tok-operator">=</span> <span class="tok-atom">true</span>, <span class="tok-variableName">Duration</span> <span class="tok-operator">=</span> <span class="tok-number">0</span>)]
+<span class="tok-keyword">public</span> <span class="tok-keyword">async</span> <span class="tok-typeName">Task</span><span class="tok-operator">&lt;</span><span class="tok-variableName">ActionResult</span><span class="tok-operator">&lt;</span><span class="tok-typeName">object</span><span class="tok-operator">&gt;&gt;</span> <span class="tok-variableName tok-definition">GetS3PresignedUploadUrlAsync</span>(<span class="tok-typeName">string</span> <span class="tok-variableName">fileName</span>)
+{
+  <span class="tok-comment">// Format the file name and add a unique prefix</span>
+
+  <span class="tok-typeName">string</span> <span class="tok-variableName">fileExtension</span> <span class="tok-operator">=</span> <span class="tok-variableName">Path</span>.<span class="tok-variableName">GetExtension</span>(<span class="tok-variableName">fileName</span>)<span class="tok-operator">?</span>.<span class="tok-variableName">ToLower</span>();
+  <span class="tok-typeName">string</span> <span class="tok-variableName">fileNameWithoutExtension</span> <span class="tok-operator">=</span> <span class="tok-variableName">Path</span>.<span class="tok-variableName">GetFileNameWithoutExtension</span>(<span class="tok-variableName">fileName</span>);
+
+  <span class="tok-typeName">string</span> <span class="tok-variableName">urlFriendlyFileName</span> <span class="tok-operator">=</span> <span class="tok-variableName">Regex</span>.<span class="tok-variableName">Replace</span>(<span class="tok-variableName">fileNameWithoutExtension</span>, <span class="tok-string">&quot;[^A-Za-z0-9]&quot;</span>, <span class="tok-string">&quot;-&quot;</span>);
+
+  <span class="tok-typeName">string</span> <span class="tok-variableName">objectKey</span> <span class="tok-operator">=</span> <span class="tok-variableName">$</span><span class="tok-string">&quot;{Guid.NewGuid()}-{urlFriendlyFileName}{fileExtension}&quot;</span>;
+
+  <span class="tok-typeName">string</span> <span class="tok-variableName">presignedUrl</span> <span class="tok-operator">=</span> <span class="tok-variableName">_awsS3Service</span>.<span class="tok-variableName">GetPresignedUrl</span>(<span class="tok-variableName">objectKey</span>);
+
+  <span class="tok-keyword">return</span> <span class="tok-keyword">new</span>
+  {
+      <span class="tok-variableName">presignedUrl</span>,
+      <span class="tok-variableName">bucket</span> <span class="tok-operator">=</span> <span class="tok-variableName">_awsS3Service</span>.<span class="tok-variableName">ClientUploadBucket</span>,
+      <span class="tok-variableName">objectKey</span>
+  };
+}
+</code></pre>
+<p>Here is the HTML and JavaScript to test the upload. This has sample code has been adapted from the example code provided in the AWS documentation to work with the above controller and service code, passing the filename to the API endpoint so that this is included in the presigned URL (and the resulting file in our bucket get's the file name we want) Also, the restiction on file extension has been removed.</p>
+<pre><code class="language-html"><span class="tok-meta">&lt;!DOCTYPE html&gt;</span>
+<span class="tok-punctuation">&lt;</span><span class="tok-typeName">html</span><span class="tok-punctuation">&gt;</span>
+<span class="tok-punctuation">&lt;</span><span class="tok-typeName">head</span><span class="tok-punctuation">&gt;</span>
+  <span class="tok-punctuation">&lt;</span><span class="tok-typeName">title</span><span class="tok-punctuation">&gt;</span>Upload file to S3<span class="tok-punctuation">&lt;/</span><span class="tok-typeName">title</span><span class="tok-punctuation">&gt;</span>
+  <span class="tok-punctuation">&lt;</span><span class="tok-typeName">script</span> <span class="tok-propertyName">src</span><span class="tok-operator">=</span><span class="tok-string">&quot;https://unpkg.com/vue&quot;</span><span class="tok-punctuation">&gt;</span><span class="tok-punctuation">&lt;/</span><span class="tok-typeName">script</span><span class="tok-punctuation">&gt;</span>
+  <span class="tok-punctuation">&lt;</span><span class="tok-typeName">script</span> <span class="tok-propertyName">src</span><span class="tok-operator">=</span><span class="tok-string">&quot;https://unpkg.com/axios@0.2.1/dist/axios.min.js&quot;</span><span class="tok-punctuation">&gt;</span><span class="tok-punctuation">&lt;/</span><span class="tok-typeName">script</span><span class="tok-punctuation">&gt;</span>
+<span class="tok-punctuation">&lt;/</span><span class="tok-typeName">head</span><span class="tok-punctuation">&gt;</span>
+<span class="tok-punctuation">&lt;</span><span class="tok-typeName">body</span><span class="tok-punctuation">&gt;</span>
+  <span class="tok-punctuation">&lt;</span><span class="tok-typeName">div</span> <span class="tok-propertyName">id</span><span class="tok-operator">=</span><span class="tok-string">&quot;app&quot;</span><span class="tok-punctuation">&gt;</span>
+    <span class="tok-punctuation">&lt;</span><span class="tok-typeName">h1</span><span class="tok-punctuation">&gt;</span>S3 Uploader Test<span class="tok-punctuation">&lt;/</span><span class="tok-typeName">h1</span><span class="tok-punctuation">&gt;</span>
+
+    <span class="tok-punctuation">&lt;</span><span class="tok-typeName">div</span> <span class="tok-propertyName">v-if</span><span class="tok-operator">=</span><span class="tok-string">&quot;!uploadFile&quot;</span><span class="tok-punctuation">&gt;</span>
+      <span class="tok-punctuation">&lt;</span><span class="tok-typeName">h2</span><span class="tok-punctuation">&gt;</span>Select an uploadFile<span class="tok-punctuation">&lt;/</span><span class="tok-typeName">h2</span><span class="tok-punctuation">&gt;</span>
+      <span class="tok-punctuation">&lt;</span><span class="tok-typeName">input</span> <span class="tok-propertyName">type</span><span class="tok-operator">=</span><span class="tok-string">&quot;file&quot;</span> <span class="tok-propertyName">@change</span><span class="tok-operator">=</span><span class="tok-string">&quot;onFileChange&quot;</span><span class="tok-punctuation">&gt;</span>
+    <span class="tok-punctuation">&lt;/</span><span class="tok-typeName">div</span><span class="tok-punctuation">&gt;</span>
+    <span class="tok-punctuation">&lt;</span><span class="tok-typeName">div</span> <span class="tok-propertyName">v-else</span><span class="tok-punctuation">&gt;</span>
+      <span class="tok-punctuation">&lt;</span><span class="tok-typeName">img</span> <span class="tok-propertyName">:src</span><span class="tok-operator">=</span><span class="tok-string">&quot;uploadFile&quot;</span> <span class="tok-punctuation">/&gt;</span>
+      <span class="tok-punctuation">&lt;</span><span class="tok-typeName">button</span> <span class="tok-propertyName">v-if</span><span class="tok-operator">=</span><span class="tok-string">&quot;!uploadURL&quot;</span> <span class="tok-propertyName">@click</span><span class="tok-operator">=</span><span class="tok-string">&quot;removeImage&quot;</span><span class="tok-punctuation">&gt;</span>Remove uploadFile<span class="tok-punctuation">&lt;/</span><span class="tok-typeName">button</span><span class="tok-punctuation">&gt;</span>
+      <span class="tok-punctuation">&lt;</span><span class="tok-typeName">button</span> <span class="tok-propertyName">v-if</span><span class="tok-operator">=</span><span class="tok-string">&quot;!uploadURL&quot;</span> <span class="tok-propertyName">@click</span><span class="tok-operator">=</span><span class="tok-string">&quot;uploadImage&quot;</span><span class="tok-punctuation">&gt;</span>Upload uploadFile<span class="tok-punctuation">&lt;/</span><span class="tok-typeName">button</span><span class="tok-punctuation">&gt;</span>
+    <span class="tok-punctuation">&lt;/</span><span class="tok-typeName">div</span><span class="tok-punctuation">&gt;</span>
+    <span class="tok-punctuation">&lt;</span><span class="tok-typeName">h2</span> <span class="tok-propertyName">v-if</span><span class="tok-operator">=</span><span class="tok-string">&quot;uploadURL&quot;</span><span class="tok-punctuation">&gt;</span>Success! Image uploaded to bucket.<span class="tok-punctuation">&lt;/</span><span class="tok-typeName">h2</span><span class="tok-punctuation">&gt;</span>
+  <span class="tok-punctuation">&lt;/</span><span class="tok-typeName">div</span><span class="tok-punctuation">&gt;</span>
+
+  <span class="tok-punctuation">&lt;</span><span class="tok-typeName">script</span><span class="tok-punctuation">&gt;</span>
+    <span class="tok-keyword">const</span> <span class="tok-variableName tok-definition">MAX_UPLOAD_FILE_SIZE</span> <span class="tok-operator">=</span> <span class="tok-number">1000000</span>
+
+    <span class="tok-comment">/* ENTER YOUR ENDPOINT HERE */</span>
+
+    <span class="tok-keyword">const</span> <span class="tok-variableName tok-definition">API_ENDPOINT</span> <span class="tok-operator">=</span> <span class="tok-string">'http://localhost:5000/api/file/s3-presigned-upload-url'</span> <span class="tok-comment">// e.g. https://ab1234ab123.execute-api.us-east-1.amazonaws.com/uploads</span>
+
+    <span class="tok-keyword">new</span> <span class="tok-className">Vue</span><span class="tok-punctuation">(</span><span class="tok-punctuation">{</span>
+      <span class="tok-propertyName tok-definition">el</span><span class="tok-punctuation">:</span> <span class="tok-string">&quot;#app&quot;</span><span class="tok-punctuation">,</span>
+      <span class="tok-propertyName tok-definition">data</span><span class="tok-punctuation">:</span> <span class="tok-punctuation">{</span>
+        <span class="tok-propertyName tok-definition">uploadFile</span><span class="tok-punctuation">:</span> <span class="tok-string">''</span><span class="tok-punctuation">,</span>
+        <span class="tok-propertyName tok-definition">uploadFileName</span><span class="tok-punctuation">:</span> <span class="tok-string">''</span><span class="tok-punctuation">,</span>
+        <span class="tok-propertyName tok-definition">uploadURL</span><span class="tok-punctuation">:</span> <span class="tok-string">''</span>
+      <span class="tok-punctuation">}</span><span class="tok-punctuation">,</span>
+      <span class="tok-propertyName tok-definition">methods</span><span class="tok-punctuation">:</span> <span class="tok-punctuation">{</span>
+        <span class="tok-propertyName tok-definition">onFileChange</span> <span class="tok-punctuation">(</span><span class="tok-variableName tok-definition">e</span><span class="tok-punctuation">)</span> <span class="tok-punctuation">{</span>
+          <span class="tok-keyword">let</span> <span class="tok-variableName tok-definition">files</span> <span class="tok-operator">=</span> <span class="tok-variableName">e</span><span class="tok-operator">.</span><span class="tok-propertyName">target</span><span class="tok-operator">.</span><span class="tok-propertyName">files</span> <span class="tok-operator">||</span> <span class="tok-variableName">e</span><span class="tok-operator">.</span><span class="tok-propertyName">dataTransfer</span><span class="tok-operator">.</span><span class="tok-propertyName">files</span>
+          <span class="tok-keyword">if</span> <span class="tok-punctuation">(</span><span class="tok-operator">!</span><span class="tok-variableName">files</span><span class="tok-operator">.</span><span class="tok-propertyName">length</span><span class="tok-punctuation">)</span> <span class="tok-keyword">return</span>
+          <span class="tok-keyword">this</span><span class="tok-operator">.</span><span class="tok-propertyName">uploadFileName</span> <span class="tok-operator">=</span> <span class="tok-variableName">files</span><span class="tok-punctuation">[</span><span class="tok-number">0</span><span class="tok-punctuation">]</span><span class="tok-operator">.</span><span class="tok-propertyName">name</span>
+          <span class="tok-keyword">this</span><span class="tok-operator">.</span><span class="tok-propertyName">createUploadFile</span><span class="tok-punctuation">(</span><span class="tok-variableName">files</span><span class="tok-punctuation">[</span><span class="tok-number">0</span><span class="tok-punctuation">]</span><span class="tok-punctuation">)</span>
+        <span class="tok-punctuation">}</span><span class="tok-punctuation">,</span>
+        <span class="tok-propertyName tok-definition">createUploadFile</span> <span class="tok-punctuation">(</span><span class="tok-variableName tok-definition">file</span><span class="tok-punctuation">)</span> <span class="tok-punctuation">{</span>
+          <span class="tok-comment">// var uploadFile = new Image()</span>
+          <span class="tok-keyword">let</span> <span class="tok-variableName tok-definition">reader</span> <span class="tok-operator">=</span> <span class="tok-keyword">new</span> <span class="tok-className">FileReader</span><span class="tok-punctuation">(</span><span class="tok-punctuation">)</span>
+          <span class="tok-variableName">reader</span><span class="tok-operator">.</span><span class="tok-propertyName">onload</span> <span class="tok-operator">=</span> <span class="tok-punctuation">(</span><span class="tok-variableName tok-definition">e</span><span class="tok-punctuation">)</span> <span class="tok-punctuation">=&gt;</span> <span class="tok-punctuation">{</span>
+            <span class="tok-keyword">this</span><span class="tok-operator">.</span><span class="tok-propertyName">uploadFile</span> <span class="tok-operator">=</span> <span class="tok-variableName">e</span><span class="tok-operator">.</span><span class="tok-propertyName">target</span><span class="tok-operator">.</span><span class="tok-propertyName">result</span>
+          <span class="tok-punctuation">}</span>
+          <span class="tok-variableName">reader</span><span class="tok-operator">.</span><span class="tok-propertyName">readAsDataURL</span><span class="tok-punctuation">(</span><span class="tok-variableName">file</span><span class="tok-punctuation">)</span>
+        <span class="tok-punctuation">}</span><span class="tok-punctuation">,</span>
+        <span class="tok-propertyName tok-definition">removeImage</span><span class="tok-punctuation">:</span> <span class="tok-keyword">function</span> <span class="tok-punctuation">(</span><span class="tok-variableName tok-definition">e</span><span class="tok-punctuation">)</span> <span class="tok-punctuation">{</span>
+          <span class="tok-variableName">console</span><span class="tok-operator">.</span><span class="tok-propertyName">log</span><span class="tok-punctuation">(</span><span class="tok-string">'Remove clicked'</span><span class="tok-punctuation">)</span>
+          <span class="tok-keyword">this</span><span class="tok-operator">.</span><span class="tok-propertyName">uploadFile</span> <span class="tok-operator">=</span> <span class="tok-string">''</span>
+        <span class="tok-punctuation">}</span><span class="tok-punctuation">,</span>
+        <span class="tok-propertyName tok-definition">uploadImage</span><span class="tok-punctuation">:</span> <span class="tok-keyword">async</span> <span class="tok-keyword">function</span> <span class="tok-punctuation">(</span><span class="tok-variableName tok-definition">e</span><span class="tok-punctuation">)</span> <span class="tok-punctuation">{</span>
+          <span class="tok-variableName">console</span><span class="tok-operator">.</span><span class="tok-propertyName">log</span><span class="tok-punctuation">(</span><span class="tok-string">'Upload clicked'</span><span class="tok-punctuation">)</span>
+          <span class="tok-comment">// Get the presigned URL</span>
+          <span class="tok-keyword">const</span> <span class="tok-variableName tok-definition">response</span> <span class="tok-operator">=</span> <span class="tok-keyword">await</span> <span class="tok-variableName">axios</span><span class="tok-punctuation">(</span><span class="tok-punctuation">{</span>
+            <span class="tok-propertyName tok-definition">method</span><span class="tok-punctuation">:</span> <span class="tok-string">'GET'</span><span class="tok-punctuation">,</span>
+            <span class="tok-propertyName tok-definition">url</span><span class="tok-punctuation">:</span> <span class="tok-variableName">API_ENDPOINT</span> <span class="tok-operator">+</span> <span class="tok-string">'?fileName='</span> <span class="tok-operator">+</span> <span class="tok-keyword">this</span><span class="tok-operator">.</span><span class="tok-propertyName">uploadFileName</span>
+          <span class="tok-punctuation">}</span><span class="tok-punctuation">)</span>
+          <span class="tok-variableName">console</span><span class="tok-operator">.</span><span class="tok-propertyName">log</span><span class="tok-punctuation">(</span><span class="tok-string">'Response: '</span><span class="tok-punctuation">,</span> <span class="tok-variableName">response</span><span class="tok-punctuation">)</span>
+          <span class="tok-variableName">console</span><span class="tok-operator">.</span><span class="tok-propertyName">log</span><span class="tok-punctuation">(</span><span class="tok-string">'Uploading: '</span><span class="tok-punctuation">,</span> <span class="tok-keyword">this</span><span class="tok-operator">.</span><span class="tok-propertyName">uploadFile</span><span class="tok-punctuation">)</span>
+          <span class="tok-keyword">let</span> <span class="tok-variableName tok-definition">binary</span> <span class="tok-operator">=</span> <span class="tok-variableName">atob</span><span class="tok-punctuation">(</span><span class="tok-keyword">this</span><span class="tok-operator">.</span><span class="tok-propertyName">uploadFile</span><span class="tok-operator">.</span><span class="tok-propertyName">split</span><span class="tok-punctuation">(</span><span class="tok-string">','</span><span class="tok-punctuation">)</span><span class="tok-punctuation">[</span><span class="tok-number">1</span><span class="tok-punctuation">]</span><span class="tok-punctuation">)</span>
+          <span class="tok-keyword">let</span> <span class="tok-variableName tok-definition">array</span> <span class="tok-operator">=</span> <span class="tok-punctuation">[</span><span class="tok-punctuation">]</span>
+          <span class="tok-keyword">for</span> <span class="tok-punctuation">(</span><span class="tok-keyword">var</span> <span class="tok-variableName tok-definition">i</span> <span class="tok-operator">=</span> <span class="tok-number">0</span><span class="tok-punctuation">;</span> <span class="tok-variableName">i</span> <span class="tok-operator">&lt;</span> <span class="tok-variableName">binary</span><span class="tok-operator">.</span><span class="tok-propertyName">length</span><span class="tok-punctuation">;</span> <span class="tok-variableName">i</span><span class="tok-operator">++</span><span class="tok-punctuation">)</span> <span class="tok-punctuation">{</span>
+            <span class="tok-variableName">array</span><span class="tok-operator">.</span><span class="tok-propertyName">push</span><span class="tok-punctuation">(</span><span class="tok-variableName">binary</span><span class="tok-operator">.</span><span class="tok-propertyName">charCodeAt</span><span class="tok-punctuation">(</span><span class="tok-variableName">i</span><span class="tok-punctuation">)</span><span class="tok-punctuation">)</span>
+          <span class="tok-punctuation">}</span>
+          <span class="tok-keyword">let</span> <span class="tok-variableName tok-definition">blobData</span> <span class="tok-operator">=</span> <span class="tok-keyword">new</span> <span class="tok-className">Blob</span><span class="tok-punctuation">(</span><span class="tok-punctuation">[</span><span class="tok-keyword">new</span> <span class="tok-className">Uint8Array</span><span class="tok-punctuation">(</span><span class="tok-variableName">array</span><span class="tok-punctuation">)</span><span class="tok-punctuation">]</span><span class="tok-punctuation">,</span> <span class="tok-punctuation">{</span><span class="tok-propertyName tok-definition">type</span><span class="tok-punctuation">:</span> <span class="tok-string">'application/octet-stream'</span><span class="tok-punctuation">}</span><span class="tok-punctuation">)</span>
+          <span class="tok-variableName">console</span><span class="tok-operator">.</span><span class="tok-propertyName">log</span><span class="tok-punctuation">(</span><span class="tok-string">'Uploading to: '</span><span class="tok-punctuation">,</span> <span class="tok-variableName">response</span><span class="tok-operator">.</span><span class="tok-propertyName">presignedUrl</span><span class="tok-punctuation">)</span>
+          <span class="tok-keyword">const</span> <span class="tok-variableName tok-definition">result</span> <span class="tok-operator">=</span> <span class="tok-keyword">await</span> <span class="tok-variableName">fetch</span><span class="tok-punctuation">(</span><span class="tok-variableName">response</span><span class="tok-operator">.</span><span class="tok-propertyName">presignedUrl</span><span class="tok-punctuation">,</span> <span class="tok-punctuation">{</span>
+            <span class="tok-propertyName tok-definition">method</span><span class="tok-punctuation">:</span> <span class="tok-string">'PUT'</span><span class="tok-punctuation">,</span>
+            <span class="tok-propertyName tok-definition">body</span><span class="tok-punctuation">:</span> <span class="tok-variableName">blobData</span>
+          <span class="tok-punctuation">}</span><span class="tok-punctuation">)</span>
+          <span class="tok-variableName">console</span><span class="tok-operator">.</span><span class="tok-propertyName">log</span><span class="tok-punctuation">(</span><span class="tok-string">'Result: '</span><span class="tok-punctuation">,</span> <span class="tok-variableName">result</span><span class="tok-punctuation">)</span>
+          <span class="tok-comment">// Final URL for the user doesn't need the query string params</span>
+          <span class="tok-keyword">this</span><span class="tok-operator">.</span><span class="tok-propertyName">uploadURL</span> <span class="tok-operator">=</span> <span class="tok-variableName">response</span><span class="tok-operator">.</span><span class="tok-propertyName">presignedUrl</span><span class="tok-operator">.</span><span class="tok-propertyName">split</span><span class="tok-punctuation">(</span><span class="tok-string">'?'</span><span class="tok-punctuation">)</span><span class="tok-punctuation">[</span><span class="tok-number">0</span><span class="tok-punctuation">]</span>
+        <span class="tok-punctuation">}</span>
+      <span class="tok-punctuation">}</span>
+    <span class="tok-punctuation">}</span><span class="tok-punctuation">)</span>
+  <span class="tok-punctuation">&lt;/</span><span class="tok-typeName">script</span><span class="tok-punctuation">&gt;</span>
+  <span class="tok-punctuation">&lt;</span><span class="tok-typeName">style</span> <span class="tok-propertyName">type</span><span class="tok-operator">=</span><span class="tok-string">&quot;text/css&quot;</span><span class="tok-punctuation">&gt;</span>
+    <span class="tok-typeName">body</span> <span class="tok-punctuation">{</span>
+      <span class="tok-propertyName">background</span><span class="tok-punctuation">:</span> <span class="tok-literal">#20262E</span><span class="tok-punctuation">;</span>
+      <span class="tok-propertyName">padding</span><span class="tok-punctuation">:</span> <span class="tok-number">20</span><span class="tok-keyword">px</span><span class="tok-punctuation">;</span>
+      <span class="tok-propertyName">font-family</span><span class="tok-punctuation">:</span> <span class="tok-atom">sans-serif</span><span class="tok-punctuation">;</span>
+    <span class="tok-punctuation">}</span>
+    <span class="tok-operator">#</span><span class="tok-labelName">app</span> <span class="tok-punctuation">{</span>
+      <span class="tok-propertyName">background</span><span class="tok-punctuation">:</span> <span class="tok-literal">#fff</span><span class="tok-punctuation">;</span>
+      <span class="tok-propertyName">border-radius</span><span class="tok-punctuation">:</span> <span class="tok-number">4</span><span class="tok-keyword">px</span><span class="tok-punctuation">;</span>
+      <span class="tok-propertyName">padding</span><span class="tok-punctuation">:</span> <span class="tok-number">20</span><span class="tok-keyword">px</span><span class="tok-punctuation">;</span>
+      <span class="tok-propertyName">transition</span><span class="tok-punctuation">:</span> <span class="tok-atom">all</span> <span class="tok-number">0.2</span><span class="tok-keyword">s</span><span class="tok-punctuation">;</span>
+      <span class="tok-propertyName">text-align</span><span class="tok-punctuation">:</span> <span class="tok-atom">center</span><span class="tok-punctuation">;</span>
+    <span class="tok-punctuation">}</span>
+    <span class="tok-operator">#</span><span class="tok-labelName">logo</span> <span class="tok-punctuation">{</span>
+      <span class="tok-propertyName">width</span><span class="tok-punctuation">:</span> <span class="tok-number">100</span><span class="tok-keyword">px</span><span class="tok-punctuation">;</span>
+    <span class="tok-punctuation">}</span>
+    <span class="tok-typeName">h2</span> <span class="tok-punctuation">{</span>
+      <span class="tok-propertyName">font-weight</span><span class="tok-punctuation">:</span> <span class="tok-atom">bold</span><span class="tok-punctuation">;</span>
+      <span class="tok-propertyName">margin-bottom</span><span class="tok-punctuation">:</span> <span class="tok-number">15</span><span class="tok-keyword">px</span><span class="tok-punctuation">;</span>
+    <span class="tok-punctuation">}</span>
+    <span class="tok-typeName">h1</span><span class="tok-punctuation">,</span> <span class="tok-typeName">h2</span> <span class="tok-punctuation">{</span>
+      <span class="tok-propertyName">font-weight</span><span class="tok-punctuation">:</span> <span class="tok-atom">normal</span><span class="tok-punctuation">;</span>
+      <span class="tok-propertyName">margin-bottom</span><span class="tok-punctuation">:</span> <span class="tok-number">15</span><span class="tok-keyword">px</span><span class="tok-punctuation">;</span>
+    <span class="tok-punctuation">}</span>
+    <span class="tok-typeName">a</span> <span class="tok-punctuation">{</span>
+      <span class="tok-propertyName">color</span><span class="tok-punctuation">:</span> <span class="tok-literal">#42b983</span><span class="tok-punctuation">;</span>
+    <span class="tok-punctuation">}</span>
+    <span class="tok-typeName">img</span> <span class="tok-punctuation">{</span>
+      <span class="tok-propertyName">width</span><span class="tok-punctuation">:</span> <span class="tok-number">30</span><span class="tok-keyword">%</span><span class="tok-punctuation">;</span>
+      <span class="tok-propertyName">margin</span><span class="tok-punctuation">:</span> <span class="tok-atom">auto</span><span class="tok-punctuation">;</span>
+      <span class="tok-propertyName">display</span><span class="tok-punctuation">:</span> <span class="tok-atom">block</span><span class="tok-punctuation">;</span>
+      <span class="tok-propertyName">margin-bottom</span><span class="tok-punctuation">:</span> <span class="tok-number">10</span><span class="tok-keyword">px</span><span class="tok-punctuation">;</span>
+    <span class="tok-punctuation">}</span>
+  <span class="tok-punctuation">&lt;/</span><span class="tok-typeName">style</span><span class="tok-punctuation">&gt;</span>
+<span class="tok-punctuation">&lt;/</span><span class="tok-typeName">body</span><span class="tok-punctuation">&gt;</span>
+<span class="tok-punctuation">&lt;/</span><span class="tok-typeName">html</span><span class="tok-punctuation">&gt;</span>
+</code></pre>
+<h2 id="creating-and-configuring-the-s3-bucket">Creating and Configuring the S3 Bucket</h2>
+<p>You can create the bucket with default options in the AWS S3 console, and then set CORS options as required. A permissive CORS policy looks like this. You will want to restrict the permissions based on your requirements.</p>
+<pre><code class="language-json"><span class="tok-punctuation">[</span>
+  <span class="tok-punctuation">{</span>
+      <span class="tok-propertyName">&quot;AllowedHeaders&quot;</span><span class="tok-punctuation">:</span> <span class="tok-punctuation">[</span>
+          <span class="tok-string">&quot;*&quot;</span>
+      <span class="tok-punctuation">]</span><span class="tok-punctuation">,</span>
+      <span class="tok-propertyName">&quot;AllowedMethods&quot;</span><span class="tok-punctuation">:</span> <span class="tok-punctuation">[</span>
+          <span class="tok-string">&quot;HEAD&quot;</span><span class="tok-punctuation">,</span>
+          <span class="tok-string">&quot;GET&quot;</span><span class="tok-punctuation">,</span>
+          <span class="tok-string">&quot;PUT&quot;</span><span class="tok-punctuation">,</span>
+          <span class="tok-string">&quot;POST&quot;</span><span class="tok-punctuation">,</span>
+          <span class="tok-string">&quot;DELETE&quot;</span>
+      <span class="tok-punctuation">]</span><span class="tok-punctuation">,</span>
+      <span class="tok-propertyName">&quot;AllowedOrigins&quot;</span><span class="tok-punctuation">:</span> <span class="tok-punctuation">[</span>
+          <span class="tok-string">&quot;*&quot;</span>
+      <span class="tok-punctuation">]</span><span class="tok-punctuation">,</span>
+      <span class="tok-propertyName">&quot;ExposeHeaders&quot;</span><span class="tok-punctuation">:</span> <span class="tok-punctuation">[</span><span class="tok-punctuation">]</span><span class="tok-punctuation">,</span>
+      <span class="tok-propertyName">&quot;MaxAgeSeconds&quot;</span><span class="tok-punctuation">:</span> <span class="tok-number">3000</span>
+  <span class="tok-punctuation">}</span>
+<span class="tok-punctuation">]</span>
+</code></pre>
+<p><img src="assets/pasted-image-20220106161055-ee5d5a89.cdbd1e47-2784-4cda-83e9-eac4ccf21b83.png" alt=""></p>
+<h2 id="the-resulting-upload-page">The Resulting Upload Page</h2>
+<p>Running the app locally, I have served this page from <code>http://localhost:5000/upload.html</code> by putting the <code>.html</code> file in the <code>wwwroot</code> folder of my API. We now have a basic test harness</p>
+<p><img src="assets/pasted-image-20220106160712-090ebdb5.734e07e2-d9df-473f-a019-39fb9cedb657.png" alt=""></p>
+<p>If we look in the AWS S3 console, we can see that we have a .jpg file that we can download to verify the upload.</p>
+<p><img src="assets/pasted-image-20220106160905-6893adf5.37c6bc04-3c3b-48bc-b4a1-0d2f981a9894.png" alt=""></p>
+<p>And that's it - we have uploaded a file directly from our client to AWS S3 using pre-signed URLs.</p>
+
+            </div>
+            <nav class="pagination" aria-label="Neighbouring posts">
+                <a class="button pagination__prev" href="converting-enum-types-by-value-in-c.html"><span class="button__icon">←</span><span class="button__text">Converting Enum Types By Value in C#</span></a>
+                <a class="button pagination__next" href="using-github-to-host-images.html"><span class="button__text">Using GitHub to Host Images</span><span class="button__icon">→</span></a>
+            </nav>
+        </article>
+    </main>
+        <footer class="footer">
+            <div class="footer__inner">
+                <div class="copyright">
+                    <span>&copy; 2026 g9n Blog</span>
+                    <span class="footer__separator" aria-hidden="true">::</span>
+                    <span>Published with <a href="https://etherpk.com" rel="noopener">EtherPK</a></span>
+                    <span class="footer__separator" aria-hidden="true">::</span><a href="feed.xml">Feed</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+        <script src="theme/search.js" defer></script>
+</body>
+</html>

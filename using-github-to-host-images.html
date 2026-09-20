@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="EtherPK">
-    <title>Attention Was Always the Bottleneck (AI) :: g9n Blog</title>
-    <meta name="description" content="In earlier days, we didn&#39;t want to spend our attention on machine code or assembly, and later memory management an garbage collection. So we invented tools and abstractions so that we didn&#39;t have to…">
+    <title>Using GitHub to Host Images :: g9n Blog</title>
+    <meta name="description" content="For simple image hosting scenarios, you can host images directly out of a public GitHub respository by following these steps: Browse to image on github.com, e.g.…">
     <link rel="stylesheet" href="theme/theme.css">
     
     
@@ -53,8 +53,8 @@
                     
                     
                 </li>
-                <li class="nav-current ">
-                    <a href="attention-was-always-the-bottleneck-ai.html" aria-current="page">Attention Was Always the Bottleneck (AI)</a>
+                <li class="">
+                    <a href="attention-was-always-the-bottleneck-ai.html">Attention Was Always the Bottleneck (AI)</a>
                     
                     
                 </li>
@@ -138,8 +138,8 @@
                     
                     
                 </li>
-                <li class="">
-                    <a href="using-github-to-host-images.html">Using GitHub to Host Images</a>
+                <li class="nav-current ">
+                    <a href="using-github-to-host-images.html" aria-current="page">Using GitHub to Host Images</a>
                     
                     
                 </li>
@@ -153,19 +153,27 @@
         </header>
     <main id="content" class="content">
         <article class="post">
-            <h1 class="post-title">Attention Was Always the Bottleneck (AI)</h1>
-            <div class="post-meta"><time class="post-date" datetime="2026-09-01">2026-09-01</time> :: <span class="post-reading">2 min read</span></div>
+            <h1 class="post-title">Using GitHub to Host Images</h1>
+            <div class="post-meta"><time class="post-date" datetime="2022-01-06">2022-01-06</time> :: <span class="post-reading">1 min read</span></div>
             <div class="post-content">
-<p>In earlier days, we didn't want to spend our attention on machine code or assembly, and later memory management an garbage collection. So we invented tools and abstractions so that we didn't have to think about these things any more. We had more valuable problems and since we could automate them away, they were no longer deemed worth our attention.</p>
-<p>The same is now happening with high level code. We're spending less and less time with the code, both writing and understanding it because AI / LLMs / Agents can automate much of the management of code, and anyway, we have more valuable problems.</p>
-<p>The difference I think is that while earlier solutions to more fundamental computing concerns were deterministic processes, AI is probabilistic. So while we can outsource our attention for a wider range of problems, we're going to be pulled back in for decision making, checking and 'taste' tests more regularly than we would have been previously, and this will happen alongside rapid proliferation of new code being written and deployed.</p>
-<p>I'm not yet sure what the full consequence of this will be, but I feel it's what is at the core of widely reported developer fatigue - the demand for attention is not going away, and the range of problems that require that attention will also grow.</p>
-<p>I think we can summarise that we are just doing more, faster. But not all resources (such as attention and the earth's physical resources are going to keep up).</p>
+<p>For simple image hosting scenarios, you can host images directly out of a public GitHub respository by following these steps:</p>
+<p>Browse to image on github.com, e.g.</p>
+<pre><code>https://github.com/appsoftwareltd/app-software-public/blob/main/graphics/logo/as_icon_text_blue_with_grey_text_2x.png
+</code></pre>
+<p>Here you will see the GitHub page providing access to view / download the file. But we want the raw file, without GitHub page content wrapping it.</p>
+<p>A 'Raw' button doesn't exist for image files, but you can add <code>?raw=true</code> to end of URL.</p>
+<p>Hit enter. You will be redirected to a URL as below.</p>
+<pre><code>https://raw.githubusercontent.com/appsoftwareltd/app-software-public/main/graphics/logo/as_icon_text_blue_with_grey_text_2x.png
+</code></pre>
+<p>Here is the image as found at the above URL:</p>
+<img alt="App Software Logo" src="https://raw.githubusercontent.com/appsoftwareltd/app-software-public/main/graphics/logo/as_icon_text_blue_with_grey_text_2x.png" />
+<p><strong>Note</strong>: The redirect adds the <code>raw</code> sub domain part, changes domain to <code>githubusercontent.com</code> and removes the <code>blob</code> portion of the path.</p>
+<p>Test the link in an unauthenticated browser, and then use as required.</p>
 
             </div>
             <nav class="pagination" aria-label="Neighbouring posts">
-                <a class="button pagination__prev" href="make-sure-you-spend-time-with-tech-you-enjoy.html"><span class="button__icon">←</span><span class="button__text">Make Sure You Spend Time With Tech You Enjoy</span></a>
-                
+                <a class="button pagination__prev" href="uploading-directly-to-s3-from-client-using-pre-signed-urls-javascript-net.html"><span class="button__icon">←</span><span class="button__text">Uploading Directly to S3 from Client Using Pre-Signed URLs (JavaScript,  .NET)</span></a>
+                <a class="button pagination__next" href="a-custom-workflow-to-publish-from-obsidian-to-blotim.html"><span class="button__text">A Custom Workflow to Publish from Obsidian to Blot.im</span><span class="button__icon">→</span></a>
             </nav>
         </article>
     </main>

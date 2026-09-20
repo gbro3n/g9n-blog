@@ -5,7 +5,7 @@
     "kind": "blog",
     "theme": "g9n-blog-theme-etherpk-terminal"
   },
-  "generatedAt": "2026-09-20T10:55:12.495Z",
+  "generatedAt": "2026-09-20T11:18:56.059Z",
   "ok": true,
   "errors": [],
   "warnings": [],
@@ -40,6 +40,114 @@
       "kind": "page",
       "slug": "the-skills-i-think-we-might-gain-ai",
       "url": "the-skills-i-think-we-might-gain-ai.html"
+    },
+    {
+      "concept": "Maintaining a Blog with Jekyll, GitHub Pages and GitHub Codespaces",
+      "kind": "page",
+      "slug": "maintaining-a-blog-with-jekyll-github-pages-and-github-codespaces",
+      "url": "maintaining-a-blog-with-jekyll-github-pages-and-github-codespaces.html"
+    },
+    {
+      "concept": "How to wrap a TypeScript JS callback with async  await",
+      "kind": "page",
+      "slug": "how-to-wrap-a-typescript-js-callback-with-async-await",
+      "url": "how-to-wrap-a-typescript-js-callback-with-async-await.html"
+    },
+    {
+      "concept": "API Versioning and Basic UI Authentication with OpenAPI (Swagger Swashbuckle) in .NET Core 6",
+      "kind": "page",
+      "slug": "api-versioning-and-basic-ui-authentication-with-openapi-swagger-swashbuckle-in-net-core-6",
+      "url": "api-versioning-and-basic-ui-authentication-with-openapi-swagger-swashbuckle-in-net-core-6.html"
+    },
+    {
+      "concept": "A Utility Class for Finding Database Deadlocks in .NET Applications",
+      "kind": "page",
+      "slug": "a-utility-class-for-finding-database-deadlocks-in-net-applications",
+      "url": "a-utility-class-for-finding-database-deadlocks-in-net-applications.html"
+    },
+    {
+      "concept": "How to create a deep copy of an object in JavaScript, TypeScript",
+      "kind": "page",
+      "slug": "how-to-create-a-deep-copy-of-an-object-in-javascript-typescript",
+      "url": "how-to-create-a-deep-copy-of-an-object-in-javascript-typescript.html"
+    },
+    {
+      "concept": "Implementing Microsoft.Extensions.Logging.ILogger with NLog",
+      "kind": "page",
+      "slug": "implementing-microsoftextensionsloggingilogger-with-nlog",
+      "url": "implementing-microsoftextensionsloggingilogger-with-nlog.html"
+    },
+    {
+      "concept": "Managing Code Snippets Using Logseq",
+      "kind": "page",
+      "slug": "managing-code-snippets-using-logseq",
+      "url": "managing-code-snippets-using-logseq.html"
+    },
+    {
+      "concept": "A Rough Guide to Building a Retro Pie Bar Top Arcade Game Machine",
+      "kind": "page",
+      "slug": "a-rough-guide-to-building-a-retro-pie-bar-top-arcade-game-machine",
+      "url": "a-rough-guide-to-building-a-retro-pie-bar-top-arcade-game-machine.html"
+    },
+    {
+      "concept": "Converting Enum Types By Value in C#",
+      "kind": "page",
+      "slug": "converting-enum-types-by-value-in-c",
+      "url": "converting-enum-types-by-value-in-c.html"
+    },
+    {
+      "concept": "Sanitizing HTML in .NET Core",
+      "kind": "page",
+      "slug": "sanitizing-html-in-net-core",
+      "url": "sanitizing-html-in-net-core.html"
+    },
+    {
+      "concept": "ASP.NET File Uploader with SignalR Progress Bar and Extended Input Stream Processing",
+      "kind": "page",
+      "slug": "aspnet-file-uploader-with-signalr-progress-bar-and-extended-input-stream-processing",
+      "url": "aspnet-file-uploader-with-signalr-progress-bar-and-extended-input-stream-processing.html"
+    },
+    {
+      "concept": "Fail Early, Fail Fast and why you should throw exceptions",
+      "kind": "page",
+      "slug": "fail-early-fail-fast-and-why-you-should-throw-exceptions",
+      "url": "fail-early-fail-fast-and-why-you-should-throw-exceptions.html"
+    },
+    {
+      "concept": "A Custom Workflow to Publish from Obsidian to Blot.im",
+      "kind": "page",
+      "slug": "a-custom-workflow-to-publish-from-obsidian-to-blotim",
+      "url": "a-custom-workflow-to-publish-from-obsidian-to-blotim.html"
+    },
+    {
+      "concept": "Using GitHub to Host Images",
+      "kind": "page",
+      "slug": "using-github-to-host-images",
+      "url": "using-github-to-host-images.html"
+    },
+    {
+      "concept": "Robust Error Handling in ASP.NET Core",
+      "kind": "page",
+      "slug": "robust-error-handling-in-aspnet-core",
+      "url": "robust-error-handling-in-aspnet-core.html"
+    },
+    {
+      "concept": "How to inject Google Adsense In-Article script into your HTML (ASP.NET Core Razor)",
+      "kind": "page",
+      "slug": "how-to-inject-google-adsense-in-article-script-into-your-html-aspnet-core-razor",
+      "url": "how-to-inject-google-adsense-in-article-script-into-your-html-aspnet-core-razor.html"
+    },
+    {
+      "concept": "Uploading Directly to S3 from Client Using Pre-Signed URLs (JavaScript,  .NET)",
+      "kind": "page",
+      "slug": "uploading-directly-to-s3-from-client-using-pre-signed-urls-javascript-net",
+      "url": "uploading-directly-to-s3-from-client-using-pre-signed-urls-javascript-net.html"
+    },
+    {
+      "concept": "Hackers, Painters and Kanban for Software as a Creative Process",
+      "kind": "page",
+      "slug": "hackers-painters-and-kanban-for-software-as-a-creative-process",
+      "url": "hackers-painters-and-kanban-for-software-as-a-creative-process.html"
     }
   ],
   "excluded": [
@@ -5348,16 +5456,8 @@
       "reason": "not-public"
     },
     {
-      "concept": "Maintaining a Blog with Jekyll, GitHub Pages and GitHub Codespaces",
-      "reason": "not-named"
-    },
-    {
       "concept": "[[Synology]] DS923+ 4 Bay [[NAS]] enclosure",
       "reason": "not-public"
-    },
-    {
-      "concept": "How to wrap a TypeScript JS callback with async  await",
-      "reason": "not-named"
     },
     {
       "concept": "[[Summer Holiday 2023 (Croatia)]] Project",
@@ -5466,10 +5566,6 @@
     {
       "concept": "Matomo",
       "reason": "not-public"
-    },
-    {
-      "concept": "API Versioning and Basic UI Authentication with OpenAPI (Swagger Swashbuckle) in .NET Core 6",
-      "reason": "not-named"
     },
     {
       "concept": "BLE Bluetooth Scanner",
@@ -6364,10 +6460,6 @@
       "reason": "not-public"
     },
     {
-      "concept": "A Utility Class for Finding Database Deadlocks in .NET Applications",
-      "reason": "not-named"
-    },
-    {
       "concept": "dpkg",
       "reason": "not-public"
     },
@@ -6400,10 +6492,6 @@
       "reason": "not-public"
     },
     {
-      "concept": "How to create a deep copy of an object in JavaScript, TypeScript",
-      "reason": "not-named"
-    },
-    {
       "concept": "MTB Maintenance",
       "reason": "not-public"
     },
@@ -6418,10 +6506,6 @@
     {
       "concept": "Covenant",
       "reason": "not-public"
-    },
-    {
-      "concept": "Implementing Microsoft.Extensions.Logging.ILogger with NLog",
-      "reason": "not-named"
     },
     {
       "concept": "Super Protein Smoothie",
@@ -6550,10 +6634,6 @@
     {
       "concept": "[[[[CodeSnip]] Bash]] apt-get",
       "reason": "not-public"
-    },
-    {
-      "concept": "Managing Code Snippets Using Logseq",
-      "reason": "not-named"
     },
     {
       "concept": "[[Closed [[Guard]]]] (BJJ System)",
@@ -6814,10 +6894,6 @@
     {
       "concept": "Decentralized Autonomous Company",
       "reason": "not-public"
-    },
-    {
-      "concept": "A Rough Guide to Building a Retro Pie Bar Top Arcade Game Machine",
-      "reason": "not-named"
     },
     {
       "concept": "Maersk Integrated Platform (MIP)",
@@ -7628,10 +7704,6 @@
       "reason": "not-public"
     },
     {
-      "concept": "Converting Enum Types By Value in C#",
-      "reason": "not-named"
-    },
-    {
       "concept": "D'arce Choke",
       "reason": "not-public"
     },
@@ -8314,10 +8386,6 @@
     {
       "concept": "Fractional Work",
       "reason": "not-public"
-    },
-    {
-      "concept": "Sanitizing HTML in .NET Core",
-      "reason": "not-named"
     },
     {
       "concept": "MariaDB JSON_CONTAINS",
@@ -9308,10 +9376,6 @@
       "reason": "not-public"
     },
     {
-      "concept": "ASP.NET File Uploader with SignalR Progress Bar and Extended Input Stream Processing",
-      "reason": "not-named"
-    },
-    {
       "concept": "Frame",
       "reason": "not-public"
     },
@@ -9366,10 +9430,6 @@
     {
       "concept": "Westbury Group Practice ([[Doctors]] Surgery)",
       "reason": "not-public"
-    },
-    {
-      "concept": "Fail Early, Fail Fast and why you should throw exceptions",
-      "reason": "not-named"
     },
     {
       "concept": "Git Reset and Clean Untracked Files",
@@ -9606,10 +9666,6 @@
     {
       "concept": "hls__Booking.com_Confirmation_1699300937736_0",
       "reason": "not-public"
-    },
-    {
-      "concept": "A Custom Workflow to Publish from Obsidian to Blot.im",
-      "reason": "not-named"
     },
     {
       "concept": "Digital Art",
@@ -9980,10 +10036,6 @@
       "reason": "not-public"
     },
     {
-      "concept": "Using GitHub to Host Images",
-      "reason": "not-named"
-    },
-    {
       "concept": "[[Google]] Ads",
       "reason": "not-public"
     },
@@ -10022,10 +10074,6 @@
     {
       "concept": "Null Reference Exception",
       "reason": "not-public"
-    },
-    {
-      "concept": "Robust Error Handling in ASP.NET Core",
-      "reason": "not-named"
     },
     {
       "concept": "XSD Diagram (XSD Tool)",
@@ -10130,10 +10178,6 @@
     {
       "concept": "Microsoft Tasks",
       "reason": "not-public"
-    },
-    {
-      "concept": "How to inject Google Adsense In-Article script into your HTML (ASP.NET Core Razor)",
-      "reason": "not-named"
     },
     {
       "concept": "VirtualBox",
@@ -10466,10 +10510,6 @@
     {
       "concept": "[[[[CI]]]] [[CD]]",
       "reason": "not-public"
-    },
-    {
-      "concept": "Uploading Directly to S3 from Client Using Pre-Signed URLs (JavaScript,  .NET)",
-      "reason": "not-named"
     },
     {
       "concept": "hls__Note-Names-Overview-Full-Score_1782635899627_0",
@@ -11056,10 +11096,6 @@
       "reason": "not-public"
     },
     {
-      "concept": "Hackers, Painters and Kanban for Software as a Creative Process",
-      "reason": "not-named"
-    },
-    {
       "concept": "Windows Keyboard Shortcuts",
       "reason": "not-public"
     },
@@ -11623,7 +11659,30 @@
   "collisions": [],
   "missingLinks": [],
   "assets": {
-    "copied": [],
+    "copied": [
+      "pasted-image-20220702135940-039ebc63.9739737c-1c94-4fc8-bb69-957b4de9b695.png",
+      "pasted-image-20220118130612-afb155ec.c95b8509-6188-41f6-87b6-6e7ac03b6dae.png",
+      "pasted-image-20220118130459-8ce02f82.3c7c8485-5a6c-46e0-ab1a-b7b5a243ff9e.png",
+      "pasted-image-20220118130300-f75cc19f.fa62edae-0edd-476a-acb2-c40e432f2f33.png",
+      "pasted-image-20220107102840-b7da05a8.27da6912-8dc9-48fc-92ce-0b2ff4347887.png",
+      "pasted-image-20220701100531-33cd7383.f4f5f78e-bb58-4394-94ac-c62b5dea4d67.png",
+      "pasted-image-20220701083348-a6413e20.173843b5-1d04-4b2f-b497-856de85d8d3a.png",
+      "pasted-image-20220701083429-83a97da0.1dbf81a9-6b52-4553-854b-40038378b039.png",
+      "pasted-image-20220701094910-e51430e5.48b4486d-dd96-42e4-8844-8567502b6902.png",
+      "pasted-image-20220701100458-d01947a3.5d375051-3e02-4e6e-a6e8-2fddd3c77f94.png",
+      "pxl-20211229-104137270-0d2d556c.086a56f1-370c-40a0-94f7-1454edd73095.jpg",
+      "pasted-image-20220109222519-1c27c680.a3314f72-7b92-47ed-9c11-a9ee926dcd23.png",
+      "pasted-image-20220109222622-711aba3e.b19678d3-0f84-4a70-a110-eae67fb0f34c.png",
+      "pasted-image-20220109222912-6230033d.8eb93f25-752f-44d4-acda-d3b8daeb72db.png",
+      "pasted-image-20220109221425-4b0c5a40.cd55e8c4-0d69-4a1b-a6d0-5a777100efb5.png",
+      "pasted-image-20220109222054-57a0669e.a1428225-4fa3-46e4-82af-89fc8f3c2ea0.png",
+      "pasted-image-20220109222043-7a85faf4.31fee81a-16fa-45ec-af2a-b8a9085ac8a7.png",
+      "pasted-image-20220107103737-26d679a9.392a0bdf-a1ed-41f2-a4b2-08a8fbd569c2.png",
+      "pasted-image-20211014080839-2c667eab.2fab5098-e029-449b-9e3f-f291177df0a8.png",
+      "pasted-image-20220106161055-ee5d5a89.cdbd1e47-2784-4cda-83e9-eac4ccf21b83.png",
+      "pasted-image-20220106160712-090ebdb5.734e07e2-d9df-473f-a019-39fb9cedb657.png",
+      "pasted-image-20220106160905-6893adf5.37c6bc04-3c3b-48bc-b4a1-0d2f981a9894.png"
+    ],
     "missing": []
   },
   "includes": [
@@ -11663,26 +11722,7 @@
   "external": [
     "https://etherpk.com"
   ],
-  "publicInNoPublication": [
-    "Maintaining a Blog with Jekyll, GitHub Pages and GitHub Codespaces",
-    "How to wrap a TypeScript JS callback with async  await",
-    "API Versioning and Basic UI Authentication with OpenAPI (Swagger Swashbuckle) in .NET Core 6",
-    "A Utility Class for Finding Database Deadlocks in .NET Applications",
-    "How to create a deep copy of an object in JavaScript, TypeScript",
-    "Implementing Microsoft.Extensions.Logging.ILogger with NLog",
-    "Managing Code Snippets Using Logseq",
-    "A Rough Guide to Building a Retro Pie Bar Top Arcade Game Machine",
-    "Converting Enum Types By Value in C#",
-    "Sanitizing HTML in .NET Core",
-    "ASP.NET File Uploader with SignalR Progress Bar and Extended Input Stream Processing",
-    "Fail Early, Fail Fast and why you should throw exceptions",
-    "A Custom Workflow to Publish from Obsidian to Blot.im",
-    "Using GitHub to Host Images",
-    "Robust Error Handling in ASP.NET Core",
-    "How to inject Google Adsense In-Article script into your HTML (ASP.NET Core Razor)",
-    "Uploading Directly to S3 from Client Using Pre-Signed URLs (JavaScript,  .NET)",
-    "Hackers, Painters and Kanban for Software as a Creative Process"
-  ],
+  "publicInNoPublication": [],
   "theme": {
     "source": "graph",
     "name": "etherpk-terminal",

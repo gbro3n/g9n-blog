@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="EtherPK">
+    <title>A Utility Class for Finding Database Deadlocks in .NET Applications :: g9n Blog</title>
+    <meta name="description" content="Database deadlocks were suspected in a large .NET Core project with around 50 transaction blocks. To help pinpoint the source of the transaction as quickly as possible, I designed this set of utility…">
+    <link rel="stylesheet" href="theme/theme.css">
+    
+    
+    <link rel="alternate" type="application/rss+xml" title="g9n Blog" href="feed.xml">
+</head>
+<body class="layout-terminal">
+    <a class="skip-link" href="#content">Skip to content</a>
+    <div class="container">
+        <header class="header">
+            <div class="header__inner">
+                <a class="site-title logo" href="index.html">
+                    <span class="logo__mark"><!-- The EtherPK icon (resources/brand/etherpk-icon-*.svg), inline so the page fetches nothing and it takes the text colour; aria-hidden because the title beside it is the name. Fill the "logo" include, or edit this partial, for your own. -->
+                                             <svg class="site-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 191.82 166.13" width="24" height="21" aria-hidden="true" focusable="false"><path fill="currentColor" fill-rule="evenodd" d="M67.09,132.92,47.93,166.13H9.59L0,149.52,86.33,0H105.5L19.17,149.52H38.34l19.17-33.2h76.8l9.59,16.6Zm48-83.12,9.65,16.71H143.9L115.08,16.6q-24,41.57-48,83.12H143.9q14.37,24.9,28.76,49.8h-96l-9.59,16.61H182.24l9.58-16.61-38.34-66.4H96C95.85,82.9,113.39,52.73,115.08,49.8Z"/></svg>
+</span>
+                    <span class="logo__text">g9n Blog</span>
+                    <span class="logo__cursor" aria-hidden="true"></span>
+                </a>
+                <button class="nav-toggle menu-trigger" type="button" aria-controls="site-nav" aria-expanded="false" aria-label="Menu">Menu</button>
+            </div>
+            <div class="nav-backdrop" hidden></div>
+            <nav id="site-nav" class="menu site-nav" aria-label="Site">
+                <ul class="menu__inner site-nav-list">
+                <li class="">
+                    <a href="a-custom-workflow-to-publish-from-obsidian-to-blotim.html">A Custom Workflow to Publish from Obsidian to Blot.im</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="a-rough-guide-to-building-a-retro-pie-bar-top-arcade-game-machine.html">A Rough Guide to Building a Retro Pie Bar Top Arcade Game Machine</a>
+                    
+                    
+                </li>
+                <li class="nav-current ">
+                    <a href="a-utility-class-for-finding-database-deadlocks-in-net-applications.html" aria-current="page">A Utility Class for Finding Database Deadlocks in .NET Applications</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="api-versioning-and-basic-ui-authentication-with-openapi-swagger-swashbuckle-in-net-core-6.html">API Versioning and Basic UI Authentication with OpenAPI (Swagger Swashbuckle) in .NET Core 6</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="aspnet-file-uploader-with-signalr-progress-bar-and-extended-input-stream-processing.html">ASP.NET File Uploader with SignalR Progress Bar and Extended Input Stream Processing</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="attention-was-always-the-bottleneck-ai.html">Attention Was Always the Bottleneck (AI)</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="converting-enum-types-by-value-in-c.html">Converting Enum Types By Value in C#</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="fail-early-fail-fast-and-why-you-should-throw-exceptions.html">Fail Early, Fail Fast and why you should throw exceptions</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="hackers-painters-and-kanban-for-software-as-a-creative-process.html">Hackers, Painters and Kanban for Software as a Creative Process</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="how-to-create-a-deep-copy-of-an-object-in-javascript-typescript.html">How to create a deep copy of an object in JavaScript, TypeScript</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="how-to-inject-google-adsense-in-article-script-into-your-html-aspnet-core-razor.html">How to inject Google Adsense In-Article script into your HTML (ASP.NET Core Razor)</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="how-to-wrap-a-typescript-js-callback-with-async-await.html">How to wrap a TypeScript JS callback with async  await</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="implementing-microsoftextensionsloggingilogger-with-nlog.html">Implementing Microsoft.Extensions.Logging.ILogger with NLog</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="introducing-the-g9n-blog.html">Introducing the g9n blog</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="maintaining-a-blog-with-jekyll-github-pages-and-github-codespaces.html">Maintaining a Blog with Jekyll, GitHub Pages and GitHub Codespaces</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="make-sure-you-spend-time-with-tech-you-enjoy.html">Make Sure You Spend Time With Tech You Enjoy</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="managing-code-snippets-using-logseq.html">Managing Code Snippets Using Logseq</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="observations-around-prominent-programmer-sentiment-and-ai.html">Observations Around Prominent Programmer Sentiment and AI</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="robust-error-handling-in-aspnet-core.html">Robust Error Handling in ASP.NET Core</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="sanitizing-html-in-net-core.html">Sanitizing HTML in .NET Core</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="the-skills-i-think-we-might-gain-ai.html">The skills I think we might gain (AI)</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="uploading-directly-to-s3-from-client-using-pre-signed-urls-javascript-net.html">Uploading Directly to S3 from Client Using Pre-Signed URLs (JavaScript,  .NET)</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="using-github-to-host-images.html">Using GitHub to Host Images</a>
+                    
+                    
+                </li>
+                </ul>
+                <form class="site-search" role="search" data-search-index="search.json" data-search-script="search-index.js">
+                    <label class="visually-hidden" for="site-search-input">Search</label>
+                    <input id="site-search-input" type="search" name="q" placeholder="$ search" autocomplete="off">
+                    <div class="site-search-results" role="listbox" hidden></div>
+                </form>
+            </nav>
+        </header>
+    <main id="content" class="content">
+        <article class="post">
+            <h1 class="post-title">A Utility Class for Finding Database Deadlocks in .NET Applications</h1>
+            <div class="post-meta"><time class="post-date" datetime="2021-02-23">2021-02-23</time> :: <span class="post-reading">4 min read</span></div>
+        <nav class="toc framed" aria-label="Table of contents">
+            <p class="toc__title">:: Table of contents</p>
+            <ul>
+                <li class="toc-level-2"><a href="#usage">Usage:</a></li><li class="toc-level-2"><a href="#full-code">Full Code:</a></li>
+            </ul>
+        </nav>
+            <div class="post-content">
+<p>Database deadlocks were suspected in a large .NET Core project with around 50 transaction blocks.</p>
+<p><img src="assets/pasted-image-20220107102840-b7da05a8.27da6912-8dc9-48fc-92ce-0b2ff4347887.png" alt=""></p>
+<p>To help pinpoint the source of the transaction as quickly as possible, I designed this set of utility classes to wrap calls to transaction method calls and set a limit on how long they can take to complete. Failure to complete within a given time (10 seconds as configured below) should result in logging out and an exception being thrown. The stack trace is included to help identify the source of the problem.</p>
+<p>This is a destructive process in that it requires you to modify your code, but in my case the formatting of code was pretty consistent so using find and replace proved easy.</p>
+<p>Bit of a caveat — the issue turned out not to be a dead lock, and so this code is unproven, but in theory it should work and I’ll be trying it again one day I expect! Hope it helps, because if you’re reading this, you probably need some today!</p>
+<p>Using the source code below, you have to supply your own <code>**ILogger**</code> implementation, and create a guid for each call to <code>**BeginMonitorTransaction**</code> which will help you to identify logs and the transactions they relate to. I’m using a <code>**UnitOfWork**</code> helper class, but this applies to any code where <code>**IDbConnection**</code> and <code>**IDbTransaction**</code> are used.</p>
+<h2 id="usage">Usage:</h2>
+<pre><code class="language-csharp"><span class="tok-keyword">var</span> <span class="tok-variableName tok-definition">monitoredTransactionId</span> <span class="tok-operator">=</span> <span class="tok-typeName">Guid</span>.<span class="tok-variableName">NewGuid</span>();
+
+<span class="tok-keyword">using</span> (<span class="tok-keyword">var</span> <span class="tok-variableName tok-definition">dbtransaction</span> <span class="tok-operator">=</span> <span class="tok-variableName">unitOfWork</span>.<span class="tok-variableName">DbConnection</span>.<span class="tok-variableName">BeginMonitorTransaction</span>(<span class="tok-variableName">_logger</span>, <span class="tok-variableName">monitoredTransactionId</span>))
+{
+    <span class="tok-comment">// Some database call ...</span>
+
+    <span class="tok-variableName">dbtransaction</span>.<span class="tok-variableName">MonitorCommit</span>(<span class="tok-variableName">_logger</span>, <span class="tok-variableName">monitoredTransactionId</span>);
+}
+</code></pre>
+<h2 id="full-code">Full Code:</h2>
+<pre><code>using System;
+using System.Data;
+using System.Timers;
+using Microsoft.Extensions.Logging;
+
+namespace AProject.Db.Data.Extensions
+{
+    public static class DbConnectionMonitoring
+    {
+        // Time after which to consider a transaction locked
+
+        private const int DbConnectionMonitoringTimeoutMs = 10000;
+
+        /// &lt;summary&gt;
+        /// Replace calls to IDbConnection.BeginTransaction with this
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;dbConnection&quot;&gt;&lt;/param&gt;
+        /// &lt;param name=&quot;logger&quot;&gt;&lt;/param&gt;
+        /// &lt;param name=&quot;guid&quot;&gt;&lt;/param&gt;
+        /// &lt;param name=&quot;isolationLevel&quot;&gt;&lt;/param&gt;
+        /// &lt;returns&gt;&lt;/returns&gt;
+        public static IDbTransaction BeginMonitorTransaction(this IDbConnection dbConnection, ILogger logger, Guid guid, IsolationLevel? isolationLevel = null)
+        {
+            string uid = guid.ToString();
+
+            string stackTrace = Environment.StackTrace;
+
+            using (new DbConnectionMonitoringTimeout(logger, uid, nameof(BeginMonitorTransaction), stackTrace, DbConnectionMonitoringTimeoutMs))
+            {
+                logger.LogInformation(GetLogString(uid, $&quot;{nameof(BeginMonitorTransaction)} BEGIN&quot;, stackTrace));
+
+                var dbTransaction = isolationLevel == null ? dbConnection.BeginTransaction() : dbConnection.BeginTransaction((IsolationLevel)isolationLevel);
+
+                logger.LogInformation(GetLogString(uid, $&quot;{nameof(BeginMonitorTransaction)} END&quot;, stackTrace));
+
+                return dbTransaction;
+            }
+        }
+
+        /// &lt;summary&gt;
+        /// Replace calls to IDbTransaction.Commit with this
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;dbTransaction&quot;&gt;&lt;/param&gt;
+        /// &lt;param name=&quot;logger&quot;&gt;&lt;/param&gt;
+        /// &lt;param name=&quot;guid&quot;&gt;&lt;/param&gt;
+        public static void MonitorCommit(this IDbTransaction dbTransaction, ILogger logger, Guid guid)
+        {
+            string uid = guid.ToString();
+
+            string stackTrace = Environment.StackTrace;
+
+            using (new DbConnectionMonitoringTimeout(logger, uid, nameof(BeginMonitorTransaction), stackTrace, DbConnectionMonitoringTimeoutMs))
+            {
+                logger.LogInformation(GetLogString(uid, $&quot;{nameof(MonitorCommit)} BEGIN&quot;, stackTrace));
+
+                dbTransaction.Commit();
+
+                logger.LogInformation(GetLogString(uid, $&quot;{nameof(MonitorCommit)} END&quot;, stackTrace));
+            }
+        }
+
+
+        /// &lt;summary&gt;
+        /// Replace calls to IDbTransaction.Rollback with this
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;dbTransaction&quot;&gt;&lt;/param&gt;
+        /// &lt;param name=&quot;logger&quot;&gt;&lt;/param&gt;
+        /// &lt;param name=&quot;guid&quot;&gt;&lt;/param&gt;
+        public static void MonitorRollback(this IDbTransaction dbTransaction, ILogger logger, Guid guid)
+        {
+            string uid = guid.ToString();
+
+            string stackTrace = Environment.StackTrace;
+
+            using (new DbConnectionMonitoringTimeout(logger, uid, nameof(BeginMonitorTransaction), stackTrace, DbConnectionMonitoringTimeoutMs))
+            {
+                logger.LogInformation(GetLogString(uid, $&quot;{nameof(MonitorRollback)} BEGIN&quot;, stackTrace));
+
+                dbTransaction.Rollback();
+
+                logger.LogInformation(GetLogString(uid, $&quot;{nameof(MonitorRollback)} END&quot;, stackTrace));
+            }
+        }
+
+        private static string GetLogString(string uid, string operation, string stackTrace)
+        {
+            return $&quot;ID: {uid} TransactionMonitoring {operation} {stackTrace} {DateTime.UtcNow.ToString(&quot;yyyyMMdd_HHmmss&quot;)}&quot;;
+        }
+
+        internal class DbConnectionMonitoringTimeout : IDisposable
+        {
+            private bool _disposed;
+
+            private readonly Timer _timer;
+
+            private readonly ILogger _logger;
+            private readonly string _uid;
+            private readonly string _eventDescription;
+            private readonly string _stackTrace;
+
+            public DbConnectionMonitoringTimeout(ILogger logger, string uid, string eventDescription, string stackTrace, int timeoutMs)
+            {
+                _logger = logger;
+                _uid = uid;
+                _eventDescription = eventDescription;
+                _stackTrace = stackTrace;
+
+                _timer = new Timer();
+
+                _timer.Elapsed += OnTimedEvent;
+
+                _timer.Interval = timeoutMs;
+
+                _timer.Start();
+            }
+
+            /// &lt;summary&gt;
+            /// On timer elapsed, log out and raise an exception to help pin point the delayed transaction completion
+            /// &lt;/summary&gt;
+            /// &lt;param name=&quot;source&quot;&gt;&lt;/param&gt;
+            /// &lt;param name=&quot;e&quot;&gt;&lt;/param&gt;
+            /// &lt;exception cref=&quot;DbConnectionTimingException&quot;&gt;&lt;/exception&gt;
+            private void OnTimedEvent(object source, ElapsedEventArgs e)
+            {
+                string errorMsg = $&quot;{_uid} TransactionMonitoring {_eventDescription} {nameof(DbConnectionTimingException)} timed out: {_stackTrace}&quot;;
+
+                var exception = new DbConnectionTimingException(errorMsg);
+
+                _logger.LogError(exception, errorMsg);
+
+                throw exception;
+            }
+
+            public void Dispose()
+            {
+                Dispose(true);
+                GC.SuppressFinalize(this);
+            }
+
+            protected virtual void Dispose(bool disposing)
+            {
+                if (!_disposed)
+                {
+                    if (disposing)
+                    {
+                        _timer?.Dispose();
+                    }
+
+                    _disposed = true;
+                }
+            }
+        }
+
+        internal class DbConnectionTimingException : Exception
+        {
+            public DbConnectionTimingException(string message) : base(message)
+            {
+            }
+        }
+    }
+}
+</code></pre>
+
+            </div>
+            <nav class="pagination" aria-label="Neighbouring posts">
+                <a class="button pagination__prev" href="robust-error-handling-in-aspnet-core.html"><span class="button__icon">←</span><span class="button__text">Robust Error Handling in ASP.NET Core</span></a>
+                <a class="button pagination__next" href="sanitizing-html-in-net-core.html"><span class="button__text">Sanitizing HTML in .NET Core</span><span class="button__icon">→</span></a>
+            </nav>
+        </article>
+    </main>
+        <footer class="footer">
+            <div class="footer__inner">
+                <div class="copyright">
+                    <span>&copy; 2026 g9n Blog</span>
+                    <span class="footer__separator" aria-hidden="true">::</span>
+                    <span>Published with <a href="https://etherpk.com" rel="noopener">EtherPK</a></span>
+                    <span class="footer__separator" aria-hidden="true">::</span><a href="feed.xml">Feed</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+        <script src="theme/search.js" defer></script>
+</body>
+</html>

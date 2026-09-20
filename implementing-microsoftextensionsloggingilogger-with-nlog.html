@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="EtherPK">
+    <title>Implementing Microsoft.Extensions.Logging.ILogger with NLog :: g9n Blog</title>
+    <meta name="description" content="I’ve designed this ILoggerimplementation to solve an issue I encountered today where the code I was working was wasn’t logging errors when the error occurred in a background thread. It was failing…">
+    <link rel="stylesheet" href="theme/theme.css">
+    
+    
+    <link rel="alternate" type="application/rss+xml" title="g9n Blog" href="feed.xml">
+</head>
+<body class="layout-terminal">
+    <a class="skip-link" href="#content">Skip to content</a>
+    <div class="container">
+        <header class="header">
+            <div class="header__inner">
+                <a class="site-title logo" href="index.html">
+                    <span class="logo__mark"><!-- The EtherPK icon (resources/brand/etherpk-icon-*.svg), inline so the page fetches nothing and it takes the text colour; aria-hidden because the title beside it is the name. Fill the "logo" include, or edit this partial, for your own. -->
+                                             <svg class="site-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 191.82 166.13" width="24" height="21" aria-hidden="true" focusable="false"><path fill="currentColor" fill-rule="evenodd" d="M67.09,132.92,47.93,166.13H9.59L0,149.52,86.33,0H105.5L19.17,149.52H38.34l19.17-33.2h76.8l9.59,16.6Zm48-83.12,9.65,16.71H143.9L115.08,16.6q-24,41.57-48,83.12H143.9q14.37,24.9,28.76,49.8h-96l-9.59,16.61H182.24l9.58-16.61-38.34-66.4H96C95.85,82.9,113.39,52.73,115.08,49.8Z"/></svg>
+</span>
+                    <span class="logo__text">g9n Blog</span>
+                    <span class="logo__cursor" aria-hidden="true"></span>
+                </a>
+                <button class="nav-toggle menu-trigger" type="button" aria-controls="site-nav" aria-expanded="false" aria-label="Menu">Menu</button>
+            </div>
+            <div class="nav-backdrop" hidden></div>
+            <nav id="site-nav" class="menu site-nav" aria-label="Site">
+                <ul class="menu__inner site-nav-list">
+                <li class="">
+                    <a href="a-custom-workflow-to-publish-from-obsidian-to-blotim.html">A Custom Workflow to Publish from Obsidian to Blot.im</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="a-rough-guide-to-building-a-retro-pie-bar-top-arcade-game-machine.html">A Rough Guide to Building a Retro Pie Bar Top Arcade Game Machine</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="a-utility-class-for-finding-database-deadlocks-in-net-applications.html">A Utility Class for Finding Database Deadlocks in .NET Applications</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="api-versioning-and-basic-ui-authentication-with-openapi-swagger-swashbuckle-in-net-core-6.html">API Versioning and Basic UI Authentication with OpenAPI (Swagger Swashbuckle) in .NET Core 6</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="aspnet-file-uploader-with-signalr-progress-bar-and-extended-input-stream-processing.html">ASP.NET File Uploader with SignalR Progress Bar and Extended Input Stream Processing</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="attention-was-always-the-bottleneck-ai.html">Attention Was Always the Bottleneck (AI)</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="converting-enum-types-by-value-in-c.html">Converting Enum Types By Value in C#</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="fail-early-fail-fast-and-why-you-should-throw-exceptions.html">Fail Early, Fail Fast and why you should throw exceptions</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="hackers-painters-and-kanban-for-software-as-a-creative-process.html">Hackers, Painters and Kanban for Software as a Creative Process</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="how-to-create-a-deep-copy-of-an-object-in-javascript-typescript.html">How to create a deep copy of an object in JavaScript, TypeScript</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="how-to-inject-google-adsense-in-article-script-into-your-html-aspnet-core-razor.html">How to inject Google Adsense In-Article script into your HTML (ASP.NET Core Razor)</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="how-to-wrap-a-typescript-js-callback-with-async-await.html">How to wrap a TypeScript JS callback with async  await</a>
+                    
+                    
+                </li>
+                <li class="nav-current ">
+                    <a href="implementing-microsoftextensionsloggingilogger-with-nlog.html" aria-current="page">Implementing Microsoft.Extensions.Logging.ILogger with NLog</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="introducing-the-g9n-blog.html">Introducing the g9n blog</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="maintaining-a-blog-with-jekyll-github-pages-and-github-codespaces.html">Maintaining a Blog with Jekyll, GitHub Pages and GitHub Codespaces</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="make-sure-you-spend-time-with-tech-you-enjoy.html">Make Sure You Spend Time With Tech You Enjoy</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="managing-code-snippets-using-logseq.html">Managing Code Snippets Using Logseq</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="observations-around-prominent-programmer-sentiment-and-ai.html">Observations Around Prominent Programmer Sentiment and AI</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="robust-error-handling-in-aspnet-core.html">Robust Error Handling in ASP.NET Core</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="sanitizing-html-in-net-core.html">Sanitizing HTML in .NET Core</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="the-skills-i-think-we-might-gain-ai.html">The skills I think we might gain (AI)</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="uploading-directly-to-s3-from-client-using-pre-signed-urls-javascript-net.html">Uploading Directly to S3 from Client Using Pre-Signed URLs (JavaScript,  .NET)</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="using-github-to-host-images.html">Using GitHub to Host Images</a>
+                    
+                    
+                </li>
+                </ul>
+                <form class="site-search" role="search" data-search-index="search.json" data-search-script="search-index.js">
+                    <label class="visually-hidden" for="site-search-input">Search</label>
+                    <input id="site-search-input" type="search" name="q" placeholder="$ search" autocomplete="off">
+                    <div class="site-search-results" role="listbox" hidden></div>
+                </form>
+            </nav>
+        </header>
+    <main id="content" class="content">
+        <article class="post">
+            <h1 class="post-title">Implementing Microsoft.Extensions.Logging.ILogger with NLog</h1>
+            <div class="post-meta"><time class="post-date" datetime="2021-02-25">2021-02-25</time> :: <span class="post-reading">3 min read</span></div>
+        <nav class="toc framed" aria-label="Table of contents">
+            <p class="toc__title">:: Table of contents</p>
+            <ul>
+                <li class="toc-level-2"><a href="#the-code">The code</a></li><li class="toc-level-2"><a href="#the-nloglogger-class-its-self">The NLogLogger class it’s self</a></li>
+            </ul>
+        </nav>
+            <div class="post-content">
+<p>I’ve designed this <code>ILogger</code>implementation to solve an issue I encountered today where the code I was working was wasn’t logging errors when the error occurred in a background thread. It was failing silently because unless you configure NLog specifically to throw exceptions, it won’t.</p>
+<p>The principle issue in my case was that the usual <code>ILogger&lt;T&gt;</code> instance instantiated in the class constructor wasn’t available because the controller object on the main thread had disposed before the thread had completed. Fair enough. I then tried creating an instance of <code>ILogger&lt;T&gt;</code> via a service locator within the thread. And that failed silently too (I’m not sure of what was going on internally here but I’m wondering if it’s to do with the Logger being typed to the class which is disposed, would need to check the framework source code here).</p>
+<p>So I opted to create a class that implements <code>Microsoft.Extensions.Logging.ILogger</code>, and register it as a singleton that can be used everywhere and will not be disposed with the container object.</p>
+<p><a href="https://stackoverflow.com/questions/53825831/asp-net-core-api-why-does-logger-type-match-controller-class">So we loose the capabilities</a> of <code>ILogger&lt;T&gt;</code> which would allow the logger to record information about the type, but to me this is a simplification and has practical benefits when working with async code.</p>
+<h2 id="the-code">The code</h2>
+<p>Package references that may be required depending on the .NET core framework version you are targeting.</p>
+<pre><code class="language-xml"><span class="tok-punctuation">&lt;</span><span class="tok-typeName">PackageReference</span> <span class="tok-propertyName">Include</span><span class="tok-operator">=</span><span class="tok-string">&quot;Microsoft.Extensions.Logging&quot;</span> <span class="tok-propertyName">Version</span><span class="tok-operator">=</span><span class="tok-string">&quot;3.1.5&quot;</span> <span class="tok-punctuation">/&gt;</span>  
+<span class="tok-punctuation">&lt;</span><span class="tok-typeName">PackageReference</span> <span class="tok-propertyName">Include</span><span class="tok-operator">=</span><span class="tok-string">&quot;NLog&quot;</span> <span class="tok-propertyName">Version</span><span class="tok-operator">=</span><span class="tok-string">&quot;4.5.10&quot;</span> <span class="tok-punctuation">/&gt;</span>  
+<span class="tok-punctuation">&lt;</span><span class="tok-typeName">PackageReference</span> <span class="tok-propertyName">Include</span><span class="tok-operator">=</span><span class="tok-string">&quot;NLog.Web.AspNetCore&quot;</span> <span class="tok-propertyName">Version</span><span class="tok-operator">=</span><span class="tok-string">&quot;4.7.0&quot;</span> <span class="tok-punctuation">/&gt;</span>
+</code></pre>
+<h2 id="the-nloglogger-class-its-self">The NLogLogger class it’s self</h2>
+<pre><code class="language-csharp"><span class="tok-keyword">using</span> <span class="tok-variableName">Microsoft</span>.<span class="tok-variableName">Extensions</span>.<span class="tok-variableName">Logging</span>;
+<span class="tok-keyword">using</span> <span class="tok-variableName">NLog</span>;
+<span class="tok-keyword">using</span> <span class="tok-variableName">System</span>;
+
+<span class="tok-keyword">namespace</span> <span class="tok-variableName tok-definition">ANamespace</span>
+{
+    <span class="tok-keyword">public</span> <span class="tok-keyword">class</span> <span class="tok-variableName tok-definition">NLogLogger</span> : <span class="tok-variableName">Microsoft</span>.<span class="tok-variableName">Extensions</span>.<span class="tok-variableName">Logging</span>.<span class="tok-variableName">ILogger</span>
+    {
+        <span class="tok-keyword">private</span> <span class="tok-variableName">NLog</span>.<span class="tok-variableName">ILogger</span> <span class="tok-variableName">NLogLoggerInstance</span> { <span class="tok-keyword">get</span>; }
+
+        <span class="tok-keyword">private</span> <span class="tok-keyword">class</span> <span class="tok-variableName tok-definition">DisposableStub</span> : <span class="tok-variableName">IDisposable</span>
+        {
+            <span class="tok-keyword">public</span> <span class="tok-keyword">void</span> <span class="tok-variableName">Dispose</span>()
+            {
+                <span class="tok-comment">// Do nothing</span>
+            }
+        }
+
+        <span class="tok-keyword">public</span> <span class="tok-variableName">NLogLogger</span>()
+        {
+            <span class="tok-variableName">NLogLoggerInstance</span> <span class="tok-operator">=</span> <span class="tok-variableName">LogManager</span>.<span class="tok-variableName">LoadConfiguration</span>(<span class="tok-string">&quot;NLog.config&quot;</span>).<span class="tok-variableName">GetCurrentClassLogger</span>();
+        }
+
+        <span class="tok-keyword">public</span> <span class="tok-variableName">IDisposable</span> <span class="tok-variableName">BeginScope</span><span class="tok-operator">&lt;</span><span class="tok-variableName">TState</span><span class="tok-operator">&gt;</span>(<span class="tok-variableName">TState</span> <span class="tok-variableName">state</span>)
+        {
+            <span class="tok-comment">// Not implementing this feature</span>
+
+            <span class="tok-keyword">return</span> <span class="tok-keyword">new</span> <span class="tok-variableName">DisposableStub</span>();
+        }
+
+        <span class="tok-keyword">public</span> <span class="tok-typeName">bool</span> <span class="tok-variableName">IsEnabled</span>(<span class="tok-variableName">Microsoft</span>.<span class="tok-variableName">Extensions</span>.<span class="tok-variableName">Logging</span>.<span class="tok-variableName">LogLevel</span> <span class="tok-variableName">logLevel</span>)
+        {
+            <span class="tok-keyword">if</span> (<span class="tok-variableName">logLevel</span> <span class="tok-operator">==</span> <span class="tok-variableName">Microsoft</span>.<span class="tok-variableName">Extensions</span>.<span class="tok-variableName">Logging</span>.<span class="tok-variableName">LogLevel</span>.<span class="tok-variableName">Trace</span>)
+            {
+                <span class="tok-keyword">return</span> <span class="tok-variableName">NLogLoggerInstance</span>.<span class="tok-variableName">IsTraceEnabled</span>;
+            }
+            <span class="tok-keyword">else</span> <span class="tok-keyword">if</span> (<span class="tok-variableName">logLevel</span> <span class="tok-operator">==</span> <span class="tok-variableName">Microsoft</span>.<span class="tok-variableName">Extensions</span>.<span class="tok-variableName">Logging</span>.<span class="tok-variableName">LogLevel</span>.<span class="tok-variableName">Debug</span>)
+            {
+                <span class="tok-keyword">return</span> <span class="tok-variableName">NLogLoggerInstance</span>.<span class="tok-variableName">IsDebugEnabled</span>;
+            }
+            <span class="tok-keyword">else</span> <span class="tok-keyword">if</span> (<span class="tok-variableName">logLevel</span> <span class="tok-operator">==</span> <span class="tok-variableName">Microsoft</span>.<span class="tok-variableName">Extensions</span>.<span class="tok-variableName">Logging</span>.<span class="tok-variableName">LogLevel</span>.<span class="tok-variableName">Information</span>)
+            {
+                <span class="tok-keyword">return</span> <span class="tok-variableName">NLogLoggerInstance</span>.<span class="tok-variableName">IsInfoEnabled</span>;
+            }
+            <span class="tok-keyword">else</span> <span class="tok-keyword">if</span> (<span class="tok-variableName">logLevel</span> <span class="tok-operator">==</span> <span class="tok-variableName">Microsoft</span>.<span class="tok-variableName">Extensions</span>.<span class="tok-variableName">Logging</span>.<span class="tok-variableName">LogLevel</span>.<span class="tok-variableName">Warning</span>)
+            {
+                <span class="tok-keyword">return</span> <span class="tok-variableName">NLogLoggerInstance</span>.<span class="tok-variableName">IsWarnEnabled</span>;
+            }
+            <span class="tok-keyword">else</span> <span class="tok-keyword">if</span> (<span class="tok-variableName">logLevel</span> <span class="tok-operator">==</span> <span class="tok-variableName">Microsoft</span>.<span class="tok-variableName">Extensions</span>.<span class="tok-variableName">Logging</span>.<span class="tok-variableName">LogLevel</span>.<span class="tok-variableName">Error</span>)
+            {
+                <span class="tok-keyword">return</span> <span class="tok-variableName">NLogLoggerInstance</span>.<span class="tok-variableName">IsErrorEnabled</span>;
+            }
+            <span class="tok-keyword">else</span> <span class="tok-keyword">if</span> (<span class="tok-variableName">logLevel</span> <span class="tok-operator">==</span> <span class="tok-variableName">Microsoft</span>.<span class="tok-variableName">Extensions</span>.<span class="tok-variableName">Logging</span>.<span class="tok-variableName">LogLevel</span>.<span class="tok-variableName">Critical</span>)
+            {
+                <span class="tok-keyword">return</span> <span class="tok-variableName">NLogLoggerInstance</span>.<span class="tok-variableName">IsFatalEnabled</span>;
+            }
+            <span class="tok-keyword">else</span> <span class="tok-keyword">if</span> (<span class="tok-variableName">logLevel</span> <span class="tok-operator">==</span> <span class="tok-variableName">Microsoft</span>.<span class="tok-variableName">Extensions</span>.<span class="tok-variableName">Logging</span>.<span class="tok-variableName">LogLevel</span>.<span class="tok-variableName">None</span>)
+            {
+                <span class="tok-keyword">return</span> <span class="tok-atom">false</span>;
+            }
+            <span class="tok-keyword">else</span>
+            {
+                <span class="tok-keyword">throw</span> <span class="tok-keyword">new</span> <span class="tok-variableName">InvalidOperationException</span>(<span class="tok-variableName">$</span><span class="tok-string">&quot;Unhandled type of {nameof(Microsoft.Extensions.Logging.LogLevel)}&quot;</span>);
+            }
+        }
+
+        <span class="tok-keyword">public</span> <span class="tok-keyword">void</span> <span class="tok-variableName">Log</span><span class="tok-operator">&lt;</span><span class="tok-variableName">TState</span><span class="tok-operator">&gt;</span>(<span class="tok-variableName">Microsoft</span>.<span class="tok-variableName">Extensions</span>.<span class="tok-variableName">Logging</span>.<span class="tok-variableName">LogLevel</span> <span class="tok-variableName">logLevel</span>, <span class="tok-variableName">EventId</span> <span class="tok-variableName">eventId</span>, <span class="tok-variableName">TState</span> <span class="tok-variableName">state</span>, <span class="tok-variableName">Exception</span> <span class="tok-variableName">exception</span>, <span class="tok-typeName">Func</span><span class="tok-operator">&lt;</span><span class="tok-variableName">TState</span>, <span class="tok-variableName">Exception</span>, <span class="tok-typeName">string</span><span class="tok-operator">&gt;</span> <span class="tok-variableName">formatter</span>)
+        {
+            <span class="tok-keyword">if</span> (<span class="tok-variableName">logLevel</span> <span class="tok-operator">==</span> <span class="tok-variableName">Microsoft</span>.<span class="tok-variableName">Extensions</span>.<span class="tok-variableName">Logging</span>.<span class="tok-variableName">LogLevel</span>.<span class="tok-variableName">Trace</span>)
+            {
+                <span class="tok-variableName">NLogLoggerInstance</span>.<span class="tok-variableName">Trace</span>(<span class="tok-variableName">formatter</span>(<span class="tok-variableName">state</span>, <span class="tok-variableName">exception</span>));
+            }
+            <span class="tok-keyword">else</span> <span class="tok-keyword">if</span> (<span class="tok-variableName">logLevel</span> <span class="tok-operator">==</span> <span class="tok-variableName">Microsoft</span>.<span class="tok-variableName">Extensions</span>.<span class="tok-variableName">Logging</span>.<span class="tok-variableName">LogLevel</span>.<span class="tok-variableName">Debug</span>)
+            {
+                <span class="tok-variableName">NLogLoggerInstance</span>.<span class="tok-variableName">Debug</span>(<span class="tok-variableName">formatter</span>(<span class="tok-variableName">state</span>, <span class="tok-variableName">exception</span>));
+            }
+            <span class="tok-keyword">else</span> <span class="tok-keyword">if</span> (<span class="tok-variableName">logLevel</span> <span class="tok-operator">==</span> <span class="tok-variableName">Microsoft</span>.<span class="tok-variableName">Extensions</span>.<span class="tok-variableName">Logging</span>.<span class="tok-variableName">LogLevel</span>.<span class="tok-variableName">Information</span>)
+            {
+                <span class="tok-variableName">NLogLoggerInstance</span>.<span class="tok-variableName">Info</span>(<span class="tok-variableName">exception</span>, <span class="tok-variableName">formatter</span>(<span class="tok-variableName">state</span>, <span class="tok-variableName">exception</span>));
+            }
+            <span class="tok-keyword">else</span> <span class="tok-keyword">if</span> (<span class="tok-variableName">logLevel</span> <span class="tok-operator">==</span> <span class="tok-variableName">Microsoft</span>.<span class="tok-variableName">Extensions</span>.<span class="tok-variableName">Logging</span>.<span class="tok-variableName">LogLevel</span>.<span class="tok-variableName">Warning</span>)
+            {
+                <span class="tok-variableName">NLogLoggerInstance</span>.<span class="tok-variableName">Warn</span>(<span class="tok-variableName">exception</span>, <span class="tok-variableName">formatter</span>(<span class="tok-variableName">state</span>, <span class="tok-variableName">exception</span>));
+            }
+            <span class="tok-keyword">else</span> <span class="tok-keyword">if</span> (<span class="tok-variableName">logLevel</span> <span class="tok-operator">==</span> <span class="tok-variableName">Microsoft</span>.<span class="tok-variableName">Extensions</span>.<span class="tok-variableName">Logging</span>.<span class="tok-variableName">LogLevel</span>.<span class="tok-variableName">Error</span>)
+            {
+                <span class="tok-variableName">NLogLoggerInstance</span>.<span class="tok-variableName">Error</span>(<span class="tok-variableName">exception</span>, <span class="tok-variableName">formatter</span>(<span class="tok-variableName">state</span>, <span class="tok-variableName">exception</span>));
+            }
+            <span class="tok-keyword">else</span> <span class="tok-keyword">if</span> (<span class="tok-variableName">logLevel</span> <span class="tok-operator">==</span> <span class="tok-variableName">Microsoft</span>.<span class="tok-variableName">Extensions</span>.<span class="tok-variableName">Logging</span>.<span class="tok-variableName">LogLevel</span>.<span class="tok-variableName">Critical</span>)
+            {
+                <span class="tok-variableName">NLogLoggerInstance</span>.<span class="tok-variableName">Fatal</span>(<span class="tok-variableName">exception</span>, <span class="tok-variableName">formatter</span>(<span class="tok-variableName">state</span>, <span class="tok-variableName">exception</span>));
+            }
+            <span class="tok-keyword">else</span> <span class="tok-keyword">if</span> (<span class="tok-variableName">logLevel</span> <span class="tok-operator">==</span> <span class="tok-variableName">Microsoft</span>.<span class="tok-variableName">Extensions</span>.<span class="tok-variableName">Logging</span>.<span class="tok-variableName">LogLevel</span>.<span class="tok-variableName">None</span>)
+            {
+                <span class="tok-variableName">NLogLoggerInstance</span>.<span class="tok-variableName">Info</span>(<span class="tok-variableName">formatter</span>(<span class="tok-variableName">state</span>, <span class="tok-variableName">exception</span>));
+            }
+        }
+    }
+}
+</code></pre>
+<p>Registering as a service for dependency injection in your ASP.NET core app:</p>
+<pre><code class="language-csharp"><span class="tok-variableName">services</span>.<span class="tok-variableName">AddSingleton</span><span class="tok-operator">&lt;</span><span class="tok-variableName">Microsoft</span>.<span class="tok-variableName">Extensions</span>.<span class="tok-variableName">Logging</span>.<span class="tok-variableName">ILogger</span><span class="tok-operator">&gt;</span>(<span class="tok-keyword">new</span> <span class="tok-variableName">ANamespace</span>.<span class="tok-variableName">NLogLogger</span>());
+</code></pre>
+
+            </div>
+            <nav class="pagination" aria-label="Neighbouring posts">
+                <a class="button pagination__prev" href="sanitizing-html-in-net-core.html"><span class="button__icon">←</span><span class="button__text">Sanitizing HTML in .NET Core</span></a>
+                <a class="button pagination__next" href="how-to-create-a-deep-copy-of-an-object-in-javascript-typescript.html"><span class="button__text">How to create a deep copy of an object in JavaScript, TypeScript</span><span class="button__icon">→</span></a>
+            </nav>
+        </article>
+    </main>
+        <footer class="footer">
+            <div class="footer__inner">
+                <div class="copyright">
+                    <span>&copy; 2026 g9n Blog</span>
+                    <span class="footer__separator" aria-hidden="true">::</span>
+                    <span>Published with <a href="https://etherpk.com" rel="noopener">EtherPK</a></span>
+                    <span class="footer__separator" aria-hidden="true">::</span><a href="feed.xml">Feed</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+        <script src="theme/search.js" defer></script>
+</body>
+</html>

@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="EtherPK">
-    <title>Attention Was Always the Bottleneck (AI) :: g9n Blog</title>
-    <meta name="description" content="In earlier days, we didn&#39;t want to spend our attention on machine code or assembly, and later memory management an garbage collection. So we invented tools and abstractions so that we didn&#39;t have to…">
+    <title>Sanitizing HTML in .NET Core :: g9n Blog</title>
+    <meta name="description" content="Looking through options for sanitizing HTML, I found my way to the following library: https:&#x2F;&#x2F;github.com&#x2F;mganss&#x2F;HtmlSanitizer HtmlSantizer uses a whitelist approach to HTML sanitization. A whitelist…">
     <link rel="stylesheet" href="theme/theme.css">
     
     
@@ -53,8 +53,8 @@
                     
                     
                 </li>
-                <li class="nav-current ">
-                    <a href="attention-was-always-the-bottleneck-ai.html" aria-current="page">Attention Was Always the Bottleneck (AI)</a>
+                <li class="">
+                    <a href="attention-was-always-the-bottleneck-ai.html">Attention Was Always the Bottleneck (AI)</a>
                     
                     
                 </li>
@@ -123,8 +123,8 @@
                     
                     
                 </li>
-                <li class="">
-                    <a href="sanitizing-html-in-net-core.html">Sanitizing HTML in .NET Core</a>
+                <li class="nav-current ">
+                    <a href="sanitizing-html-in-net-core.html" aria-current="page">Sanitizing HTML in .NET Core</a>
                     
                     
                 </li>
@@ -153,19 +153,27 @@
         </header>
     <main id="content" class="content">
         <article class="post">
-            <h1 class="post-title">Attention Was Always the Bottleneck (AI)</h1>
-            <div class="post-meta"><time class="post-date" datetime="2026-09-01">2026-09-01</time> :: <span class="post-reading">2 min read</span></div>
+            <h1 class="post-title">Sanitizing HTML in .NET Core</h1>
+            <div class="post-meta"><time class="post-date" datetime="2021-02-25">2021-02-25</time> :: <span class="post-reading">1 min read</span></div>
             <div class="post-content">
-<p>In earlier days, we didn't want to spend our attention on machine code or assembly, and later memory management an garbage collection. So we invented tools and abstractions so that we didn't have to think about these things any more. We had more valuable problems and since we could automate them away, they were no longer deemed worth our attention.</p>
-<p>The same is now happening with high level code. We're spending less and less time with the code, both writing and understanding it because AI / LLMs / Agents can automate much of the management of code, and anyway, we have more valuable problems.</p>
-<p>The difference I think is that while earlier solutions to more fundamental computing concerns were deterministic processes, AI is probabilistic. So while we can outsource our attention for a wider range of problems, we're going to be pulled back in for decision making, checking and 'taste' tests more regularly than we would have been previously, and this will happen alongside rapid proliferation of new code being written and deployed.</p>
-<p>I'm not yet sure what the full consequence of this will be, but I feel it's what is at the core of widely reported developer fatigue - the demand for attention is not going away, and the range of problems that require that attention will also grow.</p>
-<p>I think we can summarise that we are just doing more, faster. But not all resources (such as attention and the earth's physical resources are going to keep up).</p>
+<p>Looking through options for sanitizing HTML, I found my way to the following library:</p>
+<p><a href="https://github.com/mganss/HtmlSanitizer">https://github.com/mganss/HtmlSanitizer</a></p>
+<p>HtmlSantizer uses a whitelist approach to HTML sanitization. A whitelist approach to HTML sanitization is more secure in that there is less scope for missing dangerous tags and attributes. It also works well in a markdown context where a limited set of known tags will make up the output HTML.</p>
+<p>If you want to allow additional tags and attributes to remain in the output HTML, you can configure the <code>HtmlSanitizer</code>class as follows:</p>
+<pre><code class="language-csharp"><span class="tok-keyword">var</span> <span class="tok-variableName tok-definition">sanitizer</span> <span class="tok-operator">=</span> <span class="tok-keyword">new</span> <span class="tok-variableName">HtmlSanitizer</span>();  
+<span class="tok-variableName">sanitizer</span>.<span class="tok-variableName">AllowedAttributes</span>.<span class="tok-variableName">Add</span>(<span class="tok-string">&quot;class&quot;</span>);  
+<span class="tok-keyword">var</span> <span class="tok-variableName tok-definition">sanitized</span> <span class="tok-operator">=</span> <span class="tok-variableName">sanitizer</span>.<span class="tok-variableName">Sanitize</span>(<span class="tok-variableName">html</span>);
+</code></pre>
+<p>Rick Strahl’s blog provides a good overview of some of the concerns in the following two blog posts:</p>
+<ul>
+<li><a href="https://weblog.west-wind.com/posts/2012/jul/19/net-html-sanitation-for-rich-html-input">https://weblog.west-wind.com/posts/2012/jul/19/net-html-sanitation-for-rich-html-input</a></li>
+<li><a href="https://weblog.west-wind.com/posts/2018/Aug/31/Markdown-and-Cross-Site-Scripting">https://weblog.west-wind.com/posts/2018/Aug/31/Markdown-and-Cross-Site-Scripting</a></li>
+</ul>
 
             </div>
             <nav class="pagination" aria-label="Neighbouring posts">
-                <a class="button pagination__prev" href="make-sure-you-spend-time-with-tech-you-enjoy.html"><span class="button__icon">←</span><span class="button__text">Make Sure You Spend Time With Tech You Enjoy</span></a>
-                
+                <a class="button pagination__prev" href="a-utility-class-for-finding-database-deadlocks-in-net-applications.html"><span class="button__icon">←</span><span class="button__text">A Utility Class for Finding Database Deadlocks in .NET Applications</span></a>
+                <a class="button pagination__next" href="implementing-microsoftextensionsloggingilogger-with-nlog.html"><span class="button__text">Implementing Microsoft.Extensions.Logging.ILogger with NLog</span><span class="button__icon">→</span></a>
             </nav>
         </article>
     </main>

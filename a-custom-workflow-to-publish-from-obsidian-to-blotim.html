@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="EtherPK">
+    <title>A Custom Workflow to Publish from Obsidian to Blot.im :: g9n Blog</title>
+    <meta name="description" content="This is the first post to this blog using a custom workflow that uses: Obsidian for markdown file curation. A custom tag to identify files intended for publication. A Node.js script to copy files and…">
+    <link rel="stylesheet" href="theme/theme.css">
+    
+    
+    <link rel="alternate" type="application/rss+xml" title="g9n Blog" href="feed.xml">
+</head>
+<body class="layout-terminal">
+    <a class="skip-link" href="#content">Skip to content</a>
+    <div class="container">
+        <header class="header">
+            <div class="header__inner">
+                <a class="site-title logo" href="index.html">
+                    <span class="logo__mark"><!-- The EtherPK icon (resources/brand/etherpk-icon-*.svg), inline so the page fetches nothing and it takes the text colour; aria-hidden because the title beside it is the name. Fill the "logo" include, or edit this partial, for your own. -->
+                                             <svg class="site-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 191.82 166.13" width="24" height="21" aria-hidden="true" focusable="false"><path fill="currentColor" fill-rule="evenodd" d="M67.09,132.92,47.93,166.13H9.59L0,149.52,86.33,0H105.5L19.17,149.52H38.34l19.17-33.2h76.8l9.59,16.6Zm48-83.12,9.65,16.71H143.9L115.08,16.6q-24,41.57-48,83.12H143.9q14.37,24.9,28.76,49.8h-96l-9.59,16.61H182.24l9.58-16.61-38.34-66.4H96C95.85,82.9,113.39,52.73,115.08,49.8Z"/></svg>
+</span>
+                    <span class="logo__text">g9n Blog</span>
+                    <span class="logo__cursor" aria-hidden="true"></span>
+                </a>
+                <button class="nav-toggle menu-trigger" type="button" aria-controls="site-nav" aria-expanded="false" aria-label="Menu">Menu</button>
+            </div>
+            <div class="nav-backdrop" hidden></div>
+            <nav id="site-nav" class="menu site-nav" aria-label="Site">
+                <ul class="menu__inner site-nav-list">
+                <li class="nav-current ">
+                    <a href="a-custom-workflow-to-publish-from-obsidian-to-blotim.html" aria-current="page">A Custom Workflow to Publish from Obsidian to Blot.im</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="a-rough-guide-to-building-a-retro-pie-bar-top-arcade-game-machine.html">A Rough Guide to Building a Retro Pie Bar Top Arcade Game Machine</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="a-utility-class-for-finding-database-deadlocks-in-net-applications.html">A Utility Class for Finding Database Deadlocks in .NET Applications</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="api-versioning-and-basic-ui-authentication-with-openapi-swagger-swashbuckle-in-net-core-6.html">API Versioning and Basic UI Authentication with OpenAPI (Swagger Swashbuckle) in .NET Core 6</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="aspnet-file-uploader-with-signalr-progress-bar-and-extended-input-stream-processing.html">ASP.NET File Uploader with SignalR Progress Bar and Extended Input Stream Processing</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="attention-was-always-the-bottleneck-ai.html">Attention Was Always the Bottleneck (AI)</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="converting-enum-types-by-value-in-c.html">Converting Enum Types By Value in C#</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="fail-early-fail-fast-and-why-you-should-throw-exceptions.html">Fail Early, Fail Fast and why you should throw exceptions</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="hackers-painters-and-kanban-for-software-as-a-creative-process.html">Hackers, Painters and Kanban for Software as a Creative Process</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="how-to-create-a-deep-copy-of-an-object-in-javascript-typescript.html">How to create a deep copy of an object in JavaScript, TypeScript</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="how-to-inject-google-adsense-in-article-script-into-your-html-aspnet-core-razor.html">How to inject Google Adsense In-Article script into your HTML (ASP.NET Core Razor)</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="how-to-wrap-a-typescript-js-callback-with-async-await.html">How to wrap a TypeScript JS callback with async  await</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="implementing-microsoftextensionsloggingilogger-with-nlog.html">Implementing Microsoft.Extensions.Logging.ILogger with NLog</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="introducing-the-g9n-blog.html">Introducing the g9n blog</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="maintaining-a-blog-with-jekyll-github-pages-and-github-codespaces.html">Maintaining a Blog with Jekyll, GitHub Pages and GitHub Codespaces</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="make-sure-you-spend-time-with-tech-you-enjoy.html">Make Sure You Spend Time With Tech You Enjoy</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="managing-code-snippets-using-logseq.html">Managing Code Snippets Using Logseq</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="observations-around-prominent-programmer-sentiment-and-ai.html">Observations Around Prominent Programmer Sentiment and AI</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="robust-error-handling-in-aspnet-core.html">Robust Error Handling in ASP.NET Core</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="sanitizing-html-in-net-core.html">Sanitizing HTML in .NET Core</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="the-skills-i-think-we-might-gain-ai.html">The skills I think we might gain (AI)</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="uploading-directly-to-s3-from-client-using-pre-signed-urls-javascript-net.html">Uploading Directly to S3 from Client Using Pre-Signed URLs (JavaScript,  .NET)</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="using-github-to-host-images.html">Using GitHub to Host Images</a>
+                    
+                    
+                </li>
+                </ul>
+                <form class="site-search" role="search" data-search-index="search.json" data-search-script="search-index.js">
+                    <label class="visually-hidden" for="site-search-input">Search</label>
+                    <input id="site-search-input" type="search" name="q" placeholder="$ search" autocomplete="off">
+                    <div class="site-search-results" role="listbox" hidden></div>
+                </form>
+            </nav>
+        </header>
+    <main id="content" class="content">
+        <article class="post">
+            <h1 class="post-title">A Custom Workflow to Publish from Obsidian to Blot.im</h1>
+            <div class="post-meta"><time class="post-date" datetime="2022-01-06">2022-01-06</time> :: <span class="post-reading">3 min read</span></div>
+        <nav class="toc framed" aria-label="Table of contents">
+            <p class="toc__title">:: Table of contents</p>
+            <ul>
+                <li class="toc-level-2"><a href="#how-the-post-appears-in-obsidian">How the post appears in Obsidian</a></li><li class="toc-level-2"><a href="#the-nodejs-script-for-identifying-and-copying-out-files-for-publication">The Node.js script for identifying and copying out files for publication</a></li>
+            </ul>
+        </nav>
+            <div class="post-content">
+<p>This is the first post to this blog using a custom workflow that uses:</p>
+<ul>
+<li><a href="https://obsidian.md">Obsidian</a> for markdown file curation.</li>
+<li>A custom tag to identify files intended for publication.</li>
+<li>A Node.js script to copy files and assets to a Dropbox folder.</li>
+<li><a href="https://blot.im">Blot.im</a> to sync from the Dropbox folder and publish the blog.</li>
+</ul>
+<h2 id="how-the-post-appears-in-obsidian">How the post appears in Obsidian</h2>
+<p><img src="assets/pasted-image-20211014080839-2c667eab.2fab5098-e029-449b-9e3f-f291177df0a8.png" alt=""></p>
+<h2 id="the-nodejs-script-for-identifying-and-copying-out-files-for-publication">The Node.js script for identifying and copying out files for publication</h2>
+<pre><code class="language-javascript"><span class="tok-comment">// Note this will delete the destination folder and contents recursively before recreating.</span>
+
+<span class="tok-comment">// Run with node obsidian-to-blot.js &quot;&lt;SOURCE DIR&gt;&quot; &quot;&lt;SOURCE ASSETS DIR&gt;&quot;  &quot;&lt;DROPBOX OUTPUT FOLDER&gt;&quot;</span>
+
+
+<span class="tok-keyword">var</span> <span class="tok-variableName tok-definition">fs</span> <span class="tok-operator">=</span> <span class="tok-variableName">require</span><span class="tok-punctuation">(</span><span class="tok-string">'fs'</span><span class="tok-punctuation">)</span>
+<span class="tok-keyword">var</span> <span class="tok-variableName tok-definition">path</span> <span class="tok-operator">=</span> <span class="tok-variableName">require</span><span class="tok-punctuation">(</span><span class="tok-string">'path'</span><span class="tok-punctuation">)</span>
+
+<span class="tok-keyword">const</span> <span class="tok-variableName tok-definition">argsArray</span> <span class="tok-operator">=</span> <span class="tok-variableName">process</span><span class="tok-operator">.</span><span class="tok-propertyName">argv</span><span class="tok-operator">.</span><span class="tok-propertyName">slice</span><span class="tok-punctuation">(</span><span class="tok-number">2</span><span class="tok-punctuation">)</span>
+
+<span class="tok-keyword">if</span> <span class="tok-punctuation">(</span><span class="tok-variableName">argsArray</span><span class="tok-operator">.</span><span class="tok-propertyName">length</span> <span class="tok-operator">===</span> <span class="tok-number">3</span><span class="tok-punctuation">)</span> <span class="tok-punctuation">{</span>
+<span class="tok-keyword">const</span> <span class="tok-variableName tok-definition">pagesFolder</span> <span class="tok-operator">=</span> <span class="tok-variableName">argsArray</span><span class="tok-punctuation">[</span><span class="tok-number">0</span><span class="tok-punctuation">]</span>
+<span class="tok-keyword">const</span> <span class="tok-variableName tok-definition">assetsFolder</span> <span class="tok-operator">=</span> <span class="tok-variableName">argsArray</span><span class="tok-punctuation">[</span><span class="tok-number">1</span><span class="tok-punctuation">]</span>
+<span class="tok-keyword">const</span> <span class="tok-variableName tok-definition">destinationFolder</span> <span class="tok-operator">=</span> <span class="tok-variableName">argsArray</span><span class="tok-punctuation">[</span><span class="tok-number">2</span><span class="tok-punctuation">]</span>
+
+<span class="tok-variableName">console</span><span class="tok-operator">.</span><span class="tok-propertyName">log</span><span class="tok-punctuation">(</span><span class="tok-string">'pagesFolder: '</span> <span class="tok-operator">+</span> <span class="tok-variableName">pagesFolder</span><span class="tok-punctuation">)</span>
+<span class="tok-variableName">console</span><span class="tok-operator">.</span><span class="tok-propertyName">log</span><span class="tok-punctuation">(</span><span class="tok-string">'assetsFolder: '</span> <span class="tok-operator">+</span> <span class="tok-variableName">assetsFolder</span><span class="tok-punctuation">)</span>
+<span class="tok-variableName">console</span><span class="tok-operator">.</span><span class="tok-propertyName">log</span><span class="tok-punctuation">(</span><span class="tok-string">'destinationFolder: '</span> <span class="tok-operator">+</span> <span class="tok-variableName">destinationFolder</span><span class="tok-punctuation">)</span>
+
+<span class="tok-variableName">console</span><span class="tok-operator">.</span><span class="tok-propertyName">log</span><span class="tok-punctuation">(</span><span class="tok-string">'Deleting destination folder: '</span> <span class="tok-operator">+</span> <span class="tok-variableName">destinationFolder</span><span class="tok-punctuation">)</span>
+
+<span class="tok-variableName">fs</span><span class="tok-operator">.</span><span class="tok-propertyName">rmdirSync</span><span class="tok-punctuation">(</span><span class="tok-variableName">destinationFolder</span><span class="tok-punctuation">,</span> <span class="tok-punctuation">{</span> <span class="tok-propertyName tok-definition">recursive</span><span class="tok-punctuation">:</span> <span class="tok-bool">true</span> <span class="tok-punctuation">}</span><span class="tok-punctuation">)</span>
+
+<span class="tok-variableName">console</span><span class="tok-operator">.</span><span class="tok-propertyName">log</span><span class="tok-punctuation">(</span><span class="tok-string">'Creating destination folder: '</span> <span class="tok-operator">+</span> <span class="tok-variableName">destinationFolder</span><span class="tok-punctuation">)</span>
+
+<span class="tok-keyword">if</span> <span class="tok-punctuation">(</span><span class="tok-operator">!</span><span class="tok-variableName">fs</span><span class="tok-operator">.</span><span class="tok-propertyName">existsSync</span><span class="tok-punctuation">(</span><span class="tok-variableName">destinationFolder</span><span class="tok-punctuation">)</span><span class="tok-punctuation">)</span> <span class="tok-punctuation">{</span>
+  <span class="tok-variableName">fs</span><span class="tok-operator">.</span><span class="tok-propertyName">mkdirSync</span><span class="tok-punctuation">(</span><span class="tok-variableName">destinationFolder</span><span class="tok-punctuation">)</span>
+<span class="tok-punctuation">}</span>
+
+<span class="tok-comment">// Create destination assets folder if it doesn't exist</span>
+
+<span class="tok-keyword">const</span> <span class="tok-variableName tok-definition">destinationAssetsFolder</span> <span class="tok-operator">=</span> <span class="tok-variableName">destinationFolder</span> <span class="tok-operator">+</span> <span class="tok-string">'/assets'</span>
+
+<span class="tok-keyword">if</span> <span class="tok-punctuation">(</span><span class="tok-operator">!</span><span class="tok-variableName">fs</span><span class="tok-operator">.</span><span class="tok-propertyName">existsSync</span><span class="tok-punctuation">(</span><span class="tok-variableName">destinationAssetsFolder</span><span class="tok-punctuation">)</span><span class="tok-punctuation">)</span> <span class="tok-punctuation">{</span>
+  <span class="tok-variableName">fs</span><span class="tok-operator">.</span><span class="tok-propertyName">mkdirSync</span><span class="tok-punctuation">(</span><span class="tok-variableName">destinationAssetsFolder</span><span class="tok-punctuation">)</span>
+<span class="tok-punctuation">}</span>
+
+<span class="tok-variableName">fs</span><span class="tok-operator">.</span><span class="tok-propertyName">readdir</span><span class="tok-punctuation">(</span><span class="tok-variableName">pagesFolder</span><span class="tok-punctuation">,</span> <span class="tok-keyword">function</span> <span class="tok-punctuation">(</span><span class="tok-variableName tok-definition">err</span><span class="tok-punctuation">,</span> <span class="tok-variableName tok-definition">list</span><span class="tok-punctuation">)</span> <span class="tok-punctuation">{</span>
+  <span class="tok-keyword">if</span> <span class="tok-punctuation">(</span><span class="tok-variableName">err</span><span class="tok-punctuation">)</span> <span class="tok-punctuation">{</span>
+    <span class="tok-keyword">throw</span> <span class="tok-variableName">err</span>
+  <span class="tok-punctuation">}</span>
+
+  <span class="tok-variableName">list</span><span class="tok-operator">.</span><span class="tok-propertyName">forEach</span><span class="tok-punctuation">(</span><span class="tok-keyword">function</span> <span class="tok-punctuation">(</span><span class="tok-variableName tok-definition">textFilePath</span><span class="tok-punctuation">,</span> <span class="tok-variableName tok-definition">i</span><span class="tok-punctuation">)</span> <span class="tok-punctuation">{</span>
+    <span class="tok-variableName">textFilePath</span> <span class="tok-operator">=</span> <span class="tok-variableName">path</span><span class="tok-operator">.</span><span class="tok-propertyName">resolve</span><span class="tok-punctuation">(</span><span class="tok-variableName">pagesFolder</span><span class="tok-punctuation">,</span> <span class="tok-variableName">textFilePath</span><span class="tok-punctuation">)</span>
+
+    <span class="tok-keyword">let</span> <span class="tok-variableName tok-definition">textFileName</span> <span class="tok-operator">=</span> <span class="tok-variableName">path</span><span class="tok-operator">.</span><span class="tok-propertyName">basename</span><span class="tok-punctuation">(</span><span class="tok-variableName">textFilePath</span><span class="tok-punctuation">)</span>
+
+    <span class="tok-keyword">let</span> <span class="tok-variableName tok-definition">textFileText</span> <span class="tok-operator">=</span> <span class="tok-variableName">fs</span><span class="tok-operator">.</span><span class="tok-propertyName">readFileSync</span><span class="tok-punctuation">(</span><span class="tok-variableName">textFilePath</span><span class="tok-punctuation">,</span> <span class="tok-string">'utf8'</span><span class="tok-punctuation">)</span>
+
+    <span class="tok-keyword">const</span> <span class="tok-variableName tok-definition">textFileLines</span> <span class="tok-operator">=</span> <span class="tok-variableName">textFileText</span><span class="tok-operator">.</span><span class="tok-propertyName">split</span><span class="tok-punctuation">(</span><span class="tok-string2">/\r?\n/</span><span class="tok-punctuation">)</span>
+
+    <span class="tok-keyword">let</span> <span class="tok-variableName tok-definition">isPublic</span> <span class="tok-operator">=</span> <span class="tok-bool">false</span>
+
+    <span class="tok-keyword">for</span> <span class="tok-punctuation">(</span><span class="tok-keyword">let</span> <span class="tok-variableName tok-definition">i</span> <span class="tok-operator">=</span> <span class="tok-number">0</span><span class="tok-punctuation">;</span> <span class="tok-variableName">i</span> <span class="tok-operator">&lt;</span> <span class="tok-variableName">textFileLines</span><span class="tok-operator">.</span><span class="tok-propertyName">length</span><span class="tok-punctuation">;</span> <span class="tok-variableName">i</span><span class="tok-operator">++</span><span class="tok-punctuation">)</span> <span class="tok-punctuation">{</span>
+      <span class="tok-comment">// Only search first few lines of text for public tag</span>
+
+      <span class="tok-keyword">if</span> <span class="tok-punctuation">(</span><span class="tok-variableName">i</span> <span class="tok-operator">&gt;</span> <span class="tok-number">10</span><span class="tok-punctuation">)</span> <span class="tok-punctuation">{</span>
+        <span class="tok-keyword">break</span>
+      <span class="tok-punctuation">}</span>
+
+      <span class="tok-keyword">let</span> <span class="tok-variableName tok-definition">lineText</span> <span class="tok-operator">=</span> <span class="tok-variableName">textFileLines</span><span class="tok-punctuation">[</span><span class="tok-variableName">i</span><span class="tok-punctuation">]</span>
+
+      <span class="tok-keyword">if</span> <span class="tok-punctuation">(</span><span class="tok-variableName">lineText</span><span class="tok-punctuation">)</span> <span class="tok-punctuation">{</span>
+        <span class="tok-variableName">lineText</span> <span class="tok-operator">=</span> <span class="tok-variableName">lineText</span><span class="tok-operator">.</span><span class="tok-propertyName">trim</span><span class="tok-punctuation">(</span><span class="tok-punctuation">)</span>
+
+        <span class="tok-comment">// Check line is not empty</span>
+
+        <span class="tok-keyword">if</span> <span class="tok-punctuation">(</span><span class="tok-variableName">lineText</span><span class="tok-operator">.</span><span class="tok-propertyName">length</span> <span class="tok-operator">&gt;</span> <span class="tok-number">0</span><span class="tok-punctuation">)</span> <span class="tok-punctuation">{</span>
+          <span class="tok-comment">// Check line is not comment</span>
+
+          <span class="tok-keyword">if</span> <span class="tok-punctuation">(</span><span class="tok-variableName">lineText</span><span class="tok-operator">.</span><span class="tok-propertyName">indexOf</span><span class="tok-punctuation">(</span><span class="tok-string">'#_PublicPage'</span><span class="tok-punctuation">)</span> <span class="tok-operator">!=</span> <span class="tok-operator">-</span><span class="tok-number">1</span><span class="tok-punctuation">)</span> <span class="tok-punctuation">{</span>
+            <span class="tok-variableName">isPublic</span> <span class="tok-operator">=</span> <span class="tok-bool">true</span>
+          <span class="tok-punctuation">}</span>
+        <span class="tok-punctuation">}</span>
+      <span class="tok-punctuation">}</span>
+    <span class="tok-punctuation">}</span>
+
+    <span class="tok-keyword">if</span> <span class="tok-punctuation">(</span><span class="tok-variableName">isPublic</span><span class="tok-punctuation">)</span> <span class="tok-punctuation">{</span>
+      <span class="tok-variableName">console</span><span class="tok-operator">.</span><span class="tok-propertyName">log</span><span class="tok-punctuation">(</span><span class="tok-string">'Found public page: '</span> <span class="tok-operator">+</span> <span class="tok-variableName">textFileName</span><span class="tok-punctuation">)</span>
+    <span class="tok-punctuation">}</span>
+
+    <span class="tok-keyword">if</span> <span class="tok-punctuation">(</span><span class="tok-variableName">isPublic</span><span class="tok-punctuation">)</span> <span class="tok-punctuation">{</span>
+      <span class="tok-comment">// Parse asset links from file</span>
+
+      <span class="tok-keyword">var</span> <span class="tok-variableName tok-definition">originalLinkRegex</span> <span class="tok-operator">=</span> <span class="tok-string2">/!\[(.*)]\(\.\.\/assets\/(.+)\)/g</span>
+
+      <span class="tok-keyword">while</span> <span class="tok-punctuation">(</span><span class="tok-punctuation">(</span><span class="tok-variableName">result</span> <span class="tok-operator">=</span> <span class="tok-variableName">originalLinkRegex</span><span class="tok-operator">.</span><span class="tok-propertyName">exec</span><span class="tok-punctuation">(</span><span class="tok-variableName">textFileText</span><span class="tok-punctuation">)</span><span class="tok-punctuation">)</span><span class="tok-punctuation">)</span> <span class="tok-punctuation">{</span>
+        <span class="tok-comment">// Extract components from link names</span>
+
+        <span class="tok-keyword">const</span> <span class="tok-variableName tok-definition">linkFull</span> <span class="tok-operator">=</span> <span class="tok-variableName">result</span><span class="tok-punctuation">[</span><span class="tok-number">0</span><span class="tok-punctuation">]</span>
+        <span class="tok-keyword">const</span> <span class="tok-variableName tok-definition">linkText</span> <span class="tok-operator">=</span> <span class="tok-variableName">result</span><span class="tok-punctuation">[</span><span class="tok-number">1</span><span class="tok-punctuation">]</span>
+        <span class="tok-keyword">const</span> <span class="tok-variableName tok-definition">linkFileName</span> <span class="tok-operator">=</span> <span class="tok-variableName">result</span><span class="tok-punctuation">[</span><span class="tok-number">2</span><span class="tok-punctuation">]</span>
+
+        <span class="tok-variableName">console</span><span class="tok-operator">.</span><span class="tok-propertyName">log</span><span class="tok-punctuation">(</span><span class="tok-string">'Captured asset linkFull: '</span> <span class="tok-operator">+</span> <span class="tok-variableName">linkFull</span><span class="tok-punctuation">)</span>
+        <span class="tok-variableName">console</span><span class="tok-operator">.</span><span class="tok-propertyName">log</span><span class="tok-punctuation">(</span><span class="tok-string">'Captured asset linkText: '</span> <span class="tok-operator">+</span> <span class="tok-variableName">linkText</span><span class="tok-punctuation">)</span>
+        <span class="tok-variableName">console</span><span class="tok-operator">.</span><span class="tok-propertyName">log</span><span class="tok-punctuation">(</span><span class="tok-string">'Captured asset linkFileName: '</span> <span class="tok-operator">+</span> <span class="tok-variableName">linkFileName</span><span class="tok-punctuation">)</span>
+
+        <span class="tok-comment">// Obsidian will URL encode the file URL so decode this as not compatible with blot</span>
+
+        <span class="tok-keyword">const</span> <span class="tok-variableName tok-definition">linkFileNameUrlDecoded</span> <span class="tok-operator">=</span> <span class="tok-variableName">decodeURIComponent</span><span class="tok-punctuation">(</span><span class="tok-variableName">linkFileName</span><span class="tok-punctuation">)</span>
+
+        <span class="tok-variableName">console</span><span class="tok-operator">.</span><span class="tok-propertyName">log</span><span class="tok-punctuation">(</span><span class="tok-string">'linkFileNameUrlDecoded: '</span> <span class="tok-operator">+</span> <span class="tok-variableName">linkFileNameUrlDecoded</span><span class="tok-punctuation">)</span>
+
+        <span class="tok-comment">// If the asset referenced by the link, copy it out to the blot folder.</span>
+        <span class="tok-comment">// The file name must start with an underscore so that it does not appear as a blog entry</span>
+        <span class="tok-comment">// in it's own right</span>
+
+        <span class="tok-keyword">if</span> <span class="tok-punctuation">(</span>
+          <span class="tok-variableName">fs</span><span class="tok-operator">.</span><span class="tok-propertyName">existsSync</span><span class="tok-punctuation">(</span>
+            <span class="tok-variableName">path</span><span class="tok-operator">.</span><span class="tok-propertyName">resolve</span><span class="tok-punctuation">(</span><span class="tok-variableName">assetsFolder</span> <span class="tok-operator">+</span> <span class="tok-string">'/'</span> <span class="tok-operator">+</span> <span class="tok-variableName">linkFileNameUrlDecoded</span><span class="tok-punctuation">)</span><span class="tok-punctuation">,</span>
+          <span class="tok-punctuation">)</span>
+        <span class="tok-punctuation">)</span> <span class="tok-punctuation">{</span>
+          <span class="tok-variableName">console</span><span class="tok-operator">.</span><span class="tok-propertyName">log</span><span class="tok-punctuation">(</span><span class="tok-string">'Copying asset: '</span> <span class="tok-operator">+</span> <span class="tok-variableName">linkFileNameUrlDecoded</span><span class="tok-punctuation">)</span>
+
+          <span class="tok-variableName">fs</span><span class="tok-operator">.</span><span class="tok-propertyName">copyFileSync</span><span class="tok-punctuation">(</span>
+            <span class="tok-variableName">path</span><span class="tok-operator">.</span><span class="tok-propertyName">resolve</span><span class="tok-punctuation">(</span><span class="tok-variableName">assetsFolder</span> <span class="tok-operator">+</span> <span class="tok-string">'/'</span> <span class="tok-operator">+</span> <span class="tok-variableName">linkFileNameUrlDecoded</span><span class="tok-punctuation">)</span><span class="tok-punctuation">,</span>
+            <span class="tok-variableName">path</span><span class="tok-operator">.</span><span class="tok-propertyName">resolve</span><span class="tok-punctuation">(</span>
+              <span class="tok-variableName">destinationFolder</span> <span class="tok-operator">+</span> <span class="tok-string">'/assets/_'</span> <span class="tok-operator">+</span> <span class="tok-variableName">linkFileNameUrlDecoded</span><span class="tok-punctuation">,</span>
+            <span class="tok-punctuation">)</span><span class="tok-punctuation">,</span>
+          <span class="tok-punctuation">)</span>
+        <span class="tok-punctuation">}</span>
+      <span class="tok-punctuation">}</span>
+
+      <span class="tok-comment">// Replace the links with a format and path compatible with blot.</span>
+      <span class="tok-comment">// Again, the link to the asset must begin with an underscore.</span>
+
+      <span class="tok-keyword">let</span> <span class="tok-variableName tok-definition">modifiedFileText</span> <span class="tok-operator">=</span> <span class="tok-variableName">textFileText</span><span class="tok-operator">.</span><span class="tok-propertyName">replace</span><span class="tok-punctuation">(</span>
+        <span class="tok-variableName">originalLinkRegex</span><span class="tok-punctuation">,</span>
+        <span class="tok-string">'![$1](assets/_$2)'</span><span class="tok-punctuation">,</span>
+      <span class="tok-punctuation">)</span>
+
+      <span class="tok-comment">// Write out the file to the destination folder</span>
+
+      <span class="tok-variableName">console</span><span class="tok-operator">.</span><span class="tok-propertyName">log</span><span class="tok-punctuation">(</span><span class="tok-string">'Copying text file: '</span> <span class="tok-operator">+</span> <span class="tok-variableName">textFileName</span><span class="tok-punctuation">)</span>
+
+      <span class="tok-variableName">fs</span><span class="tok-operator">.</span><span class="tok-propertyName">writeFileSync</span><span class="tok-punctuation">(</span>
+        <span class="tok-variableName">path</span><span class="tok-operator">.</span><span class="tok-propertyName">resolve</span><span class="tok-punctuation">(</span><span class="tok-variableName">destinationFolder</span> <span class="tok-operator">+</span> <span class="tok-string">'/'</span> <span class="tok-operator">+</span> <span class="tok-variableName">textFileName</span><span class="tok-punctuation">)</span><span class="tok-punctuation">,</span>
+        <span class="tok-variableName">modifiedFileText</span><span class="tok-punctuation">,</span>
+      <span class="tok-punctuation">)</span>
+    <span class="tok-punctuation">}</span>
+  <span class="tok-punctuation">}</span><span class="tok-punctuation">)</span>
+<span class="tok-punctuation">}</span><span class="tok-punctuation">)</span>
+<span class="tok-punctuation">}</span>
+</code></pre>
+<p>Note: In the above delete '_' in the string '#_PublicPage'. As this blog page is dependant on this this tag, it can't exist without modification in the above code snippet.</p>
+
+            </div>
+            <nav class="pagination" aria-label="Neighbouring posts">
+                <a class="button pagination__prev" href="using-github-to-host-images.html"><span class="button__icon">←</span><span class="button__text">Using GitHub to Host Images</span></a>
+                <a class="button pagination__next" href="a-rough-guide-to-building-a-retro-pie-bar-top-arcade-game-machine.html"><span class="button__text">A Rough Guide to Building a Retro Pie Bar Top Arcade Game Machine</span><span class="button__icon">→</span></a>
+            </nav>
+        </article>
+    </main>
+        <footer class="footer">
+            <div class="footer__inner">
+                <div class="copyright">
+                    <span>&copy; 2026 g9n Blog</span>
+                    <span class="footer__separator" aria-hidden="true">::</span>
+                    <span>Published with <a href="https://etherpk.com" rel="noopener">EtherPK</a></span>
+                    <span class="footer__separator" aria-hidden="true">::</span><a href="feed.xml">Feed</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+        <script src="theme/search.js" defer></script>
+</body>
+</html>

@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="EtherPK">
-    <title>Attention Was Always the Bottleneck (AI) :: g9n Blog</title>
-    <meta name="description" content="In earlier days, we didn&#39;t want to spend our attention on machine code or assembly, and later memory management an garbage collection. So we invented tools and abstractions so that we didn&#39;t have to…">
+    <title>Maintaining a Blog with Jekyll, GitHub Pages and GitHub Codespaces :: g9n Blog</title>
+    <meta name="description" content="These are notes copied from the README.md of my public blog (the one you are reading now). Jekyll and GitHub pages have proven to a be a low friction workflow for curating and publishing posts.…">
     <link rel="stylesheet" href="theme/theme.css">
     
     
@@ -53,8 +53,8 @@
                     
                     
                 </li>
-                <li class="nav-current ">
-                    <a href="attention-was-always-the-bottleneck-ai.html" aria-current="page">Attention Was Always the Bottleneck (AI)</a>
+                <li class="">
+                    <a href="attention-was-always-the-bottleneck-ai.html">Attention Was Always the Bottleneck (AI)</a>
                     
                     
                 </li>
@@ -98,8 +98,8 @@
                     
                     
                 </li>
-                <li class="">
-                    <a href="maintaining-a-blog-with-jekyll-github-pages-and-github-codespaces.html">Maintaining a Blog with Jekyll, GitHub Pages and GitHub Codespaces</a>
+                <li class="nav-current ">
+                    <a href="maintaining-a-blog-with-jekyll-github-pages-and-github-codespaces.html" aria-current="page">Maintaining a Blog with Jekyll, GitHub Pages and GitHub Codespaces</a>
                     
                     
                 </li>
@@ -153,19 +153,57 @@
         </header>
     <main id="content" class="content">
         <article class="post">
-            <h1 class="post-title">Attention Was Always the Bottleneck (AI)</h1>
-            <div class="post-meta"><time class="post-date" datetime="2026-09-01">2026-09-01</time> :: <span class="post-reading">2 min read</span></div>
+            <h1 class="post-title">Maintaining a Blog with Jekyll, GitHub Pages and GitHub Codespaces</h1>
+            <div class="post-meta"><time class="post-date" datetime="2022-07-02">2022-07-02</time> :: <span class="post-reading">2 min read</span></div>
+        <nav class="toc framed" aria-label="Table of contents">
+            <p class="toc__title">:: Table of contents</p>
+            <ul>
+                <li class="toc-level-2"><a href="#replicating-this-workflow">Replicating this Workflow</a></li><li class="toc-level-2"><a href="#debug">Debug</a></li><li class="toc-level-2"><a href="#deploy">Deploy</a></li><li class="toc-level-2"><a href="#git-configuration">Git Configuration</a></li>
+            </ul>
+        </nav>
             <div class="post-content">
-<p>In earlier days, we didn't want to spend our attention on machine code or assembly, and later memory management an garbage collection. So we invented tools and abstractions so that we didn't have to think about these things any more. We had more valuable problems and since we could automate them away, they were no longer deemed worth our attention.</p>
-<p>The same is now happening with high level code. We're spending less and less time with the code, both writing and understanding it because AI / LLMs / Agents can automate much of the management of code, and anyway, we have more valuable problems.</p>
-<p>The difference I think is that while earlier solutions to more fundamental computing concerns were deterministic processes, AI is probabilistic. So while we can outsource our attention for a wider range of problems, we're going to be pulled back in for decision making, checking and 'taste' tests more regularly than we would have been previously, and this will happen alongside rapid proliferation of new code being written and deployed.</p>
-<p>I'm not yet sure what the full consequence of this will be, but I feel it's what is at the core of widely reported developer fatigue - the demand for attention is not going away, and the range of problems that require that attention will also grow.</p>
-<p>I think we can summarise that we are just doing more, faster. But not all resources (such as attention and the earth's physical resources are going to keep up).</p>
+<p><img src="assets/pasted-image-20220702135940-039ebc63.9739737c-1c94-4fc8-bb69-957b4de9b695.png" alt="Jekyll Blog in GitHub Codespaces"></p>
+<p>These are notes copied from the <a href="https://github.com/garethrbrown/garethrbrown.github.io">README.md</a> of my public blog (the one you are reading now).</p>
+<p><a href="https://jekyllrb.com/">Jekyll</a> and <a href="https://pages.github.com/">GitHub pages</a> have proven to a be a low friction workflow for curating and publishing posts. Making changes to the blog and debugging before publishing are made easier with this <a href="https://github.com/features/codespaces">GitHub Codespaces</a> workflow, since the environment now lives in the cloud, and does not need maintaining on PC.</p>
+<h2 id="replicating-this-workflow">Replicating this Workflow</h2>
+<p>Assuming an existing GitHub repository, create a new codespace.</p>
+<p>Once started, configure the codespace with the command to create the <code>devcontainer.json</code> configuration file:</p>
+<p><code>&gt; Codespaces: Configure Development Container Features</code></p>
+<p><code>devcontainer.json</code> is set up running Ubuntu with the Ruby feature:</p>
+<pre><code class="language-json"><span class="tok-string">&quot;features&quot;</span><span class="tok-punctuation">:</span> <span class="tok-punctuation">{</span>
+    <span class="tok-propertyName">&quot;ruby&quot;</span><span class="tok-punctuation">:</span> <span class="tok-string">&quot;3.1&quot;</span>
+<span class="tok-punctuation">}</span>
+</code></pre>
+<p>Following codespace container build / rebuild. Jekyll needs to be installed:</p>
+<pre><code>$ gem install jekyll bundler
+</code></pre>
+<p>Check with</p>
+<pre><code>$ jekyll -v
+</code></pre>
+<p>You will likely need to install gems from Gemfile.lock</p>
+<pre><code>$ bundle install
+</code></pre>
+<p>Due to error <code>cannot load such file -- webrick (LoadError)</code>, you may need to add the following package. (Ref: <a href="https://stackoverflow.com/questions/65617143/cannot-load-such-file-webrick-httputils">https://stackoverflow.com/questions/65617143/cannot-load-such-file-webrick-httputils</a>)</p>
+<pre><code>$ bundle add webrick
+</code></pre>
+<p>To create a new blog template, run:</p>
+<pre><code>$ jekyll new &lt;path&gt;
+</code></pre>
+<h2 id="debug">Debug</h2>
+<p>To debug locally run:</p>
+<pre><code>$ jekyll serve
+</code></pre>
+<h2 id="deploy">Deploy</h2>
+<p>Simply commit to main branch and push to GitHub. GitHub has adapters for building and deploying.</p>
+<h2 id="git-configuration">Git Configuration</h2>
+<p>Merge strategy configured (defaults to merge):</p>
+<pre><code> git config pull.rebase false 
+</code></pre>
 
             </div>
             <nav class="pagination" aria-label="Neighbouring posts">
-                <a class="button pagination__prev" href="make-sure-you-spend-time-with-tech-you-enjoy.html"><span class="button__icon">←</span><span class="button__text">Make Sure You Spend Time With Tech You Enjoy</span></a>
-                
+                <a class="button pagination__prev" href="managing-code-snippets-using-logseq.html"><span class="button__icon">←</span><span class="button__text">Managing Code Snippets Using Logseq</span></a>
+                <a class="button pagination__next" href="hackers-painters-and-kanban-for-software-as-a-creative-process.html"><span class="button__text">Hackers, Painters and Kanban for Software as a Creative Process</span><span class="button__icon">→</span></a>
             </nav>
         </article>
     </main>

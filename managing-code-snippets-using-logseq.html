@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="EtherPK">
-    <title>Attention Was Always the Bottleneck (AI) :: g9n Blog</title>
-    <meta name="description" content="In earlier days, we didn&#39;t want to spend our attention on machine code or assembly, and later memory management an garbage collection. So we invented tools and abstractions so that we didn&#39;t have to…">
+    <title>Managing Code Snippets Using Logseq :: g9n Blog</title>
+    <meta name="description" content="Loqseq is an excellent note taking application &#x2F; outliner that facilitates low friction note taking without breaking flow while retaining control over data by using local storage. Having been wanting…">
     <link rel="stylesheet" href="theme/theme.css">
     
     
@@ -53,8 +53,8 @@
                     
                     
                 </li>
-                <li class="nav-current ">
-                    <a href="attention-was-always-the-bottleneck-ai.html" aria-current="page">Attention Was Always the Bottleneck (AI)</a>
+                <li class="">
+                    <a href="attention-was-always-the-bottleneck-ai.html">Attention Was Always the Bottleneck (AI)</a>
                     
                     
                 </li>
@@ -108,8 +108,8 @@
                     
                     
                 </li>
-                <li class="">
-                    <a href="managing-code-snippets-using-logseq.html">Managing Code Snippets Using Logseq</a>
+                <li class="nav-current ">
+                    <a href="managing-code-snippets-using-logseq.html" aria-current="page">Managing Code Snippets Using Logseq</a>
                     
                     
                 </li>
@@ -153,19 +153,54 @@
         </header>
     <main id="content" class="content">
         <article class="post">
-            <h1 class="post-title">Attention Was Always the Bottleneck (AI)</h1>
-            <div class="post-meta"><time class="post-date" datetime="2026-09-01">2026-09-01</time> :: <span class="post-reading">2 min read</span></div>
+            <h1 class="post-title">Managing Code Snippets Using Logseq</h1>
+            <div class="post-meta"><time class="post-date" datetime="2022-07-01">2022-07-01</time> :: <span class="post-reading">3 min read</span></div>
+        <nav class="toc framed" aria-label="Table of contents">
+            <p class="toc__title">:: Table of contents</p>
+            <ul>
+                <li class="toc-level-2"><a href="#how-to-structure-a-code-snippet">How to Structure a Code Snippet</a></li><li class="toc-level-2"><a href="#navigation-to-and-searching-for-code-snippets">Navigation to and Searching for Code Snippets</a></li><li class="toc-level-2"><a href="#summary">Summary</a></li>
+            </ul>
+        </nav>
             <div class="post-content">
-<p>In earlier days, we didn't want to spend our attention on machine code or assembly, and later memory management an garbage collection. So we invented tools and abstractions so that we didn't have to think about these things any more. We had more valuable problems and since we could automate them away, they were no longer deemed worth our attention.</p>
-<p>The same is now happening with high level code. We're spending less and less time with the code, both writing and understanding it because AI / LLMs / Agents can automate much of the management of code, and anyway, we have more valuable problems.</p>
-<p>The difference I think is that while earlier solutions to more fundamental computing concerns were deterministic processes, AI is probabilistic. So while we can outsource our attention for a wider range of problems, we're going to be pulled back in for decision making, checking and 'taste' tests more regularly than we would have been previously, and this will happen alongside rapid proliferation of new code being written and deployed.</p>
-<p>I'm not yet sure what the full consequence of this will be, but I feel it's what is at the core of widely reported developer fatigue - the demand for attention is not going away, and the range of problems that require that attention will also grow.</p>
-<p>I think we can summarise that we are just doing more, faster. But not all resources (such as attention and the earth's physical resources are going to keep up).</p>
+<p><a href="https://logseq.com/">Loqseq</a> is an excellent note taking application / outliner that facilitates low friction note taking without breaking flow while retaining control over data by using local storage.</p>
+<p>Having been wanting to find a good code snippets workflow in Logseq, I've now settled on a system that works really well for me. This is a subject that I found little information on when starting out with Logseq but have now been using this workflow successfully for several months. I find this technique results in easy to read notes, allows for snippets capture in isolation or with surrounding context, and makes rediscovery easy via several search paths.</p>
+<h2 id="how-to-structure-a-code-snippet">How to Structure a Code Snippet</h2>
+<p>A code snippet can be created anywhere. In the journals pages or somewhere in a named page.</p>
+<p>The snippet is captured in the form:</p>
+<pre><code>- [[CodeSnip/TagA/TagB]] Explanatory title for snippet
+	- More information
+	- ```language
+  
+    // Some code
+    var a = 'Some string';  
+    
+	  ```
+</code></pre>
+<p><strong>The information on the top level line is:</strong></p>
+<ul>
+<li><code>CodeSnip</code> - Marks the block as being a code snippet. This could be anything, I chose this because it's easy to type and doesn't collide with any other term.</li>
+<li><code>TagA/TagB</code> - Can be one or more tags that form a 'breadcrumb' of related subjects for the snippet. Logseq will see each subject as a separate tag that can be used for grouping and navigation as shown below.</li>
+<li><code>Explanatory title for snippet</code> - Tells you what the snippet is about. _Note: It's important that this is on the same line as the <code>CodeSnip</code> tag as it makes it more likely that this title will be visible when searching or viewing linked references _</li>
+</ul>
+<p>Below that is any other relevant information and the snippet. Here's an example from my graph with notes on a feature in Moq, a C# unit testing / mocking library.</p>
+<p><strong>Here's how it looks as captured on the journal page:</strong></p>
+<p><img src="assets/pasted-image-20220701100531-33cd7383.f4f5f78e-bb58-4394-94ac-c62b5dea4d67.png" alt="Code snippet capture in logseq"></p>
+<h2 id="navigation-to-and-searching-for-code-snippets">Navigation to and Searching for Code Snippets</h2>
+<p>Note that at the bottom of this page, Logseq has identified <code>CodeSnip</code> and <code>C#</code> parent tags within the aggregate tag <code>[[CodeSnip/C##/Moq]]</code>. Something to note here is that Logseq treats the <code>C#</code> and <code>Moq</code> tags in this path as different tags with the same names elsewhere in my graph (I think this is the correct behaviour as implemented by the Logseq team, as for some subjects, the tag in the context of the path may have different semantics to the standalone tag - though an option to configure this behaviour might be nice). Because of this, I have also used the <code>[[Moq]]</code> tag in the explanatory title to give me the best chance of rediscovering this snippet.</p>
+<p><img src="assets/pasted-image-20220701083348-a6413e20.173843b5-1d04-4b2f-b497-856de85d8d3a.png" alt="Code snippet hierarchy in logseq"></p>
+<p>Clicking on the <code>C#</code> tag from the path hierarchy allows me to see all my <code>C#</code> code snippets. Similarly, clicking on a <code>[[CodeSnip/C#/Moq]]</code> tag allows me to see all my <code>Moq</code> code snippets.</p>
+<p><img src="assets/pasted-image-20220701083429-83a97da0.1dbf81a9-6b52-4553-854b-40038378b039.png" alt="Code snippet hierarchy navigation in logseq"></p>
+<p>Here's how the snippet shows up in a standard search for 'Moq' using Logseq's find functionality.</p>
+<p><img src="assets/pasted-image-20220701094910-e51430e5.48b4486d-dd96-42e4-8844-8567502b6902.png" alt="Code snippet find in logseq"></p>
+<p>Here's how it appears as a linked reference from the <code>Moq</code> page.</p>
+<p><img src="assets/pasted-image-20220701100458-d01947a3.5d375051-3e02-4e6e-a6e8-2fddd3c77f94.png" alt="Code snippet linked reference in logseq"></p>
+<h2 id="summary">Summary</h2>
+<p>So you can see this structure gives us several paths to rediscovering / finding our code snippet, and allows for it to be displayed clearly in each case.</p>
 
             </div>
             <nav class="pagination" aria-label="Neighbouring posts">
-                <a class="button pagination__prev" href="make-sure-you-spend-time-with-tech-you-enjoy.html"><span class="button__icon">←</span><span class="button__text">Make Sure You Spend Time With Tech You Enjoy</span></a>
-                
+                <a class="button pagination__prev" href="api-versioning-and-basic-ui-authentication-with-openapi-swagger-swashbuckle-in-net-core-6.html"><span class="button__icon">←</span><span class="button__text">API Versioning and Basic UI Authentication with OpenAPI (Swagger Swashbuckle) in .NET Core 6</span></a>
+                <a class="button pagination__next" href="maintaining-a-blog-with-jekyll-github-pages-and-github-codespaces.html"><span class="button__text">Maintaining a Blog with Jekyll, GitHub Pages and GitHub Codespaces</span><span class="button__icon">→</span></a>
             </nav>
         </article>
     </main>

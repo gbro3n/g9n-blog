@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="EtherPK">
-    <title>Attention Was Always the Bottleneck (AI) :: g9n Blog</title>
-    <meta name="description" content="In earlier days, we didn&#39;t want to spend our attention on machine code or assembly, and later memory management an garbage collection. So we invented tools and abstractions so that we didn&#39;t have to…">
+    <title>Fail Early, Fail Fast and why you should throw exceptions :: g9n Blog</title>
+    <meta name="description" content="Debugging is a necessary part of software engineering. All software has bugs, and so debugging goes with the territory. Some are simple to fix. Some are only show up under certain (sometimes unusual)…">
     <link rel="stylesheet" href="theme/theme.css">
     
     
@@ -53,8 +53,8 @@
                     
                     
                 </li>
-                <li class="nav-current ">
-                    <a href="attention-was-always-the-bottleneck-ai.html" aria-current="page">Attention Was Always the Bottleneck (AI)</a>
+                <li class="">
+                    <a href="attention-was-always-the-bottleneck-ai.html">Attention Was Always the Bottleneck (AI)</a>
                     
                     
                 </li>
@@ -63,8 +63,8 @@
                     
                     
                 </li>
-                <li class="">
-                    <a href="fail-early-fail-fast-and-why-you-should-throw-exceptions.html">Fail Early, Fail Fast and why you should throw exceptions</a>
+                <li class="nav-current ">
+                    <a href="fail-early-fail-fast-and-why-you-should-throw-exceptions.html" aria-current="page">Fail Early, Fail Fast and why you should throw exceptions</a>
                     
                     
                 </li>
@@ -153,19 +153,48 @@
         </header>
     <main id="content" class="content">
         <article class="post">
-            <h1 class="post-title">Attention Was Always the Bottleneck (AI)</h1>
-            <div class="post-meta"><time class="post-date" datetime="2026-09-01">2026-09-01</time> :: <span class="post-reading">2 min read</span></div>
+            <h1 class="post-title">Fail Early, Fail Fast and why you should throw exceptions</h1>
+            <div class="post-meta"><time class="post-date" datetime="2018-08-07">2018-08-07</time> :: <span class="post-reading">5 min read</span></div>
+        <nav class="toc framed" aria-label="Table of contents">
+            <p class="toc__title">:: Table of contents</p>
+            <ul>
+                <li class="toc-level-3"><a href="#however-dont-always-crash-the-application">However, Don&#39;t (Always) Crash the Application</a></li><li class="toc-level-3"><a href="#making-failure-visible">Making Failure Visible</a></li><li class="toc-level-3"><a href="#prioritising-errors">Prioritising Errors </a></li><li class="toc-level-3"><a href="#final-note">Final Note</a></li>
+            </ul>
+        </nav>
             <div class="post-content">
-<p>In earlier days, we didn't want to spend our attention on machine code or assembly, and later memory management an garbage collection. So we invented tools and abstractions so that we didn't have to think about these things any more. We had more valuable problems and since we could automate them away, they were no longer deemed worth our attention.</p>
-<p>The same is now happening with high level code. We're spending less and less time with the code, both writing and understanding it because AI / LLMs / Agents can automate much of the management of code, and anyway, we have more valuable problems.</p>
-<p>The difference I think is that while earlier solutions to more fundamental computing concerns were deterministic processes, AI is probabilistic. So while we can outsource our attention for a wider range of problems, we're going to be pulled back in for decision making, checking and 'taste' tests more regularly than we would have been previously, and this will happen alongside rapid proliferation of new code being written and deployed.</p>
-<p>I'm not yet sure what the full consequence of this will be, but I feel it's what is at the core of widely reported developer fatigue - the demand for attention is not going away, and the range of problems that require that attention will also grow.</p>
-<p>I think we can summarise that we are just doing more, faster. But not all resources (such as attention and the earth's physical resources are going to keep up).</p>
+<p>Debugging is a necessary part of software engineering. All software has bugs, and so debugging goes with the territory. Some are simple to fix. Some are only show up under certain (sometimes unusual) conditions, maybe after an operation has been running for some time or if that operation occurs at a certain time of day. Sometimes applications catch bugs and produce a helpful message or  a stack trace in logs that can help us lead us to where the bug occurred. And sometimes they don't because exceptions are trapped and that information discarded.</p>
+<p>It's rare, but most developers have experienced bugs during their career that take them away from feature development for a day or even a week at a time.</p>
+<p>Such bugs often present them in a form such as:</p>
+<ul>
+<li>&quot;The application locks up at around 10am every morning and we don't know why.&quot;</li>
+<li>&quot;The user clicks the button but nothing happens, and nothing shows up in the console.&quot;</li>
+<li>&quot;The customer says they placed the order but we can't see it in the back end.&quot;</li>
+<li>&quot;The wait message shows indefinitely&quot;</li>
+</ul>
+<p>There is a temptation for programmers to attempt to build robust applications by trapping exceptions and trying to 'handle' them. This maybe the correct action if the error condition is known to be frequent and there is a clear way of working around the error. For example when making calls to an SMTP server that is known to sometimes reject requests, or uses a less than robust network connection, the programmer might want to build in a retry mechanism. Of course it is useful for users or administrators of a system to have to deal with as few failures as possible.</p>
+<p>All too often however, programmers catch exceptions without fully 'handling' the error. It might be that a program continues to run without a required value because the exception thrown due to a failed database connection was trapped and the method allowed to return a null value. Such a program might not fall over completely, but it may behave strangely, or not complete subsequent operations in the way that was intended.</p>
+<p>The presumption has to be that every line of code in your application does something important. If not, why is it there? Allowing it to work with incorrect or missing data should be expected to be problematic. The resulting types of bugs, where something is 'wrong', rather than the application having visibly failed are usually harder to track down than the equivalent situation where the application has been allowed to fail.</p>
+<p>###Fail Fast, Fail Early<br>
+The solution to the problem is to 'fail fast, fail early'. Exceptions are called exceptions because they occur in exceptional circumstances. The programmer is not expecting the user to experience them regularly. Clear and visible failure prompts a fix, and makes the cause of the exception easier to find. In the long term, this is what results in robust software.</p>
+<h3 id="however-dont-always-crash-the-application">However, Don't (Always) Crash the Application</h3>
+<p>Making failure visible does not mean crashing the application. Presenting the user with technical looking error messages is rarely appropriate. In some types of application, such as software that runs on the desktop or as a service, allowing a crash is likely not acceptable, and for mission critical software applications potentially unsafe.</p>
+<h3 id="making-failure-visible">Making Failure Visible</h3>
+<p>So if an application crash is not acceptable, then some sort of error handling is necessary. This should take the form of a global exception handler. Where programs run multiple threads, trap exceptions at the highest possible level, either within the thread or, if your language / framework allows, by assigning an exception handler to the thread.</p>
+<p>Ultimately, the operation that the application was attempting should stop, even if the application itself does not fully. The error should then be logged for the attention of a developer.</p>
+<p>Where the program has a user interface and the operation was intended to result in visible feedback to the user, a user friendly error view should be presented to the user. This may prompt the user to report the issue. If that is likely, then it might be useful to print the date and time on the screen, and ask the user to take a note of what they were doing at the time when the error occurred.</p>
+<h3 id="prioritising-errors">Prioritising Errors </h3>
+<p>Some errors are expected frequently, such as 404 errors when you run a public facing web application. Content that no longer exists or where bots or users attempt to guess URLs that never existed result in 404s. It might be useful to review these 404s intermittently, but it's unlikely that you want to know about every one. Application errors, and fatal errors that do crash a process or sub process likely require more attention. Some development teams write or copy logs to a centralised location and make failures visible on a UI that everyone can see. Smaller applications might email out errors to system administrators. There are services like Splunk that help to process log data, useful where large volumes of log information are created.</p>
+<h3 id="final-note">Final Note</h3>
+<p>So if you're going to fail, do it fast, visibly, and make sure you collect the information you need to direct you to the source of the problem. While this may result in more visible errors in early life for an application, it will result in more robust, easy maintain software in the future.</p>
+<p>Further reading on this topic can be found below.</p>
+<p><a href="https://www.martinfowler.com/ieeeSoftware/failFast.pdf">https://www.martinfowler.com/ieeeSoftware/failFast.pdf</a></p>
+<p><a href="https://stackoverflow.com/questions/2807241/what-does-the-expression-fail-early-mean-and-when-would-you-want-to-do-so">https://stackoverflow.com/questions/2807241/what-does-the-expression-fail-early-mean-and-when-would-you-want-to-do-so</a><br>
+No newline at end of file</p>
 
             </div>
             <nav class="pagination" aria-label="Neighbouring posts">
-                <a class="button pagination__prev" href="make-sure-you-spend-time-with-tech-you-enjoy.html"><span class="button__icon">←</span><span class="button__text">Make Sure You Spend Time With Tech You Enjoy</span></a>
-                
+                <a class="button pagination__prev" href="aspnet-file-uploader-with-signalr-progress-bar-and-extended-input-stream-processing.html"><span class="button__icon">←</span><span class="button__text">ASP.NET File Uploader with SignalR Progress Bar and Extended Input Stream Processing</span></a>
+                <a class="button pagination__next" href="how-to-inject-google-adsense-in-article-script-into-your-html-aspnet-core-razor.html"><span class="button__text">How to inject Google Adsense In-Article script into your HTML (ASP.NET Core Razor)</span><span class="button__icon">→</span></a>
             </nav>
         </article>
     </main>

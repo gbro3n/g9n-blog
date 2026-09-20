@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="EtherPK">
-    <title>Attention Was Always the Bottleneck (AI) :: g9n Blog</title>
-    <meta name="description" content="In earlier days, we didn&#39;t want to spend our attention on machine code or assembly, and later memory management an garbage collection. So we invented tools and abstractions so that we didn&#39;t have to…">
+    <title>How to create a deep copy of an object in JavaScript, TypeScript :: g9n Blog</title>
+    <meta name="description" content="If you already know the difference between a deep and shallow copy of an object, then you don’t need to read the very good but quite long articles I got from my Google search on the most straight…">
     <link rel="stylesheet" href="theme/theme.css">
     
     
@@ -53,8 +53,8 @@
                     
                     
                 </li>
-                <li class="nav-current ">
-                    <a href="attention-was-always-the-bottleneck-ai.html" aria-current="page">Attention Was Always the Bottleneck (AI)</a>
+                <li class="">
+                    <a href="attention-was-always-the-bottleneck-ai.html">Attention Was Always the Bottleneck (AI)</a>
                     
                     
                 </li>
@@ -73,8 +73,8 @@
                     
                     
                 </li>
-                <li class="">
-                    <a href="how-to-create-a-deep-copy-of-an-object-in-javascript-typescript.html">How to create a deep copy of an object in JavaScript, TypeScript</a>
+                <li class="nav-current ">
+                    <a href="how-to-create-a-deep-copy-of-an-object-in-javascript-typescript.html" aria-current="page">How to create a deep copy of an object in JavaScript, TypeScript</a>
                     
                     
                 </li>
@@ -153,19 +153,36 @@
         </header>
     <main id="content" class="content">
         <article class="post">
-            <h1 class="post-title">Attention Was Always the Bottleneck (AI)</h1>
-            <div class="post-meta"><time class="post-date" datetime="2026-09-01">2026-09-01</time> :: <span class="post-reading">2 min read</span></div>
+            <h1 class="post-title">How to create a deep copy of an object in JavaScript, TypeScript</h1>
+            <div class="post-meta"><time class="post-date" datetime="2021-02-25">2021-02-25</time> :: <span class="post-reading">1 min read</span></div>
             <div class="post-content">
-<p>In earlier days, we didn't want to spend our attention on machine code or assembly, and later memory management an garbage collection. So we invented tools and abstractions so that we didn't have to think about these things any more. We had more valuable problems and since we could automate them away, they were no longer deemed worth our attention.</p>
-<p>The same is now happening with high level code. We're spending less and less time with the code, both writing and understanding it because AI / LLMs / Agents can automate much of the management of code, and anyway, we have more valuable problems.</p>
-<p>The difference I think is that while earlier solutions to more fundamental computing concerns were deterministic processes, AI is probabilistic. So while we can outsource our attention for a wider range of problems, we're going to be pulled back in for decision making, checking and 'taste' tests more regularly than we would have been previously, and this will happen alongside rapid proliferation of new code being written and deployed.</p>
-<p>I'm not yet sure what the full consequence of this will be, but I feel it's what is at the core of widely reported developer fatigue - the demand for attention is not going away, and the range of problems that require that attention will also grow.</p>
-<p>I think we can summarise that we are just doing more, faster. But not all resources (such as attention and the earth's physical resources are going to keep up).</p>
+<p>If you already know the difference between a deep and shallow copy of an object, then you don’t need to read the <a href="https://medium.com/@manjuladube/understanding-deep-and-shallow-copy-in-javascript-13438bad941c">very good but quite long articles</a> I got from my Google search on the most straight forward way to create a deep copy of an object in JavaScript/TypeScript.</p>
+<p>Basically, do this:</p>
+<pre><code>let deepCopy = JSON.parse(JSON.stringify(objectToDeepCopy));
+</code></pre>
+<p>Here is a full working example, which you can play with on <a href="https://codepen.io/appsoftware/pen/XWNVByp?editors=1111">Codepen</a> if you like.</p>
+<pre><code class="language-javascript"><span class="tok-keyword">let</span> <span class="tok-variableName tok-definition">anArray</span> <span class="tok-operator">=</span> <span class="tok-punctuation">[</span>
+  <span class="tok-punctuation">{</span> <span class="tok-propertyName tok-definition">id</span><span class="tok-punctuation">:</span> <span class="tok-number">1</span><span class="tok-punctuation">,</span> <span class="tok-propertyName tok-definition">name</span><span class="tok-punctuation">:</span> <span class="tok-string">'Foo'</span><span class="tok-punctuation">}</span><span class="tok-punctuation">,</span>
+  <span class="tok-punctuation">{</span> <span class="tok-propertyName tok-definition">id</span><span class="tok-punctuation">:</span> <span class="tok-number">2</span><span class="tok-punctuation">,</span> <span class="tok-propertyName tok-definition">name</span><span class="tok-punctuation">:</span> <span class="tok-string">'Bar'</span><span class="tok-punctuation">}</span>
+<span class="tok-punctuation">]</span><span class="tok-punctuation">;</span>
+
+<span class="tok-comment">// Create shallow and deep copies of anArray</span>
+
+<span class="tok-keyword">let</span> <span class="tok-variableName tok-definition">shallowCopyOfArray</span> <span class="tok-operator">=</span> <span class="tok-variableName">anArray</span><span class="tok-punctuation">;</span>
+
+<span class="tok-keyword">let</span> <span class="tok-variableName tok-definition">deepCopyOfArray</span> <span class="tok-operator">=</span> <span class="tok-variableName">JSON</span><span class="tok-operator">.</span><span class="tok-propertyName">parse</span><span class="tok-punctuation">(</span><span class="tok-variableName">JSON</span><span class="tok-operator">.</span><span class="tok-propertyName">stringify</span><span class="tok-punctuation">(</span><span class="tok-variableName">anArray</span><span class="tok-punctuation">)</span><span class="tok-punctuation">)</span><span class="tok-punctuation">;</span> <span class="tok-comment">// &lt;!-- Like this to create a deep copy!</span>
+
+<span class="tok-comment">// Log compare of instance equality</span>
+
+<span class="tok-variableName">console</span><span class="tok-operator">.</span><span class="tok-propertyName">log</span><span class="tok-punctuation">(</span><span class="tok-string">'anArray is same object instance as shallowCopyOfArray'</span><span class="tok-punctuation">,</span> <span class="tok-variableName">shallowCopyOfArray</span> <span class="tok-operator">===</span> <span class="tok-variableName">anArray</span><span class="tok-punctuation">)</span><span class="tok-punctuation">;</span> <span class="tok-comment">// true</span>
+
+<span class="tok-variableName">console</span><span class="tok-operator">.</span><span class="tok-propertyName">log</span><span class="tok-punctuation">(</span><span class="tok-string">'deepCopyOfArray is same object instance as shallowCopyOfArray'</span><span class="tok-punctuation">,</span> <span class="tok-variableName">deepCopyOfArray</span> <span class="tok-operator">===</span> <span class="tok-variableName">anArray</span><span class="tok-punctuation">)</span><span class="tok-punctuation">;</span> <span class="tok-comment">// false</span>
+</code></pre>
 
             </div>
             <nav class="pagination" aria-label="Neighbouring posts">
-                <a class="button pagination__prev" href="make-sure-you-spend-time-with-tech-you-enjoy.html"><span class="button__icon">←</span><span class="button__text">Make Sure You Spend Time With Tech You Enjoy</span></a>
-                
+                <a class="button pagination__prev" href="implementing-microsoftextensionsloggingilogger-with-nlog.html"><span class="button__icon">←</span><span class="button__text">Implementing Microsoft.Extensions.Logging.ILogger with NLog</span></a>
+                <a class="button pagination__next" href="how-to-wrap-a-typescript-js-callback-with-async-await.html"><span class="button__text">How to wrap a TypeScript JS callback with async  await</span><span class="button__icon">→</span></a>
             </nav>
         </article>
     </main>

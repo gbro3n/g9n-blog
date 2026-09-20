@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="EtherPK">
+    <title>API Versioning and Basic UI Authentication with OpenAPI (Swagger Swashbuckle) in .NET Core 6 :: g9n Blog</title>
+    <meta name="description" content="Introduction This post aims to detail how to implement an OpenAPI (Swagger) configuration in a .NET Core 6 web app that includes two API versioning strategy options (URL &#x2F; HTTP header) along with…">
+    <link rel="stylesheet" href="theme/theme.css">
+    
+    
+    <link rel="alternate" type="application/rss+xml" title="g9n Blog" href="feed.xml">
+</head>
+<body class="layout-terminal">
+    <a class="skip-link" href="#content">Skip to content</a>
+    <div class="container">
+        <header class="header">
+            <div class="header__inner">
+                <a class="site-title logo" href="index.html">
+                    <span class="logo__mark"><!-- The EtherPK icon (resources/brand/etherpk-icon-*.svg), inline so the page fetches nothing and it takes the text colour; aria-hidden because the title beside it is the name. Fill the "logo" include, or edit this partial, for your own. -->
+                                             <svg class="site-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 191.82 166.13" width="24" height="21" aria-hidden="true" focusable="false"><path fill="currentColor" fill-rule="evenodd" d="M67.09,132.92,47.93,166.13H9.59L0,149.52,86.33,0H105.5L19.17,149.52H38.34l19.17-33.2h76.8l9.59,16.6Zm48-83.12,9.65,16.71H143.9L115.08,16.6q-24,41.57-48,83.12H143.9q14.37,24.9,28.76,49.8h-96l-9.59,16.61H182.24l9.58-16.61-38.34-66.4H96C95.85,82.9,113.39,52.73,115.08,49.8Z"/></svg>
+</span>
+                    <span class="logo__text">g9n Blog</span>
+                    <span class="logo__cursor" aria-hidden="true"></span>
+                </a>
+                <button class="nav-toggle menu-trigger" type="button" aria-controls="site-nav" aria-expanded="false" aria-label="Menu">Menu</button>
+            </div>
+            <div class="nav-backdrop" hidden></div>
+            <nav id="site-nav" class="menu site-nav" aria-label="Site">
+                <ul class="menu__inner site-nav-list">
+                <li class="">
+                    <a href="a-custom-workflow-to-publish-from-obsidian-to-blotim.html">A Custom Workflow to Publish from Obsidian to Blot.im</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="a-rough-guide-to-building-a-retro-pie-bar-top-arcade-game-machine.html">A Rough Guide to Building a Retro Pie Bar Top Arcade Game Machine</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="a-utility-class-for-finding-database-deadlocks-in-net-applications.html">A Utility Class for Finding Database Deadlocks in .NET Applications</a>
+                    
+                    
+                </li>
+                <li class="nav-current ">
+                    <a href="api-versioning-and-basic-ui-authentication-with-openapi-swagger-swashbuckle-in-net-core-6.html" aria-current="page">API Versioning and Basic UI Authentication with OpenAPI (Swagger Swashbuckle) in .NET Core 6</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="aspnet-file-uploader-with-signalr-progress-bar-and-extended-input-stream-processing.html">ASP.NET File Uploader with SignalR Progress Bar and Extended Input Stream Processing</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="attention-was-always-the-bottleneck-ai.html">Attention Was Always the Bottleneck (AI)</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="converting-enum-types-by-value-in-c.html">Converting Enum Types By Value in C#</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="fail-early-fail-fast-and-why-you-should-throw-exceptions.html">Fail Early, Fail Fast and why you should throw exceptions</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="hackers-painters-and-kanban-for-software-as-a-creative-process.html">Hackers, Painters and Kanban for Software as a Creative Process</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="how-to-create-a-deep-copy-of-an-object-in-javascript-typescript.html">How to create a deep copy of an object in JavaScript, TypeScript</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="how-to-inject-google-adsense-in-article-script-into-your-html-aspnet-core-razor.html">How to inject Google Adsense In-Article script into your HTML (ASP.NET Core Razor)</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="how-to-wrap-a-typescript-js-callback-with-async-await.html">How to wrap a TypeScript JS callback with async  await</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="implementing-microsoftextensionsloggingilogger-with-nlog.html">Implementing Microsoft.Extensions.Logging.ILogger with NLog</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="introducing-the-g9n-blog.html">Introducing the g9n blog</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="maintaining-a-blog-with-jekyll-github-pages-and-github-codespaces.html">Maintaining a Blog with Jekyll, GitHub Pages and GitHub Codespaces</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="make-sure-you-spend-time-with-tech-you-enjoy.html">Make Sure You Spend Time With Tech You Enjoy</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="managing-code-snippets-using-logseq.html">Managing Code Snippets Using Logseq</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="observations-around-prominent-programmer-sentiment-and-ai.html">Observations Around Prominent Programmer Sentiment and AI</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="robust-error-handling-in-aspnet-core.html">Robust Error Handling in ASP.NET Core</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="sanitizing-html-in-net-core.html">Sanitizing HTML in .NET Core</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="the-skills-i-think-we-might-gain-ai.html">The skills I think we might gain (AI)</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="uploading-directly-to-s3-from-client-using-pre-signed-urls-javascript-net.html">Uploading Directly to S3 from Client Using Pre-Signed URLs (JavaScript,  .NET)</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="using-github-to-host-images.html">Using GitHub to Host Images</a>
+                    
+                    
+                </li>
+                </ul>
+                <form class="site-search" role="search" data-search-index="search.json" data-search-script="search-index.js">
+                    <label class="visually-hidden" for="site-search-input">Search</label>
+                    <input id="site-search-input" type="search" name="q" placeholder="$ search" autocomplete="off">
+                    <div class="site-search-results" role="listbox" hidden></div>
+                </form>
+            </nav>
+        </header>
+    <main id="content" class="content">
+        <article class="post">
+            <h1 class="post-title">API Versioning and Basic UI Authentication with OpenAPI (Swagger Swashbuckle) in .NET Core 6</h1>
+            <div class="post-meta"><time class="post-date" datetime="2022-01-18">2022-01-18</time> :: <span class="post-reading">8 min read</span></div>
+        <nav class="toc framed" aria-label="Table of contents">
+            <p class="toc__title">:: Table of contents</p>
+            <ul>
+                <li class="toc-level-2"><a href="#introduction">Introduction</a></li><li class="toc-level-2"><a href="#what-were-setting-up-here">What we&#39;re setting up here</a></li><li class="toc-level-2"><a href="#how-it-looks">How it looks</a></li><li class="toc-level-2"><a href="#configuration">Configuration</a></li><li class="toc-level-3"><a href="#programcs">Program.cs</a></li><li class="toc-level-2"><a href="#swagger-ui-basic-authentication">Swagger UI Basic Authentication</a></li><li class="toc-level-2"><a href="#idocumentfilter-and-ioperationfilter">IDocumentFilter and IOperationFilter</a></li><li class="toc-level-3"><a href="#swaggeraddheaderparameteroperationfiltercs">SwaggerAddHeaderParameterOperationFilter.cs</a></li><li class="toc-level-3"><a href="#replaceversionwithexactvalueinpathfiltercs">ReplaceVersionWithExactValueInPathFilter.cs</a></li><li class="toc-level-3"><a href="#removeversionparameterfiltercs">RemoveVersionParameterFilter.cs</a></li><li class="toc-level-2"><a href="#summary">Summary</a></li>
+            </ul>
+        </nav>
+            <div class="post-content">
+<h2 id="introduction">Introduction</h2>
+<p>This post aims to detail how to implement an OpenAPI (Swagger) configuration in a .NET Core 6 web app that includes two API versioning strategy options (URL / HTTP header) along with Basic authentication for access to the Swagger UI. This set up includes configuration to ensure that versioning parameters are forwarded from the Swagger UI in requests to the API.</p>
+<p>Full code for this post can be found on <a href="https://github.com/garethrbrown/openapi-swagger-api-versioning-demo">GitHub</a>:</p>
+<p><a href="https://github.com/garethrbrown/openapi-swagger-api-versioning-demo">https://github.com/garethrbrown/openapi-swagger-api-versioning-demo</a></p>
+<h2 id="what-were-setting-up-here">What we're setting up here</h2>
+<ul>
+<li>An OpenAPI / Swagger configuration in <code>Program.cs</code></li>
+<li>API versioning with an option for switching between URL and HTTP header versioning strategies</li>
+<li>Implementations of IOperationFilter and IDocumentFilter to manipulate the parameter options and values passed in requests to API from the Swagger UI</li>
+<li>Bearer token configuration for OAuth protection of API endpoints (note that OAuth is not fully implemented for this example, only the Swagger configuration)</li>
+<li>Basic authentication for the Swagger UI</li>
+</ul>
+<h2 id="how-it-looks">How it looks</h2>
+<p><strong>Basic authentication for the Swagger UI</strong></p>
+<p><img src="assets/pasted-image-20220118130612-afb155ec.c95b8509-6188-41f6-87b6-6e7ac03b6dae.png" alt="Basic authentication for the Swagger UI"></p>
+<p><strong>Version in header in Swagger UI</strong>
+<img src="assets/pasted-image-20220118130459-8ce02f82.3c7c8485-5a6c-46e0-ab1a-b7b5a243ff9e.png" alt="Version in header in Swagger UI"></p>
+<p><strong>Version in path in Swagger UI</strong>
+<img src="assets/pasted-image-20220118130300-f75cc19f.fa62edae-0edd-476a-acb2-c40e432f2f33.png" alt="Version in path in Swagger UI"></p>
+<h2 id="configuration">Configuration</h2>
+<p>The bulk of the configuration is included in Program.cs (prior to .NET 6 it would have been in Startup.cs).</p>
+<p>A custom enumeration is implemented below to allow us to switch between API versioning strategies (in practice you may decide to retain only code in conditional branches relating to the strategy you decide on). Switch between <code>VersionStrategy.Path</code> and <code>VersionStrategy.Header</code> to try the two strategies.</p>
+<pre><code class="language-csharp"><span class="tok-keyword">var</span> <span class="tok-variableName tok-definition">versionStrategy</span> <span class="tok-operator">=</span> <span class="tok-variableName">VersionStrategy</span>.<span class="tok-variableName">Path</span>; <span class="tok-comment">// VersionStrategy.Header</span>
+</code></pre>
+<p><strong>Header versioning</strong> causes the API to route to different controller actions based on the <code>Api-Version</code> header value e.g.</p>
+<pre><code>Api-Version: 1.0
+</code></pre>
+<p><strong>URL versioning</strong> causes the API to route to different controller actions based the version included in the path e.g.</p>
+<pre><code>https://somedomain.com/api/v1.0/endpoint
+</code></pre>
+<p>Both strategies have advantages and disadvantages. For example, URL versioning means that a client cannot negate to include a version parameter (in the headers) for example, leaving them susceptible to breaking changes when the default API version progresses.</p>
+<p>Header versioning allows the client to ignore versioning all together providing the endpoint is not removed from the API specification.</p>
+<p>Other strategies available include media type and query string versioning (not included in this post).</p>
+<p><code>IOperationFilter</code> and <code>IDocumentFilter</code> implementations are included and added to configuration to push the UI docs version number into the parameters displayed and cause them to be included with requests to the API</p>
+<h3 id="programcs">Program.cs</h3>
+<pre><code class="language-csharp"><span class="tok-keyword">using</span> <span class="tok-variableName">OpenApiVersionDemo</span>.<span class="tok-variableName">Common</span>;
+<span class="tok-keyword">using</span> <span class="tok-variableName">OpenApiVersionDemo</span>.<span class="tok-variableName">WebApi</span>;
+<span class="tok-keyword">using</span> <span class="tok-variableName">OpenApiVersionDemo</span>.<span class="tok-variableName">WebApi</span>.<span class="tok-variableName">Middleware</span>;
+<span class="tok-keyword">using</span> <span class="tok-variableName">Microsoft</span>.<span class="tok-variableName">AspNetCore</span>.<span class="tok-variableName">Mvc</span>;
+<span class="tok-keyword">using</span> <span class="tok-variableName">Microsoft</span>.<span class="tok-variableName">AspNetCore</span>.<span class="tok-variableName">Mvc</span>.<span class="tok-variableName">Versioning</span>;
+<span class="tok-keyword">using</span> <span class="tok-variableName">Microsoft</span>.<span class="tok-variableName">OpenApi</span>.<span class="tok-variableName">Models</span>;
+<span class="tok-keyword">using</span> <span class="tok-variableName">System</span>.<span class="tok-variableName">Reflection</span>;
+<span class="tok-keyword">using</span> <span class="tok-variableName">OpenApiVersionDemo</span>.<span class="tok-variableName">Services</span>;
+<span class="tok-keyword">using</span> <span class="tok-variableName">OpenApiVersionDemo</span>.<span class="tok-variableName">Services</span>.<span class="tok-variableName">Interfaces</span>;
+
+<span class="tok-keyword">var</span> <span class="tok-variableName tok-definition">versionStrategy</span> <span class="tok-operator">=</span> <span class="tok-variableName">VersionStrategy</span>.<span class="tok-variableName">Path</span>;
+
+<span class="tok-keyword">var</span> <span class="tok-variableName tok-definition">builder</span> <span class="tok-operator">=</span> <span class="tok-variableName">WebApplication</span>.<span class="tok-variableName">CreateBuilder</span>(<span class="tok-variableName">args</span>);
+
+<span class="tok-comment">// Use intermediate builder to obtain configuration etc</span>
+
+<span class="tok-keyword">var</span> <span class="tok-variableName tok-definition">intermediateBuilder</span> <span class="tok-operator">=</span> <span class="tok-variableName">WebApplication</span>.<span class="tok-variableName">CreateBuilder</span>(<span class="tok-variableName">args</span>);
+
+<span class="tok-keyword">var</span> <span class="tok-variableName tok-definition">intermediateApp</span> <span class="tok-operator">=</span> <span class="tok-variableName">intermediateBuilder</span>.<span class="tok-variableName">Build</span>();
+
+<span class="tok-comment">// Add services to the container.</span>
+
+<span class="tok-keyword">var</span> <span class="tok-variableName tok-definition">webHostEnvironment</span> <span class="tok-operator">=</span> <span class="tok-variableName">intermediateApp</span>.<span class="tok-variableName">Services</span>.<span class="tok-variableName">GetRequiredService</span><span class="tok-operator">&lt;</span><span class="tok-variableName">IWebHostEnvironment</span><span class="tok-operator">&gt;</span>();
+
+<span class="tok-keyword">var</span> <span class="tok-variableName tok-definition">nLogLogger</span> <span class="tok-operator">=</span> <span class="tok-keyword">new</span> <span class="tok-variableName">NLogLogger</span>(<span class="tok-variableName">webHostEnvironment</span>.<span class="tok-variableName">EnvironmentName</span>);
+
+<span class="tok-variableName">builder</span>.<span class="tok-variableName">Services</span>.<span class="tok-variableName">AddSingleton</span><span class="tok-operator">&lt;</span><span class="tok-variableName">ILogger</span><span class="tok-operator">&gt;</span>(<span class="tok-variableName">nLogLogger</span>);
+
+<span class="tok-variableName">builder</span>.<span class="tok-variableName">Services</span>.<span class="tok-variableName">AddTransient</span><span class="tok-operator">&lt;</span><span class="tok-variableName">ITestService</span>, <span class="tok-variableName">TestService</span><span class="tok-operator">&gt;</span>();
+
+<span class="tok-variableName">builder</span>.<span class="tok-variableName">Services</span>.<span class="tok-variableName">AddTransient</span><span class="tok-operator">&lt;</span><span class="tok-variableName">SwaggerAuthenticationMiddleware</span><span class="tok-operator">&gt;</span>();
+
+<span class="tok-variableName">builder</span>.<span class="tok-variableName">Services</span>.<span class="tok-variableName">AddControllers</span>();
+
+<span class="tok-variableName">builder</span>.<span class="tok-variableName">Services</span>.<span class="tok-variableName">AddVersionedApiExplorer</span>(<span class="tok-variableName">o</span> <span class="tok-operator">=&gt;</span>
+{
+    <span class="tok-variableName">o</span>.<span class="tok-variableName">GroupNameFormat</span> <span class="tok-operator">=</span> <span class="tok-string">&quot;'v'VVV&quot;</span>;
+
+    <span class="tok-comment">// Value applies if using URL segment versioning</span>
+
+    <span class="tok-variableName">o</span>.<span class="tok-variableName">SubstituteApiVersionInUrl</span> <span class="tok-operator">=</span> <span class="tok-atom">true</span>;
+
+    <span class="tok-comment">// ApiVersionParameterSource prevents the version</span>
+    <span class="tok-comment">// parameters from showing up in swagger UI, and is also required specifically where</span>
+    <span class="tok-comment">// VersionStrategy.Header is used</span>
+
+    <span class="tok-keyword">if</span> (<span class="tok-variableName">versionStrategy</span> <span class="tok-operator">==</span> <span class="tok-variableName">VersionStrategy</span>.<span class="tok-variableName">Path</span>)
+    {
+        <span class="tok-variableName">o</span>.<span class="tok-variableName">ApiVersionParameterSource</span> <span class="tok-operator">=</span> <span class="tok-keyword">new</span> <span class="tok-variableName">UrlSegmentApiVersionReader</span>();
+    }
+    <span class="tok-keyword">else</span> <span class="tok-keyword">if</span> (<span class="tok-variableName">versionStrategy</span> <span class="tok-operator">==</span> <span class="tok-variableName">VersionStrategy</span>.<span class="tok-variableName">Header</span>)
+    {
+        <span class="tok-variableName">o</span>.<span class="tok-variableName">ApiVersionParameterSource</span> <span class="tok-operator">=</span> <span class="tok-keyword">new</span> <span class="tok-variableName">HeaderApiVersionReader</span>();
+    }
+    <span class="tok-keyword">else</span>
+    {
+        <span class="tok-keyword">throw</span> <span class="tok-keyword">new</span> <span class="tok-variableName">InvalidOperationException</span>(<span class="tok-variableName">$</span><span class="tok-string">&quot;Unhandled value for {nameof(versionStrategy)}&quot;</span>);
+    }
+});
+
+<span class="tok-keyword">var</span> <span class="tok-variableName tok-definition">configuration</span> <span class="tok-operator">=</span> <span class="tok-keyword">new</span> <span class="tok-variableName">ConfigurationBuilder</span>()
+                    .<span class="tok-variableName">AddJsonFile</span>(<span class="tok-variableName">$</span><span class="tok-string">&quot;appsettings.{webHostEnvironment.EnvironmentName}.json&quot;</span>, <span class="tok-variableName">optional</span>: <span class="tok-atom">false</span>, <span class="tok-variableName">reloadOnChange</span>: <span class="tok-atom">false</span>)
+                    .<span class="tok-variableName">Build</span>();
+
+<span class="tok-typeName">string</span> <span class="tok-variableName">apiVersionDisplayName</span> <span class="tok-operator">=</span> <span class="tok-variableName">configuration</span>[<span class="tok-string">&quot;App:DisplayName&quot;</span>];
+
+<span class="tok-variableName">IList</span><span class="tok-operator">&lt;</span><span class="tok-variableName">ApiVersionDescriptor</span><span class="tok-operator">&gt;</span> <span class="tok-variableName">apiVersionDescriptors</span> <span class="tok-operator">=</span> <span class="tok-keyword">new</span> <span class="tok-variableName">List</span><span class="tok-operator">&lt;</span><span class="tok-variableName">ApiVersionDescriptor</span><span class="tok-operator">&gt;</span>()
+{
+    <span class="tok-keyword">new</span> (<span class="tok-variableName">apiVersionDisplayName</span>, <span class="tok-string">&quot;v1.0&quot;</span>, <span class="tok-variableName">deprecated</span>: <span class="tok-atom">false</span>),
+    <span class="tok-keyword">new</span> (<span class="tok-variableName">apiVersionDisplayName</span>, <span class="tok-string">&quot;v0.1&quot;</span>, <span class="tok-variableName">deprecated</span>: <span class="tok-atom">true</span>)
+};
+
+<span class="tok-variableName">builder</span>.<span class="tok-variableName">Services</span>.<span class="tok-variableName">AddApiVersioning</span>(<span class="tok-variableName">o</span> <span class="tok-operator">=&gt;</span>
+{
+    <span class="tok-variableName">o</span>.<span class="tok-variableName">DefaultApiVersion</span> <span class="tok-operator">=</span> <span class="tok-keyword">new</span> <span class="tok-variableName">ApiVersion</span>(<span class="tok-number">1</span>, <span class="tok-number">0</span>);
+    <span class="tok-variableName">o</span>.<span class="tok-variableName">AssumeDefaultVersionWhenUnspecified</span> <span class="tok-operator">=</span> <span class="tok-atom">true</span>;
+    <span class="tok-variableName">o</span>.<span class="tok-variableName">ReportApiVersions</span> <span class="tok-operator">=</span> <span class="tok-atom">true</span>;
+
+    <span class="tok-comment">// Header, media type and query string API versioning supported</span>
+    <span class="tok-comment">// So use any of the following to specify API version:</span>
+    <span class="tok-comment">//</span>
+    <span class="tok-comment">//                url-segment: /v1.0/path</span>
+    <span class="tok-comment">//                header: Api-Version: 1.0</span>
+    <span class="tok-comment">//                media-type: Accept: application/json;v=1.0</span>
+    <span class="tok-comment">//                querystring: ?api-version=0.1</span>
+
+    <span class="tok-comment">// Set ApiVersionReader. Multiple options can be combined with ApiVersionReader.Combine</span>
+
+    <span class="tok-keyword">if</span> (<span class="tok-variableName">versionStrategy</span> <span class="tok-operator">==</span> <span class="tok-variableName">VersionStrategy</span>.<span class="tok-variableName">Path</span>)
+    {
+        <span class="tok-variableName">o</span>.<span class="tok-variableName">ApiVersionReader</span> <span class="tok-operator">=</span> <span class="tok-keyword">new</span> <span class="tok-variableName">UrlSegmentApiVersionReader</span>();
+    }
+    <span class="tok-keyword">else</span> <span class="tok-keyword">if</span> (<span class="tok-variableName">versionStrategy</span> <span class="tok-operator">==</span> <span class="tok-variableName">VersionStrategy</span>.<span class="tok-variableName">Header</span>)
+    {
+        <span class="tok-variableName">o</span>.<span class="tok-variableName">ApiVersionReader</span> <span class="tok-operator">=</span> <span class="tok-keyword">new</span> <span class="tok-variableName">HeaderApiVersionReader</span>(<span class="tok-string">&quot;Api-Version&quot;</span>);
+    }
+    <span class="tok-keyword">else</span>
+    {
+        <span class="tok-keyword">throw</span> <span class="tok-keyword">new</span> <span class="tok-variableName">InvalidOperationException</span>(<span class="tok-variableName">$</span><span class="tok-string">&quot;Unhandled value for {nameof(versionStrategy)}&quot;</span>);
+    }
+});
+
+<span class="tok-variableName">builder</span>.<span class="tok-variableName">Services</span>.<span class="tok-variableName">AddEndpointsApiExplorer</span>();
+<span class="tok-variableName">builder</span>.<span class="tok-variableName">Services</span>.<span class="tok-variableName">AddSwaggerGen</span>(<span class="tok-variableName">options</span> <span class="tok-operator">=&gt;</span>
+{
+    <span class="tok-variableName">options</span>.<span class="tok-variableName">CustomSchemaIds</span>(<span class="tok-variableName">x</span> <span class="tok-operator">=&gt;</span> <span class="tok-variableName">x</span>.<span class="tok-variableName">FullName</span>);
+
+    <span class="tok-keyword">foreach</span> (<span class="tok-keyword">var</span> <span class="tok-variableName tok-definition">apiVersionDescriptor</span> <span class="tok-keyword">in</span> <span class="tok-variableName">apiVersionDescriptors</span>)
+    {
+        <span class="tok-variableName">options</span>.<span class="tok-variableName">SwaggerDoc</span>(<span class="tok-variableName">apiVersionDescriptor</span>.<span class="tok-variableName">VersionShort</span>, <span class="tok-keyword">new</span> <span class="tok-variableName">OpenApiInfo</span> { <span class="tok-variableName">Title</span> <span class="tok-operator">=</span> <span class="tok-variableName">apiVersionDescriptor</span>.<span class="tok-variableName">VersionFull</span>, <span class="tok-variableName">Version</span> <span class="tok-operator">=</span> <span class="tok-variableName">apiVersionDescriptor</span>.<span class="tok-variableName">VersionShort</span> });
+    }
+
+    <span class="tok-comment">// Enabling bearer token auth in Swagger UI </span>
+
+    <span class="tok-variableName">options</span>.<span class="tok-variableName">AddSecurityDefinition</span>(<span class="tok-string">&quot;Bearer&quot;</span>, <span class="tok-keyword">new</span> <span class="tok-variableName">OpenApiSecurityScheme</span>
+    {
+        <span class="tok-variableName">Description</span> <span class="tok-operator">=</span> <span class="tok-string">&quot;JWT Authorization header using the Bearer scheme (Use value 'Bearer [accessToken]')&quot;</span>,
+        <span class="tok-variableName">Name</span> <span class="tok-operator">=</span> <span class="tok-string">&quot;Authorization&quot;</span>,
+        <span class="tok-variableName">In</span> <span class="tok-operator">=</span> <span class="tok-variableName">ParameterLocation</span>.<span class="tok-variableName">Header</span>,
+        <span class="tok-variableName">Type</span> <span class="tok-operator">=</span> <span class="tok-variableName">SecuritySchemeType</span>.<span class="tok-variableName">ApiKey</span>,
+        <span class="tok-variableName">Scheme</span> <span class="tok-operator">=</span> <span class="tok-string">&quot;bearer&quot;</span>
+    });
+
+    <span class="tok-variableName">options</span>.<span class="tok-variableName">MapType</span><span class="tok-operator">&lt;</span><span class="tok-variableName">FileResult</span><span class="tok-operator">&gt;</span>(() <span class="tok-operator">=&gt;</span> <span class="tok-keyword">new</span> <span class="tok-variableName">OpenApiSchema</span>() { <span class="tok-variableName">Type</span> <span class="tok-operator">=</span> <span class="tok-string">&quot;file&quot;</span> });
+
+    <span class="tok-variableName">options</span>.<span class="tok-variableName">AddSecurityRequirement</span>(<span class="tok-keyword">new</span> <span class="tok-variableName">OpenApiSecurityRequirement</span>
+                {
+                    {
+                        <span class="tok-keyword">new</span> <span class="tok-variableName">OpenApiSecurityScheme</span>
+                        {
+                            <span class="tok-variableName">Reference</span> <span class="tok-operator">=</span> <span class="tok-keyword">new</span> <span class="tok-variableName">OpenApiReference</span>
+                            {
+                                <span class="tok-variableName">Type</span> <span class="tok-operator">=</span> <span class="tok-variableName">ReferenceType</span>.<span class="tok-variableName">SecurityScheme</span>,
+                                <span class="tok-variableName">Id</span> <span class="tok-operator">=</span> <span class="tok-string">&quot;Bearer&quot;</span>
+                            }
+                        }, <span class="tok-keyword">new</span> <span class="tok-variableName">List</span><span class="tok-operator">&lt;</span><span class="tok-typeName">string</span><span class="tok-operator">&gt;</span>()
+                    }
+                });
+
+    <span class="tok-variableName">options</span>.<span class="tok-variableName">DocInclusionPredicate</span>((<span class="tok-variableName">docName</span>, <span class="tok-variableName">apiDesc</span>) <span class="tok-operator">=&gt;</span>
+    {
+        <span class="tok-keyword">var</span> <span class="tok-variableName tok-definition">actionApiVersionModel</span> <span class="tok-operator">=</span> <span class="tok-variableName">apiDesc</span>.<span class="tok-variableName">ActionDescriptor</span><span class="tok-operator">?</span>.<span class="tok-variableName">GetApiVersion</span>();
+
+        <span class="tok-comment">// Unversioned actions should be included everywhere</span>
+
+        <span class="tok-keyword">if</span> (<span class="tok-variableName">actionApiVersionModel</span> <span class="tok-operator">==</span> <span class="tok-atom">null</span>)
+        {
+            <span class="tok-keyword">return</span> <span class="tok-atom">true</span>;
+        }
+        <span class="tok-keyword">if</span> (<span class="tok-variableName">actionApiVersionModel</span>.<span class="tok-variableName">DeclaredApiVersions</span>.<span class="tok-variableName">Any</span>())
+        {
+            <span class="tok-keyword">return</span> <span class="tok-variableName">actionApiVersionModel</span>.<span class="tok-variableName">DeclaredApiVersions</span>.<span class="tok-variableName">Any</span>(<span class="tok-variableName">v</span> <span class="tok-operator">=&gt;</span> <span class="tok-variableName">$</span><span class="tok-string">&quot;v{v.ToString()}&quot;</span> <span class="tok-operator">==</span> <span class="tok-variableName">docName</span>);
+        }
+
+        <span class="tok-keyword">return</span> <span class="tok-variableName">actionApiVersionModel</span>.<span class="tok-variableName">ImplementedApiVersions</span>.<span class="tok-variableName">Any</span>(<span class="tok-variableName">v</span> <span class="tok-operator">=&gt;</span> <span class="tok-variableName">$</span><span class="tok-string">&quot;v{v.ToString()}&quot;</span> <span class="tok-operator">==</span> <span class="tok-variableName">docName</span>);
+    });
+
+    <span class="tok-keyword">if</span> (<span class="tok-variableName">versionStrategy</span> <span class="tok-operator">==</span> <span class="tok-variableName">VersionStrategy</span>.<span class="tok-variableName">Path</span>)
+    {
+        <span class="tok-comment">// Use these filters for path versioning (version)</span>
+
+        <span class="tok-variableName">options</span>.<span class="tok-variableName">OperationFilter</span><span class="tok-operator">&lt;</span><span class="tok-variableName">RemoveVersionParameterFilter</span><span class="tok-operator">&gt;</span>();
+        <span class="tok-variableName">options</span>.<span class="tok-variableName">DocumentFilter</span><span class="tok-operator">&lt;</span><span class="tok-variableName">ReplaceVersionWithExactValueInPathFilter</span><span class="tok-operator">&gt;</span>();
+    }
+    <span class="tok-keyword">else</span> <span class="tok-keyword">if</span> (<span class="tok-variableName">versionStrategy</span> <span class="tok-operator">==</span> <span class="tok-variableName">VersionStrategy</span>.<span class="tok-variableName">Header</span>)
+    {
+        <span class="tok-comment">// Use this filter for header versioning (Api-Version)</span>
+
+        <span class="tok-variableName">options</span>.<span class="tok-variableName">OperationFilter</span><span class="tok-operator">&lt;</span><span class="tok-variableName">SwaggerAddHeaderParameterOperationFilter</span><span class="tok-operator">&gt;</span>();
+    }
+    <span class="tok-keyword">else</span>
+    {
+        <span class="tok-keyword">throw</span> <span class="tok-keyword">new</span> <span class="tok-variableName">InvalidOperationException</span>(<span class="tok-variableName">$</span><span class="tok-string">&quot;Unhandled value for {nameof(versionStrategy)}&quot;</span>);
+    }
+
+    <span class="tok-keyword">var</span> <span class="tok-variableName tok-definition">xmlFile</span> <span class="tok-operator">=</span> <span class="tok-variableName">$</span><span class="tok-string">&quot;{Assembly.GetExecutingAssembly().GetName().Name}.xml&quot;</span>;
+    <span class="tok-keyword">var</span> <span class="tok-variableName tok-definition">xmlPath</span> <span class="tok-operator">=</span> <span class="tok-variableName">Path</span>.<span class="tok-variableName">Combine</span>(<span class="tok-variableName">AppContext</span>.<span class="tok-variableName">BaseDirectory</span>, <span class="tok-variableName">xmlFile</span>);
+
+    <span class="tok-comment">// Requires &lt;GenerateDocumentationFile&gt;true&lt;/GenerateDocumentationFile&gt; in .csproj file for XML document generation</span>
+
+    <span class="tok-variableName">options</span>.<span class="tok-variableName">IncludeXmlComments</span>(<span class="tok-variableName">xmlPath</span>);
+    <span class="tok-variableName">options</span>.<span class="tok-variableName">ResolveConflictingActions</span>(<span class="tok-variableName">apiDescriptions</span> <span class="tok-operator">=&gt;</span> <span class="tok-variableName">apiDescriptions</span>.<span class="tok-variableName">First</span>());
+});
+
+<span class="tok-comment">// Configure logging used by ASP.NET Core. Set minimum log levels in JSON app configuration</span>
+
+<span class="tok-variableName">builder</span>.<span class="tok-variableName">Logging</span>.<span class="tok-variableName">ClearProviders</span>();
+<span class="tok-variableName">builder</span>.<span class="tok-variableName">Logging</span>.<span class="tok-variableName">AddProvider</span>(<span class="tok-keyword">new</span> <span class="tok-variableName">NLogLoggerProvider</span>(<span class="tok-variableName">webHostEnvironment</span>.<span class="tok-variableName">EnvironmentName</span>));
+
+<span class="tok-keyword">var</span> <span class="tok-variableName tok-definition">app</span> <span class="tok-operator">=</span> <span class="tok-variableName">builder</span>.<span class="tok-variableName">Build</span>();
+
+<span class="tok-comment">// Configure the HTTP request pipeline.</span>
+
+<span class="tok-variableName">app</span>.<span class="tok-variableName">UseMiddleware</span><span class="tok-operator">&lt;</span><span class="tok-variableName">SwaggerAuthenticationMiddleware</span><span class="tok-operator">&gt;</span>();
+
+<span class="tok-comment">// Enable middleware to serve generated Swagger as a JSON endpoint.</span>
+
+<span class="tok-variableName">app</span>.<span class="tok-variableName">UseSwagger</span>(<span class="tok-variableName">c</span> <span class="tok-operator">=&gt;</span>
+{
+    <span class="tok-variableName">c</span>.<span class="tok-variableName">RouteTemplate</span> <span class="tok-operator">=</span> <span class="tok-string">&quot;api/docs/swagger/{documentName}/swagger.json&quot;</span>;
+});
+
+<span class="tok-comment">// Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),</span>
+<span class="tok-comment">// specifying the Swagger JSON endpoint.</span>
+
+<span class="tok-comment">// NOTE: Missing HTTP verb attributes on controller actions will cause &quot;Fetch error&quot; (HTTP 500) when loading Swagger UI</span>
+
+<span class="tok-variableName">app</span>.<span class="tok-variableName">UseSwaggerUI</span>(<span class="tok-variableName">c</span> <span class="tok-operator">=&gt;</span>
+{
+    <span class="tok-keyword">foreach</span> (<span class="tok-keyword">var</span> <span class="tok-variableName tok-definition">apiVersionDescriptor</span> <span class="tok-keyword">in</span> <span class="tok-variableName">apiVersionDescriptors</span>)
+    {
+        <span class="tok-variableName">c</span>.<span class="tok-variableName">SwaggerEndpoint</span>(<span class="tok-variableName">$</span><span class="tok-string">&quot;swagger/{apiVersionDescriptor.VersionShort}/swagger.json&quot;</span>, <span class="tok-variableName">apiVersionDescriptor</span>.<span class="tok-variableName">VersionFull</span>);
+    }
+
+    <span class="tok-variableName">c</span>.<span class="tok-variableName">RoutePrefix</span> <span class="tok-operator">=</span> <span class="tok-string">&quot;api/docs&quot;</span>;
+});
+
+<span class="tok-variableName">app</span>.<span class="tok-variableName">UseAuthorization</span>();
+
+<span class="tok-variableName">app</span>.<span class="tok-variableName">MapControllers</span>();
+
+<span class="tok-variableName">app</span>.<span class="tok-variableName">MapControllerRoute</span>(<span class="tok-string">&quot;default&quot;</span>, <span class="tok-string">&quot;{controller=Home}/{action=Index}/{id?}&quot;</span>);
+
+<span class="tok-variableName">app</span>.<span class="tok-variableName">Run</span>();
+
+
+</code></pre>
+<h2 id="swagger-ui-basic-authentication">Swagger UI Basic Authentication</h2>
+<p>Basic authentication can be included to protect the Swagger UI from being browsed by unauthorised party. This is a simple and secure mechanism for protecting the Swagger UI providing that the username and password is sent over HTTPS.</p>
+<p>This is of course optional. Note that this does not protect the API its self, only the Swagger UI. This middleware excludes requests from non localhost clients.</p>
+<p><strong>SwaggerAuthenticationMiddleware.cs</strong></p>
+<pre><code class="language-csharp"><span class="tok-keyword">using</span> <span class="tok-variableName">System</span>.<span class="tok-variableName">Net</span>;
+<span class="tok-keyword">using</span> <span class="tok-variableName">System</span>.<span class="tok-variableName">Text</span>;
+
+<span class="tok-keyword">namespace</span> <span class="tok-variableName tok-definition">ThisApp</span>.<span class="tok-variableName">WebApi</span>.<span class="tok-variableName">Middleware</span>;
+
+<span class="tok-keyword">public</span> <span class="tok-keyword">class</span> <span class="tok-variableName tok-definition">SwaggerAuthenticationMiddleware</span> : <span class="tok-variableName">IMiddleware</span>
+{
+    <span class="tok-keyword">private</span> <span class="tok-keyword">readonly</span> <span class="tok-typeName">string</span> <span class="tok-variableName">_userName</span>;
+    <span class="tok-keyword">private</span> <span class="tok-keyword">readonly</span> <span class="tok-typeName">string</span> <span class="tok-variableName">_password</span>;
+
+    <span class="tok-keyword">public</span> <span class="tok-variableName">SwaggerAuthenticationMiddleware</span>(<span class="tok-variableName">IConfiguration</span> <span class="tok-variableName">configuration</span>)
+    {
+        <span class="tok-variableName">_userName</span> <span class="tok-operator">=</span> <span class="tok-variableName">configuration</span>.<span class="tok-variableName">GetValue</span><span class="tok-operator">&lt;</span><span class="tok-typeName">string</span><span class="tok-operator">&gt;</span>(<span class="tok-string">&quot;App:Swagger:BasicUiAuth:Username&quot;</span>);
+        <span class="tok-variableName">_password</span> <span class="tok-operator">=</span> <span class="tok-variableName">configuration</span>.<span class="tok-variableName">GetValue</span><span class="tok-operator">&lt;</span><span class="tok-typeName">string</span><span class="tok-operator">&gt;</span>(<span class="tok-string">&quot;App:Swagger:BasicUiAuth:Password&quot;</span>);
+    }
+
+    <span class="tok-keyword">public</span> <span class="tok-keyword">async</span> <span class="tok-typeName">Task</span> <span class="tok-variableName">InvokeAsync</span>(<span class="tok-variableName">HttpContext</span> <span class="tok-variableName">context</span>, <span class="tok-variableName">RequestDelegate</span> <span class="tok-variableName">next</span>)
+    {
+        <span class="tok-comment">//If we hit the swagger locally (in development) then skip basic auth</span>
+
+        <span class="tok-keyword">if</span> (<span class="tok-variableName">context</span>.<span class="tok-variableName">Request</span>.<span class="tok-variableName">Path</span>.<span class="tok-variableName">StartsWithSegments</span>(<span class="tok-string">&quot;/api/docs&quot;</span>) <span class="tok-operator">&amp;&amp;</span> <span class="tok-operator">!</span><span class="tok-variableName">IsLocalRequest</span>(<span class="tok-variableName">context</span>))
+        {
+            <span class="tok-typeName">string</span> <span class="tok-variableName">authHeader</span> <span class="tok-operator">=</span> <span class="tok-variableName">context</span>.<span class="tok-variableName">Request</span>.<span class="tok-variableName">Headers</span>[<span class="tok-string">&quot;Authorization&quot;</span>];
+
+            <span class="tok-keyword">if</span> (<span class="tok-variableName">authHeader</span> <span class="tok-operator">!=</span> <span class="tok-atom">null</span> <span class="tok-operator">&amp;&amp;</span> <span class="tok-variableName">authHeader</span>.<span class="tok-variableName">StartsWith</span>(<span class="tok-string">&quot;Basic &quot;</span>))
+            {
+                <span class="tok-typeName">int</span> <span class="tok-variableName">splitAuthHeaderParts</span> <span class="tok-operator">=</span> <span class="tok-number">2</span>;
+
+                <span class="tok-typeName">string</span>[] <span class="tok-variableName">splitAuthHeader</span> <span class="tok-operator">=</span> <span class="tok-variableName">authHeader</span>.<span class="tok-variableName">Split</span>(<span class="tok-string">' '</span>, <span class="tok-variableName">splitAuthHeaderParts</span>, <span class="tok-variableName">StringSplitOptions</span>.<span class="tok-variableName">RemoveEmptyEntries</span>);
+
+                <span class="tok-keyword">if</span> (<span class="tok-variableName">splitAuthHeader</span>.<span class="tok-variableName">Length</span> <span class="tok-operator">!=</span> <span class="tok-variableName">splitAuthHeaderParts</span>)
+                {
+                    <span class="tok-keyword">throw</span> <span class="tok-keyword">new</span> <span class="tok-variableName">InvalidOperationException</span>(<span class="tok-variableName">$</span><span class="tok-string">&quot;{splitAuthHeader} length should be {splitAuthHeaderParts}&quot;</span>);
+                }
+
+                <span class="tok-comment">// Get the encoded username and password</span>
+                <span class="tok-keyword">var</span> <span class="tok-variableName tok-definition">encodedUsernamePassword</span> <span class="tok-operator">=</span> <span class="tok-variableName">splitAuthHeader</span>[<span class="tok-number">1</span>].<span class="tok-variableName">Trim</span>();
+
+                <span class="tok-comment">// Decode from Base64 to string</span>
+
+                <span class="tok-keyword">var</span> <span class="tok-variableName tok-definition">decodedUsernamePassword</span> <span class="tok-operator">=</span> <span class="tok-variableName">Encoding</span>.<span class="tok-variableName">UTF8</span>.<span class="tok-variableName">GetString</span>(<span class="tok-variableName">Convert</span>.<span class="tok-variableName">FromBase64String</span>(<span class="tok-variableName">encodedUsernamePassword</span>));
+
+                <span class="tok-typeName">string</span>[] <span class="tok-variableName">splitDecodedUsernamePassword</span> <span class="tok-operator">=</span> <span class="tok-variableName">decodedUsernamePassword</span>.<span class="tok-variableName">Split</span>(<span class="tok-string">':'</span>, <span class="tok-number">2</span>);
+
+                <span class="tok-comment">// Split username and password</span>
+                <span class="tok-keyword">var</span> <span class="tok-variableName tok-definition">username</span> <span class="tok-operator">=</span> <span class="tok-variableName">splitDecodedUsernamePassword</span>[<span class="tok-number">0</span>];
+                <span class="tok-keyword">var</span> <span class="tok-variableName tok-definition">password</span> <span class="tok-operator">=</span> <span class="tok-variableName">splitDecodedUsernamePassword</span>[<span class="tok-number">1</span>];
+
+                <span class="tok-comment">// Check if login is correct</span>
+                <span class="tok-keyword">if</span> (<span class="tok-variableName">IsAuthorized</span>(<span class="tok-variableName">username</span>, <span class="tok-variableName">password</span>))
+                {
+                    <span class="tok-keyword">await</span> <span class="tok-variableName">next</span>.<span class="tok-variableName">Invoke</span>(<span class="tok-variableName">context</span>);
+                    <span class="tok-keyword">return</span>;
+                }
+            }
+
+            <span class="tok-comment">// Return authentication type (causes browser to show login dialog)</span>
+            <span class="tok-variableName">context</span>.<span class="tok-variableName">Response</span>.<span class="tok-variableName">Headers</span>[<span class="tok-string">&quot;WWW-Authenticate&quot;</span>] <span class="tok-operator">=</span> <span class="tok-string">&quot;Basic&quot;</span>;
+
+            <span class="tok-comment">// Return unauthorized</span>
+            <span class="tok-variableName">context</span>.<span class="tok-variableName">Response</span>.<span class="tok-variableName">StatusCode</span> <span class="tok-operator">=</span> (<span class="tok-typeName">int</span>)<span class="tok-variableName">HttpStatusCode</span>.<span class="tok-variableName">Unauthorized</span>;
+        }
+        <span class="tok-keyword">else</span>
+        {
+            <span class="tok-keyword">await</span> <span class="tok-variableName">next</span>.<span class="tok-variableName">Invoke</span>(<span class="tok-variableName">context</span>);
+        }
+    }
+
+    <span class="tok-keyword">private</span> <span class="tok-typeName">bool</span> <span class="tok-variableName">IsAuthorized</span>(<span class="tok-typeName">string</span> <span class="tok-variableName">username</span>, <span class="tok-typeName">string</span> <span class="tok-variableName">password</span>) <span class="tok-operator">=&gt;</span> <span class="tok-variableName">_userName</span> <span class="tok-operator">==</span> <span class="tok-variableName">username</span> <span class="tok-operator">&amp;&amp;</span> <span class="tok-variableName">_password</span> <span class="tok-operator">==</span> <span class="tok-variableName">password</span>;
+
+    <span class="tok-keyword">private</span> <span class="tok-typeName">bool</span> <span class="tok-variableName">IsLocalRequest</span>(<span class="tok-variableName">HttpContext</span> <span class="tok-variableName">context</span>)
+    {
+        <span class="tok-keyword">if</span> (<span class="tok-variableName">context</span>.<span class="tok-variableName">Request</span>.<span class="tok-variableName">Host</span>.<span class="tok-variableName">Value</span>.<span class="tok-variableName">StartsWith</span>(<span class="tok-string">&quot;localhost:&quot;</span>))
+        {
+            <span class="tok-keyword">return</span> <span class="tok-atom">true</span>;
+        }
+
+        <span class="tok-comment">// Handle running using the Microsoft.AspNetCore.TestHost and the site being run entirely locally in memory without an actual TCP/IP connection</span>
+        <span class="tok-keyword">if</span> (<span class="tok-variableName">context</span>.<span class="tok-variableName">Connection</span>.<span class="tok-variableName">RemoteIpAddress</span> <span class="tok-operator">==</span> <span class="tok-atom">null</span> <span class="tok-operator">&amp;&amp;</span> <span class="tok-variableName">context</span>.<span class="tok-variableName">Connection</span>.<span class="tok-variableName">LocalIpAddress</span> <span class="tok-operator">==</span> <span class="tok-atom">null</span>)
+        {
+            <span class="tok-keyword">return</span> <span class="tok-atom">true</span>;
+        }
+
+        <span class="tok-keyword">if</span> (<span class="tok-variableName">context</span>.<span class="tok-variableName">Connection</span>.<span class="tok-variableName">RemoteIpAddress</span> <span class="tok-operator">!=</span> <span class="tok-atom">null</span> <span class="tok-operator">&amp;&amp;</span> <span class="tok-variableName">context</span>.<span class="tok-variableName">Connection</span>.<span class="tok-variableName">RemoteIpAddress</span>.<span class="tok-variableName">Equals</span>(<span class="tok-variableName">context</span>.<span class="tok-variableName">Connection</span>.<span class="tok-variableName">LocalIpAddress</span>))
+        {
+            <span class="tok-keyword">return</span> <span class="tok-atom">true</span>;
+        }
+
+        <span class="tok-keyword">return</span> <span class="tok-variableName">context</span>.<span class="tok-variableName">Connection</span>.<span class="tok-variableName">RemoteIpAddress</span> <span class="tok-operator">!=</span> <span class="tok-atom">null</span> <span class="tok-operator">&amp;&amp;</span> <span class="tok-variableName">IPAddress</span>.<span class="tok-variableName">IsLoopback</span>(<span class="tok-variableName">context</span>.<span class="tok-variableName">Connection</span>.<span class="tok-variableName">RemoteIpAddress</span>);
+    }
+}
+
+</code></pre>
+<h2 id="idocumentfilter-and-ioperationfilter">IDocumentFilter and IOperationFilter</h2>
+<p>Implementations of these interfaces can be used to modify the Swagger UI documentation and the requests that it sends to the API.</p>
+<p>Here's what each of them do:</p>
+<h3 id="swaggeraddheaderparameteroperationfiltercs">SwaggerAddHeaderParameterOperationFilter.cs</h3>
+<p>This implementation of <code>IOperationFilter</code> adds an <code>API Version</code> header into requests from the Swagger UI to the API, defaulting to the version of the API selected. This can be overridden in the action parameters.</p>
+<pre><code class="language-csharp"><span class="tok-keyword">public</span> <span class="tok-keyword">class</span> <span class="tok-variableName tok-definition">SwaggerAddHeaderParameterOperationFilter</span> : <span class="tok-variableName">IOperationFilter</span>
+{
+    <span class="tok-keyword">public</span> <span class="tok-keyword">void</span> <span class="tok-variableName">Apply</span>(<span class="tok-variableName">OpenApiOperation</span> <span class="tok-variableName">operation</span>, <span class="tok-variableName">OperationFilterContext</span> <span class="tok-variableName">context</span>)
+    {
+        <span class="tok-variableName">operation</span>.<span class="tok-variableName">Parameters</span>.<span class="tok-variableName">Add</span>(<span class="tok-keyword">new</span> <span class="tok-variableName">OpenApiParameter</span>
+        {
+            <span class="tok-variableName">Name</span> <span class="tok-operator">=</span> <span class="tok-string">&quot;Api-Version&quot;</span>,
+            <span class="tok-variableName">In</span> <span class="tok-operator">=</span> <span class="tok-variableName">ParameterLocation</span>.<span class="tok-variableName">Header</span>,
+            <span class="tok-variableName">Description</span> <span class="tok-operator">=</span> <span class="tok-string">&quot;API Version&quot;</span>,
+            <span class="tok-variableName">Required</span> <span class="tok-operator">=</span> <span class="tok-atom">true</span>,
+            <span class="tok-variableName">Schema</span> <span class="tok-operator">=</span> <span class="tok-keyword">new</span> <span class="tok-variableName">OpenApiSchema</span>
+            {
+                <span class="tok-variableName">Type</span> <span class="tok-operator">=</span> <span class="tok-string">&quot;string&quot;</span>,
+                <span class="tok-variableName">Default</span> <span class="tok-operator">=</span> <span class="tok-keyword">new</span> <span class="tok-variableName">OpenApiString</span>(<span class="tok-variableName">context</span>.<span class="tok-variableName">DocumentName</span>.<span class="tok-variableName">Replace</span>(<span class="tok-string">&quot;v&quot;</span>, <span class="tok-typeName">string</span>.<span class="tok-variableName">Empty</span>))
+            }
+        });
+    }
+}
+</code></pre>
+<h3 id="replaceversionwithexactvalueinpathfiltercs">ReplaceVersionWithExactValueInPathFilter.cs</h3>
+<p>This <code>IDocumentFilter</code> implementation takes the selected API version and adds it into the path in the Swagger UI, so there is no longer a need to input a path version parameter value manually.</p>
+<pre><code class="language-csharp"><span class="tok-keyword">public</span> <span class="tok-keyword">class</span> <span class="tok-variableName tok-definition">ReplaceVersionWithExactValueInPathFilter</span> : <span class="tok-variableName">IDocumentFilter</span>
+{
+    <span class="tok-keyword">public</span> <span class="tok-keyword">void</span> <span class="tok-variableName">Apply</span>(<span class="tok-variableName">OpenApiDocument</span> <span class="tok-variableName">swaggerDoc</span>, <span class="tok-variableName">DocumentFilterContext</span> <span class="tok-variableName">context</span>)
+    {
+        <span class="tok-keyword">var</span> <span class="tok-variableName tok-definition">paths</span> <span class="tok-operator">=</span> <span class="tok-keyword">new</span> <span class="tok-variableName">OpenApiPaths</span>();
+        <span class="tok-keyword">foreach</span> (<span class="tok-keyword">var</span> <span class="tok-variableName tok-definition">path</span> <span class="tok-keyword">in</span> <span class="tok-variableName">swaggerDoc</span>.<span class="tok-variableName">Paths</span>)
+        {
+            <span class="tok-variableName">paths</span>.<span class="tok-variableName">Add</span>(<span class="tok-variableName">path</span>.<span class="tok-variableName">Key</span>.<span class="tok-variableName">Replace</span>(<span class="tok-string">&quot;v{version}&quot;</span>, <span class="tok-variableName">swaggerDoc</span>.<span class="tok-variableName">Info</span>.<span class="tok-variableName">Version</span>), <span class="tok-variableName">path</span>.<span class="tok-variableName">Value</span>);
+        }
+
+        <span class="tok-variableName">swaggerDoc</span>.<span class="tok-variableName">Paths</span> <span class="tok-operator">=</span> <span class="tok-variableName">paths</span>;
+    }
+}
+</code></pre>
+<h3 id="removeversionparameterfiltercs">RemoveVersionParameterFilter.cs</h3>
+<p>This <code>IOperationFilter</code> implementation removes the version parameter from the inputs collection in the UI action.</p>
+<pre><code class="language-csharp"><span class="tok-keyword">public</span> <span class="tok-keyword">class</span> <span class="tok-variableName tok-definition">RemoveVersionParameterFilter</span> : <span class="tok-variableName">IOperationFilter</span>
+{
+    <span class="tok-keyword">public</span> <span class="tok-keyword">void</span> <span class="tok-variableName">Apply</span>(<span class="tok-variableName">OpenApiOperation</span> <span class="tok-variableName">operation</span>, <span class="tok-variableName">OperationFilterContext</span> <span class="tok-variableName">context</span>)
+    {
+        <span class="tok-keyword">var</span> <span class="tok-variableName tok-definition">versionParameter</span> <span class="tok-operator">=</span> <span class="tok-variableName">operation</span>.<span class="tok-variableName">Parameters</span>.<span class="tok-variableName">SingleOrDefault</span>(<span class="tok-variableName">p</span> <span class="tok-operator">=&gt;</span> <span class="tok-variableName">p</span>.<span class="tok-variableName">Name</span> <span class="tok-operator">==</span> <span class="tok-string">&quot;version&quot;</span>);
+
+        <span class="tok-keyword">if</span> (<span class="tok-variableName">versionParameter</span> <span class="tok-operator">!=</span> <span class="tok-atom">null</span>)
+        {
+            <span class="tok-variableName">operation</span>.<span class="tok-variableName">Parameters</span>.<span class="tok-variableName">Remove</span>(<span class="tok-variableName">versionParameter</span>);
+        }
+    }
+}
+</code></pre>
+<h2 id="summary">Summary</h2>
+<p>Using the above configuration, you have a versioned API in .NET Core 6 with a Swagger user interface which will forward selected API version information to the API. In addtion, the UI requires basic authentication to browse for non localhost clients.</p>
+
+            </div>
+            <nav class="pagination" aria-label="Neighbouring posts">
+                <a class="button pagination__prev" href="a-rough-guide-to-building-a-retro-pie-bar-top-arcade-game-machine.html"><span class="button__icon">←</span><span class="button__text">A Rough Guide to Building a Retro Pie Bar Top Arcade Game Machine</span></a>
+                <a class="button pagination__next" href="managing-code-snippets-using-logseq.html"><span class="button__text">Managing Code Snippets Using Logseq</span><span class="button__icon">→</span></a>
+            </nav>
+        </article>
+    </main>
+        <footer class="footer">
+            <div class="footer__inner">
+                <div class="copyright">
+                    <span>&copy; 2026 g9n Blog</span>
+                    <span class="footer__separator" aria-hidden="true">::</span>
+                    <span>Published with <a href="https://etherpk.com" rel="noopener">EtherPK</a></span>
+                    <span class="footer__separator" aria-hidden="true">::</span><a href="feed.xml">Feed</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+        <script src="theme/search.js" defer></script>
+</body>
+</html>

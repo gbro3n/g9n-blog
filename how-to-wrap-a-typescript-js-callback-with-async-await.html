@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="EtherPK">
+    <title>How to wrap a TypeScript JS callback with async  await :: g9n Blog</title>
+    <meta name="description" content="I find that at times the standard TypeScript&#x2F;JavaScript callback pattern can make code hard to read and manage. To alleviate this problem, we can wrap callbacks with promises to synchronise the call.…">
+    <link rel="stylesheet" href="theme/theme.css">
+    
+    
+    <link rel="alternate" type="application/rss+xml" title="g9n Blog" href="feed.xml">
+</head>
+<body class="layout-terminal">
+    <a class="skip-link" href="#content">Skip to content</a>
+    <div class="container">
+        <header class="header">
+            <div class="header__inner">
+                <a class="site-title logo" href="index.html">
+                    <span class="logo__mark"><!-- The EtherPK icon (resources/brand/etherpk-icon-*.svg), inline so the page fetches nothing and it takes the text colour; aria-hidden because the title beside it is the name. Fill the "logo" include, or edit this partial, for your own. -->
+                                             <svg class="site-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 191.82 166.13" width="24" height="21" aria-hidden="true" focusable="false"><path fill="currentColor" fill-rule="evenodd" d="M67.09,132.92,47.93,166.13H9.59L0,149.52,86.33,0H105.5L19.17,149.52H38.34l19.17-33.2h76.8l9.59,16.6Zm48-83.12,9.65,16.71H143.9L115.08,16.6q-24,41.57-48,83.12H143.9q14.37,24.9,28.76,49.8h-96l-9.59,16.61H182.24l9.58-16.61-38.34-66.4H96C95.85,82.9,113.39,52.73,115.08,49.8Z"/></svg>
+</span>
+                    <span class="logo__text">g9n Blog</span>
+                    <span class="logo__cursor" aria-hidden="true"></span>
+                </a>
+                <button class="nav-toggle menu-trigger" type="button" aria-controls="site-nav" aria-expanded="false" aria-label="Menu">Menu</button>
+            </div>
+            <div class="nav-backdrop" hidden></div>
+            <nav id="site-nav" class="menu site-nav" aria-label="Site">
+                <ul class="menu__inner site-nav-list">
+                <li class="">
+                    <a href="a-custom-workflow-to-publish-from-obsidian-to-blotim.html">A Custom Workflow to Publish from Obsidian to Blot.im</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="a-rough-guide-to-building-a-retro-pie-bar-top-arcade-game-machine.html">A Rough Guide to Building a Retro Pie Bar Top Arcade Game Machine</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="a-utility-class-for-finding-database-deadlocks-in-net-applications.html">A Utility Class for Finding Database Deadlocks in .NET Applications</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="api-versioning-and-basic-ui-authentication-with-openapi-swagger-swashbuckle-in-net-core-6.html">API Versioning and Basic UI Authentication with OpenAPI (Swagger Swashbuckle) in .NET Core 6</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="aspnet-file-uploader-with-signalr-progress-bar-and-extended-input-stream-processing.html">ASP.NET File Uploader with SignalR Progress Bar and Extended Input Stream Processing</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="attention-was-always-the-bottleneck-ai.html">Attention Was Always the Bottleneck (AI)</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="converting-enum-types-by-value-in-c.html">Converting Enum Types By Value in C#</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="fail-early-fail-fast-and-why-you-should-throw-exceptions.html">Fail Early, Fail Fast and why you should throw exceptions</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="hackers-painters-and-kanban-for-software-as-a-creative-process.html">Hackers, Painters and Kanban for Software as a Creative Process</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="how-to-create-a-deep-copy-of-an-object-in-javascript-typescript.html">How to create a deep copy of an object in JavaScript, TypeScript</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="how-to-inject-google-adsense-in-article-script-into-your-html-aspnet-core-razor.html">How to inject Google Adsense In-Article script into your HTML (ASP.NET Core Razor)</a>
+                    
+                    
+                </li>
+                <li class="nav-current ">
+                    <a href="how-to-wrap-a-typescript-js-callback-with-async-await.html" aria-current="page">How to wrap a TypeScript JS callback with async  await</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="implementing-microsoftextensionsloggingilogger-with-nlog.html">Implementing Microsoft.Extensions.Logging.ILogger with NLog</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="introducing-the-g9n-blog.html">Introducing the g9n blog</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="maintaining-a-blog-with-jekyll-github-pages-and-github-codespaces.html">Maintaining a Blog with Jekyll, GitHub Pages and GitHub Codespaces</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="make-sure-you-spend-time-with-tech-you-enjoy.html">Make Sure You Spend Time With Tech You Enjoy</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="managing-code-snippets-using-logseq.html">Managing Code Snippets Using Logseq</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="observations-around-prominent-programmer-sentiment-and-ai.html">Observations Around Prominent Programmer Sentiment and AI</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="robust-error-handling-in-aspnet-core.html">Robust Error Handling in ASP.NET Core</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="sanitizing-html-in-net-core.html">Sanitizing HTML in .NET Core</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="the-skills-i-think-we-might-gain-ai.html">The skills I think we might gain (AI)</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="uploading-directly-to-s3-from-client-using-pre-signed-urls-javascript-net.html">Uploading Directly to S3 from Client Using Pre-Signed URLs (JavaScript,  .NET)</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="using-github-to-host-images.html">Using GitHub to Host Images</a>
+                    
+                    
+                </li>
+                </ul>
+                <form class="site-search" role="search" data-search-index="search.json" data-search-script="search-index.js">
+                    <label class="visually-hidden" for="site-search-input">Search</label>
+                    <input id="site-search-input" type="search" name="q" placeholder="$ search" autocomplete="off">
+                    <div class="site-search-results" role="listbox" hidden></div>
+                </form>
+            </nav>
+        </header>
+    <main id="content" class="content">
+        <article class="post">
+            <h1 class="post-title">How to wrap a TypeScript JS callback with async  await</h1>
+            <div class="post-meta"><time class="post-date" datetime="2021-02-25">2021-02-25</time> :: <span class="post-reading">2 min read</span></div>
+            <div class="post-content">
+<p>I find that at times the standard TypeScript/JavaScript callback pattern can make code hard to read and manage. To alleviate this problem, we can wrap callbacks with promises to synchronise the call. Going a step further, we can implement async / await to further improve code readability. This is especially true if like me, your primary programming language is OO like C# or Java.</p>
+<p>In the below example, I’m working with NeDB, as JS database. Operations in NeDB follow the standard callback pattern. Standard callback pattern in the docs looks like this:</p>
+<pre><code class="language-javascript"><span class="tok-variableName">db</span><span class="tok-operator">.</span><span class="tok-propertyName">findOne</span><span class="tok-punctuation">(</span><span class="tok-punctuation">{</span><span class="tok-string">'name'</span><span class="tok-punctuation">:</span> <span class="tok-string">'draupnir'</span><span class="tok-punctuation">}</span><span class="tok-punctuation">,</span> <span class="tok-keyword">function</span> <span class="tok-punctuation">(</span><span class="tok-variableName tok-definition">err</span><span class="tok-punctuation">,</span> <span class="tok-variableName tok-definition">doc</span><span class="tok-punctuation">)</span> <span class="tok-punctuation">{</span>  
+    <span class="tok-variableName">console</span><span class="tok-operator">.</span><span class="tok-propertyName">log</span><span class="tok-punctuation">(</span><span class="tok-string">'findOne callback: err, doc'</span><span class="tok-punctuation">,</span> <span class="tok-punctuation">[</span><span class="tok-variableName">err</span><span class="tok-punctuation">,</span> <span class="tok-variableName">doc</span><span class="tok-punctuation">]</span><span class="tok-punctuation">)</span><span class="tok-punctuation">;</span>  
+<span class="tok-punctuation">}</span><span class="tok-punctuation">)</span><span class="tok-punctuation">;</span>
+</code></pre>
+<p>In the async / await version below, we create an async function that wraps a promise, allowing us to call await to synchronise on the result. To allow for error handling in case promise reject() is called, we wrap the await in a try-catch-finally block.</p>
+<p>In the standard promise version, we simply use <code>findOnePromise.then()</code> to inspect the result.</p>
+<p>So, depending on your preference, you have some options …</p>
+<pre><code class="language-javascript"><span class="tok-comment">///////////////////////</span>
+<span class="tok-comment">// async / await vesion</span>
+<span class="tok-comment">///////////////////////</span>
+
+<span class="tok-keyword">let</span> <span class="tok-variableName tok-definition">findOnePromiseFn</span> <span class="tok-operator">=</span> <span class="tok-keyword">async</span> <span class="tok-punctuation">(</span><span class="tok-variableName tok-definition">obj</span><span class="tok-punctuation">)</span><span class="tok-punctuation">:</span><span class="tok-typeName">Promise</span><span class="tok-operator">&lt;</span><span class="tok-variableName">any</span><span class="tok-operator">&gt;</span> <span class="tok-punctuation">=&gt;</span> <span class="tok-punctuation">{</span>
+
+    <span class="tok-propertyName">return </span><span class="tok-keyword">new</span> <span class="tok-className">Promise</span><span class="tok-punctuation">(</span><span class="tok-punctuation">(</span><span class="tok-variableName tok-definition">resolve</span><span class="tok-punctuation">,</span> <span class="tok-variableName tok-definition">reject</span><span class="tok-punctuation">)</span> <span class="tok-punctuation">=&gt;</span> <span class="tok-punctuation">{</span>
+
+        <span class="tok-variableName">db</span><span class="tok-operator">.</span><span class="tok-propertyName">findOne</span><span class="tok-punctuation">(</span><span class="tok-variableName">obj</span><span class="tok-punctuation">,</span> <span class="tok-keyword">function</span> <span class="tok-punctuation">(</span><span class="tok-variableName tok-definition">err</span><span class="tok-punctuation">,</span> <span class="tok-variableName tok-definition">doc</span><span class="tok-punctuation">)</span> <span class="tok-punctuation">{</span>
+
+            <span class="tok-keyword">if</span><span class="tok-punctuation">(</span><span class="tok-variableName">err</span><span class="tok-punctuation">)</span>
+            <span class="tok-punctuation">{</span>
+                <span class="tok-variableName">reject</span><span class="tok-punctuation">(</span><span class="tok-variableName">err</span><span class="tok-punctuation">)</span><span class="tok-punctuation">;</span>
+            <span class="tok-punctuation">}</span>
+            <span class="tok-keyword">else</span>
+            <span class="tok-punctuation">{</span>
+                <span class="tok-variableName">resolve</span><span class="tok-punctuation">(</span><span class="tok-variableName">doc</span><span class="tok-punctuation">)</span><span class="tok-punctuation">;</span>
+            <span class="tok-punctuation">}</span>
+        <span class="tok-punctuation">}</span><span class="tok-punctuation">)</span><span class="tok-punctuation">;</span>
+    <span class="tok-punctuation">}</span><span class="tok-punctuation">)</span>
+<span class="tok-punctuation">}</span>
+
+<span class="tok-comment">// Trigger the function</span>
+
+<span class="tok-keyword">let</span> <span class="tok-variableName tok-definition">findOnePromise</span> <span class="tok-operator">=</span> <span class="tok-variableName">findOnePromiseFn</span><span class="tok-punctuation">(</span><span class="tok-punctuation">{</span><span class="tok-string">'name'</span><span class="tok-punctuation">:</span> <span class="tok-string">'draupnir'</span><span class="tok-punctuation">}</span><span class="tok-punctuation">)</span><span class="tok-punctuation">;</span>
+
+<span class="tok-comment">// Potentially do other stuff ...</span>
+
+<span class="tok-comment">// Await the result</span>
+
+<span class="tok-keyword">try</span>
+<span class="tok-punctuation">{</span>
+    <span class="tok-keyword">let</span> <span class="tok-variableName tok-definition">findOnePromiseResult</span> <span class="tok-operator">=</span> <span class="tok-keyword">await</span> <span class="tok-variableName">findOnePromise</span><span class="tok-punctuation">;</span>
+
+    <span class="tok-variableName">console</span><span class="tok-operator">.</span><span class="tok-propertyName">log</span><span class="tok-punctuation">(</span><span class="tok-string">'findOnePromiseResult'</span><span class="tok-punctuation">,</span> <span class="tok-variableName">findOnePromiseResult</span><span class="tok-punctuation">)</span><span class="tok-punctuation">;</span>
+<span class="tok-punctuation">}</span>
+<span class="tok-keyword">catch</span> <span class="tok-punctuation">(</span><span class="tok-variableName tok-definition">e</span><span class="tok-punctuation">)</span>
+<span class="tok-punctuation">{</span>
+    <span class="tok-variableName">console</span><span class="tok-operator">.</span><span class="tok-propertyName">log</span><span class="tok-punctuation">(</span><span class="tok-string">'findOnePromiseResult (Error)'</span><span class="tok-punctuation">,</span> <span class="tok-variableName">e</span><span class="tok-punctuation">)</span><span class="tok-punctuation">;</span>
+<span class="tok-punctuation">}</span>
+<span class="tok-keyword">finally</span>
+<span class="tok-punctuation">{</span>
+    <span class="tok-comment">// Any clean up</span>
+<span class="tok-punctuation">}</span>
+  
+<span class="tok-comment">/////////////////////////////////</span>
+<span class="tok-comment">// standard promise based version</span>
+<span class="tok-comment">/////////////////////////////////</span>
+  
+<span class="tok-keyword">let</span> <span class="tok-variableName tok-definition">findOnePromisFn</span> <span class="tok-operator">=</span> <span class="tok-punctuation">(</span><span class="tok-punctuation">)</span> <span class="tok-punctuation">=&gt;</span> <span class="tok-punctuation">{</span>
+
+    <span class="tok-keyword">return</span> <span class="tok-keyword">new</span> <span class="tok-className">Promise</span><span class="tok-punctuation">(</span><span class="tok-punctuation">(</span><span class="tok-variableName tok-definition">resolve</span><span class="tok-punctuation">,</span> <span class="tok-variableName tok-definition">reject</span><span class="tok-punctuation">)</span> <span class="tok-punctuation">=&gt;</span> <span class="tok-punctuation">{</span>
+
+        <span class="tok-variableName">db</span><span class="tok-operator">.</span><span class="tok-propertyName">findOne</span><span class="tok-punctuation">(</span><span class="tok-punctuation">{</span><span class="tok-string">'name'</span><span class="tok-punctuation">:</span> <span class="tok-string">'draupnir'</span><span class="tok-punctuation">}</span><span class="tok-punctuation">,</span> <span class="tok-keyword">function</span> <span class="tok-punctuation">(</span><span class="tok-variableName tok-definition">err</span><span class="tok-punctuation">,</span> <span class="tok-variableName tok-definition">doc</span><span class="tok-punctuation">)</span> <span class="tok-punctuation">{</span>
+
+            <span class="tok-keyword">if</span><span class="tok-punctuation">(</span><span class="tok-variableName">err</span><span class="tok-punctuation">)</span>
+            <span class="tok-punctuation">{</span>
+                <span class="tok-variableName">reject</span><span class="tok-punctuation">(</span><span class="tok-variableName">err</span><span class="tok-punctuation">)</span>
+            <span class="tok-punctuation">}</span>
+            <span class="tok-keyword">else</span>
+            <span class="tok-punctuation">{</span>
+                <span class="tok-variableName">resolve</span><span class="tok-punctuation">(</span><span class="tok-variableName">doc</span><span class="tok-punctuation">)</span><span class="tok-punctuation">;</span>
+            <span class="tok-punctuation">}</span>
+        <span class="tok-punctuation">}</span><span class="tok-punctuation">)</span><span class="tok-punctuation">;</span>
+    <span class="tok-punctuation">}</span><span class="tok-punctuation">)</span>
+<span class="tok-punctuation">}</span>
+
+<span class="tok-variableName">findOnePromisFn</span><span class="tok-punctuation">(</span><span class="tok-punctuation">)</span><span class="tok-operator">.</span><span class="tok-propertyName">then</span><span class="tok-punctuation">(</span>
+    <span class="tok-variableName tok-definition">value</span> <span class="tok-punctuation">=&gt;</span> <span class="tok-punctuation">{</span>
+
+        <span class="tok-comment">// Success</span>
+
+        <span class="tok-variableName">console</span><span class="tok-operator">.</span><span class="tok-propertyName">log</span><span class="tok-punctuation">(</span><span class="tok-string">'findOnePromiseResult'</span><span class="tok-punctuation">,</span> <span class="tok-variableName">value</span><span class="tok-punctuation">)</span><span class="tok-punctuation">;</span>
+    <span class="tok-punctuation">}</span><span class="tok-punctuation">,</span> 
+    <span class="tok-variableName tok-definition">reason</span> <span class="tok-punctuation">=&gt;</span> <span class="tok-punctuation">{</span>
+
+        <span class="tok-comment">// Error</span>
+
+        <span class="tok-variableName">console</span><span class="tok-operator">.</span><span class="tok-propertyName">error</span><span class="tok-punctuation">(</span><span class="tok-string">'findOnePromiseResult (Error)'</span><span class="tok-punctuation">,</span> <span class="tok-variableName">reason</span><span class="tok-punctuation">)</span><span class="tok-punctuation">;</span>
+    <span class="tok-punctuation">}</span>
+<span class="tok-punctuation">)</span><span class="tok-punctuation">;</span>
+
+<span class="tok-comment">//////////////////////////////////</span>
+<span class="tok-comment">// Standard async callback version</span>
+<span class="tok-comment">//////////////////////////////////</span>
+
+<span class="tok-variableName">db</span><span class="tok-operator">.</span><span class="tok-propertyName">findOne</span><span class="tok-punctuation">(</span><span class="tok-punctuation">{</span><span class="tok-string">'name'</span><span class="tok-punctuation">:</span> <span class="tok-string">'draupnir'</span><span class="tok-punctuation">}</span><span class="tok-punctuation">,</span> <span class="tok-keyword">function</span> <span class="tok-punctuation">(</span><span class="tok-variableName tok-definition">err</span><span class="tok-punctuation">,</span> <span class="tok-variableName tok-definition">doc</span><span class="tok-punctuation">)</span> <span class="tok-punctuation">{</span>
+
+    <span class="tok-variableName">console</span><span class="tok-operator">.</span><span class="tok-propertyName">log</span><span class="tok-punctuation">(</span><span class="tok-string">'findOne callback: err, doc'</span><span class="tok-punctuation">,</span> <span class="tok-punctuation">[</span><span class="tok-variableName">err</span><span class="tok-punctuation">,</span> <span class="tok-variableName">doc</span><span class="tok-punctuation">]</span><span class="tok-punctuation">)</span><span class="tok-punctuation">;</span>
+<span class="tok-punctuation">}</span><span class="tok-punctuation">)</span><span class="tok-punctuation">;</span>
+</code></pre>
+
+            </div>
+            <nav class="pagination" aria-label="Neighbouring posts">
+                <a class="button pagination__prev" href="how-to-create-a-deep-copy-of-an-object-in-javascript-typescript.html"><span class="button__icon">←</span><span class="button__text">How to create a deep copy of an object in JavaScript, TypeScript</span></a>
+                <a class="button pagination__next" href="converting-enum-types-by-value-in-c.html"><span class="button__text">Converting Enum Types By Value in C#</span><span class="button__icon">→</span></a>
+            </nav>
+        </article>
+    </main>
+        <footer class="footer">
+            <div class="footer__inner">
+                <div class="copyright">
+                    <span>&copy; 2026 g9n Blog</span>
+                    <span class="footer__separator" aria-hidden="true">::</span>
+                    <span>Published with <a href="https://etherpk.com" rel="noopener">EtherPK</a></span>
+                    <span class="footer__separator" aria-hidden="true">::</span><a href="feed.xml">Feed</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+        <script src="theme/search.js" defer></script>
+</body>
+</html>

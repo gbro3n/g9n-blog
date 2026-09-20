@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="EtherPK">
+    <title>Robust Error Handling in ASP.NET Core :: g9n Blog</title>
+    <meta name="description" content="Error handling in .NET Core is great, but there are some pitfalls if not properly set up that can result in unexpected behaviour. For example - HTTP status codes that appear incorrect, or some…">
+    <link rel="stylesheet" href="theme/theme.css">
+    
+    
+    <link rel="alternate" type="application/rss+xml" title="g9n Blog" href="feed.xml">
+</head>
+<body class="layout-terminal">
+    <a class="skip-link" href="#content">Skip to content</a>
+    <div class="container">
+        <header class="header">
+            <div class="header__inner">
+                <a class="site-title logo" href="index.html">
+                    <span class="logo__mark"><!-- The EtherPK icon (resources/brand/etherpk-icon-*.svg), inline so the page fetches nothing and it takes the text colour; aria-hidden because the title beside it is the name. Fill the "logo" include, or edit this partial, for your own. -->
+                                             <svg class="site-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 191.82 166.13" width="24" height="21" aria-hidden="true" focusable="false"><path fill="currentColor" fill-rule="evenodd" d="M67.09,132.92,47.93,166.13H9.59L0,149.52,86.33,0H105.5L19.17,149.52H38.34l19.17-33.2h76.8l9.59,16.6Zm48-83.12,9.65,16.71H143.9L115.08,16.6q-24,41.57-48,83.12H143.9q14.37,24.9,28.76,49.8h-96l-9.59,16.61H182.24l9.58-16.61-38.34-66.4H96C95.85,82.9,113.39,52.73,115.08,49.8Z"/></svg>
+</span>
+                    <span class="logo__text">g9n Blog</span>
+                    <span class="logo__cursor" aria-hidden="true"></span>
+                </a>
+                <button class="nav-toggle menu-trigger" type="button" aria-controls="site-nav" aria-expanded="false" aria-label="Menu">Menu</button>
+            </div>
+            <div class="nav-backdrop" hidden></div>
+            <nav id="site-nav" class="menu site-nav" aria-label="Site">
+                <ul class="menu__inner site-nav-list">
+                <li class="">
+                    <a href="a-custom-workflow-to-publish-from-obsidian-to-blotim.html">A Custom Workflow to Publish from Obsidian to Blot.im</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="a-rough-guide-to-building-a-retro-pie-bar-top-arcade-game-machine.html">A Rough Guide to Building a Retro Pie Bar Top Arcade Game Machine</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="a-utility-class-for-finding-database-deadlocks-in-net-applications.html">A Utility Class for Finding Database Deadlocks in .NET Applications</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="api-versioning-and-basic-ui-authentication-with-openapi-swagger-swashbuckle-in-net-core-6.html">API Versioning and Basic UI Authentication with OpenAPI (Swagger Swashbuckle) in .NET Core 6</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="aspnet-file-uploader-with-signalr-progress-bar-and-extended-input-stream-processing.html">ASP.NET File Uploader with SignalR Progress Bar and Extended Input Stream Processing</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="attention-was-always-the-bottleneck-ai.html">Attention Was Always the Bottleneck (AI)</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="converting-enum-types-by-value-in-c.html">Converting Enum Types By Value in C#</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="fail-early-fail-fast-and-why-you-should-throw-exceptions.html">Fail Early, Fail Fast and why you should throw exceptions</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="hackers-painters-and-kanban-for-software-as-a-creative-process.html">Hackers, Painters and Kanban for Software as a Creative Process</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="how-to-create-a-deep-copy-of-an-object-in-javascript-typescript.html">How to create a deep copy of an object in JavaScript, TypeScript</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="how-to-inject-google-adsense-in-article-script-into-your-html-aspnet-core-razor.html">How to inject Google Adsense In-Article script into your HTML (ASP.NET Core Razor)</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="how-to-wrap-a-typescript-js-callback-with-async-await.html">How to wrap a TypeScript JS callback with async  await</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="implementing-microsoftextensionsloggingilogger-with-nlog.html">Implementing Microsoft.Extensions.Logging.ILogger with NLog</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="introducing-the-g9n-blog.html">Introducing the g9n blog</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="maintaining-a-blog-with-jekyll-github-pages-and-github-codespaces.html">Maintaining a Blog with Jekyll, GitHub Pages and GitHub Codespaces</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="make-sure-you-spend-time-with-tech-you-enjoy.html">Make Sure You Spend Time With Tech You Enjoy</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="managing-code-snippets-using-logseq.html">Managing Code Snippets Using Logseq</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="observations-around-prominent-programmer-sentiment-and-ai.html">Observations Around Prominent Programmer Sentiment and AI</a>
+                    
+                    
+                </li>
+                <li class="nav-current ">
+                    <a href="robust-error-handling-in-aspnet-core.html" aria-current="page">Robust Error Handling in ASP.NET Core</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="sanitizing-html-in-net-core.html">Sanitizing HTML in .NET Core</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="the-skills-i-think-we-might-gain-ai.html">The skills I think we might gain (AI)</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="uploading-directly-to-s3-from-client-using-pre-signed-urls-javascript-net.html">Uploading Directly to S3 from Client Using Pre-Signed URLs (JavaScript,  .NET)</a>
+                    
+                    
+                </li>
+                <li class="">
+                    <a href="using-github-to-host-images.html">Using GitHub to Host Images</a>
+                    
+                    
+                </li>
+                </ul>
+                <form class="site-search" role="search" data-search-index="search.json" data-search-script="search-index.js">
+                    <label class="visually-hidden" for="site-search-input">Search</label>
+                    <input id="site-search-input" type="search" name="q" placeholder="$ search" autocomplete="off">
+                    <div class="site-search-results" role="listbox" hidden></div>
+                </form>
+            </nav>
+        </header>
+    <main id="content" class="content">
+        <article class="post">
+            <h1 class="post-title">Robust Error Handling in ASP.NET Core</h1>
+            <div class="post-meta"><time class="post-date" datetime="2020-07-23">2020-07-23</time> :: <span class="post-reading">4 min read</span></div>
+        <nav class="toc framed" aria-label="Table of contents">
+            <p class="toc__title">:: Table of contents</p>
+            <ul>
+                <li class="toc-level-2"><a href="#the-core-issues">The core issues</a></li><li class="toc-level-3"><a href="#changing-httpget-to-route">Changing [HttpGet] to [Route]</a></li><li class="toc-level-3"><a href="#checking-paths-in-httpcontextfeatures-to-determine-if-the-original-request-was-for-an-api-controller">Checking paths in HttpContext.Features to determine if the original request was for an API controller</a></li><li class="toc-level-2"><a href="#full-source-code">Full Source Code</a></li>
+            </ul>
+        </nav>
+            <div class="post-content">
+<p>Error handling in .NET Core is great, but there are some pitfalls if not properly set up that can result in unexpected behaviour. For example - HTTP status codes that appear incorrect, or some categories of errors not being trapped.</p>
+<p>I revisited my error handling code because of a few issues I was experiencing:</p>
+<ul>
+<li>Errors that occurred before the request had made it inside controller code were returning HTTP 405 (Method not allowed) to the caller / browser.</li>
+<li>Errors in API controllers were returning HTML in the response to the caller, when a simple text or JSON response would be more appropriate.</li>
+</ul>
+<p>The main reference documentation is here:</p>
+<p><a href="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/error-handling?view=aspnetcore-3.1">https://docs.microsoft.com/en-us/aspnet/core/fundamentals/error-handling?view=aspnetcore-3.1</a></p>
+<h2 id="the-core-issues">The core issues</h2>
+<h3 id="changing-httpget-to-route">Changing [HttpGet] to [Route]</h3>
+<p>I was using the <code>[HttpGet(&quot;error/{statusCode:int}&quot;)]</code> HTTP verb attribute on my error controller action. This meant that where an error was thrown and the original action was an HTTP POST, <code>UseStatusCodePagesWithReExecute</code> re-executes the pipeline but is not allowed to call the <code>Error</code> action because <code>[HttpGet(&quot;error/{statusCode:int}&quot;)]</code> requires that the action is only available in the context of an HTTP POST. To resolve this, I needed to use <code>[Route(&quot;error/{statusCode:int}&quot;)]</code> instead.</p>
+<p>Startup.cs</p>
+<pre><code class="language-csharp"><span class="tok-keyword">public</span> <span class="tok-keyword">void</span> <span class="tok-variableName">Configure</span>(<span class="tok-variableName">IApplicationBuilder</span> <span class="tok-variableName">app</span>, <span class="tok-variableName">IWebHostEnvironment</span> <span class="tok-variableName">env</span>, <span class="tok-variableName">IConfiguration</span> <span class="tok-variableName">configuration</span>)
+{
+    <span class="tok-comment">// ....</span>
+    
+    <span class="tok-comment">// Ensures graceful handling of non exception errors (404's etc)</span>
+
+    <span class="tok-variableName">app</span>.<span class="tok-variableName">UseStatusCodePagesWithReExecute</span>(<span class="tok-string">&quot;/error/{0}&quot;</span>);
+
+    <span class="tok-comment">// Ensures custom error pages for unhandled exceptions</span>
+
+    <span class="tok-variableName">app</span>.<span class="tok-variableName">UseExceptionHandler</span>(<span class="tok-string">&quot;/error/500&quot;</span>);
+</code></pre>
+<h3 id="checking-paths-in-httpcontextfeatures-to-determine-if-the-original-request-was-for-an-api-controller">Checking paths in HttpContext.Features to determine if the original request was for an API controller</h3>
+<p>Using properties on the variables below ...</p>
+<pre><code class="language-csharp"><span class="tok-keyword">var</span> <span class="tok-variableName tok-definition">statusCodeFeature</span> <span class="tok-operator">=</span> <span class="tok-variableName">HttpContext</span>.<span class="tok-variableName">Features</span>.<span class="tok-variableName">Get</span><span class="tok-operator">&lt;</span><span class="tok-variableName">IStatusCodeReExecuteFeature</span><span class="tok-operator">&gt;</span>();
+
+<span class="tok-keyword">var</span> <span class="tok-variableName tok-definition">exceptionDataFeature</span> <span class="tok-operator">=</span> <span class="tok-variableName">HttpContext</span>.<span class="tok-variableName">Features</span>.<span class="tok-variableName">Get</span><span class="tok-operator">&lt;</span><span class="tok-variableName">IExceptionHandlerPathFeature</span><span class="tok-operator">&gt;</span>();
+</code></pre>
+<p>We can later check the path for an <code>/api</code> prefix and return the appropriate response.</p>
+<pre><code class="language-csharp"><span class="tok-typeName">bool</span> <span class="tok-variableName">isApiPath</span> <span class="tok-operator">=</span> (<span class="tok-variableName">statusCodeFeature</span><span class="tok-operator">?</span>.<span class="tok-variableName">OriginalPath</span> <span class="tok-operator">!=</span> <span class="tok-atom">null</span> <span class="tok-operator">&amp;&amp;</span> <span class="tok-variableName">statusCodeFeature</span>.<span class="tok-variableName">OriginalPath</span>.<span class="tok-variableName">StartsWith</span>(<span class="tok-string">&quot;/api&quot;</span>, <span class="tok-variableName">StringComparison</span>.<span class="tok-variableName">InvariantCultureIgnoreCase</span>)) <span class="tok-operator">||</span>
+                 (<span class="tok-variableName">exceptionDataFeature</span><span class="tok-operator">?</span>.<span class="tok-variableName">Path</span> <span class="tok-operator">!=</span> <span class="tok-atom">null</span> <span class="tok-operator">&amp;&amp;</span> <span class="tok-variableName">exceptionDataFeature</span>.<span class="tok-variableName">Path</span>.<span class="tok-variableName">StartsWith</span>(<span class="tok-string">&quot;/api&quot;</span>, <span class="tok-variableName">StringComparison</span>.<span class="tok-variableName">InvariantCultureIgnoreCase</span>));
+
+<span class="tok-keyword">if</span> (<span class="tok-variableName">isApiPath</span>)
+{
+    <span class="tok-variableName">actionResult</span> <span class="tok-operator">=</span> <span class="tok-variableName">Content</span>(<span class="tok-variableName">$</span><span class="tok-string">&quot;The request could not be processed ({statusCode.ToString(CultureInfo.InvariantCulture)})&quot;</span>);
+}
+<span class="tok-keyword">else</span>
+{
+    <span class="tok-variableName">ViewBag</span>.<span class="tok-variableName">StatusCode</span> <span class="tok-operator">=</span> <span class="tok-variableName">statusCode</span>;
+    <span class="tok-variableName">actionResult</span> <span class="tok-operator">=</span> <span class="tok-variableName">View</span>();
+}
+</code></pre>
+<h2 id="full-source-code">Full Source Code</h2>
+<p>ErrorController.cs</p>
+<pre><code class="language-csharp"><span class="tok-keyword">using</span> <span class="tok-variableName">System</span>;
+<span class="tok-keyword">using</span> <span class="tok-variableName">System</span>.<span class="tok-variableName">Globalization</span>;
+<span class="tok-keyword">using</span> <span class="tok-variableName">Microsoft</span>.<span class="tok-variableName">AspNetCore</span>.<span class="tok-variableName">Diagnostics</span>;
+<span class="tok-keyword">using</span> <span class="tok-variableName">Microsoft</span>.<span class="tok-variableName">AspNetCore</span>.<span class="tok-variableName">Mvc</span>;
+<span class="tok-keyword">using</span> <span class="tok-variableName">Microsoft</span>.<span class="tok-variableName">Extensions</span>.<span class="tok-variableName">Configuration</span>;
+<span class="tok-keyword">using</span> <span class="tok-variableName">Microsoft</span>.<span class="tok-variableName">Extensions</span>.<span class="tok-variableName">Logging</span>;
+
+<span class="tok-keyword">namespace</span> <span class="tok-variableName tok-definition">ExampleApp</span>.<span class="tok-variableName">Controllers</span>
+{
+    <span class="tok-keyword">public</span> <span class="tok-keyword">class</span> <span class="tok-variableName tok-definition">ErrorController</span> : <span class="tok-variableName">Controller</span>
+    {
+        <span class="tok-keyword">private</span> <span class="tok-keyword">readonly</span> <span class="tok-variableName">IConfiguration</span> <span class="tok-variableName">_configuration</span>;
+        <span class="tok-keyword">private</span> <span class="tok-keyword">readonly</span> <span class="tok-variableName">ILogger</span> <span class="tok-variableName">_logger</span>;
+
+        <span class="tok-keyword">public</span> <span class="tok-variableName">ErrorController</span>(<span class="tok-variableName">IConfiguration</span> <span class="tok-variableName">configuration</span>, <span class="tok-variableName">ILogger</span> <span class="tok-variableName">logger</span>) : <span class="tok-keyword">base</span>(<span class="tok-variableName">configuration</span>)
+        {
+            <span class="tok-variableName">_configuration</span> <span class="tok-operator">=</span> <span class="tok-variableName">configuration</span>;
+            <span class="tok-variableName">_logger</span> <span class="tok-operator">=</span> <span class="tok-variableName">logger</span>;
+        }
+
+        <span class="tok-comment">// Must be [Route] attribute and not HttpGet (for example) as if the original erroring action does</span>
+        <span class="tok-comment">// not match then this results in an 40t status code which is confusing for the recipient</span>
+
+        [<span class="tok-variableName">Route</span>(<span class="tok-string">&quot;error/{statusCode:int}&quot;</span>)]
+        <span class="tok-keyword">public</span> <span class="tok-variableName">IActionResult</span> <span class="tok-variableName">Error</span>(<span class="tok-typeName">int</span> <span class="tok-variableName">statusCode</span>)
+        {
+            <span class="tok-keyword">var</span> <span class="tok-variableName tok-definition">statusCodeFeature</span> <span class="tok-operator">=</span> <span class="tok-variableName">HttpContext</span>.<span class="tok-variableName">Features</span>.<span class="tok-variableName">Get</span><span class="tok-operator">&lt;</span><span class="tok-variableName">IStatusCodeReExecuteFeature</span><span class="tok-operator">&gt;</span>();
+
+            <span class="tok-keyword">var</span> <span class="tok-variableName tok-definition">exceptionDataFeature</span> <span class="tok-operator">=</span> <span class="tok-variableName">HttpContext</span>.<span class="tok-variableName">Features</span>.<span class="tok-variableName">Get</span><span class="tok-operator">&lt;</span><span class="tok-variableName">IExceptionHandlerPathFeature</span><span class="tok-operator">&gt;</span>();
+
+            <span class="tok-typeName">string</span> <span class="tok-variableName">logString</span> <span class="tok-operator">=</span> <span class="tok-atom">null</span>;
+
+            <span class="tok-keyword">if</span> (<span class="tok-variableName">statusCodeFeature</span> <span class="tok-operator">!=</span> <span class="tok-atom">null</span>)
+            {
+                <span class="tok-variableName">logString</span> <span class="tok-operator">+=</span> <span class="tok-variableName">$</span><span class="tok-string">&quot;Status Code: {statusCode} Status Code Path Base: [{statusCodeFeature.OriginalPathBase}], Status Code Path: [{statusCodeFeature.OriginalPath}], Status Code Query String: [{statusCodeFeature.OriginalQueryString}]&quot;</span>;
+            }
+
+            <span class="tok-keyword">if</span> (<span class="tok-variableName">exceptionDataFeature</span> <span class="tok-operator">!=</span> <span class="tok-atom">null</span>)
+            {
+                <span class="tok-keyword">if</span> (<span class="tok-variableName">logString</span> <span class="tok-operator">!=</span> <span class="tok-atom">null</span>)
+                {
+                    <span class="tok-variableName">logString</span> <span class="tok-operator">+=</span> <span class="tok-variableName">Environment</span>.<span class="tok-variableName">NewLine</span>;
+                }
+
+                <span class="tok-variableName">logString</span> <span class="tok-operator">+=</span> <span class="tok-variableName">$</span><span class="tok-string">&quot;Status Code: {statusCode} Exception Path: [{exceptionDataFeature.Path}], Exception: [{exceptionDataFeature.Error}], Exception Message: [{exceptionDataFeature.Error.Message}], Exception Stack Trace: [{exceptionDataFeature.Error.StackTrace}]&quot;</span>;
+            }
+
+            <span class="tok-keyword">if</span> (<span class="tok-variableName">statusCodeFeature</span> <span class="tok-operator">==</span> <span class="tok-atom">null</span> <span class="tok-operator">&amp;&amp;</span> <span class="tok-variableName">exceptionDataFeature</span> <span class="tok-operator">==</span> <span class="tok-atom">null</span>)
+            {
+                <span class="tok-comment">// Unsure if it's possible for both to be null but log something  in case</span>
+
+                <span class="tok-variableName">logString</span> <span class="tok-operator">+=</span> <span class="tok-variableName">$</span><span class="tok-string">&quot;Status Code: {statusCode}. Both {nameof(statusCodeFeature)} and {nameof(exceptionDataFeature)} were null in {nameof(ErrorController)} {nameof(Error)}&quot;</span>;
+            }
+
+            <span class="tok-keyword">if</span> (<span class="tok-variableName">statusCode</span> <span class="tok-operator">&gt;=</span> <span class="tok-number">400</span> <span class="tok-operator">&amp;&amp;</span> <span class="tok-variableName">statusCode</span> <span class="tok-operator">&lt;=</span> <span class="tok-number">499</span>)
+            {
+                <span class="tok-comment">// Log warning to ensure captured in production logging. Although possibly not our</span>
+                <span class="tok-comment">// error, something is not communicating with our app as expected and so this warrants</span>
+                <span class="tok-comment">// the warn flag.</span>
+
+                <span class="tok-variableName">_logger</span>.<span class="tok-variableName">LogWarning</span>(<span class="tok-variableName">logString</span>);
+            }
+            <span class="tok-keyword">else</span>
+            {
+                <span class="tok-variableName">_logger</span>.<span class="tok-variableName">LogError</span>(<span class="tok-variableName">logString</span>);
+            }
+
+            <span class="tok-variableName">IActionResult</span> <span class="tok-variableName">actionResult</span>;
+
+            <span class="tok-comment">// Check both statusCodeFeature and exceptionDataFeature for path</span>
+
+            <span class="tok-typeName">bool</span> <span class="tok-variableName">isApiPath</span> <span class="tok-operator">=</span> (<span class="tok-variableName">statusCodeFeature</span><span class="tok-operator">?</span>.<span class="tok-variableName">OriginalPath</span> <span class="tok-operator">!=</span> <span class="tok-atom">null</span> <span class="tok-operator">&amp;&amp;</span> <span class="tok-variableName">statusCodeFeature</span>.<span class="tok-variableName">OriginalPath</span>.<span class="tok-variableName">StartsWith</span>(<span class="tok-string">&quot;/api&quot;</span>, <span class="tok-variableName">StringComparison</span>.<span class="tok-variableName">InvariantCultureIgnoreCase</span>)) <span class="tok-operator">||</span>
+                             (<span class="tok-variableName">exceptionDataFeature</span><span class="tok-operator">?</span>.<span class="tok-variableName">Path</span> <span class="tok-operator">!=</span> <span class="tok-atom">null</span> <span class="tok-operator">&amp;&amp;</span> <span class="tok-variableName">exceptionDataFeature</span>.<span class="tok-variableName">Path</span>.<span class="tok-variableName">StartsWith</span>(<span class="tok-string">&quot;/api&quot;</span>, <span class="tok-variableName">StringComparison</span>.<span class="tok-variableName">InvariantCultureIgnoreCase</span>));
+
+            <span class="tok-keyword">if</span> (<span class="tok-variableName">isApiPath</span>)
+            {
+                <span class="tok-variableName">actionResult</span> <span class="tok-operator">=</span> <span class="tok-variableName">Content</span>(<span class="tok-variableName">$</span><span class="tok-string">&quot;The request could not be processed ({statusCode.ToString(CultureInfo.InvariantCulture)})&quot;</span>);
+            }
+            <span class="tok-keyword">else</span>
+            {
+                <span class="tok-variableName">ViewBag</span>.<span class="tok-variableName">StatusCode</span> <span class="tok-operator">=</span> <span class="tok-variableName">statusCode</span>;
+
+                <span class="tok-variableName">actionResult</span> <span class="tok-operator">=</span> <span class="tok-variableName">View</span>();
+            }
+
+            <span class="tok-keyword">return</span> <span class="tok-variableName">actionResult</span>;
+        }
+
+        <span class="tok-comment">// Test actions to trigger basic use case scenarios</span>
+
+        [<span class="tok-variableName">HttpGet</span>(<span class="tok-string">&quot;error/test-throw-404&quot;</span>)]
+        <span class="tok-keyword">public</span> <span class="tok-variableName">IActionResult</span> <span class="tok-variableName">Throw404</span>() <span class="tok-operator">=&gt;</span> <span class="tok-variableName">StatusCode</span>(<span class="tok-number">404</span>);
+
+        [<span class="tok-variableName">HttpGet</span>(<span class="tok-string">&quot;error/test-throw-422&quot;</span>)]
+        <span class="tok-keyword">public</span> <span class="tok-variableName">IActionResult</span> <span class="tok-variableName">Throw422</span>() <span class="tok-operator">=&gt;</span> <span class="tok-variableName">StatusCode</span>(<span class="tok-number">422</span>);
+
+        [<span class="tok-variableName">HttpGet</span>(<span class="tok-string">&quot;error/test-throw-500&quot;</span>)]
+        <span class="tok-keyword">public</span> <span class="tok-variableName">IActionResult</span> <span class="tok-variableName">Throw500</span>() <span class="tok-operator">=&gt;</span> <span class="tok-variableName">StatusCode</span>(<span class="tok-number">500</span>);
+
+        [<span class="tok-variableName">HttpGet</span>(<span class="tok-string">&quot;error/test-throw-exception&quot;</span>)]
+        <span class="tok-keyword">public</span> <span class="tok-variableName">IActionResult</span> <span class="tok-variableName">ThrowException</span>()
+        {
+            <span class="tok-keyword">throw</span> <span class="tok-keyword">new</span> <span class="tok-variableName">InvalidOperationException</span>(<span class="tok-string">&quot;Test exception&quot;</span>);
+        }
+    }
+}
+</code></pre>
+
+            </div>
+            <nav class="pagination" aria-label="Neighbouring posts">
+                <a class="button pagination__prev" href="how-to-inject-google-adsense-in-article-script-into-your-html-aspnet-core-razor.html"><span class="button__icon">←</span><span class="button__text">How to inject Google Adsense In-Article script into your HTML (ASP.NET Core Razor)</span></a>
+                <a class="button pagination__next" href="a-utility-class-for-finding-database-deadlocks-in-net-applications.html"><span class="button__text">A Utility Class for Finding Database Deadlocks in .NET Applications</span><span class="button__icon">→</span></a>
+            </nav>
+        </article>
+    </main>
+        <footer class="footer">
+            <div class="footer__inner">
+                <div class="copyright">
+                    <span>&copy; 2026 g9n Blog</span>
+                    <span class="footer__separator" aria-hidden="true">::</span>
+                    <span>Published with <a href="https://etherpk.com" rel="noopener">EtherPK</a></span>
+                    <span class="footer__separator" aria-hidden="true">::</span><a href="feed.xml">Feed</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+        <script src="theme/search.js" defer></script>
+</body>
+</html>
