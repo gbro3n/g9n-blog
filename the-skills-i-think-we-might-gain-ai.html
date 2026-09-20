@@ -4,28 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="EtherPK">
-    <title>The skills I think we might gain (AI) · g9n Blog</title>
+    <title>The skills I think we might gain (AI) :: g9n Blog</title>
     <meta name="description" content="The general consensus, and common sense seem to dictate that the more we lean on LLMs for coding, the weaker our ability to code by hand will become. I feel like it&#39;s something all experienced…">
     <link rel="stylesheet" href="theme/theme.css">
     
     
     
 </head>
-<body class="layout-blog">
+<body class="layout-terminal">
     <a class="skip-link" href="#content">Skip to content</a>
-        <header class="site-header">
-            <div class="site-header-row">
-                <a class="site-title" href="index.html"><!-- The EtherPK icon (resources/brand/etherpk-icon-*.svg), inline so the page fetches nothing and it takes the text colour; aria-hidden because the title beside it is the name. Fill the "logo" include, or edit this partial, for your own. -->
-                                                        <svg class="site-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 191.82 166.13" width="24" height="21" aria-hidden="true" focusable="false"><path fill="currentColor" fill-rule="evenodd" d="M67.09,132.92,47.93,166.13H9.59L0,149.52,86.33,0H105.5L19.17,149.52H38.34l19.17-33.2h76.8l9.59,16.6Zm48-83.12,9.65,16.71H143.9L115.08,16.6q-24,41.57-48,83.12H143.9q14.37,24.9,28.76,49.8h-96l-9.59,16.61H182.24l9.58-16.61-38.34-66.4H96C95.85,82.9,113.39,52.73,115.08,49.8Z"/></svg>
-<span class="site-title-text">g9n Blog</span></a>
-                <form class="site-search" role="search" data-search-index="search.json" data-search-script="search-index.js">
-                    <label class="visually-hidden" for="site-search-input">Search</label>
-                    <input id="site-search-input" type="search" name="q" placeholder="Search" autocomplete="off">
-                    <div class="site-search-results" role="listbox" hidden></div>
-                </form>
+    <div class="container">
+        <header class="header">
+            <div class="header__inner">
+                <a class="site-title logo" href="index.html">
+                    <span class="logo__mark"><!-- The EtherPK icon (resources/brand/etherpk-icon-*.svg), inline so the page fetches nothing and it takes the text colour; aria-hidden because the title beside it is the name. Fill the "logo" include, or edit this partial, for your own. -->
+                                             <svg class="site-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 191.82 166.13" width="24" height="21" aria-hidden="true" focusable="false"><path fill="currentColor" fill-rule="evenodd" d="M67.09,132.92,47.93,166.13H9.59L0,149.52,86.33,0H105.5L19.17,149.52H38.34l19.17-33.2h76.8l9.59,16.6Zm48-83.12,9.65,16.71H143.9L115.08,16.6q-24,41.57-48,83.12H143.9q14.37,24.9,28.76,49.8h-96l-9.59,16.61H182.24l9.58-16.61-38.34-66.4H96C95.85,82.9,113.39,52.73,115.08,49.8Z"/></svg>
+</span>
+                    <span class="logo__text">g9n Blog</span>
+                    <span class="logo__cursor" aria-hidden="true"></span>
+                </a>
+                <button class="nav-toggle menu-trigger" type="button" aria-controls="site-nav" aria-expanded="false" aria-label="Menu">Menu</button>
             </div>
-            <nav class="site-nav" aria-label="Site">
-                <ul class="site-nav-list">
+            <div class="nav-backdrop" hidden></div>
+            <nav id="site-nav" class="menu site-nav" aria-label="Site">
+                <ul class="menu__inner site-nav-list">
                 <li class="">
                     <a href="attention-was-always-the-bottleneck-ai.html">Attention Was Always the Bottleneck (AI)</a>
                     
@@ -52,15 +54,24 @@
                     
                 </li>
                 </ul>
+                <form class="site-search" role="search" data-search-index="search.json" data-search-script="search-index.js">
+                    <label class="visually-hidden" for="site-search-input">Search</label>
+                    <input id="site-search-input" type="search" name="q" placeholder="$ search" autocomplete="off">
+                    <div class="site-search-results" role="listbox" hidden></div>
+                </form>
             </nav>
         </header>
     <main id="content" class="content">
         <article class="post">
-            <header class="post-header">
-                <h1>The skills I think we might gain (AI)</h1>
-                <time class="post-date" datetime="2026-06-24">2026-06-24</time>
-            </header>
-            <div class="post-body">
+            <h1 class="post-title">The skills I think we might gain (AI)</h1>
+            <div class="post-meta"><time class="post-date" datetime="2026-06-24">2026-06-24</time> :: <span class="post-reading">2 min read</span></div>
+        <nav class="toc framed" aria-label="Table of contents">
+            <p class="toc__title">:: Table of contents</p>
+            <ul>
+                <li class="toc-level-2"><a href="#decision-making-at-pace">Decision Making, At Pace</a></li>
+            </ul>
+        </nav>
+            <div class="post-content">
 <p>The general consensus, and common sense seem to dictate that the more we lean on LLMs for coding, the weaker our ability to code by hand will become. I feel like it's something all experienced engineers will be able to get back if they decide they want to put the effort in, but the AI genie doesn't look like it's going back in the bottle any time soon, and so the motivation to put that effort in is always going to be competing with the motivation for doing something else important.</p>
 <p>That said, like many others, my output has gone up significantly - I would suggest 6x based on the number of projects I'm shipping compared to pre AI periods (and I don't think the quality has gone down like many suggest is inevitable), but I am tired. Agentic software engineering seems to come with fatigue, as numerous other blog posts I have read recount.</p>
 <p>So my brain must be doing something ... right?</p>
@@ -71,11 +82,23 @@
 <p>This is something that's going to be hard to measure. For now I'm watching for two things. Software quality, and the success of projects against their stated aims.</p>
 
             </div>
+            <nav class="pagination" aria-label="Neighbouring posts">
+                <a class="button pagination__prev" href="introducing-the-g9n-blog.html"><span class="button__icon">←</span><span class="button__text">Introducing the g9n blog</span></a>
+                <a class="button pagination__next" href="observations-around-prominent-programmer-sentiment-and-ai.html"><span class="button__text">Observations Around Prominent Programmer Sentiment and AI</span><span class="button__icon">→</span></a>
+            </nav>
         </article>
     </main>
-        <footer class="site-footer">
-            <p>g9n Blog · published with <a href="https://etherpk.com" rel="noopener">EtherPK</a></p>
+        <footer class="footer">
+            <div class="footer__inner">
+                <div class="copyright">
+                    <span>&copy; 2026 g9n Blog</span>
+                    <span class="footer__separator" aria-hidden="true">::</span>
+                    <span>Published with <a href="https://etherpk.com" rel="noopener">EtherPK</a></span>
+                    
+                </div>
+            </div>
         </footer>
+    </div>
         <script src="theme/search.js" defer></script>
 </body>
 </html>

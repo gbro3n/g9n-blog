@@ -11,21 +11,23 @@
     
     
 </head>
-<body class="layout-blog is-home">
+<body class="layout-terminal is-home">
     <a class="skip-link" href="#content">Skip to content</a>
-        <header class="site-header">
-            <div class="site-header-row">
-                <a class="site-title" href="index.html"><!-- The EtherPK icon (resources/brand/etherpk-icon-*.svg), inline so the page fetches nothing and it takes the text colour; aria-hidden because the title beside it is the name. Fill the "logo" include, or edit this partial, for your own. -->
-                                                        <svg class="site-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 191.82 166.13" width="24" height="21" aria-hidden="true" focusable="false"><path fill="currentColor" fill-rule="evenodd" d="M67.09,132.92,47.93,166.13H9.59L0,149.52,86.33,0H105.5L19.17,149.52H38.34l19.17-33.2h76.8l9.59,16.6Zm48-83.12,9.65,16.71H143.9L115.08,16.6q-24,41.57-48,83.12H143.9q14.37,24.9,28.76,49.8h-96l-9.59,16.61H182.24l9.58-16.61-38.34-66.4H96C95.85,82.9,113.39,52.73,115.08,49.8Z"/></svg>
-<span class="site-title-text">g9n Blog</span></a>
-                <form class="site-search" role="search" data-search-index="search.json" data-search-script="search-index.js">
-                    <label class="visually-hidden" for="site-search-input">Search</label>
-                    <input id="site-search-input" type="search" name="q" placeholder="Search" autocomplete="off">
-                    <div class="site-search-results" role="listbox" hidden></div>
-                </form>
+    <div class="container">
+        <header class="header">
+            <div class="header__inner">
+                <a class="site-title logo" href="index.html">
+                    <span class="logo__mark"><!-- The EtherPK icon (resources/brand/etherpk-icon-*.svg), inline so the page fetches nothing and it takes the text colour; aria-hidden because the title beside it is the name. Fill the "logo" include, or edit this partial, for your own. -->
+                                             <svg class="site-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 191.82 166.13" width="24" height="21" aria-hidden="true" focusable="false"><path fill="currentColor" fill-rule="evenodd" d="M67.09,132.92,47.93,166.13H9.59L0,149.52,86.33,0H105.5L19.17,149.52H38.34l19.17-33.2h76.8l9.59,16.6Zm48-83.12,9.65,16.71H143.9L115.08,16.6q-24,41.57-48,83.12H143.9q14.37,24.9,28.76,49.8h-96l-9.59,16.61H182.24l9.58-16.61-38.34-66.4H96C95.85,82.9,113.39,52.73,115.08,49.8Z"/></svg>
+</span>
+                    <span class="logo__text">g9n Blog</span>
+                    <span class="logo__cursor" aria-hidden="true"></span>
+                </a>
+                <button class="nav-toggle menu-trigger" type="button" aria-controls="site-nav" aria-expanded="false" aria-label="Menu">Menu</button>
             </div>
-            <nav class="site-nav" aria-label="Site">
-                <ul class="site-nav-list">
+            <div class="nav-backdrop" hidden></div>
+            <nav id="site-nav" class="menu site-nav" aria-label="Site">
+                <ul class="menu__inner site-nav-list">
                 <li class="">
                     <a href="attention-was-always-the-bottleneck-ai.html">Attention Was Always the Bottleneck (AI)</a>
                     
@@ -52,40 +54,60 @@
                     
                 </li>
                 </ul>
+                <form class="site-search" role="search" data-search-index="search.json" data-search-script="search-index.js">
+                    <label class="visually-hidden" for="site-search-input">Search</label>
+                    <input id="site-search-input" type="search" name="q" placeholder="$ search" autocomplete="off">
+                    <div class="site-search-results" role="listbox" hidden></div>
+                </form>
             </nav>
         </header>
     <main id="content" class="content">
-        <section class="post-list" aria-label="Posts">
-            <article class="post-summary">
-                <h2><a href="attention-was-always-the-bottleneck-ai.html">Attention Was Always the Bottleneck (AI)</a></h2>
-                <time datetime="2026-09-01">2026-09-01</time>
-                <p>In earlier days, we didn&#39;t want to spend our attention on machine code or assembly, and later memory management an garbage collection. So we invented tools and abstractions so that we didn&#39;t have to…</p>
-            </article>
-            <article class="post-summary">
-                <h2><a href="make-sure-you-spend-time-with-tech-you-enjoy.html">Make Sure You Spend Time With Tech You Enjoy</a></h2>
-                <time datetime="2026-09-01">2026-09-01</time>
-                <p>As a developer, something that contributes to feelings of burnout is constantly dealing with faults, and software that has not yet been completed. An antidote to this I find, is to carve out some…</p>
-            </article>
-            <article class="post-summary">
-                <h2><a href="observations-around-prominent-programmer-sentiment-and-ai.html">Observations Around Prominent Programmer Sentiment and AI</a></h2>
-                <time datetime="2026-08-30">2026-08-30</time>
-                <p>A few months ago, it was easy to find AI sceptics among prominent programmers. Just over a year ago DHH was interviewed on the Lex Friedman Podcast. Now appearing again on the recent episode, DHH&#39;s…</p>
-            </article>
-            <article class="post-summary">
-                <h2><a href="the-skills-i-think-we-might-gain-ai.html">The skills I think we might gain (AI)</a></h2>
-                <time datetime="2026-06-24">2026-06-24</time>
-                <p>The general consensus, and common sense seem to dictate that the more we lean on LLMs for coding, the weaker our ability to code by hand will become. I feel like it&#39;s something all experienced…</p>
-            </article>
-            <article class="post-summary">
-                <h2><a href="introducing-the-g9n-blog.html">Introducing the g9n blog</a></h2>
-                <time datetime="2026-05-17">2026-05-17</time>
-                <p>Welcome to my blog. This is where I intend (intend, not promise) to put my (hopefully) regular writings in an effort to be more intentional about what I&#39;m working on and thinking about, communicate…</p>
-            </article>
-        </section>
+        <h1 class="post-title index-title">g9n Blog</h1>
+        <div class="posts">
+                    <article class="post on-list">
+            <h1 class="post-title"><a href="attention-was-always-the-bottleneck-ai.html">Attention Was Always the Bottleneck (AI)</a></h1>
+            <div class="post-meta"><time class="post-date" datetime="2026-09-01">2026-09-01</time></div>
+            <div class="post-content"><p>In earlier days, we didn&#39;t want to spend our attention on machine code or assembly, and later memory management an garbage collection. So we invented tools and abstractions so that we didn&#39;t have to…</p></div>
+            <div><a class="read-more button inline" href="attention-was-always-the-bottleneck-ai.html">Read more →</a></div>
+        </article>
+        <article class="post on-list">
+            <h1 class="post-title"><a href="make-sure-you-spend-time-with-tech-you-enjoy.html">Make Sure You Spend Time With Tech You Enjoy</a></h1>
+            <div class="post-meta"><time class="post-date" datetime="2026-09-01">2026-09-01</time></div>
+            <div class="post-content"><p>As a developer, something that contributes to feelings of burnout is constantly dealing with faults, and software that has not yet been completed. An antidote to this I find, is to carve out some…</p></div>
+            <div><a class="read-more button inline" href="make-sure-you-spend-time-with-tech-you-enjoy.html">Read more →</a></div>
+        </article>
+        <article class="post on-list">
+            <h1 class="post-title"><a href="observations-around-prominent-programmer-sentiment-and-ai.html">Observations Around Prominent Programmer Sentiment and AI</a></h1>
+            <div class="post-meta"><time class="post-date" datetime="2026-08-30">2026-08-30</time></div>
+            <div class="post-content"><p>A few months ago, it was easy to find AI sceptics among prominent programmers. Just over a year ago DHH was interviewed on the Lex Friedman Podcast. Now appearing again on the recent episode, DHH&#39;s…</p></div>
+            <div><a class="read-more button inline" href="observations-around-prominent-programmer-sentiment-and-ai.html">Read more →</a></div>
+        </article>
+        <article class="post on-list">
+            <h1 class="post-title"><a href="the-skills-i-think-we-might-gain-ai.html">The skills I think we might gain (AI)</a></h1>
+            <div class="post-meta"><time class="post-date" datetime="2026-06-24">2026-06-24</time></div>
+            <div class="post-content"><p>The general consensus, and common sense seem to dictate that the more we lean on LLMs for coding, the weaker our ability to code by hand will become. I feel like it&#39;s something all experienced…</p></div>
+            <div><a class="read-more button inline" href="the-skills-i-think-we-might-gain-ai.html">Read more →</a></div>
+        </article>
+        <article class="post on-list">
+            <h1 class="post-title"><a href="introducing-the-g9n-blog.html">Introducing the g9n blog</a></h1>
+            <div class="post-meta"><time class="post-date" datetime="2026-05-17">2026-05-17</time></div>
+            <div class="post-content"><p>Welcome to my blog. This is where I intend (intend, not promise) to put my (hopefully) regular writings in an effort to be more intentional about what I&#39;m working on and thinking about, communicate…</p></div>
+            <div><a class="read-more button inline" href="introducing-the-g9n-blog.html">Read more →</a></div>
+        </article>
+
+        </div>
     </main>
-        <footer class="site-footer">
-            <p>g9n Blog · published with <a href="https://etherpk.com" rel="noopener">EtherPK</a></p>
+        <footer class="footer">
+            <div class="footer__inner">
+                <div class="copyright">
+                    <span>&copy; 2026 g9n Blog</span>
+                    <span class="footer__separator" aria-hidden="true">::</span>
+                    <span>Published with <a href="https://etherpk.com" rel="noopener">EtherPK</a></span>
+                    
+                </div>
+            </div>
         </footer>
+    </div>
         <script src="theme/search.js" defer></script>
 </body>
 </html>

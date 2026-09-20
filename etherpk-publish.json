@@ -3,9 +3,9 @@
     "id": "g9n-blog",
     "name": "g9n Blog",
     "kind": "blog",
-    "theme": "etherpk-blog"
+    "theme": "g9n-blog-theme-etherpk-terminal"
   },
-  "generatedAt": "2026-09-20T10:14:33.039Z",
+  "generatedAt": "2026-09-20T10:39:46.970Z",
   "ok": true,
   "errors": [],
   "warnings": [],
@@ -11562,6 +11562,10 @@
       "reason": "not-public"
     },
     {
+      "concept": "g9n Blog",
+      "reason": "publication-page"
+    },
+    {
       "concept": "Kettlebell",
       "reason": "not-public"
     },
@@ -11620,10 +11624,6 @@
     {
       "concept": "Meditation",
       "reason": "protected"
-    },
-    {
-      "concept": "g9n Blog",
-      "reason": "publication-page"
     }
   ],
   "collisions": [],
@@ -11690,8 +11690,8 @@
     "Hackers, Painters and Kanban for Software as a Creative Process"
   ],
   "theme": {
-    "source": "bundled",
-    "name": "etherpk-blog",
+    "source": "graph",
+    "name": "etherpk-terminal",
     "version": "1.0.0"
   }
 }

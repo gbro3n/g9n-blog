@@ -4,28 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="EtherPK">
-    <title>Not published · g9n Blog</title>
+    <title>Not published :: g9n Blog</title>
     
     <link rel="stylesheet" href="theme/theme.css">
     
     
     
 </head>
-<body class="layout-blog">
+<body class="layout-terminal">
     <a class="skip-link" href="#content">Skip to content</a>
-        <header class="site-header">
-            <div class="site-header-row">
-                <a class="site-title" href="index.html"><!-- The EtherPK icon (resources/brand/etherpk-icon-*.svg), inline so the page fetches nothing and it takes the text colour; aria-hidden because the title beside it is the name. Fill the "logo" include, or edit this partial, for your own. -->
-                                                        <svg class="site-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 191.82 166.13" width="24" height="21" aria-hidden="true" focusable="false"><path fill="currentColor" fill-rule="evenodd" d="M67.09,132.92,47.93,166.13H9.59L0,149.52,86.33,0H105.5L19.17,149.52H38.34l19.17-33.2h76.8l9.59,16.6Zm48-83.12,9.65,16.71H143.9L115.08,16.6q-24,41.57-48,83.12H143.9q14.37,24.9,28.76,49.8h-96l-9.59,16.61H182.24l9.58-16.61-38.34-66.4H96C95.85,82.9,113.39,52.73,115.08,49.8Z"/></svg>
-<span class="site-title-text">g9n Blog</span></a>
-                <form class="site-search" role="search" data-search-index="search.json" data-search-script="search-index.js">
-                    <label class="visually-hidden" for="site-search-input">Search</label>
-                    <input id="site-search-input" type="search" name="q" placeholder="Search" autocomplete="off">
-                    <div class="site-search-results" role="listbox" hidden></div>
-                </form>
+    <div class="container">
+        <header class="header">
+            <div class="header__inner">
+                <a class="site-title logo" href="index.html">
+                    <span class="logo__mark"><!-- The EtherPK icon (resources/brand/etherpk-icon-*.svg), inline so the page fetches nothing and it takes the text colour; aria-hidden because the title beside it is the name. Fill the "logo" include, or edit this partial, for your own. -->
+                                             <svg class="site-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 191.82 166.13" width="24" height="21" aria-hidden="true" focusable="false"><path fill="currentColor" fill-rule="evenodd" d="M67.09,132.92,47.93,166.13H9.59L0,149.52,86.33,0H105.5L19.17,149.52H38.34l19.17-33.2h76.8l9.59,16.6Zm48-83.12,9.65,16.71H143.9L115.08,16.6q-24,41.57-48,83.12H143.9q14.37,24.9,28.76,49.8h-96l-9.59,16.61H182.24l9.58-16.61-38.34-66.4H96C95.85,82.9,113.39,52.73,115.08,49.8Z"/></svg>
+</span>
+                    <span class="logo__text">g9n Blog</span>
+                    <span class="logo__cursor" aria-hidden="true"></span>
+                </a>
+                <button class="nav-toggle menu-trigger" type="button" aria-controls="site-nav" aria-expanded="false" aria-label="Menu">Menu</button>
             </div>
-            <nav class="site-nav" aria-label="Site">
-                <ul class="site-nav-list">
+            <div class="nav-backdrop" hidden></div>
+            <nav id="site-nav" class="menu site-nav" aria-label="Site">
+                <ul class="menu__inner site-nav-list">
                 <li class="">
                     <a href="attention-was-always-the-bottleneck-ai.html">Attention Was Always the Bottleneck (AI)</a>
                     
@@ -52,22 +54,33 @@
                     
                 </li>
                 </ul>
+                <form class="site-search" role="search" data-search-index="search.json" data-search-script="search-index.js">
+                    <label class="visually-hidden" for="site-search-input">Search</label>
+                    <input id="site-search-input" type="search" name="q" placeholder="$ search" autocomplete="off">
+                    <div class="site-search-results" role="listbox" hidden></div>
+                </form>
             </nav>
         </header>
     <main id="content" class="content">
-        <article class="post not-published">
-            <header class="post-header">
-                <h1>Not published</h1>
-            </header>
-            <div class="post-body">
-                <p>The page you followed a link to is not part of this site.</p>
-                <p><a href="index.html">Back to g9n Blog</a></p>
+        <article class="post">
+            <h1 class="post-title">404 :: not published</h1>
+            <div class="post-content">
+                <p>$ the page you followed a link to is not part of this site.</p>
+                <p><a class="button inline" href="index.html">← g9n Blog</a></p>
             </div>
         </article>
     </main>
-        <footer class="site-footer">
-            <p>g9n Blog · published with <a href="https://etherpk.com" rel="noopener">EtherPK</a></p>
+        <footer class="footer">
+            <div class="footer__inner">
+                <div class="copyright">
+                    <span>&copy; 2026 g9n Blog</span>
+                    <span class="footer__separator" aria-hidden="true">::</span>
+                    <span>Published with <a href="https://etherpk.com" rel="noopener">EtherPK</a></span>
+                    
+                </div>
+            </div>
         </footer>
+    </div>
         <script src="theme/search.js" defer></script>
 </body>
 </html>
