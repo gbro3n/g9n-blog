@@ -1,0 +1,11 @@
+# Files in this folder that are not part of the website, kept out of the Worker's assets.
+# Written once by EtherPK; yours to edit.
+.git
+.github
+.gitignore
+.assetsignore
+.nojekyll
+wrangler.jsonc
+AGENTS.md
+README.md
+etherpk-publish.json

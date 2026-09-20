@@ -1,0 +1,13 @@
+// Cloudflare Workers with static assets (Cloudflare's successor to Pages for new sites).
+// Deploy with `npx wrangler deploy`, or connect the repository in the dashboard under
+// Workers → Create → Import a repository and leave the build command empty. The Worker is
+// named after the publication; Cloudflare warns when this name and the Worker's differ.
+{
+    "name": "g9n-blog",
+    "compatibility_date": "2026-01-01",
+    "assets": {
+        "directory": ".",
+        "html_handling": "auto-trailing-slash",
+        "not_found_handling": "404-page"
+    }
+}
